@@ -288,6 +288,30 @@ const OrderDetail = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 py-8">
+      {/* Delivery Rating & Review Section */}
+      {order.deliveryRating && (
+        <div className="max-w-2xl mx-auto mb-8 bg-yellow-50 border border-yellow-200 rounded-3xl p-6 shadow-lg">
+          <h2 className="text-xl font-bold text-yellow-800 mb-2 flex items-center">
+            <FiStar className="w-6 h-6 text-yellow-500 mr-2" /> Delivery Rating & Review
+          </h2>
+          <div className="flex items-center mb-2">
+            <span className="text-yellow-700 font-semibold mr-2">Rating:</span>
+            <span className="text-lg font-bold text-yellow-800">{order.deliveryRating} / 5</span>
+          </div>
+          {order.deliveryReview && (
+            <div className="mt-2">
+              <span className="text-yellow-700 font-semibold mr-2">Review:</span>
+              <span className="text-gray-800">{order.deliveryReview}</span>
+            </div>
+          )}
+        </div>
+      )}
+      {/* Delivery Rating Modal for Delivered Orders without Review */}
+      {order.status?.toLowerCase() === 'delivered' && !order.deliveryRating && (
+        <DeliveryRatingModal orderId={order._id} onReviewSubmitted={(rating, review) => {
+          setOrder(prev => ({ ...prev, deliveryRating: rating, deliveryReview: review }));
+        }} />
+      )}
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <motion.div 

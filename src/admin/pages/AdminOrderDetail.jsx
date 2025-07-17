@@ -265,6 +265,25 @@ const AdminOrderDetail = () => {
         </div>          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
             {/* Order Information */}
             <div className="xl:col-span-2 space-y-6">
+            {/* Delivery Rating & Review */}
+            {order.deliveryRating && (
+              <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-yellow-50 border border-yellow-200 mb-6">
+                <h2 className="text-xl lg:text-2xl font-bold mb-4 text-yellow-800 flex items-center">
+                  <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-yellow-400 to-yellow-500 rounded-full mr-2"></span>
+                  Delivery Rating & Review
+                </h2>
+                <div className="flex items-center mb-2">
+                  <span className="text-yellow-700 font-semibold mr-2">Rating:</span>
+                  <span className="text-lg font-bold text-yellow-800">{order.deliveryRating} / 5</span>
+                </div>
+                {order.deliveryReview && (
+                  <div className="mt-2">
+                    <span className="text-yellow-700 font-semibold mr-2">Review:</span>
+                    <span className="text-gray-800">{order.deliveryReview}</span>
+                  </div>
+                )}
+              </div>
+            )}
               {/* Order Status */}
               <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
                 <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
