@@ -11,7 +11,7 @@ precacheAndRoute(self.__WB_MANIFEST)
 cleanupOutdatedCaches()
 
 // Advanced caching strategies
-const API_BASE_URL = 'https://indiraa1-backend.onrender.com/api'
+const API_BASE_URL = 'http://localhost:5001/api'
 
 // 1. API Caching with Background Sync
 const bgSyncPlugin = new BackgroundSyncPlugin('api-sync-queue', {
@@ -20,7 +20,7 @@ const bgSyncPlugin = new BackgroundSyncPlugin('api-sync-queue', {
 
 // API Routes with Network First strategy and background sync
 registerRoute(
-  ({ url }) => url.origin === 'https://indiraa1-backend.onrender.com' && url.pathname.startsWith('/api/'),
+  ({ url }) => url.origin === 'http://localhost:5001' && url.pathname.startsWith('/api/'),
   new NetworkFirst({
     cacheName: 'api-cache-v2',
     networkTimeoutSeconds: 10,
@@ -117,7 +117,7 @@ self.addEventListener('push', (event) => {
       self.registration.showNotification(title, options)
     )
   } catch (error) {
-    console.error('❌ Error handling push notification:', error)
+    // silentError('❌ Error handling push notification:', error)
     
     // Fallback notification
     event.waitUntil(
@@ -260,7 +260,7 @@ async function syncCartData() {
       })
     }
   } catch (error) {
-    console.error('❌ Cart sync failed:', error)
+    silentError('❌ Cart sync failed:', error)
   }
 }
 
@@ -292,7 +292,7 @@ async function syncWishlistData() {
       })
     }
   } catch (error) {
-    console.error('❌ Wishlist sync failed:', error)
+    silentError('❌ Wishlist sync failed:', error)
   }
 }
 
@@ -333,11 +333,11 @@ async function syncOrderData() {
           })
         }
       } catch (error) {
-        console.error(`❌ Failed to sync order ${order.id}:`, error)
+        silentError(`❌ Failed to sync order ${order.id}:`, error)
       }
     }
   } catch (error) {
-    console.error('❌ Order sync failed:', error)
+    silentError('❌ Order sync failed:', error)
   }
 }
 
@@ -366,7 +366,7 @@ async function updatePricesInBackground() {
     
     console.log('✅ Price update completed')
   } catch (error) {
-    console.error('❌ Price update failed:', error)
+    silentError('❌ Price update failed:', error)
   }
 }
 
@@ -492,7 +492,7 @@ async function cacheProductData(productData) {
     await cache.put(`${API_BASE_URL}/products/${productData.id}`, response)
     console.log(`📦 Cached product: ${productData.id}`)
   } catch (error) {
-    console.error('❌ Failed to cache product:', error)
+    silentError('❌ Failed to cache product:', error)
   }
 }
 
@@ -512,17 +512,17 @@ async function cacheImageData(imageUrls) {
       }
     }
   } catch (error) {
-    console.error('❌ Failed to cache images:', error)
+    silentError('❌ Failed to cache images:', error)
   }
 }
 
 // Error handling
 self.addEventListener('error', (event) => {
-  console.error('❌ Service worker error:', event.error)
+  silentError('❌ Service worker error:', event.error)
 })
 
 self.addEventListener('unhandledrejection', (event) => {
-  console.error('❌ Service worker unhandled rejection:', event.reason)
+  silentError('❌ Service worker unhandled rejection:', event.reason)
 })
 
 console.log('✅ Enhanced Service Worker loaded successfully')

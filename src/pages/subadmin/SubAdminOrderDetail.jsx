@@ -57,7 +57,7 @@ const SubAdminOrderDetail = () => {
         return;
       }
       
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/${orderId}`, {
+      const response = await fetch(`http://localhost:5001/api/products/orders/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -118,7 +118,7 @@ const SubAdminOrderDetail = () => {
         requestBody.deliveryOtp = deliveryOtp;
       }
       
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/${orderId}/status`, {
+      const response = await fetch(`http://localhost:5001/api/products/orders/${orderId}/status`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -172,7 +172,7 @@ const SubAdminOrderDetail = () => {
         return;
       }
       
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/${orderId}/mark-paid`, {
+      const response = await fetch(`http://localhost:5001/api/products/orders/${orderId}/mark-paid`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -225,7 +225,7 @@ const SubAdminOrderDetail = () => {
     });
   };
 
-  if (!hasAccess) {
+  if (hasAccess) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
@@ -239,9 +239,9 @@ const SubAdminOrderDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
-          <LoadingIcon className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
+          <LoadingIcon className="w-16 h-16 text-green-500 mx-auto mb-4" />
           <p className="text-gray-600 text-lg">Loading order details...</p>
         </div>
       </div>
@@ -250,237 +250,235 @@ const SubAdminOrderDetail = () => {
 
   if (!order) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
           <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-4 text-gray-800">Order Not Found</h1>
-          <p className="text-gray-600 mb-6">The order you're looking for could not be found.</p>
-          <button
-            onClick={() => navigate('/dashboard/orders')}
-            className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-xl transition-colors duration-200"
-          >
-            Back to Orders
-          </button>
+          <p className="text-gray-600">The order you're looking for doesn't exist.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
+    <>
+      <div className="max-w-6xl mx-auto w-full">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-4">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8 space-y-4 lg:space-y-0">
+          <div className="flex items-center">
             <button
               onClick={() => navigate('/dashboard/orders')}
-              className={classNames(
-                "p-3 rounded-xl transition-colors duration-200",
-                mode === 'dark' 
-                  ? "bg-gray-800 hover:bg-gray-700 text-white" 
-                  : "bg-white hover:bg-gray-50 text-gray-700 shadow-soft"
-              )}
+              className="neumorphic-button-small w-10 h-10 lg:w-12 lg:h-12 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 flex items-center justify-center mr-3 lg:mr-4 hover:shadow-soft transition-all duration-300 flex-shrink-0"
             >
-              <BackIcon className="w-5 h-5" />
+              <BackIcon className="w-5 h-5 lg:w-6 lg:h-6 text-gray-600" />
             </button>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Order Details</h1>
-              <p className="text-gray-600">Order ID: {order._id}</p>
+            <div className="min-w-0">
+              <h1 className="text-2xl lg:text-4xl font-bold mb-1 lg:mb-2 text-gray-800 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                Order Details
+              </h1>
+              <p className="text-gray-600 text-sm lg:text-lg truncate">
+                Order ID: <span className="font-mono text-gray-800">{order._id}</span>
+              </p>
             </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 lg:gap-4">
+            {isReadOnly ? (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-center">
+                <span className="text-yellow-800 font-semibold mr-2">Read-Only Access:</span>
+                <span className="text-yellow-700">You can view order details but cannot modify them.</span>
+              </div>
+            ) : (
+              <>
+                <button
+                  onClick={() => setShowStatusModal(true)}
+                  disabled={updating}
+                  className="neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 flex items-center justify-center text-sm lg:text-base"
+                >
+                  <UpdateIcon className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
+                  Update Status
+                </button>
+                {order.paymentStatus !== 'Paid' && (
+                  <button
+                    onClick={handleMarkAsPaid}
+                    disabled={updating}
+                    className="neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 flex items-center justify-center text-sm lg:text-base"
+                  >
+                    <MoneyIcon className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
+                    Mark as Paid
+                  </button>
+                )}
+              </>
+            )}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
           {/* Order Information */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Order Status and Actions */}
-            <div className={classNames(
-              "p-6 rounded-2xl shadow-soft",
-              mode === 'dark' ? "bg-gray-800" : "bg-white"
-            )}>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">Order Status</h2>
-                <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${getStatusColor(order.status)}`}>
-                  {getStatusIcon(order.status)}
-                  <span className="font-medium">{order.status}</span>
+          <div className="xl:col-span-2 space-y-6">
+            {/* Order Status */}
+            <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
+              <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
+                <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-2 lg:mr-3"></span>
+                Order Status
+              </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-gray-600">Order Status</label>
+                  <span className={classNames('px-3 lg:px-4 py-2 lg:py-3 rounded-2xl text-sm font-medium border flex items-center', getStatusColor(order.status))}>
+                    {getStatusIcon(order.status)}
+                    <span className="ml-2">{order.status}</span>
+                  </span>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-gray-600">Payment Status</label>
+                  <span className={classNames('px-3 lg:px-4 py-2 lg:py-3 rounded-2xl text-sm font-medium border flex items-center', 
+                    order.paymentStatus === 'Paid' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-yellow-100 text-yellow-700 border-yellow-200')}>
+                    {order.paymentStatus === 'Paid' && <PaidIcon className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />}
+                    {order.paymentStatus || 'Pending'}
+                  </span>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-gray-600">Order Date</label>
+                  <p className="text-gray-800 font-medium">{formatDate(order.placedAt || order.createdAt)}</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-gray-600">Payment Method</label>
+                  <p className="text-gray-800 font-medium">{order.paymentMethod || 'Cash on Delivery'}</p>
                 </div>
               </div>
-
-              {/* Action Buttons */}
-              {!isReadOnly && (
-                <div className="flex flex-wrap gap-3">
-                  <button
-                    onClick={() => setShowStatusModal(true)}
-                    disabled={updating}
-                    className={classNames(
-                      "flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200",
-                      updating
-                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                        : "bg-emerald-500 hover:bg-emerald-600 text-white"
-                    )}
-                  >
-                    <UpdateIcon className="w-4 h-4" />
-                    Update Status
-                  </button>
-
-                  {order.paymentStatus !== 'paid' && (
-                    <button
-                      onClick={handleMarkAsPaid}
-                      disabled={updating}
-                      className={classNames(
-                        "flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200",
-                        updating
-                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                          : "bg-blue-500 hover:bg-blue-600 text-white"
-                      )}
-                    >
-                      <PaidIcon className="w-4 h-4" />
-                      Mark as Paid
-                    </button>
+            </div>
+            {/* Delivery Slot Information */}
+            <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
+              <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
+                <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-blue-400 to-indigo-500 rounded-full mr-2 lg:mr-3"></span>
+                Delivery Information
+              </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-gray-600">📅 Preferred Delivery Date</label>
+                  {order.deliverySlot?.date ? (
+                    <p className="text-gray-800 font-medium text-sm lg:text-base">
+                      {new Date(order.deliverySlot.date).toLocaleDateString('en-IN', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}
+                    </p>
+                  ) : (
+                    <p className="text-gray-500 italic text-sm lg:text-base">No preference selected</p>
                   )}
                 </div>
-              )}
-
-              {isReadOnly && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                  <p className="text-yellow-800 text-sm">
-                    <strong>Read-Only Access:</strong> You can view order details but cannot modify them.
-                  </p>
-                </div>
-              )}
-            </div>
-
-            {/* Customer Information */}
-            <div className={classNames(
-              "p-6 rounded-2xl shadow-soft",
-              mode === 'dark' ? "bg-gray-800" : "bg-white"
-            )}>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <PeopleIcon className="w-5 h-5" />
-                Customer Information
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-gray-500">Name</p>
-                  <p className="font-medium text-gray-900">{order.shippingAddress?.fullName || 'N/A'}</p>
+                  <label className="block text-sm font-semibold mb-2 text-gray-600">🕐 Preferred Time Slot</label>
+                  {order.deliverySlot?.timeSlot ? (
+                    <span className="px-3 lg:px-4 py-2 lg:py-3 rounded-2xl text-sm font-medium border bg-blue-100 text-blue-700 border-blue-200 inline-block">
+                      {order.deliverySlot.timeSlot}
+                    </span>
+                  ) : (
+                    <p className="text-gray-500 italic text-sm lg:text-base">No preference selected</p>
+                  )}
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Phone</p>
-                  <p className="font-medium text-gray-900">{order.shippingAddress?.phone || 'N/A'}</p>
-                </div>
-                <div className="md:col-span-2">
-                  <p className="text-sm text-gray-500">Address</p>
-                  <p className="font-medium text-gray-900">
-                    {order.shippingAddress ? 
-                      `${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.state} ${order.shippingAddress.zipCode}` 
-                      : 'N/A'
-                    }
-                  </p>
-                </div>
+                {order.deliverySlot?.lastModified && (
+                  <div className="lg:col-span-2">
+                    <label className="block text-sm font-semibold mb-2 text-gray-600">Last Updated</label>
+                    <p className="text-gray-600 text-xs lg:text-sm">
+                      {new Date(order.deliverySlot.lastModified).toLocaleString('en-IN')}
+                    </p>
+                  </div>
+                )}
+                {(order.deliverySlot?.date || order.deliverySlot?.timeSlot) && (
+                  <div className="lg:col-span-2">
+                    <div className="flex items-center text-xs lg:text-sm text-gray-600 bg-blue-50 p-3 rounded-xl border border-blue-200">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                      <span>Customer has selected delivery preferences. Plan accordingly for optimal delivery experience.</span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-
             {/* Order Items */}
-            <div className={classNames(
-              "p-6 rounded-2xl shadow-soft",
-              mode === 'dark' ? "bg-gray-800" : "bg-white"
-            )}>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <PackageIcon className="w-5 h-5" />
+            <div className="neumorphic-card p-4 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20">
+              <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
+                <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-2 lg:mr-3"></span>
                 Order Items
               </h2>
               <div className="space-y-4">
-                {order.items?.map((item, index) => (
-                  <div key={index} className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg">
-                    {item.product?.images?.[0] && (
-                      <img
-                        src={item.product.images[0]}
-                        alt={item.product.name}
-                        className="w-16 h-16 object-cover rounded-lg"
-                      />
-                    )}
-                    <div className="flex-1">
-                      <h3 className="font-medium text-gray-900">{item.product?.name || 'Unknown Product'}</h3>
-                      <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
-                      <p className="text-sm text-gray-500">Price: ₹{item.price}</p>
+                {order.items?.map((item, index) => {
+                  const productName = item.product?.name || item.name || 'Product';
+                  const productImage = item.product?.images?.[0] || item.image || '/placeholder.png';
+                  return (
+                    <div key={index} className="flex items-center p-3 lg:p-4 rounded-2xl bg-white/40 backdrop-blur-sm border border-white/20">
+                      {productImage && (
+                        <img
+                          src={productImage}
+                          alt={productName}
+                          className="w-12 h-12 lg:w-16 lg:h-16 object-cover rounded-xl mr-3 lg:mr-4 shadow-soft flex-shrink-0"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-800 text-sm lg:text-base truncate">{productName}</h3>
+                        {item.variantName && (
+                          <p className="text-xs lg:text-sm text-emerald-600 font-medium">Variant: {item.variantName}</p>
+                        )}
+                        <p className="text-xs lg:text-sm text-gray-600">Quantity: {item.qty}</p>
+                        <p className="text-xs lg:text-sm text-gray-600">Price: ₹{item.variantPrice || item.price}</p>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <p className="font-semibold text-green-600 text-sm lg:text-base">₹{(item.variantPrice || item.price) * item.qty}</p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="font-medium text-gray-900">₹{(item.price * item.quantity).toFixed(2)}</p>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
-
           {/* Order Summary */}
           <div className="space-y-6">
-            {/* Payment Summary */}
-            <div className={classNames(
-              "p-6 rounded-2xl shadow-soft",
-              mode === 'dark' ? "bg-gray-800" : "bg-white"
-            )}>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <MoneyIcon className="w-5 h-5" />
-                Payment Summary
+            {/* Shipping Information */}
+            <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
+              <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
+                <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-2 lg:mr-3"></span>
+                Shipping Information
               </h2>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
-                  <span className="font-medium">₹{order.totalAmount?.toFixed(2) || '0.00'}</span>
+              <div className="space-y-4 lg:space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-gray-600">Customer Name</label>
+                  <p className="text-gray-800 font-medium">{order.shipping?.name || order.shippingAddress?.fullName || 'N/A'}</p>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
-                  <span className="font-medium">₹{order.shippingCost?.toFixed(2) || '0.00'}</span>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-gray-600">Phone Number</label>
+                  <p className="text-gray-800 font-medium">{order.shipping?.phone || order.shippingAddress?.phone || 'N/A'}</p>
                 </div>
-                {order.discountAmount > 0 && (
-                  <div className="flex justify-between text-green-600">
-                    <span>Discount</span>
-                    <span className="font-medium">-₹{order.discountAmount?.toFixed(2)}</span>
-                  </div>
-                )}
-                <div className="border-t pt-3">
-                  <div className="flex justify-between text-lg font-semibold">
-                    <span>Total</span>
-                    <span>₹{order.finalAmount?.toFixed(2) || order.totalAmount?.toFixed(2) || '0.00'}</span>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Payment Status</span>
-                    <span className={classNames(
-                      "px-2 py-1 rounded text-sm font-medium",
-                      order.paymentStatus === 'paid' 
-                        ? "bg-green-100 text-green-700"
-                        : "bg-yellow-100 text-yellow-700"
-                    )}>
-                      {order.paymentStatus || 'Pending'}
-                    </span>
-                  </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-gray-600">Shipping Address</label>
+                  <p className="text-gray-800 font-medium break-words">{order.shipping?.address || (order.shippingAddress ? `${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.state} ${order.shippingAddress.zipCode}` : 'N/A')}</p>
                 </div>
               </div>
             </div>
-
-            {/* Order Timeline */}
-            <div className={classNames(
-              "p-6 rounded-2xl shadow-soft",
-              mode === 'dark' ? "bg-gray-800" : "bg-white"
-            )}>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <OrdersIcon className="w-5 h-5" />
-                Order Timeline
+            <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
+              <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
+                <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-2 lg:mr-3"></span>
+                Order Summary
               </h2>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Order Date</span>
-                  <span className="font-medium">{formatDate(order.createdAt)}</span>
+              <div className="space-y-3 lg:space-y-4">
+                <div className="flex justify-between text-sm lg:text-base">
+                  <span className="text-gray-600">Subtotal</span>
+                  <span className="font-semibold">₹{order.totalAmount}</span>
                 </div>
-                {order.updatedAt !== order.createdAt && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Last Updated</span>
-                    <span className="font-medium">{formatDate(order.updatedAt)}</span>
-                  </div>
-                )}
+                <div className="flex justify-between text-sm lg:text-base">
+                  <span className="text-gray-600">Shipping</span>
+                  <span className="font-semibold">₹0</span>
+                </div>
+                <div className="flex justify-between text-sm lg:text-base">
+                  <span className="text-gray-600">Tax</span>
+                  <span className="font-semibold">₹0</span>
+                </div>
+                <hr className="border-gray-200" />
+                <div className="flex justify-between text-base lg:text-lg font-bold text-green-600">
+                  <span>Total</span>
+                  <span>₹{order.totalAmount}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -489,90 +487,124 @@ const SubAdminOrderDetail = () => {
 
       {/* Status Update Modal */}
       {showStatusModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className={classNames(
-            "w-full max-w-md p-6 rounded-2xl shadow-soft",
-            mode === 'dark' ? "bg-gray-800" : "bg-white"
-          )}>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Update Order Status</h3>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="neumorphic-card p-4 lg:p-8 rounded-3xl bg-white/90 backdrop-blur-sm border border-white/20 max-w-md w-full">
+            <div className="flex justify-between items-center mb-4 lg:mb-6">
+              <h3 className="text-xl lg:text-2xl font-bold text-gray-800">Update Order Status</h3>
               <button
                 onClick={handleCloseModal}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                className="neumorphic-button-small w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center hover:shadow-soft transition-all duration-300 flex-shrink-0"
               >
-                <CloseIcon className="w-5 h-5" />
+                <CloseIcon className="w-4 h-4" />
               </button>
             </div>
-
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Current Status: <span className="text-emerald-600">{order.status}</span>
-                </label>
+                <label className="block text-sm font-semibold mb-2 text-gray-700">New Status</label>
                 <select
                   value={newStatus}
                   onChange={(e) => setNewStatus(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="neumorphic-input w-full p-3 lg:p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                  disabled={isReadOnly}
                 >
-                  <option value="">Select new status</option>
+                  <option value="">Select Status</option>
                   <option value="Pending">Pending</option>
                   <option value="Shipped">Shipped</option>
                   <option value="Delivered">Delivered</option>
                   <option value="Cancelled">Cancelled</option>
                 </select>
               </div>
-
-              {/* Delivery OTP field - shown when updating from Shipped to Delivered */}
-              {order.status?.toLowerCase() === 'shipped' && newStatus.toLowerCase() === 'delivered' && (
+              {/* OTP Input - Show only when updating to "Delivered" from "Shipped" */}
+              {order?.status?.toLowerCase() === 'shipped' && newStatus.toLowerCase() === 'delivered' && !isReadOnly && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Delivery Verification Code *
+                  <label className="block text-sm font-semibold mb-2 text-gray-700">
+                    Delivery Verification Code
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter 6-digit verification code"
+                    maxLength="6"
+                    pattern="[0-9]{6}"
                     value={deliveryOtp}
-                    onChange={(e) => setDeliveryOtp(e.target.value)}
-                    className={classNames(
-                      "w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500",
-                      otpError ? "border-red-300" : "border-gray-300"
-                    )}
-                    maxLength={6}
+                    onChange={(e) => {
+                      setDeliveryOtp(e.target.value.replace(/\D/g, ''));
+                      setOtpError('');
+                    }}
+                    className={`neumorphic-input w-full p-3 lg:p-4 rounded-2xl bg-white/60 backdrop-blur-sm border ${
+                      otpError ? 'border-red-300' : 'border-white/20'
+                    } focus:outline-none focus:ring-2 focus:ring-green-500/50 font-mono text-lg tracking-wider text-center`}
+                    placeholder="Enter 6-digit OTP"
                   />
                   {otpError && (
-                    <p className="mt-1 text-sm text-red-600">{otpError}</p>
+                    <p className="text-red-500 text-sm mt-2">{otpError}</p>
                   )}
-                  <p className="mt-1 text-xs text-gray-500">
-                    This code should be provided by the customer upon delivery
+                  <p className="text-gray-600 text-sm mt-2">
+                    Enter the delivery verification code provided by the customer to confirm delivery.
                   </p>
                 </div>
               )}
-
-              <div className="flex gap-3">
-                <button
-                  onClick={handleCloseModal}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                >
-                  Cancel
-                </button>
+              <div className="flex flex-col sm:flex-row gap-3 lg:gap-4">
                 <button
                   onClick={handleStatusUpdate}
-                  disabled={!newStatus || updating}
-                  className={classNames(
-                    "flex-1 px-4 py-2 rounded-lg transition-colors duration-200",
-                    !newStatus || updating
-                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      : "bg-emerald-500 hover:bg-emerald-600 text-white"
-                  )}
+                  disabled={!newStatus || updating || isReadOnly}
+                  className="flex-1 neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 flex items-center justify-center text-sm lg:text-base"
                 >
-                  {updating ? 'Updating...' : 'Update Status'}
+                  {updating ? (
+                    <>
+                      <LoadingIcon className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
+                      Updating...
+                    </>
+                  ) : (
+                    <>
+                      <UpdateIcon className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
+                      Update Status
+                    </>
+                  )}
+                </button>
+                <button
+                  onClick={handleCloseModal}
+                  disabled={updating}
+                  className="flex-1 neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-2xl bg-gray-500 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 text-sm lg:text-base"
+                >
+                  Cancel
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
-    </div>
+      <style jsx>{`
+        .neumorphic-card {
+          box-shadow: 
+            20px 20px 60px rgba(0, 0, 0, 0.05),
+            -20px -20px 60px rgba(255, 255, 255, 0.8);
+        }
+        .neumorphic-button {
+          box-shadow: 
+            8px 8px 16px rgba(0, 0, 0, 0.2),
+            -8px -8px 16px rgba(255, 255, 255, 0.1);
+        }
+        .neumorphic-button-small {
+          box-shadow: 
+            4px 4px 8px rgba(0, 0, 0, 0.2),
+            -4px -4px 8px rgba(255, 255, 255, 0.1);
+        }
+        .neumorphic-input {
+          box-shadow: 
+            inset 4px 4px 8px rgba(0, 0, 0, 0.05),
+            inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+        }
+        .shadow-soft {
+          box-shadow: 
+            8px 8px 16px rgba(0, 0, 0, 0.1),
+            -8px -8px 16px rgba(255, 255, 255, 0.8);
+        }
+        .shadow-soft-lg {
+          box-shadow: 
+            12px 12px 24px rgba(0, 0, 0, 0.1),
+            -12px -12px 24px rgba(255, 255, 255, 0.8);
+        }
+      `}</style>
+    </>
   );
 };
 

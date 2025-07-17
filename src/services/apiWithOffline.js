@@ -15,7 +15,7 @@ import { openDB } from 'idb'
 import { syncManager } from './syncManager'
 import { cacheManager } from './cacheManager'
 
-const API_BASE_URL = 'https://indiraa1-backend.onrender.com/api'
+const API_BASE_URL = 'http://localhost:5001/api'
 
 // Network status detection
 export const isOnline = () => {

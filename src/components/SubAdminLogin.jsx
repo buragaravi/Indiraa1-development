@@ -55,7 +55,7 @@ const SubAdminLogin = () => {
     setError('');
 
     try {
-      const apiUrl = 'https://indiraa1-backend.onrender.com';
+      const apiUrl = 'http://localhost:5001';
       const response = await fetch(`${apiUrl}/api/sub-admin/login`, {
         method: 'POST',
         headers: {
