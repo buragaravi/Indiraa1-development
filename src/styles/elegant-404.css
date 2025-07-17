@@ -1,0 +1,449 @@
+/* Modern Elegant 404 Page Styles - Enhanced */
+
+/* Custom cursor animations */
+.custom-cursor {
+  cursor: none;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(45deg, #2ecc71, #4CAF50);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+  box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+}
+
+.cursor-outline {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(46, 204, 113, 0.3);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.15s ease;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-hover .cursor-outline {
+  transform: translate(-50%, -50%) scale(1.5);
+  border-color: rgba(46, 204, 113, 0.6);
+}
+
+.cursor-click .cursor-dot {
+  transform: scale(2);
+  background: linear-gradient(45deg, #27ae60, #2ecc71);
+}
+
+/* Enhanced soft floating animation */
+@keyframes softFloat {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg) scale(1); 
+    opacity: 0.7;
+  }
+  25% { 
+    transform: translateY(-12px) rotate(2deg) scale(1.05); 
+    opacity: 0.9;
+  }
+  50% { 
+    transform: translateY(-8px) rotate(0deg) scale(1.1); 
+    opacity: 1;
+  }
+  75% { 
+    transform: translateY(-10px) rotate(-2deg) scale(1.05); 
+    opacity: 0.8;
+  }
+}
+
+.soft-float {
+  animation: softFloat 8s ease-in-out infinite;
+}
+
+.soft-float-delayed {
+  animation: softFloat 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.soft-float-slow {
+  animation: softFloat 12s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+.soft-float-extra {
+  animation: softFloat 10s ease-in-out infinite;
+  animation-delay: 6s;
+}
+
+/* Advanced gentle pulse animation */
+@keyframes gentlePulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 0.6;
+    filter: blur(0px);
+  }
+  50% { 
+    transform: scale(1.15);
+    opacity: 1;
+    filter: blur(1px);
+  }
+}
+
+.gentle-pulse {
+  animation: gentlePulse 4s ease-in-out infinite;
+}
+
+.gentle-pulse-delayed {
+  animation: gentlePulse 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Enhanced elegant glow effect */
+@keyframes elegantGlow {
+  0% { 
+    box-shadow: 0 0 30px rgba(46, 204, 113, 0.2), 0 0 60px rgba(76, 175, 80, 0.1);
+    transform: scale(1);
+  }
+  25% {
+    box-shadow: 0 0 40px rgba(46, 204, 113, 0.4), 0 0 80px rgba(76, 175, 80, 0.2);
+    transform: scale(1.02);
+  }
+  50% { 
+    box-shadow: 0 0 50px rgba(46, 204, 113, 0.6), 0 0 100px rgba(76, 175, 80, 0.3);
+    transform: scale(1.05);
+  }
+  75% {
+    box-shadow: 0 0 40px rgba(46, 204, 113, 0.4), 0 0 80px rgba(76, 175, 80, 0.2);
+    transform: scale(1.02);
+  }
+  100% { 
+    box-shadow: 0 0 30px rgba(46, 204, 113, 0.2), 0 0 60px rgba(76, 175, 80, 0.1);
+    transform: scale(1);
+  }
+}
+
+.elegant-glow {
+  animation: elegantGlow 6s ease-in-out infinite;
+}
+
+/* Spacious text reveal with enhanced effects */
+@keyframes textReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.8);
+    filter: blur(10px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(25px) scale(0.9);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.text-reveal {
+  animation: textReveal 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.text-reveal-delay-1 {
+  animation: textReveal 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+  opacity: 0;
+}
+
+.text-reveal-delay-2 {
+  animation: textReveal 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+  opacity: 0;
+}
+
+.text-reveal-delay-3 {
+  animation: textReveal 1.5s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+  opacity: 0;
+}
+
+.text-reveal-delay-4 {
+  animation: textReveal 1.5s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
+  opacity: 0;
+}
+
+.text-reveal-delay-5 {
+  animation: textReveal 1.5s cubic-bezier(0.4, 0, 0.2, 1) 2s forwards;
+  opacity: 0;
+}
+
+/* Enhanced elegant button hover effect */
+.elegant-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.elegant-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.4) 30%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.4) 70%,
+    transparent 100%
+  );
+  transition: left 0.8s ease;
+}
+
+.elegant-button:hover::before {
+  left: 100%;
+}
+
+.elegant-button:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(46, 204, 113, 0.4);
+}
+
+.elegant-button:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+/* Enhanced vector icon animations */
+@keyframes iconFloat {
+  0%, 100% { 
+    transform: translateY(0px) scale(1) rotate(0deg); 
+    filter: brightness(1);
+  }
+  25% {
+    transform: translateY(-8px) scale(1.1) rotate(5deg); 
+    filter: brightness(1.2);
+  }
+  50% { 
+    transform: translateY(-15px) scale(1.15) rotate(0deg); 
+    filter: brightness(1.3);
+  }
+  75% {
+    transform: translateY(-8px) scale(1.1) rotate(-5deg); 
+    filter: brightness(1.2);
+  }
+}
+
+.icon-float {
+  animation: iconFloat 4s ease-in-out infinite;
+}
+
+.icon-float-delayed {
+  animation: iconFloat 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.icon-float-slow {
+  animation: iconFloat 6s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+/* Enhanced bottom animation wave */
+@keyframes wave {
+  0%, 100% { 
+    transform: translateX(0) translateY(0) scaleY(1) rotate(0deg);
+  }
+  25% { 
+    transform: translateX(-8px) translateY(-4px) scaleY(1.2) rotate(2deg);
+  }
+  50% { 
+    transform: translateX(0) translateY(-8px) scaleY(0.8) rotate(0deg);
+  }
+  75% { 
+    transform: translateX(8px) translateY(-4px) scaleY(1.2) rotate(-2deg);
+  }
+}
+
+.wave-animation {
+  animation: wave 5s ease-in-out infinite;
+}
+
+.wave-delayed-1 {
+  animation: wave 5s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+.wave-delayed-2 {
+  animation: wave 5s ease-in-out infinite;
+  animation-delay: 1.6s;
+}
+
+.wave-delayed-3 {
+  animation: wave 5s ease-in-out infinite;
+  animation-delay: 2.4s;
+}
+
+.wave-delayed-4 {
+  animation: wave 5s ease-in-out infinite;
+  animation-delay: 3.2s;
+}
+
+/* Enhanced gradient text animation */
+@keyframes gradientShift {
+  0% { 
+    background-position: 0% 50%;
+    filter: hue-rotate(0deg);
+  }
+  25% {
+    background-position: 25% 50%;
+    filter: hue-rotate(5deg);
+  }
+  50% { 
+    background-position: 100% 50%;
+    filter: hue-rotate(10deg);
+  }
+  75% {
+    background-position: 75% 50%;
+    filter: hue-rotate(5deg);
+  }
+  100% { 
+    background-position: 0% 50%;
+    filter: hue-rotate(0deg);
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #2ecc71, #4CAF50, #81C784, #27ae60, #2ecc71);
+  background-size: 400% 400%;
+  animation: gradientShift 4s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Enhanced soft morphing shapes */
+@keyframes morphShape {
+  0%, 100% { 
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; 
+    transform: rotate(0deg) scale(1);
+  }
+  20% { 
+    border-radius: 40% 60% 50% 50% / 70% 40% 60% 30%; 
+    transform: rotate(72deg) scale(1.1);
+  }
+  40% { 
+    border-radius: 70% 30% 40% 60% / 40% 70% 60% 50%; 
+    transform: rotate(144deg) scale(0.9);
+  }
+  60% { 
+    border-radius: 50% 50% 60% 40% / 50% 70% 30% 60%; 
+    transform: rotate(216deg) scale(1.05);
+  }
+  80% { 
+    border-radius: 30% 70% 50% 50% / 60% 50% 40% 70%; 
+    transform: rotate(288deg) scale(0.95);
+  }
+}
+
+.morph-shape {
+  animation: morphShape 25s ease-in-out infinite;
+}
+
+/* Enhanced particle effect */
+@keyframes particle {
+  0% {
+    transform: translateY(0) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(-30px) scale(0.7) rotate(90deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-60px) scale(1) rotate(180deg);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translateY(-90px) scale(0.8) rotate(270deg);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-120px) scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.particle {
+  animation: particle 4s ease-out infinite;
+}
+
+.particle-delayed-1 {
+  animation: particle 4s ease-out infinite;
+  animation-delay: 1.3s;
+}
+
+.particle-delayed-2 {
+  animation: particle 4s ease-out infinite;
+  animation-delay: 2.6s;
+}
+
+.particle-delayed-3 {
+  animation: particle 4s ease-out infinite;
+  animation-delay: 3.9s;
+}
+
+/* Enhanced elegant backdrop blur effect */
+.elegant-backdrop {
+  backdrop-filter: blur(25px) saturate(200%);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Breathing animation for main circle */
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.03);
+    filter: brightness(1.1);
+  }
+}
+
+.breathe {
+  animation: breathe 8s ease-in-out infinite;
+}
+
+/* Orbit animation for floating elements */
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(50px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(50px) rotate(-360deg);
+  }
+}
+
+.orbit {
+  animation: orbit 20s linear infinite;
+}
+
+.orbit-reverse {
+  animation: orbit 25s linear infinite reverse;
+}
+
+/* Magnetic hover effect */
+.magnetic-hover {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.magnetic-hover:hover {
+  transform: scale(1.1) rotate(5deg);
+}

@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+
+:root {
+  --color-primary: #2ecc71;
+  --color-primary-dark: #27ae60;
+  --color-primary-light: #a8e6cf;
+  --color-secondary: #34495e;
+  --color-gray-100: #f7fafc;
+  --color-gray-200: #edf2f7;
+  --color-gray-300: #e2e8f0;
+  --color-gray-600: #718096;
+  --color-gray-700: #4a5568;
+  --color-white: #ffffff;
+}
+
+.btn-primary {
+  background-color: #2ecc71;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #27ae60;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #2ecc71;
+  border: 2px solid #2ecc71;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.btn-outline {
+  background-color: white;
+  color: #4a5568;
+  border: 2px solid #e2e8f0;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  background-color: #f7fafc;
+}
+
+.input-primary {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.375rem;
+  transition: all 0.2s;
+}
+
+.input-primary:focus {
+  outline: none;
+  border-color: #2ecc71;
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+}
+
+.section-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s;
+}
+
+.section-card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Checkout Steps Common Styles */
+.checkout-step {
+  @apply bg-white p-6 rounded-lg shadow-md mb-6;
+}
+
+.checkout-step-title {
+  @apply text-xl font-semibold mb-6 text-gray-800;
+}
+
+.checkout-item {
+  @apply flex items-center border-b pb-4 mb-4 last:border-b-0 last:pb-0 last:mb-0;
+}
+
+.checkout-item-image {
+  @apply w-20 h-20 object-cover rounded-md;
+}
+
+.checkout-item-details {
+  @apply ml-4 flex-grow;
+}
+
+.price-row {
+  @apply flex justify-between items-center py-2;
+}
+
+.price-label {
+  @apply text-gray-600;
+}
+
+.price-value {
+  @apply font-medium;
+}
+
+.price-total {
+  @apply flex justify-between items-center py-3 border-t mt-3 text-lg font-semibold;
+}

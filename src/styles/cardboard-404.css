@@ -1,0 +1,242 @@
+/* 404 NotFound Page - Cardboard Theme Animations */
+
+/* App-themed texture gradient */
+.cardboard-texture {
+  background: linear-gradient(45deg, 
+    #4CAF50 0%, 
+    #2ecc71 25%, 
+    #27ae60 50%, 
+    #2E7D32 75%, 
+    #1B5E20 100%
+  );
+  background-size: 4px 4px;
+}
+
+/* Floating cardboard pieces animation */
+@keyframes float-cardboard {
+  0% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-10px) rotate(2deg); }
+  50% { transform: translateY(0px) rotate(0deg); }
+  75% { transform: translateY(-5px) rotate(-2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.cardboard-float {
+  animation: float-cardboard 6s ease-in-out infinite;
+}
+
+.cardboard-float-delayed {
+  animation: float-cardboard 6s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.cardboard-float-slow {
+  animation: float-cardboard 8s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+/* Enhanced box bounce with 3D effect */
+@keyframes cardboard-bounce {
+  0% { 
+    transform: translateY(0px) rotateX(5deg) rotateY(-5deg); 
+    box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+  }
+  50% { 
+    transform: translateY(-15px) rotateX(-2deg) rotateY(2deg); 
+    box-shadow: 0 25px 40px rgba(46, 204, 113, 0.2);
+  }
+  100% { 
+    transform: translateY(0px) rotateX(5deg) rotateY(-5deg); 
+    box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+  }
+}
+
+.cardboard-box-bounce {
+  animation: cardboard-bounce 3s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* Glowing text effect for 404 */
+@keyframes glow-404 {
+  0% { 
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.5), 0 0 20px rgba(76, 175, 80, 0.3);
+    transform: scale(1);
+  }
+  50% { 
+    text-shadow: 0 0 20px rgba(46, 204, 113, 0.8), 0 0 30px rgba(76, 175, 80, 0.5), 0 0 40px rgba(39, 174, 96, 0.3);
+    transform: scale(1.05);
+  }
+  100% { 
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.5), 0 0 20px rgba(76, 175, 80, 0.3);
+    transform: scale(1);
+  }
+}
+
+.glow-text {
+  animation: glow-404 2s ease-in-out infinite;
+}
+
+/* App-themed tape strips */
+.cardboard-tape {
+  position: relative;
+}
+
+.cardboard-tape::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: -5px;
+  right: -5px;
+  height: 15px;
+  background: linear-gradient(90deg, 
+    rgba(76, 175, 80, 0.7) 0%, 
+    rgba(46, 204, 113, 0.8) 50%, 
+    rgba(76, 175, 80, 0.7) 100%
+  );
+  border: 1px solid rgba(39, 174, 96, 0.5);
+  border-radius: 2px;
+  transform: rotate(-2deg);
+}
+
+.cardboard-tape::after {
+  content: '';
+  position: absolute;
+  bottom: 20%;
+  left: -3px;
+  right: -3px;
+  height: 12px;
+  background: linear-gradient(90deg, 
+    rgba(46, 204, 113, 0.6) 0%, 
+    rgba(39, 174, 96, 0.7) 50%, 
+    rgba(46, 204, 113, 0.6) 100%
+  );
+  border: 1px solid rgba(46, 125, 50, 0.5);
+  border-radius: 2px;
+  transform: rotate(1deg);
+}
+
+/* App-themed crease lines */
+.cardboard-creases {
+  position: relative;
+  overflow: hidden;
+}
+
+.cardboard-creases::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 25%;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, 
+    transparent 0%, 
+    rgba(39, 174, 96, 0.3) 20%, 
+    rgba(39, 174, 96, 0.5) 50%, 
+    rgba(39, 174, 96, 0.3) 80%, 
+    transparent 100%
+  );
+}
+
+.cardboard-creases::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 75%;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, 
+    transparent 0%, 
+    rgba(46, 125, 50, 0.3) 20%, 
+    rgba(46, 125, 50, 0.5) 50%, 
+    rgba(46, 125, 50, 0.3) 80%, 
+    transparent 100%
+  );
+}
+
+/* Button hover cardboard effect */
+.cardboard-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.cardboard-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    transparent 100%
+  );
+  transition: left 0.5s ease;
+}
+
+.cardboard-button:hover::before {
+  left: 100%;
+}
+
+/* Wiggle animation for icons */
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.wiggle-icon {
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+.wiggle-icon-delayed {
+  animation: wiggle 2s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+/* Parallax background effect */
+.parallax-cardboard {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Staggered fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.fade-in-up-delay-1 {
+  animation: fadeInUp 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.fade-in-up-delay-2 {
+  animation: fadeInUp 0.8s ease-out 0.4s forwards;
+  opacity: 0;
+}
+
+.fade-in-up-delay-3 {
+  animation: fadeInUp 0.8s ease-out 0.6s forwards;
+  opacity: 0;
+}
+
+.fade-in-up-delay-4 {
+  animation: fadeInUp 0.8s ease-out 0.8s forwards;
+  opacity: 0;
+}
