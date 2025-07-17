@@ -30,7 +30,7 @@ const AdminComboPacks = () => {
   const fetchComboPacks = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5001/api/combo-packs/all', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/combo-packs/all', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -56,7 +56,7 @@ const AdminComboPacks = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5001/api/combo-packs/${comboPackId}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/combo-packs/${comboPackId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -77,7 +77,7 @@ const AdminComboPacks = () => {
 
   const toggleVisibility = async (comboPackId, currentVisibility) => {
     try {
-      const response = await fetch(`http://localhost:5001/api/combo-packs/${comboPackId}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/combo-packs/${comboPackId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -455,7 +455,7 @@ const ComboPackModal = ({ comboPack, onClose, onSuccess }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/products');
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products');
       const data = await response.json();
       if (data.products) {
         setProducts(data.products);
@@ -485,8 +485,8 @@ const ComboPackModal = ({ comboPack, onClose, onSuccess }) => {
       };
 
       const url = comboPack 
-        ? `http://localhost:5001/api/combo-packs/${comboPack._id}`
-        : 'http://localhost:5001/api/combo-packs/create';
+        ? `https://indiraa1-backend.onrender.com/api/combo-packs/${comboPack._id}`
+        : 'https://indiraa1-backend.onrender.com/api/combo-packs/create';
       
       const method = comboPack ? 'PUT' : 'POST';
 

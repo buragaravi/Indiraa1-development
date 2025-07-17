@@ -31,7 +31,7 @@ const AdminUsers = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/products/users/all', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/users/all', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ const AdminUsers = () => {
     setLoadingOrders(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5001/api/products/orders/user/${userId}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/user/${userId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

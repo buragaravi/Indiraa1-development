@@ -254,7 +254,7 @@ const ProductDetail = () => {
     setSubmitting(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5001/api/products/${id}/reviews`, {
+      const res = await fetch(`https://indiraa1-backend.onrender.com/api/products/${id}/reviews`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

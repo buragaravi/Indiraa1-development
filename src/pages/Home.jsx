@@ -211,8 +211,8 @@ const Home = () => {
     try {
       const isWishlisted = isInWishlist(productId);
       const endpoint = isWishlisted 
-        ? 'http://localhost:5001/api/products/wishlist/remove'
-        : 'http://localhost:5001/api/products/wishlist/add';
+        ? 'https://indiraa1-backend.onrender.com/api/products/wishlist/remove'
+        : 'https://indiraa1-backend.onrender.com/api/products/wishlist/add';
 
       const response = await fetch(endpoint, {
         method: 'POST',
