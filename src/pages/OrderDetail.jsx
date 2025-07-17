@@ -20,6 +20,7 @@ import {
   FiStar
 } from 'react-icons/fi';
 import DeliverySlotSelector from '../components/DeliverySlotSelector';
+import DeliveryRatingModal from '../components/DeliveryRatingModal';
 
 const OrderDetail = () => {
   const { orderId } = useParams();
