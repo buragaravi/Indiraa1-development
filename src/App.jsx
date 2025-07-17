@@ -24,7 +24,6 @@ import ComboPackDetail from './pages/ComboPackDetail';
 import Cart from './pages/Cart';
 import Wishlist from './pages/Wishlist';
 import Checkout from './pages/Checkout';
-import CheckoutTest from './pages/CheckoutTest';
 import Profile from './pages/Profile';
 import Orders from './pages/Orders';
 import OrderDetail from './pages/OrderDetail';
@@ -302,15 +301,6 @@ function App() {
                 <Navbar />
                 <main className="flex-grow">
                   <Checkout />
-                </main>
-                <Footer />
-              </>
-            } />
-            <Route path="/checkout-test" element={
-              <>
-                <Navbar />
-                <main className="flex-grow">
-                  <CheckoutTest />
                 </main>
                 <Footer />
               </>
