@@ -42,7 +42,7 @@ const OrderDetail = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/${orderId}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/user/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
