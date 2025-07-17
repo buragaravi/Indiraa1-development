@@ -21,7 +21,7 @@ const Cart = () => {  const [cart, setCart] = useState([]);
 
   const fetchCart = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/products/cart/me', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/me', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -56,7 +56,7 @@ const Cart = () => {  const [cart, setCart] = useState([]);
         }
       }
 
-      const response = await fetch('http://localhost:5001/api/products/cart/update', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/update', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const Cart = () => {  const [cart, setCart] = useState([]);
         }
       }
 
-      const response = await fetch('http://localhost:5001/api/products/cart/remove', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/remove', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
