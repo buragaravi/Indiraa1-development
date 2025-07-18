@@ -39,10 +39,37 @@ const WarehouseBatchDashboard = () => {
     sortOrder: 'desc'
   });
 
+  // Calculate analytics fallbacks if backend data is incomplete
+  const calculateAnalyticsDefaults = (analyticsData) => {
+    if (!analyticsData) return null;
+    
+    const fallbacks = {
+      overview: {
+        totalBatchGroups: analyticsData.overview?.totalBatchGroups || 0,
+        recentBatchGroups: analyticsData.overview?.recentBatchGroups || 0,
+        availableItems: analyticsData.overview?.availableItems || 0,
+        availabilityRate: analyticsData.overview?.availabilityRate || 0,
+        utilizationRate: analyticsData.overview?.utilizationRate || 0,
+        usedItems: analyticsData.overview?.usedItems || 0,
+        expiringSoon: analyticsData.overview?.expiringSoon || 0
+      },
+      breakdowns: {
+        status: analyticsData.breakdowns?.status || {},
+        location: analyticsData.breakdowns?.location || {},
+        supplier: analyticsData.breakdowns?.supplier || {}
+      }
+    };
+    
+    console.log('[FRONTEND] Analytics with fallbacks:', fallbacks);
+    return fallbacks;
+  };
+
   // Fetch analytics data
   const fetchAnalytics = async () => {
     try {
       const token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
+      
+      console.log('[FRONTEND] Fetching analytics data...');
       
       const response = await fetch('http://localhost:5001/api/batches/batch-groups/analytics', {
         headers: {
@@ -56,9 +83,14 @@ const WarehouseBatchDashboard = () => {
       }
 
       const data = await response.json();
-      setAnalytics(data.data);
+      console.log('[FRONTEND] Raw analytics response:', JSON.stringify(data, null, 2));
+      
+      const processedAnalytics = calculateAnalyticsDefaults(data.data);
+      console.log('[FRONTEND] Processed analytics:', processedAnalytics);
+      
+      setAnalytics(processedAnalytics);
     } catch (err) {
-      console.error('Error fetching analytics:', err);
+      console.error('[FRONTEND] Error fetching analytics:', err);
       setError('Failed to load analytics data');
     }
   };

@@ -26,11 +26,68 @@ const BatchGroupDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  // Calculate utilization rate if not provided by backend
+  const calculateUtilizationRate = () => {
+    if (batchGroup?.statistics?.utilizationRate) {
+      return batchGroup.statistics.utilizationRate;
+    }
+    
+    // Fallback calculation
+    if (batchGroup?.products && batchGroup.products.length > 0) {
+      let totalQuantity = 0;
+      let totalUsed = 0;
+      
+      batchGroup.products.forEach(product => {
+        if (product.variantDetails && product.variantDetails.length > 0) {
+          product.variantDetails.forEach(variant => {
+            totalQuantity += variant.quantity || 0;
+            totalUsed += variant.usedQuantity || 0;
+          });
+        } else {
+          totalQuantity += product.quantity || 0;
+          totalUsed += product.usedQuantity || 0;
+        }
+      });
+      
+      return totalQuantity > 0 ? ((totalUsed / totalQuantity) * 100).toFixed(1) : 0;
+    }
+    
+    return 0;
+  };
+
+  // Calculate total used items if not provided by backend
+  const calculateUsedItems = () => {
+    if (batchGroup?.statistics?.usedItems) {
+      return batchGroup.statistics.usedItems;
+    }
+    
+    // Fallback calculation
+    if (batchGroup?.products && batchGroup.products.length > 0) {
+      let totalUsed = 0;
+      
+      batchGroup.products.forEach(product => {
+        if (product.variantDetails && product.variantDetails.length > 0) {
+          product.variantDetails.forEach(variant => {
+            totalUsed += variant.usedQuantity || 0;
+          });
+        } else {
+          totalUsed += product.usedQuantity || 0;
+        }
+      });
+      
+      return totalUsed;
+    }
+    
+    return 0;
+  };
+
   // Fetch batch group details
   const fetchBatchGroupDetails = async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('adminToken');
+      
+      console.log('[ADMIN] Fetching batch group details for ID:', id);
       
       const response = await fetch(`http://localhost:5001/api/batches/batch-groups/${id}`, {
         headers: {
@@ -44,9 +101,12 @@ const BatchGroupDetails = () => {
       }
 
       const data = await response.json();
+      console.log('[ADMIN] Raw batch group response:', JSON.stringify(data, null, 2));
+      console.log('[ADMIN] Setting batch group to data.data:', data.data);
+      
       setBatchGroup(data.data);
     } catch (err) {
-      console.error('Error fetching batch group details:', err);
+      console.error('[ADMIN] Error fetching batch group details:', err);
       setError('Failed to load batch group details');
     } finally {
       setLoading(false);
@@ -212,8 +272,8 @@ const BatchGroupDetails = () => {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Utilization Rate</p>
-                <p className="text-2xl font-bold text-gray-900">{batchGroup.statistics?.utilizationRate || 0}%</p>
-                <p className="text-sm text-purple-600 font-medium">{batchGroup.statistics?.usedItems || 0} items used</p>
+                <p className="text-2xl font-bold text-gray-900">{calculateUtilizationRate()}%</p>
+                <p className="text-sm text-purple-600 font-medium">{calculateUsedItems()} items used</p>
               </div>
             </div>
           </div>
@@ -448,20 +508,48 @@ const BatchGroupDetails = () => {
                           {product.variantDetails && product.variantDetails.length > 0 ? (
                             <div className="space-y-2">
                               {product.variantDetails.map((variant, vIndex) => {
-                                const utilizationRate = variant.quantity > 0 ? ((variant.usedQuantity / variant.quantity) * 100).toFixed(1) : 0;
+                                const availableQty = variant.availableQuantity || 0;
+                                const totalQty = variant.quantity || 0;
+                                const usedQty = variant.usedQuantity || 0;
+                                const allocatedQty = variant.allocatedQuantity || 0;
+                                
+                                // Calculate utilization rate based on used vs total
+                                const utilizationRate = totalQty > 0 ? ((usedQty / totalQty) * 100).toFixed(1) : 0;
+                                
+                                // Calculate availability rate
+                                const availabilityRate = totalQty > 0 ? ((availableQty / totalQty) * 100).toFixed(1) : 0;
+                                
                                 return (
                                   <div key={vIndex} className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-2">
-                                    <div className="text-xs font-bold text-gray-800">Used: {variant.usedQuantity}</div>
-                                    <div className="text-xs text-purple-600 font-medium">Rate: {utilizationRate}%</div>
+                                    <div className="text-xs font-bold text-gray-800">
+                                      Used: {usedQty} / {totalQty}
+                                    </div>
+                                    <div className="text-xs text-purple-600 font-medium">
+                                      Utilization: {utilizationRate}%
+                                    </div>
+                                    <div className="text-xs text-green-600 font-medium">
+                                      Available: {availableQty} ({availabilityRate}%)
+                                    </div>
+                                    <div className="text-xs text-orange-600 font-medium">
+                                      Allocated: {allocatedQty}
+                                    </div>
                                   </div>
                                 );
                               })}
                             </div>
                           ) : (
                             <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-3">
-                              <div className="text-sm font-bold text-gray-800">Used: {product.usedQuantity || 0}</div>
+                              <div className="text-sm font-bold text-gray-800">
+                                Used: {product.usedQuantity || 0} / {product.quantity || 0}
+                              </div>
                               <div className="text-xs text-orange-600 font-medium">
-                                Rate: {product.quantity > 0 ? ((product.usedQuantity || 0) / product.quantity * 100).toFixed(1) : 0}%
+                                Utilization: {product.quantity > 0 ? (((product.usedQuantity || 0) / product.quantity) * 100).toFixed(1) : 0}%
+                              </div>
+                              <div className="text-xs text-green-600 font-medium">
+                                Available: {product.availableQuantity || 0} ({product.quantity > 0 ? (((product.availableQuantity || 0) / product.quantity) * 100).toFixed(1) : 0}%)
+                              </div>
+                              <div className="text-xs text-purple-600 font-medium">
+                                Allocated: {product.allocatedQuantity || 0}
                               </div>
                             </div>
                           )}
