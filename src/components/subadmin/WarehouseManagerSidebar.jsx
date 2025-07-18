@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   FiHome,
   FiPackage,
@@ -7,12 +8,14 @@ import {
   FiImage,
   FiBarChart,
   FiSettings,
-  FiLogOut
+  FiLogOut,
+  FiGrid
 } from 'react-icons/fi';
 
 const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
 
   // Track screen size
   React.useEffect(() => {
@@ -47,37 +50,51 @@ const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
     {
       id: 'dashboard',
       name: 'Dashboard',
-      icon: FiHome
+      icon: FiHome,
+      type: 'tab'
     },
     {
       id: 'products',
       name: 'Products',
-      icon: FiPackage
+      icon: FiPackage,
+      type: 'tab'
     },
     {
       id: 'orders',
       name: 'Orders',
-      icon: FiList
+      icon: FiList,
+      type: 'tab'
+    },
+    {
+      id: 'batches',
+      name: 'Batch Management',
+      icon: FiGrid,
+      type: 'route',
+      route: '/sub-admin/warehouse_manager/batches'
     },
     {
       id: 'combo-packs',
       name: 'Combo Packs',
-      icon: FiLayers
+      icon: FiLayers,
+      type: 'tab'
     },
     {
       id: 'banners',
       name: 'Banners',
-      icon: FiImage
+      icon: FiImage,
+      type: 'tab'
     },
     {
       id: 'analytics',
       name: 'Analytics',
-      icon: FiBarChart
+      icon: FiBarChart,
+      type: 'tab'
     },
     {
       id: 'settings',
       name: 'Settings',
-      icon: FiSettings
+      icon: FiSettings,
+      type: 'tab'
     }
   ];
 
@@ -154,31 +171,43 @@ const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
             <nav className="space-y-3">
               {menuItems.map((item) => {
                 const IconComponent = item.icon;
+                const isActiveItem = isActive(item.id);
+                
                 return (
                   <button
                     key={item.id}
                     onClick={() => {
-                      setActiveTab(item.id);
-                      // Close sidebar on mobile after navigation
-                      if (isMobile) {
-                        setIsCollapsed(true);
+                      if (item.type === 'route') {
+                        // Navigate to external route
+                        navigate(item.route);
+                        // Close sidebar on mobile after navigation
+                        if (isMobile) {
+                          setIsCollapsed(true);
+                        }
+                      } else {
+                        // Handle internal tab
+                        setActiveTab(item.id);
+                        // Close sidebar on mobile after navigation
+                        if (isMobile) {
+                          setIsCollapsed(true);
+                        }
                       }
                     }}
                     className={`w-full flex items-center px-4 py-4 rounded-2xl transition-all duration-300 group relative ${
-                      isActive(item.id)
+                      isActiveItem
                         ? 'bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-lg transform scale-105'
                         : 'text-gray-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-green-50 hover:shadow-md hover:scale-102'
                     }`}
                   >
                     <IconComponent
                       className={`w-6 h-6 mr-4 transition-all duration-300 ${
-                        isActive(item.id)
+                        isActiveItem
                           ? 'text-white'
                           : 'text-gray-500 group-hover:text-emerald-600 group-hover:scale-110'
                       }`}
                     />
                     <span className="font-semibold text-base flex-1">{item.name}</span>
-                    {isActive(item.id) && (
+                    {isActiveItem && (
                       <div className="active-indicator bg-white animate-pulse"></div>
                     )}
                   </button>

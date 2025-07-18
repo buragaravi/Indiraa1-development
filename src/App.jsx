@@ -43,6 +43,12 @@ import AdminBanners from './admin/pages/AdminBanners';
 import AdminSidebar from './admin/components/AdminSidebar';
 import AdminDashboard from './pages/AdminDashboard';
 import BulkUploadHome from './pages/BulkUploadHome';
+// Batch Management Components
+import BatchDashboard from './components/BatchDashboard';
+import BatchGroupDetails from './components/BatchGroupDetails';
+// Warehouse Batch Components
+import WarehouseBatchDashboard from './components/warehouse/WarehouseBatchDashboard';
+import WarehouseBatchDetails from './components/warehouse/WarehouseBatchDetails';
 // Sub Admin Components
 import SubAdminLogin from './components/SubAdminLogin';
 import SubAdminEmailVerification from './components/SubAdminEmailVerification';
@@ -232,11 +238,23 @@ function App() {
                 <SubAdminManagement />
               </AdminLayout>
             } />
+            <Route path="/admin/batches" element={
+              <AdminLayout>
+                <BatchDashboard />
+              </AdminLayout>
+            } />
+            <Route path="/admin/batches/:id" element={
+              <AdminLayout>
+                <BatchGroupDetails />
+              </AdminLayout>
+            } />
             
             {/* Sub Admin Routes - Must be before user routes */}
             <Route path="/sub-admin/login" element={<SubAdminLogin />} />
             <Route path="/sub-admin/verify-email" element={<SubAdminEmailVerification />} />
             <Route path="/sub-admin/warehouse_manager" element={<WarehouseManagerDashboard />} />
+            <Route path="/sub-admin/warehouse_manager/batches" element={<WarehouseBatchDashboard />} />
+            <Route path="/sub-admin/warehouse_manager/batches/:id" element={<WarehouseBatchDetails />} />
             <Route path="/sub-admin/logistics_manager" element={<LogisticsManagerDashboard />} />
             <Route path="/sub-admin/dashboard" element={<SubAdminLogin />} /> {/* Redirect to login if no specific role */}
             <Route path="/dashboard/orders/:orderId" element={<SubAdminOrderDetail />} />

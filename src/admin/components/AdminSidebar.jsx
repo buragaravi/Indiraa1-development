@@ -9,7 +9,8 @@ import {
   CouponsIcon,
   PackageIcon,
   BannersIcon,
-  SubAdminIcon
+  SubAdminIcon,
+  BatchIcon
 } from './AdminIcons';
 
 const AdminSidebar = () => {
@@ -64,6 +65,11 @@ const AdminSidebar = () => {
       path: '/admin/banners',
       name: 'Banners',
       icon: BannersIcon
+    },
+    {
+      path: '/admin/batches',
+      name: 'Batch Management',
+      icon: BatchIcon
     },
     {
       path: '/admin/orders',
