@@ -29,7 +29,7 @@ const AdminOrders = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/orders/all', {
+      const response = await fetch('http://localhost:5001/api/products/orders/all', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

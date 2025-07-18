@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://indiraa1-backend.onrender.com/api';
+const API_BASE_URL = 'http://localhost:5001/api';
 
 // Product Service
 export const getProducts = async () => {

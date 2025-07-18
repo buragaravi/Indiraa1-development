@@ -268,7 +268,7 @@ const BulkUpload = ({ onSuccess, onClose }) => {
         formData.append('images', file);
       });
 
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/bulk-upload', {
+      const response = await fetch('http://localhost:5001/api/products/bulk-upload', {
         method: 'POST',
         body: formData,
       });
