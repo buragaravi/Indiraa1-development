@@ -1,71 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  Search, 
-  Filter, 
-  Eye, 
-  Package, 
+  Package2, 
   TrendingUp, 
   AlertTriangle, 
-  CheckCircle, 
+  CheckCircle,
   Clock,
+  MapPin,
+  Users,
   BarChart3,
+  PieChart,
   RefreshCw,
-  Download
+  Search,
+  Filter,
+  Calendar,
+  Eye,
+  Edit,
+  Download,
+  ArrowUpRight,
+  ArrowDownRight,
+  Activity
 } from 'lucide-react';
 
-const BatchDashboard = () => {
+const WarehouseBatchDashboard = () => {
   const navigate = useNavigate();
-  const [batchGroups, setBatchGroups] = useState([]);
   const [analytics, setAnalytics] = useState(null);
+  const [batchGroups, setBatchGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  
-  // Filters and pagination
   const [filters, setFilters] = useState({
-    search: '',
+    page: 1,
+    limit: 10,
     status: '',
     groupType: '',
     location: '',
-    page: 1,
-    limit: 10,
+    search: '',
     sortBy: 'createdAt',
     sortOrder: 'desc'
   });
 
-  // Fetch batch groups
-  const fetchBatchGroups = async () => {
-    try {
-      setLoading(true);
-      const token = localStorage.getItem('adminToken');
-      
-      const queryParams = new URLSearchParams();
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value) queryParams.append(key, value);
-      });
-
-      const response = await fetch(`http://localhost:5001/api/batches/batch-groups?${queryParams}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch batch groups');
-      }
-
-      const data = await response.json();
-      setBatchGroups(data.data.batchGroups || []);
-    } catch (err) {
-      console.error('Error fetching batch groups:', err);
-      setError('Failed to load batch groups');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Fetch analytics
+  // Fetch analytics data
   const fetchAnalytics = async () => {
     try {
       const token = localStorage.getItem('adminToken');
@@ -85,12 +59,55 @@ const BatchDashboard = () => {
       setAnalytics(data.data);
     } catch (err) {
       console.error('Error fetching analytics:', err);
+      setError('Failed to load analytics data');
     }
   };
 
+  // Fetch batch groups
+  const fetchBatchGroups = async () => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      
+      const queryParams = new URLSearchParams();
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value) queryParams.append(key, value);
+      });
+
+      const response = await fetch(`http://localhost:5001/api/batches/batch-groups?${queryParams}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch batch groups');
+      }
+
+      const data = await response.json();
+      setBatchGroups(data.data.batchGroups);
+    } catch (err) {
+      console.error('Error fetching batch groups:', err);
+      setError('Failed to load batch groups');
+    }
+  };
+
+  // Initial data fetch
   useEffect(() => {
-    fetchBatchGroups();
-    fetchAnalytics();
+    const loadData = async () => {
+      setLoading(true);
+      await Promise.all([fetchAnalytics(), fetchBatchGroups()]);
+      setLoading(false);
+    };
+
+    loadData();
+  }, []);
+
+  // Refetch batch groups when filters change
+  useEffect(() => {
+    if (!loading) {
+      fetchBatchGroups();
+    }
   }, [filters]);
 
   // Handle filter changes
@@ -98,19 +115,15 @@ const BatchDashboard = () => {
     setFilters(prev => ({
       ...prev,
       [key]: value,
-      page: 1 // Reset to first page when filters change
+      page: 1 // Reset to first page when filtering
     }));
   };
 
-  // Handle view batch group details
-  const handleViewBatchGroup = (batchGroupId) => {
-    navigate(`/admin/batches/${batchGroupId}`);
-  };
-
-  // Refresh data
-  const handleRefresh = () => {
-    fetchBatchGroups();
-    fetchAnalytics();
+  // Format numbers
+  const formatNumber = (num) => {
+    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+    return num.toString();
   };
 
   // Get status badge color
@@ -126,6 +139,7 @@ const BatchDashboard = () => {
 
   // Format date
   const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
     return new Date(dateString).toLocaleDateString('en-IN', {
       year: 'numeric',
       month: 'short',
@@ -133,39 +147,62 @@ const BatchDashboard = () => {
     });
   };
 
-  if (loading && !batchGroups.length) {
+  if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
         <div className="text-center">
-          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-blue-600" />
-          <p className="text-gray-600">Loading batch dashboard...</p>
+          <div className="p-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full inline-block mb-4">
+            <RefreshCw className="h-8 w-8 animate-spin text-white" />
+          </div>
+          <p className="text-gray-700 font-semibold">Loading batch analytics...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="p-4 bg-gradient-to-r from-red-500 to-pink-600 rounded-full inline-block mb-4">
+            <AlertTriangle className="h-12 w-12 text-white" />
+          </div>
+          <h3 className="text-lg font-bold text-gray-900 mb-2">Error Loading Dashboard</h3>
+          <p className="text-gray-600 mb-4 font-medium">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200"
+          >
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Retry
+          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-6">
+      <div className="bg-white shadow-lg border-b border-indigo-100">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          <div className="py-4">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Batch Management Dashboard</h1>
-                <p className="text-gray-600 mt-1">Monitor and manage your product batches</p>
+                <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Admin Batch Management Dashboard</h1>
+                <p className="text-gray-600 mt-1 text-sm font-medium">Monitor and manage warehouse batch inventory</p>
               </div>
               <div className="flex items-center gap-3">
                 <button
-                  onClick={handleRefresh}
-                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                  onClick={() => window.location.reload()}
+                  className="inline-flex items-center px-3 py-2 border border-indigo-300 rounded-lg shadow-sm text-sm font-medium text-indigo-700 bg-white hover:bg-indigo-50 transform hover:scale-105 transition-all duration-200"
                 >
                   <RefreshCw className="h-4 w-4 mr-2" />
                   Refresh
                 </button>
-                <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                <button className="inline-flex items-center px-3 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200">
                   <Download className="h-4 w-4 mr-2" />
-                  Export
+                  Export Report
                 </button>
               </div>
             </div>
@@ -173,225 +210,357 @@ const BatchDashboard = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Analytics Cards */}
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
+        {/* Analytics Overview */}
         {analytics && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <Package className="h-8 w-8 text-blue-600" />
+          <>
+            {/* Key Metrics Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+              <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-blue-100">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg">
+                    <Package2 className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Total Batch Groups</p>
+                    <p className="text-2xl font-bold text-gray-900">{formatNumber(analytics.overview.totalBatchGroups)}</p>
+                    <p className="text-xs text-blue-600 flex items-center mt-1 font-medium">
+                      <ArrowUpRight className="h-3 w-3 mr-1" />
+                      {analytics.overview.recentBatchGroups} new this week
+                    </p>
+                  </div>
                 </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-500">Total Batch Groups</p>
-                  <p className="text-2xl font-semibold text-gray-900">{analytics.overview.totalBatchGroups}</p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-green-100">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-lg">
+                    <CheckCircle className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Available Items</p>
+                    <p className="text-2xl font-bold text-gray-900">{formatNumber(analytics.overview.availableItems)}</p>
+                    <p className="text-xs text-green-600 font-medium">
+                      {analytics.overview.availabilityRate}% availability rate
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-purple-100">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 p-3 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl shadow-lg">
+                    <TrendingUp className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Utilization Rate</p>
+                    <p className="text-2xl font-bold text-gray-900">{analytics.overview.utilizationRate}%</p>
+                    <p className="text-xs text-purple-600 font-medium">
+                      {formatNumber(analytics.overview.usedItems)} items used
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-orange-100">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 p-3 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl shadow-lg">
+                    <AlertTriangle className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Expiring Soon</p>
+                    <p className="text-2xl font-bold text-gray-900">{analytics.overview.expiringSoon}</p>
+                    <p className="text-xs text-orange-600 font-medium">
+                      Next 30 days
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <CheckCircle className="h-8 w-8 text-green-600" />
+            {/* Status, Location, and Supplier Breakdowns - Single Row */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+              {/* Status Breakdown */}
+              <div className="bg-white rounded-xl shadow-lg border border-indigo-100">
+                <div className="px-4 py-3 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50">
+                  <div className="flex items-center">
+                    <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg mr-2">
+                      <PieChart className="h-4 w-4 text-white" />
+                    </div>
+                    <h3 className="text-sm font-bold text-gray-900">Status Breakdown</h3>
+                  </div>
                 </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-500">Active Batches</p>
-                  <p className="text-2xl font-semibold text-gray-900">{analytics.overview.activeBatchGroups}</p>
+                <div className="p-4">
+                  <div className="space-y-2">
+                    {Object.entries(analytics.breakdowns.status).map(([status, count]) => (
+                      <div key={status} className="flex items-center justify-between p-2 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
+                        <div className="flex items-center">
+                          <div className={`w-2 h-2 rounded-full mr-2 ${getStatusBadgeColor(status).split(' ')[0]}`}></div>
+                          <span className="text-xs font-medium text-gray-700">{status}</span>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-xs font-semibold text-gray-900">{count}</span>
+                          <span className="text-xs text-gray-500 ml-1">
+                            ({((count / analytics.overview.totalBatchGroups) * 100).toFixed(0)}%)
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <AlertTriangle className="h-8 w-8 text-orange-600" />
+              {/* Location Breakdown */}
+              <div className="bg-white rounded-xl shadow-lg border border-green-100">
+                <div className="px-4 py-3 border-b border-green-100 bg-gradient-to-r from-green-50 to-emerald-50">
+                  <div className="flex items-center">
+                    <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg mr-2">
+                      <MapPin className="h-4 w-4 text-white" />
+                    </div>
+                    <h3 className="text-sm font-bold text-gray-900">Location Distribution</h3>
+                  </div>
                 </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-500">Expiring Soon</p>
-                  <p className="text-2xl font-semibold text-gray-900">{analytics.overview.expiringSoon}</p>
+                <div className="p-4">
+                  <div className="space-y-2">
+                    {Object.entries(analytics.breakdowns.location).map(([location, count]) => (
+                      <div key={location} className="flex items-center justify-between p-2 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
+                        <div className="flex items-center">
+                          <div className="p-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mr-2">
+                            <MapPin className="h-2 w-2 text-white" />
+                          </div>
+                          <span className="text-xs font-medium text-gray-700">{location}</span>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-xs font-semibold text-gray-900">{count}</span>
+                          <span className="text-xs text-gray-500 ml-1">batches</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <TrendingUp className="h-8 w-8 text-purple-600" />
+              {/* Supplier Performance */}
+              <div className="bg-white rounded-xl shadow-lg border border-purple-100">
+                <div className="px-4 py-3 border-b border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50">
+                  <div className="flex items-center">
+                    <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg mr-2">
+                      <Users className="h-4 w-4 text-white" />
+                    </div>
+                    <h3 className="text-sm font-bold text-gray-900">Top Suppliers</h3>
+                  </div>
                 </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-500">Utilization Rate</p>
-                  <p className="text-2xl font-semibold text-gray-900">{analytics.overview.utilizationRate}%</p>
+                <div className="p-4">
+                  <div className="space-y-2">
+                    {Object.entries(analytics.breakdowns.supplier)
+                      .sort(([,a], [,b]) => b - a)
+                      .slice(0, 4)
+                      .map(([supplier, count]) => (
+                      <div key={supplier} className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-2 border border-purple-100">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-xs font-medium text-gray-900 truncate">{supplier}</p>
+                            <p className="text-xs text-purple-600 font-medium">Supplier</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-semibold text-purple-600">{count}</p>
+                            <p className="text-xs text-gray-500">batches</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </>
         )}
 
-        {/* Filters */}
-        <div className="bg-white rounded-lg shadow mb-6">
-          <div className="p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Filters</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Search */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search batches..."
-                  value={filters.search}
-                  onChange={(e) => handleFilterChange('search', e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-
-              {/* Status Filter */}
-              <select
-                value={filters.status}
-                onChange={(e) => handleFilterChange('status', e.target.value)}
-                className="block w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">All Statuses</option>
-                <option value="Active">Active</option>
-                <option value="Expired">Expired</option>
-                <option value="Recalled">Recalled</option>
-                <option value="Depleted">Depleted</option>
-              </select>
-
-              {/* Group Type Filter */}
-              <select
-                value={filters.groupType}
-                onChange={(e) => handleFilterChange('groupType', e.target.value)}
-                className="block w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">All Types</option>
-                <option value="BULK_UPLOAD">Bulk Upload</option>
-                <option value="MANUAL_ENTRY">Manual Entry</option>
-                <option value="SUPPLIER_DELIVERY">Supplier Delivery</option>
-                <option value="PRODUCTION_BATCH">Production Batch</option>
-              </select>
-
-              {/* Location Filter */}
-              <input
-                type="text"
-                placeholder="Filter by location..."
-                value={filters.location}
-                onChange={(e) => handleFilterChange('location', e.target.value)}
-                className="block w-full px-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-          </div>
-        </div>
-
         {/* Batch Groups Table */}
-        <div className="bg-white shadow rounded-lg">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Batch Groups</h3>
-          </div>
-          
-          {error && (
-            <div className="p-4 bg-red-50 border-l-4 border-red-400">
-              <p className="text-red-700">{error}</p>
+        <div className="bg-white shadow-xl rounded-xl border border-indigo-100">
+          <div className="px-6 py-4 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg mr-3">
+                  <Package2 className="h-5 w-5 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900">Batch Groups</h3>
+              </div>
+              <div className="flex items-center gap-4">
+                {/* Search */}
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-indigo-400" />
+                  <input
+                    type="text"
+                    placeholder="Search batches..."
+                    value={filters.search}
+                    onChange={(e) => handleFilterChange('search', e.target.value)}
+                    className="pl-10 pr-4 py-2 border border-indigo-200 rounded-lg text-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                  />
+                </div>
+
+                {/* Status Filter */}
+                <select
+                  value={filters.status}
+                  onChange={(e) => handleFilterChange('status', e.target.value)}
+                  className="px-3 py-2 border border-indigo-200 rounded-lg text-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                >
+                  <option value="">All Statuses</option>
+                  <option value="Active">Active</option>
+                  <option value="Expired">Expired</option>
+                  <option value="Recalled">Recalled</option>
+                  <option value="Depleted">Depleted</option>
+                </select>
+
+                {/* Location Filter */}
+                <select
+                  value={filters.location}
+                  onChange={(e) => handleFilterChange('location', e.target.value)}
+                  className="px-3 py-2 border border-indigo-200 rounded-lg text-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                >
+                  <option value="">All Locations</option>
+                  {analytics && Object.keys(analytics.breakdowns.location).map(location => (
+                    <option key={location} value={location}>{location}</option>
+                  ))}
+                </select>
+              </div>
             </div>
-          )}
-
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Batch Group
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Products
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Stock Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Supplier
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Expiry Date
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {batchGroups.map((batchGroup) => (
-                  <tr key={batchGroup.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div>
-                        <div className="text-sm font-medium text-gray-900">
-                          {batchGroup.batchGroupNumber}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {batchGroup.groupType?.replace('_', ' ')}
-                        </div>
-                      </div>
-                    </td>
-                    
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeColor(batchGroup.status)}`}>
-                        {batchGroup.status}
-                      </span>
-                    </td>
-                    
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {batchGroup.statistics.totalProducts} products
-                      <div className="text-xs text-gray-500">
-                        {batchGroup.statistics.totalItems} total items
-                      </div>
-                    </td>
-                    
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        Available: {batchGroup.statistics.availableItems}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        Used: {batchGroup.statistics.usedItems} ({batchGroup.statistics.utilizationRate}%)
-                      </div>
-                    </td>
-                    
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {batchGroup.supplierInfo?.supplierName || 'N/A'}
-                    </td>
-                    
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {batchGroup.defaultExpiryDate ? (
-                        <div className={`${batchGroup.statistics.isExpired ? 'text-red-600' : 'text-gray-900'}`}>
-                          {formatDate(batchGroup.defaultExpiryDate)}
-                        </div>
-                      ) : (
-                        <span className="text-gray-400">No expiry</span>
-                      )}
-                    </td>
-                    
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button
-                        onClick={() => handleViewBatchGroup(batchGroup.id)}
-                        className="text-blue-600 hover:text-blue-900 inline-flex items-center"
-                      >
-                        <Eye className="h-4 w-4 mr-1" />
-                        View Details
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
 
-          {batchGroups.length === 0 && !loading && (
-            <div className="text-center py-12">
-              <Package className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No batch groups found</h3>
-              <p className="mt-1 text-sm text-gray-500">
-                No batch groups match your current filters.
+          <div className="overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gradient-to-r from-indigo-50 to-purple-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Batch Group
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Products
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Stock Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Utilization
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Location
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {batchGroups.map((batchGroup) => (
+                    <tr key={batchGroup._id} className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div>
+                          <div className="text-sm font-bold text-gray-900">{batchGroup.batchGroupNumber}</div>
+                          <div className="text-sm text-indigo-600 font-medium">{formatDate(batchGroup.createdAt)}</div>
+                          <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full inline-block mt-1">
+                            {batchGroup.groupType?.replace('_', ' ')}
+                          </div>
+                        </div>
+                      </td>
+                      
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${getStatusBadgeColor(batchGroup.status)} shadow-sm`}>
+                          {batchGroup.status}
+                        </span>
+                        {batchGroup.statistics.isExpired && (
+                          <div className="text-xs text-red-600 mt-1 font-medium">Expired</div>
+                        )}
+                      </td>
+                      
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <div className="flex items-center bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-2">
+                          <div className="p-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg mr-2">
+                            <Package2 className="h-3 w-3 text-white" />
+                          </div>
+                          <div>
+                            <div className="text-sm font-bold text-gray-900">{batchGroup.statistics.totalProducts} products</div>
+                            <div className="text-xs text-blue-600 font-medium">
+                              {formatNumber(batchGroup.statistics.totalItems)} total items
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-2">
+                          <div className="text-sm font-bold text-gray-900">
+                            Available: {formatNumber(batchGroup.statistics.availableItems)}
+                          </div>
+                          <div className="text-xs text-green-600 font-medium">
+                            Allocated: {formatNumber(batchGroup.statistics.allocatedItems)}
+                          </div>
+                          {batchGroup.statistics.isDepleted && (
+                            <div className="text-xs text-red-600 font-medium">Depleted</div>
+                          )}
+                        </div>
+                      </td>
+                      
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-2">
+                          <div className="flex items-center">
+                            <div className="text-sm font-bold text-gray-900">{batchGroup.statistics.utilizationRate}%</div>
+                            <div className="ml-2 flex-1">
+                              <div className="w-16 bg-gray-200 rounded-full h-2">
+                                <div 
+                                  className="bg-gradient-to-r from-purple-500 to-pink-600 h-2 rounded-full transition-all duration-300" 
+                                  style={{ width: `${batchGroup.statistics.utilizationRate}%` }}
+                                ></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center text-sm text-gray-900 bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-2">
+                          <div className="p-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg mr-2">
+                            <MapPin className="h-3 w-3 text-white" />
+                          </div>
+                          <span className="font-medium">{batchGroup.location}</span>
+                        </div>
+                      </td>
+                      
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => navigate(`/admin/batches/${batchGroup._id}`)}
+                            className="p-2 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 rounded-lg transition-all duration-200"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </button>
+                          <button className="p-2 text-purple-600 hover:text-purple-800 hover:bg-purple-50 rounded-lg transition-all duration-200">
+                            <Edit className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {batchGroups.length === 0 && (
+            <div className="text-center py-16">
+              <div className="p-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full inline-block mb-4">
+                <Package2 className="mx-auto h-12 w-12 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">No batch groups found</h3>
+              <p className="text-gray-600 font-medium">
+                {filters.search || filters.status || filters.location ? 
+                  'Try adjusting your filters to see more results.' :
+                  'No batch groups have been created yet.'
+                }
               </p>
             </div>
           )}
@@ -401,4 +570,4 @@ const BatchDashboard = () => {
   );
 };
 
-export default BatchDashboard;
+export default WarehouseBatchDashboard;

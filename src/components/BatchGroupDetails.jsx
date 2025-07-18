@@ -12,7 +12,11 @@ import {
   Clock,
   Edit,
   Download,
-  RefreshCw
+  RefreshCw,
+  Eye,
+  BarChart3,
+  Activity,
+  Truck
 } from 'lucide-react';
 
 const BatchGroupDetails = () => {
@@ -96,10 +100,12 @@ const BatchGroupDetails = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
         <div className="text-center">
-          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-blue-600" />
-          <p className="text-gray-600">Loading batch group details...</p>
+          <div className="p-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full inline-block mb-4">
+            <RefreshCw className="h-12 w-12 animate-spin text-white" />
+          </div>
+          <p className="text-gray-700 font-semibold text-lg">Loading batch details...</p>
         </div>
       </div>
     );
@@ -107,17 +113,19 @@ const BatchGroupDetails = () => {
 
   if (error || !batchGroup) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
         <div className="text-center">
-          <AlertTriangle className="h-12 w-12 mx-auto mb-4 text-red-600" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Error Loading Batch Group</h3>
-          <p className="text-gray-600 mb-4">{error || 'Batch group not found'}</p>
+          <div className="p-4 bg-gradient-to-r from-red-500 to-pink-600 rounded-full inline-block mb-4">
+            <AlertTriangle className="h-12 w-12 text-white" />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">Error Loading Batch Details</h3>
+          <p className="text-gray-600 mb-6 font-medium">{error || 'Batch group not found'}</p>
           <button
             onClick={() => navigate('/admin/batches')}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+            className="inline-flex items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Batch Dashboard
+            Back to Dashboard
           </button>
         </div>
       </div>
@@ -125,35 +133,42 @@ const BatchGroupDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-6">
+      <div className="bg-white shadow-lg border-b border-indigo-100">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          <div className="py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <button
                   onClick={() => navigate('/admin/batches')}
-                  className="mr-4 p-2 text-gray-400 hover:text-gray-600"
+                  className="mr-4 p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all duration-200"
                 >
                   <ArrowLeft className="h-5 w-5" />
                 </button>
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">{batchGroup.batchGroupNumber}</h1>
-                  <p className="text-gray-600 mt-1">Batch Group Details</p>
+                  <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    {batchGroup.batchGroupNumber}
+                  </h1>
+                  <p className="text-gray-600 mt-1 text-sm font-medium">Admin Batch Details</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getStatusBadgeColor(batchGroup.status)}`}>
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold border-2 ${getStatusBadgeColor(batchGroup.status)} shadow-sm`}>
                   {batchGroup.status}
                 </span>
-                <button className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                  <Edit className="h-4 w-4 mr-2" />
-                  Edit
-                </button>
-                <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                {/* Quality Status */}
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold shadow-sm ${
+                  batchGroup.qualityChecked 
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white' 
+                    : 'bg-gradient-to-r from-yellow-500 to-orange-600 text-white'
+                }`}>
+                  <CheckCircle className="h-3 w-3 mr-1" />
+                  {batchGroup.qualityChecked ? 'Quality Verified' : 'Quality Pending'}
+                </span>
+                <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200">
                   <Download className="h-4 w-4 mr-2" />
-                  Export
+                  Export Report
                 </button>
               </div>
             </div>
@@ -161,251 +176,348 @@ const BatchGroupDetails = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
+        {/* Key Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-blue-100">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <Package className="h-8 w-8 text-blue-600" />
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg">
+                <Package className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Total Products</p>
-                <p className="text-2xl font-semibold text-gray-900">{batchGroup.statistics.totalProducts}</p>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Total Products</p>
+                <p className="text-2xl font-bold text-gray-900">{batchGroup.statistics?.totalProducts || 0}</p>
+                <p className="text-sm text-blue-600 font-medium">{batchGroup.statistics?.totalItems || 0} total items</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-green-100">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <CheckCircle className="h-8 w-8 text-green-600" />
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-lg">
+                <CheckCircle className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Available Items</p>
-                <p className="text-2xl font-semibold text-gray-900">{batchGroup.statistics.availableItems}</p>
-                <p className="text-xs text-gray-400">of {batchGroup.statistics.totalItems}</p>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Available Stock</p>
+                <p className="text-2xl font-bold text-gray-900">{batchGroup.statistics?.availableItems || 0}</p>
+                <p className="text-sm text-green-600 font-medium">{batchGroup.statistics?.availabilityRate || 0}% available</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-purple-100">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <TrendingUp className="h-8 w-8 text-purple-600" />
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl shadow-lg">
+                <TrendingUp className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Utilization Rate</p>
-                <p className="text-2xl font-semibold text-gray-900">{batchGroup.statistics.utilizationRate}%</p>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Utilization Rate</p>
+                <p className="text-2xl font-bold text-gray-900">{batchGroup.statistics?.utilizationRate || 0}%</p>
+                <p className="text-sm text-purple-600 font-medium">{batchGroup.statistics?.usedItems || 0} items used</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-orange-100">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <Clock className="h-8 w-8 text-orange-600" />
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl shadow-lg">
+                <Truck className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Orders Allocated</p>
-                <p className="text-2xl font-semibold text-gray-900">{batchGroup.statistics.orderAllocationsCount}</p>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Orders Served</p>
+                <p className="text-2xl font-bold text-gray-900">{batchGroup.statistics?.orderAllocationsCount || 0}</p>
+                <p className="text-sm text-orange-600 font-medium">Total allocations</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Batch Group Information */}
-          <div className="lg:col-span-1">
-            <div className="bg-white shadow rounded-lg">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900">Batch Information</h3>
+        {/* Batch Information and Supplier Information - Single Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          {/* Batch Information */}
+          <div className="bg-white shadow-lg rounded-xl border border-indigo-100">
+            <div className="px-4 py-3 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50">
+              <div className="flex items-center">
+                <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg mr-2">
+                  <Package className="h-4 w-4 text-white" />
+                </div>
+                <h3 className="text-sm font-bold text-gray-900">Batch Information</h3>
               </div>
-              <div className="p-6 space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-500">Group Type</label>
-                  <p className="mt-1 text-sm text-gray-900">{batchGroup.groupType?.replace('_', ' ')}</p>
+            </div>
+            <div className="p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-3">
+                  <label className="block text-xs font-semibold text-indigo-700 mb-1">Batch Group Number</label>
+                  <p className="text-sm font-mono font-bold text-gray-900 bg-white px-2 py-1 rounded border border-indigo-200">
+                    {batchGroup.batchGroupNumber}
+                  </p>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-500">Location</label>
-                  <div className="mt-1 flex items-center text-sm text-gray-900">
-                    <MapPin className="h-4 w-4 mr-1 text-gray-400" />
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-3">
+                  <label className="block text-xs font-semibold text-green-700 mb-1">Group Type</label>
+                  <p className="text-sm font-medium text-gray-900 bg-white px-2 py-1 rounded border border-green-200">
+                    {batchGroup.groupType?.replace('_', ' ')}
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3">
+                  <label className="block text-xs font-semibold text-purple-700 mb-1">Location</label>
+                  <div className="flex items-center text-sm font-medium text-gray-900 bg-white px-2 py-1 rounded border border-purple-200">
+                    <MapPin className="h-3 w-3 mr-1 text-purple-600" />
                     {batchGroup.location}
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-500">Manufacturing Date</label>
-                  <div className="mt-1 flex items-center text-sm text-gray-900">
-                    <Calendar className="h-4 w-4 mr-1 text-gray-400" />
+                <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-3">
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">Manufacturing Date</label>
+                  <div className="flex items-center text-sm font-medium text-gray-900 bg-white px-2 py-1 rounded border border-orange-200">
+                    <Calendar className="h-3 w-3 mr-1 text-orange-600" />
                     {formatShortDate(batchGroup.defaultManufacturingDate)}
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-500">Expiry Date</label>
-                  <div className={`mt-1 flex items-center text-sm ${batchGroup.statistics.isExpired ? 'text-red-600' : 'text-gray-900'}`}>
-                    <Calendar className="h-4 w-4 mr-1 text-gray-400" />
+                <div className="bg-gradient-to-r from-red-50 to-pink-50 rounded-lg p-3">
+                  <label className="block text-xs font-semibold text-red-700 mb-1">Expiry Date</label>
+                  <div className={`flex items-center text-sm font-medium bg-white px-2 py-1 rounded border ${batchGroup.statistics?.isExpired ? 'border-red-300 text-red-700' : 'border-red-200 text-gray-900'}`}>
+                    <Calendar className="h-3 w-3 mr-1 text-red-600" />
                     {formatShortDate(batchGroup.defaultExpiryDate)}
-                    {batchGroup.statistics.isExpired && (
-                      <span className="ml-2 text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Expired</span>
+                    {batchGroup.statistics?.isExpired && (
+                      <span className="ml-2 text-xs bg-red-100 text-red-800 px-1 py-0.5 rounded-full font-semibold">Expired</span>
                     )}
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-500">Created By</label>
-                  <div className="mt-1 flex items-center text-sm text-gray-900">
-                    <User className="h-4 w-4 mr-1 text-gray-400" />
+                <div className="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-lg p-3">
+                  <label className="block text-xs font-semibold text-cyan-700 mb-1">Created By</label>
+                  <div className="flex items-center text-sm font-medium text-gray-900 bg-white px-2 py-1 rounded border border-cyan-200">
+                    <User className="h-3 w-3 mr-1 text-cyan-600" />
                     {batchGroup.createdBy?.name || 'System'}
                   </div>
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-500">Created At</label>
-                  <p className="mt-1 text-sm text-gray-900">{formatDate(batchGroup.createdAt)}</p>
-                </div>
               </div>
             </div>
+          </div>
 
-            {/* Supplier Information */}
-            <div className="bg-white shadow rounded-lg mt-6">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900">Supplier Information</h3>
+          {/* Supplier Information */}
+          <div className="bg-white shadow-lg rounded-xl border border-green-100">
+            <div className="px-4 py-3 border-b border-green-100 bg-gradient-to-r from-green-50 to-emerald-50">
+              <div className="flex items-center">
+                <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg mr-2">
+                  <Truck className="h-4 w-4 text-white" />
+                </div>
+                <h3 className="text-sm font-bold text-gray-900">Supplier Information</h3>
               </div>
-              <div className="p-6 space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-500">Supplier Name</label>
-                  <p className="mt-1 text-sm text-gray-900">{batchGroup.supplierInfo?.supplierName || 'N/A'}</p>
+            </div>
+            <div className="p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-3">
+                  <label className="block text-xs font-semibold text-blue-700 mb-1">Supplier Name</label>
+                  <p className="text-sm font-medium text-gray-900 bg-white px-2 py-1 rounded border border-blue-200">
+                    {batchGroup.supplierInfo?.supplierName || 'N/A'}
+                  </p>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-500">Contact Info</label>
-                  <p className="mt-1 text-sm text-gray-900">{batchGroup.supplierInfo?.contactInfo || 'N/A'}</p>
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3">
+                  <label className="block text-xs font-semibold text-purple-700 mb-1">Contact Info</label>
+                  <p className="text-sm font-medium text-gray-900 bg-white px-2 py-1 rounded border border-purple-200">
+                    {batchGroup.supplierInfo?.contactInfo || 'N/A'}
+                  </p>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-500">Received Date</label>
-                  <p className="mt-1 text-sm text-gray-900">{formatShortDate(batchGroup.supplierInfo?.receivedDate)}</p>
+                <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-3">
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">Received Date</label>
+                  <p className="text-sm font-medium text-gray-900 bg-white px-2 py-1 rounded border border-orange-200">
+                    {formatShortDate(batchGroup.supplierInfo?.receivedDate)}
+                  </p>
+                </div>
+                <div className="bg-gradient-to-r from-teal-50 to-green-50 rounded-lg p-3">
+                  <label className="block text-xs font-semibold text-teal-700 mb-1">Created At</label>
+                  <p className="text-sm font-medium text-gray-900 bg-white px-2 py-1 rounded border border-teal-200">
+                    {formatDate(batchGroup.createdAt)}
+                  </p>
                 </div>
                 {batchGroup.supplierInfo?.notes && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-500">Notes</label>
-                    <p className="mt-1 text-sm text-gray-900">{batchGroup.supplierInfo.notes}</p>
+                  <div className="md:col-span-2 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-lg p-3">
+                    <label className="block text-xs font-semibold text-cyan-700 mb-1">Notes</label>
+                    <p className="text-sm font-medium text-gray-900 bg-white px-2 py-1 rounded border border-cyan-200">
+                      {batchGroup.supplierInfo.notes}
+                    </p>
                   </div>
                 )}
               </div>
             </div>
           </div>
+        </div>
 
+        <div className="grid grid-cols-1 gap-6">
           {/* Products List */}
-          <div className="lg:col-span-2">
-            <div className="bg-white shadow rounded-lg">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900">Products in this Batch Group</h3>
+          <div className="bg-white shadow-xl rounded-xl border border-indigo-100">
+            <div className="px-6 py-4 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50">
+              <div className="flex items-center">
+                <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg mr-3">
+                  <Package className="h-5 w-5 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900">Products in this Batch</h3>
               </div>
-              <div className="overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Product
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Stock Status
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Usage
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Current Stock
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {batchGroup.products.map((product, index) => (
-                        <tr key={index} className="hover:bg-gray-50">
-                          <td className="px-6 py-4">
-                            <div className="flex items-center">
-                              {product.productDetails?.images?.[0] && (
-                                <img
-                                  className="h-10 w-10 rounded object-cover mr-4"
-                                  src={product.productDetails.images[0]}
-                                  alt={product.productDetails.name}
-                                />
-                              )}
-                              <div>
-                                <div className="text-sm font-medium text-gray-900">
-                                  {product.productDetails?.name || 'Unknown Product'}
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  {product.productDetails?.category}
-                                </div>
-                                {product.isProductDeleted && (
-                                  <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Deleted</span>
-                                )}
+            </div>
+            <div className="overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        Product
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        Stock Status
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        Usage Stats
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        Current Stock
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {batchGroup.products?.map((product, index) => (
+                      <tr key={index} className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center">
+                            {product.productDetails?.images?.[0] && (
+                              <img
+                                className="h-14 w-14 rounded-xl object-cover mr-4 shadow-md border border-gray-200"
+                                src={product.productDetails.images[0]}
+                                alt={product.productDetails.name}
+                              />
+                            )}
+                            <div>
+                              <div className="text-sm font-bold text-gray-900">
+                                {product.productDetails?.name || 'Unknown Product'}
                               </div>
+                              <div className="text-sm text-gray-600 font-medium">
+                                {product.productDetails?.category}
+                              </div>
+                              {product.isProductDeleted && (
+                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-200">
+                                  Deleted
+                                </span>
+                              )}
                             </div>
-                          </td>
-                          
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            {product.variantDetails && product.variantDetails.length > 0 ? (
-                              <div className="space-y-1">
-                                {product.variantDetails.map((variant, vIndex) => (
-                                  <div key={vIndex} className="text-sm">
-                                    <div className="font-medium text-gray-700">{variant.variantName}</div>
-                                    <div className="text-gray-500">
+                          </div>
+                        </td>
+                        
+                        <td className="px-6 py-4">
+                          {product.variantDetails && product.variantDetails.length > 0 ? (
+                            <div className="space-y-3">
+                              {product.variantDetails.map((variant, vIndex) => {
+                                const stockPercentage = calculateStockPercentage(variant.availableQuantity, variant.quantity);
+                                return (
+                                  <div key={vIndex} className="border border-gray-200 rounded-lg p-3 bg-gradient-to-r from-gray-50 to-gray-100">
+                                    <div className="text-sm font-bold text-gray-800 mb-1">{variant.variantName}</div>
+                                    <div className="text-xs text-gray-600 mb-2 font-medium">
                                       Available: {variant.availableQuantity}/{variant.quantity}
                                     </div>
+                                    <div className="w-full bg-gray-200 rounded-full h-2 shadow-inner">
+                                      <div 
+                                        className={`h-2 rounded-full transition-all duration-300 ${stockPercentage > 50 ? 'bg-gradient-to-r from-green-500 to-emerald-500' : stockPercentage > 20 ? 'bg-gradient-to-r from-yellow-500 to-orange-500' : 'bg-gradient-to-r from-red-500 to-pink-500'}`}
+                                        style={{ width: `${stockPercentage}%` }}
+                                      ></div>
+                                    </div>
                                   </div>
-                                ))}
-                              </div>
-                            ) : (
-                              <div className="text-sm text-gray-900">
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-3">
+                              <div className="text-sm font-bold text-gray-900 mb-2">
                                 Available: {product.availableQuantity || 0}/{product.quantity || 0}
                               </div>
-                            )}
-                          </td>
-                          
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            {product.variantDetails && product.variantDetails.length > 0 ? (
-                              <div className="space-y-1">
-                                {product.variantDetails.map((variant, vIndex) => {
-                                  const utilizationRate = variant.quantity > 0 ? ((variant.usedQuantity / variant.quantity) * 100).toFixed(1) : 0;
-                                  return (
-                                    <div key={vIndex} className="text-sm text-gray-500">
-                                      Used: {variant.usedQuantity} ({utilizationRate}%)
-                                    </div>
-                                  );
-                                })}
+                              <div className="w-24 bg-gray-200 rounded-full h-2 shadow-inner">
+                                <div 
+                                  className={`h-2 rounded-full transition-all duration-300 ${calculateStockPercentage(product.availableQuantity, product.quantity) > 50 ? 'bg-gradient-to-r from-green-500 to-emerald-500' : 'bg-gradient-to-r from-yellow-500 to-orange-500'}`}
+                                  style={{ width: `${calculateStockPercentage(product.availableQuantity, product.quantity)}%` }}
+                                ></div>
                               </div>
-                            ) : (
-                              <div className="text-sm text-gray-500">
-                                Used: {product.usedQuantity || 0} ({product.quantity > 0 ? ((product.usedQuantity || 0) / product.quantity * 100).toFixed(1) : 0}%)
+                            </div>
+                          )}
+                        </td>
+                        
+                        <td className="px-6 py-4">
+                          {product.variantDetails && product.variantDetails.length > 0 ? (
+                            <div className="space-y-2">
+                              {product.variantDetails.map((variant, vIndex) => {
+                                const utilizationRate = variant.quantity > 0 ? ((variant.usedQuantity / variant.quantity) * 100).toFixed(1) : 0;
+                                return (
+                                  <div key={vIndex} className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-2">
+                                    <div className="text-xs font-bold text-gray-800">Used: {variant.usedQuantity}</div>
+                                    <div className="text-xs text-purple-600 font-medium">Rate: {utilizationRate}%</div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-3">
+                              <div className="text-sm font-bold text-gray-800">Used: {product.usedQuantity || 0}</div>
+                              <div className="text-xs text-orange-600 font-medium">
+                                Rate: {product.quantity > 0 ? ((product.usedQuantity || 0) / product.quantity * 100).toFixed(1) : 0}%
                               </div>
-                            )}
-                          </td>
-                          
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {product.currentStock || 0}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+                            </div>
+                          )}
+                        </td>
+                        
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {product.variantDetails && product.variantDetails.length > 0 ? (
+                            <div className="space-y-2">
+                              {product.variantDetails.map((variant, vIndex) => (
+                                <div key={vIndex} className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-3">
+                                  <div className="text-sm font-bold text-gray-900">{variant.availableQuantity || 0}</div>
+                                  <div className="text-xs text-green-600 font-medium">
+                                    ₹{variant.price || product.productDetails?.price || 0}
+                                  </div>
+                                  {variant.variantName && (
+                                    <div className="text-xs text-gray-500 font-medium">{variant.variantName}</div>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-3">
+                              <div className="text-sm font-bold text-gray-900">{product.currentStock || 0}</div>
+                              <div className="text-xs text-green-600 font-medium">
+                                ₹{product.productDetails?.price || 0}
+                              </div>
+                            </div>
+                          )}
+                        </td>
 
-              {batchGroup.products.length === 0 && (
-                <div className="text-center py-12">
-                  <Package className="mx-auto h-12 w-12 text-gray-400" />
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">No products found</h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    This batch group doesn't contain any products.
-                  </p>
-                </div>
-              )}
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <button
+                            onClick={() => navigate(`/admin/products`)}
+                            className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-all duration-200"
+                          >
+                            <Eye className="h-5 w-5" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
+
+            {(!batchGroup.products || batchGroup.products.length === 0) && (
+              <div className="text-center py-16">
+                <div className="p-4 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full inline-block mb-4">
+                  <Package className="mx-auto h-12 w-12 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">No products found</h3>
+                <p className="text-gray-600 font-medium">
+                  This batch group doesn't contain any products.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
