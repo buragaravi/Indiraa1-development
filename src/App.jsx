@@ -57,6 +57,7 @@ import WarehouseManagerDashboard from './components/subadmin/WarehouseManagerDas
 import LogisticsManagerDashboard from './components/subadmin/LogisticsManagerDashboard';
 import SubAdminRouteGuard from './components/auth/SubAdminRouteGuard';
 import SubAdminOrderDetail from './pages/subadmin/SubAdminOrderDetail';
+import SubAdminLayout from './components/subadmin/SubAdminLayout';
 // 404 Page
 import NotFound from './pages/NotFound';
 
@@ -252,9 +253,21 @@ function App() {
             {/* Sub Admin Routes - Must be before user routes */}
             <Route path="/sub-admin/login" element={<SubAdminLogin />} />
             <Route path="/sub-admin/verify-email" element={<SubAdminEmailVerification />} />
-            <Route path="/sub-admin/warehouse_manager" element={<WarehouseManagerDashboard />} />
-            <Route path="/sub-admin/warehouse_manager/batches" element={<WarehouseBatchDashboard />} />
-            <Route path="/sub-admin/warehouse_manager/batches/:id" element={<WarehouseBatchDetails />} />
+            <Route path="/sub-admin/warehouse_manager" element={
+              <SubAdminLayout>
+                <WarehouseManagerDashboard />
+              </SubAdminLayout>
+            } />
+            <Route path="/sub-admin/warehouse_manager/batches" element={
+              <SubAdminLayout>
+                <WarehouseBatchDashboard />
+              </SubAdminLayout>
+            } />
+            <Route path="/sub-admin/warehouse_manager/batches/:id" element={
+              <SubAdminLayout>
+                <WarehouseBatchDetails />
+              </SubAdminLayout>
+            } />
             <Route path="/sub-admin/logistics_manager" element={<LogisticsManagerDashboard />} />
             <Route path="/sub-admin/dashboard" element={<SubAdminLogin />} /> {/* Redirect to login if no specific role */}
             <Route path="/dashboard/orders/:orderId" element={<SubAdminOrderDetail />} />
