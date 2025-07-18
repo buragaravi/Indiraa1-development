@@ -14,7 +14,10 @@ import {
   FiTrash2,
   FiLoader,
   FiPackage,
-  FiGrid
+  FiGrid,
+  FiCalendar,
+  FiUser,
+  FiSettings
 } from 'react-icons/fi';
 
 const BulkUpload = ({ onSuccess, onClose }) => {
@@ -25,9 +28,24 @@ const BulkUpload = ({ onSuccess, onClose }) => {
   const [previewData, setPreviewData] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [uploadResults, setUploadResults] = useState(null);
-  const [step, setStep] = useState(1); // 1: Upload, 2: Preview, 3: Process, 4: Results
+  const [step, setStep] = useState(0);
   const [errors, setErrors] = useState([]);
   const [imageMatching, setImageMatching] = useState({});
+
+  // New batch configuration state
+  const [batchConfig, setBatchConfig] = useState({
+    sameDatesForAll: false,
+    differentSuppliers: false,
+    globalDates: {
+      manufacturingDate: '',
+      expiryDate: '',
+      bestBeforeDate: ''
+    },
+    globalSupplier: {
+      supplierName: 'Indiraa Foods Pvt Ltd',
+      contactInfo: 'info@indiraafoods.com'
+    }
+  });
 
   // Refs
   const csvInputRef = useRef(null);
@@ -35,7 +53,7 @@ const BulkUpload = ({ onSuccess, onClose }) => {
 
   // Sample CSV structure for download
   const generateSampleCSV = () => {
-    const sampleData = [
+    const baseSampleData = [
       {
         name: 'Apple Juice',
         description: 'Fresh organic apple juice with natural sweetness',
@@ -68,12 +86,43 @@ const BulkUpload = ({ onSuccess, onClose }) => {
       }
     ];
 
+    // Add batch fields based on configuration
+    const sampleData = baseSampleData.map(product => {
+      const productWithBatch = { ...product };
+
+      // Add date fields if needed
+      if (!batchConfig.sameDatesForAll) {
+        productWithBatch.manufacturingDate = '2024-07-18';
+        productWithBatch.expiryDate = '2025-06-18';
+        productWithBatch.bestBeforeDate = '2025-05-18';
+        
+        // Add variant-specific dates for products with variants
+        if (product.hasVariants) {
+          productWithBatch['manufacturingDate_500ml'] = '2024-07-18';
+          productWithBatch['expiryDate_500ml'] = '2025-06-18';
+          productWithBatch['manufacturingDate_1L'] = '2024-07-20';
+          productWithBatch['expiryDate_1L'] = '2025-06-20';
+        }
+      }
+
+      // Add supplier fields if needed
+      if (batchConfig.differentSuppliers) {
+        productWithBatch.supplierName = product.name.includes('Apple') ? 'Fresh Fruits Ltd' : 'Tropical Suppliers';
+        productWithBatch.supplierContact = product.name.includes('Apple') ? 'supplier@freshfruits.com' : 'contact@tropical.com';
+      }
+
+      // Always include location and other optional batch fields
+      productWithBatch.location = product.name.includes('Apple') ? 'Warehouse A' : 'Warehouse B';
+      
+      return productWithBatch;
+    });
+
     const csv = Papa.unparse(sampleData);
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'bulk_upload_sample.csv';
+    a.download = `bulk_upload_sample_${batchConfig.sameDatesForAll ? 'global_dates' : 'product_dates'}_${batchConfig.differentSuppliers ? 'diff_suppliers' : 'same_supplier'}.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
   };
@@ -166,7 +215,29 @@ const BulkUpload = ({ onSuccess, onClose }) => {
           originalPrice: row.originalPrice ? parseFloat(row.originalPrice) : null,
           stock: parseInt(row.stock) || 0,
           hasVariants: (row.hasVariants === 'true' || row.hasVariants === true) && variants.length > 0,
-          variants: variants
+          variants: variants,
+          
+          // Process batch data with configuration-based defaults
+          manufacturingDate: row.manufacturingDate || (batchConfig.sameDatesForAll ? batchConfig.globalDates.manufacturingDate : null),
+          expiryDate: row.expiryDate || (batchConfig.sameDatesForAll ? batchConfig.globalDates.expiryDate : null),
+          bestBeforeDate: row.bestBeforeDate || (batchConfig.sameDatesForAll ? batchConfig.globalDates.bestBeforeDate : null),
+          
+          // Supplier information
+          supplierName: row.supplierName || (!batchConfig.differentSuppliers ? batchConfig.globalSupplier.name : null),
+          supplierContact: row.supplierContact || row.contactInfo || (!batchConfig.differentSuppliers ? batchConfig.globalSupplier.contactInfo : null),
+          
+          // Optional batch fields
+          location: row.location || 'Main Warehouse',
+          qualityChecked: row.qualityChecked === 'true' || row.qualityChecked === true,
+          qualityNotes: row.qualityNotes || '',
+          
+          // Add variant-specific batch dates
+          ...Object.keys(row).reduce((acc, key) => {
+            if (key.startsWith('manufacturingDate_') || key.startsWith('expiryDate_') || key.startsWith('bestBeforeDate_')) {
+              acc[key] = row[key];
+            }
+            return acc;
+          }, {})
         };
 
         processed.push(product);
@@ -242,7 +313,7 @@ const BulkUpload = ({ onSuccess, onClose }) => {
     setCsvFile(null);
     setParsedData([]);
     setPreviewData([]);
-    setStep(1);
+    setStep(0);
     setErrors([]);
   };
 
@@ -263,13 +334,27 @@ const BulkUpload = ({ onSuccess, onClose }) => {
       // Add parsed products data
       formData.append('products', JSON.stringify(parsedData));
       
+      // Add batch configuration
+      formData.append('batchConfig', JSON.stringify(batchConfig));
+      
       // Add image files
       imageFiles.forEach((file, index) => {
         formData.append('images', file);
       });
 
+      // Get the authentication token
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setErrors(['Authentication token not found. Please login again.']);
+        setStep(2);
+        return;
+      }
+
       const response = await fetch('http://localhost:5001/api/products/bulk-upload', {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -304,7 +389,7 @@ const BulkUpload = ({ onSuccess, onClose }) => {
     setParsedData([]);
     setPreviewData([]);
     setUploadResults(null);
-    setStep(1);
+    setStep(0);
     setErrors([]);
     setImageMatching({});
     
@@ -332,10 +417,11 @@ const BulkUpload = ({ onSuccess, onClose }) => {
             <div className="absolute top-6 left-6 right-6 h-1 bg-gray-200 rounded-full"></div>
             <div 
               className="absolute top-6 left-6 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-500"
-              style={{ width: `${Math.min(((step - 1) / 3) * 100, 100)}%` }}
+              style={{ width: `${Math.min((step / 4) * 100, 100)}%` }}
             />
             
             {[
+              { number: 0, label: 'Batch Config', icon: FiGrid },
               { number: 1, label: 'Upload Files', icon: FiUpload },
               { number: 2, label: 'Preview Data', icon: FiEye },
               { number: 3, label: 'Processing', icon: FiLoader },
@@ -383,6 +469,216 @@ const BulkUpload = ({ onSuccess, onClose }) => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Step 0: Batch Configuration */}
+        {step === 0 && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-white/30"
+          >
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-full mb-4">
+                <FiGrid className="w-8 h-8" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Batch Configuration</h2>
+              <p className="text-gray-600">Configure batch tracking settings for your products</p>
+              <div className="mt-4 p-4 bg-blue-50/50 rounded-lg border border-blue-200/50">
+                <p className="text-sm text-blue-800">
+                  <strong>Note:</strong> Your configuration will affect the CSV template structure. 
+                  Download the sample CSV after configuring to get the correct format.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              {/* Manufacturing & Expiry Dates Configuration */}
+              <div className="p-6 bg-blue-50/50 rounded-2xl border border-blue-200/50">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                  <FiCalendar className="w-5 h-5 mr-2 text-blue-600" />
+                  Manufacturing & Expiry Dates
+                </h3>
+                
+                <div className="space-y-4">
+                  <label className="flex items-center space-x-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="dateConfig"
+                      checked={batchConfig.sameDatesForAll}
+                      onChange={() => setBatchConfig(prev => ({
+                        ...prev,
+                        sameDatesForAll: true
+                      }))}
+                      className="text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="text-gray-700">Same dates for all products</span>
+                  </label>
+                  
+                  {batchConfig.sameDatesForAll && (
+                    <div className="ml-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Manufacturing Date
+                        </label>
+                        <input
+                          type="date"
+                          value={batchConfig.globalDates.manufacturing}
+                          onChange={(e) => setBatchConfig(prev => ({
+                            ...prev,
+                            globalDates: {
+                              ...prev.globalDates,
+                              manufacturing: e.target.value
+                            }
+                          }))}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Expiry Date
+                        </label>
+                        <input
+                          type="date"
+                          value={batchConfig.globalDates.expiry}
+                          onChange={(e) => setBatchConfig(prev => ({
+                            ...prev,
+                            globalDates: {
+                              ...prev.globalDates,
+                              expiry: e.target.value
+                            }
+                          }))}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      </div>
+                    </div>
+                  )}
+                  
+                  <label className="flex items-center space-x-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="dateConfig"
+                      checked={!batchConfig.sameDatesForAll}
+                      onChange={() => setBatchConfig(prev => ({
+                        ...prev,
+                        sameDatesForAll: false
+                      }))}
+                      className="text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="text-gray-700">Different dates per product (specify in CSV)</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Supplier Configuration */}
+              <div className="p-6 bg-green-50/50 rounded-2xl border border-green-200/50">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                  <FiUser className="w-5 h-5 mr-2 text-green-600" />
+                  Supplier Information
+                </h3>
+                
+                <div className="space-y-4">
+                  <label className="flex items-center space-x-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="supplierConfig"
+                      checked={!batchConfig.differentSuppliers}
+                      onChange={() => setBatchConfig(prev => ({
+                        ...prev,
+                        differentSuppliers: false
+                      }))}
+                      className="text-green-600 focus:ring-green-500"
+                    />
+                    <span className="text-gray-700">Same supplier for all products</span>
+                  </label>
+                  
+                  {!batchConfig.differentSuppliers && (
+                    <div className="ml-6">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Supplier Name
+                      </label>
+                      <input
+                        type="text"
+                        value={batchConfig.globalSupplier.name}
+                        onChange={(e) => setBatchConfig(prev => ({
+                          ...prev,
+                          globalSupplier: {
+                            ...prev.globalSupplier,
+                            name: e.target.value
+                          }
+                        }))}
+                        placeholder="Enter supplier name"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      />
+                    </div>
+                  )}
+                  
+                  <label className="flex items-center space-x-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="supplierConfig"
+                      checked={batchConfig.differentSuppliers}
+                      onChange={() => setBatchConfig(prev => ({
+                        ...prev,
+                        differentSuppliers: true
+                      }))}
+                      className="text-green-600 focus:ring-green-500"
+                    />
+                    <span className="text-gray-700">Different suppliers per product (specify in CSV)</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-between items-center">
+                <button
+                  onClick={onClose}
+                  className="px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  Cancel
+                </button>
+                
+                <div className="flex gap-3">
+                  <button
+                    onClick={generateSampleCSV}
+                    className="px-6 py-3 border border-blue-500 text-blue-600 rounded-xl hover:bg-blue-50 transition-all duration-200 font-medium flex items-center gap-2"
+                  >
+                    <FiDownload className="w-4 h-4" />
+                    Download Sample CSV
+                  </button>
+                  <button
+                    onClick={() => {
+                      // Validate configuration before proceeding
+                      const errors = [];
+                      if (batchConfig.sameDatesForAll) {
+                        if (!batchConfig.globalDates.manufacturing) {
+                          errors.push('Manufacturing date is required');
+                        }
+                        if (!batchConfig.globalDates.expiry) {
+                          errors.push('Expiry date is required');
+                        }
+                      }
+                      if (!batchConfig.differentSuppliers && !batchConfig.globalSupplier.name.trim()) {
+                        errors.push('Supplier name is required');
+                      }
+                      
+                      if (errors.length > 0) {
+                        setErrors(errors);
+                        return;
+                      }
+                      
+                      setErrors([]);
+                      setStep(1);
+                    }}
+                    className="px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl hover:from-blue-600 hover:to-indigo-600 transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                  >
+                    Continue to Upload
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         {/* Step 1: File Upload */}
         {step === 1 && (
