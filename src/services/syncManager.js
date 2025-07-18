@@ -221,7 +221,7 @@ class SyncManager {
 
   // Sync implementations for different actions
   async syncAddToCart(data) {
-    const response = await fetch('http://localhost:5001/api/products/cart/add', {
+    const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -238,7 +238,7 @@ class SyncManager {
   }
 
   async syncRemoveFromCart(data) {
-    const response = await fetch('http://localhost:5001/api/products/cart/remove', {
+    const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/remove', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -255,7 +255,7 @@ class SyncManager {
   }
 
   async syncUpdateCart(data) {
-    const response = await fetch('http://localhost:5001/api/products/cart/update', {
+    const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -272,7 +272,7 @@ class SyncManager {
   }
 
   async syncAddToWishlist(data) {
-    const response = await fetch('http://localhost:5001/api/products/wishlist/add', {
+    const response = await fetch('https://indiraa1-backend.onrender.com/api/products/wishlist/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -289,7 +289,7 @@ class SyncManager {
   }
 
   async syncRemoveFromWishlist(data) {
-    const response = await fetch('http://localhost:5001/api/products/wishlist/remove', {
+    const response = await fetch('https://indiraa1-backend.onrender.com/api/products/wishlist/remove', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -306,7 +306,7 @@ class SyncManager {
   }
 
   async syncPlaceOrder(data) {
-    const response = await fetch('http://localhost:5001/api/orders', {
+    const response = await fetch('https://indiraa1-backend.onrender.com/api/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -323,7 +323,7 @@ class SyncManager {
   }
 
   async syncUpdateProfile(data) {
-    const response = await fetch('http://localhost:5001/api/auth/profile', {
+    const response = await fetch('https://indiraa1-backend.onrender.com/api/auth/profile', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -340,7 +340,7 @@ class SyncManager {
   }
 
   async syncSubmitReview(data) {
-    const response = await fetch(`http://localhost:5001/api/products/${data.productId}/reviews`, {
+    const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/${data.productId}/reviews`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
