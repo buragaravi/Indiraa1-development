@@ -54,6 +54,38 @@ body {
   display: none;  /* Safari and Chrome */
 }
 
+/* Custom elegant scrollbars with green theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(240, 253, 244, 0.3); /* Very light green background */
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4ade80, #22c55e); /* Green gradient */
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #22c55e, #16a34a); /* Darker green on hover */
+  box-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(240, 253, 244, 0.3);
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4ade80 rgba(240, 253, 244, 0.3);
+}
+
 /* Smooth scroll behavior */
 .smooth-scroll {
   scroll-behavior: smooth;

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { FiHome, FiList, FiLogOut } from 'react-icons/fi';
+import { FiHome, FiList, FiLogOut, FiTrendingUp } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 const LogisticsManagerSidebar = ({ activeTab, setActiveTab }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -32,12 +34,21 @@ const LogisticsManagerSidebar = ({ activeTab, setActiveTab }) => {
     {
       id: 'dashboard',
       name: 'Dashboard',
-      icon: FiHome
+      icon: FiHome,
+      type: 'tab'
     },
     {
       id: 'orders',
       name: 'Orders',
-      icon: FiList
+      icon: FiList,
+      type: 'tab'
+    },
+    {
+      id: 'revenue-analytics',
+      name: 'Revenue Analytics',
+      icon: FiTrendingUp,
+      type: 'route',
+      route: '/sub-admin/revenue-analytics'
     }
   ];
 
@@ -91,8 +102,8 @@ const LogisticsManagerSidebar = ({ activeTab, setActiveTab }) => {
                 <FiList className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-800 leading-tight">Logistics Manager</h1>
-                <p className="text-sm text-gray-600">Order Analytics</p>
+                <h1 className="text-lg font-bold text-gray-800 leading-tight">Logistics Manager</h1>
+                <p className="text-xs text-gray-600">Order Analytics</p>
               </div>
             </div>
             <nav className="space-y-3">
@@ -102,15 +113,19 @@ const LogisticsManagerSidebar = ({ activeTab, setActiveTab }) => {
                   <button
                     key={item.id}
                     onClick={() => {
-                      setActiveTab(item.id);
+                      if (item.type === 'route') {
+                        navigate(item.route);
+                      } else {
+                        setActiveTab(item.id);
+                      }
                       if (isMobile) {
                         setIsCollapsed(true);
                       }
                     }}
-                    className={`w-full flex items-center px-4 py-4 rounded-2xl transition-all duration-300 group relative ${isActive(item.id) ? 'bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-lg transform scale-105' : 'text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 hover:shadow-md hover:scale-102'}`}
+                    className={`w-full flex items-center px-4 py-3 rounded-xl transition-all duration-300 group relative ${isActive(item.id) ? 'bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-lg transform scale-105' : 'text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 hover:shadow-md hover:scale-102'}`}
                   >
-                    <IconComponent className={`w-6 h-6 mr-4 transition-all duration-300 ${isActive(item.id) ? 'text-white' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110'}`} />
-                    <span className="font-semibold text-base flex-1">{item.name}</span>
+                    <IconComponent className={`w-5 h-5 mr-3 transition-all duration-300 ${isActive(item.id) ? 'text-white' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110'}`} />
+                    <span className="font-medium text-sm flex-1">{item.name}</span>
                     {isActive(item.id) && (
                       <div className="active-indicator bg-white animate-pulse"></div>
                     )}
@@ -127,10 +142,10 @@ const LogisticsManagerSidebar = ({ activeTab, setActiveTab }) => {
                       setIsCollapsed(true);
                     }
                   }}
-                  className="w-full flex items-center px-4 py-4 rounded-2xl text-gray-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 hover:text-red-600 transition-all duration-300 group hover:scale-102"
+                  className="w-full flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 hover:text-red-600 transition-all duration-300 group hover:scale-102"
                 >
-                  <FiLogOut className="w-6 h-6 mr-4 text-gray-500 group-hover:text-red-600 transition-all duration-300 group-hover:scale-110" />
-                  <span className="font-semibold text-base">Logout</span>
+                  <FiLogOut className="w-5 h-5 mr-3 text-gray-500 group-hover:text-red-600 transition-all duration-300 group-hover:scale-110" />
+                  <span className="font-medium text-sm">Logout</span>
                 </button>
               </div>
             </div>

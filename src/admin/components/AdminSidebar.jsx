@@ -10,7 +10,8 @@ import {
   PackageIcon,
   BannersIcon,
   SubAdminIcon,
-  BatchIcon
+  BatchIcon,
+  RevenueAnalyticsIcon
 } from './AdminIcons';
 
 const AdminSidebar = () => {
@@ -90,6 +91,11 @@ const AdminSidebar = () => {
       path: '/admin/coupons',
       name: 'Coupons',
       icon: CouponsIcon
+    },
+    {
+      path: '/admin/revenue-analytics',
+      name: 'Revenue Analytics',
+      icon: RevenueAnalyticsIcon
     }
   ];
 
@@ -147,8 +153,8 @@ const AdminSidebar = () => {
                 <DashboardIcon className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-800 leading-tight">Admin Panel</h1>
-                <p className="text-sm text-gray-600">Management Console</p>
+                <h1 className="text-lg font-bold text-gray-800 leading-tight">Admin Panel</h1>
+                <p className="text-xs text-gray-600">Management Console</p>
               </div>
             </div>
 
@@ -164,19 +170,20 @@ const AdminSidebar = () => {
                         setIsCollapsed(true);
                       }
                     }}
-                    className={`flex items-center px-4 py-4 rounded-2xl transition-all duration-300 group relative ${
+                    className={`flex items-center px-4 py-3 rounded-xl transition-all duration-300 group relative ${
                       isActive(item.path)
                         ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg transform scale-105'
                         : 'text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 hover:shadow-md hover:scale-102'
                     }`}
                   >
                     <IconComponent
-                      className={`w-6 h-6 mr-4 transition-all duration-300 ${
+                      className={`w-5 h-5 mr-3 transition-all duration-300 ${
                         isActive(item.path)
                           ? 'text-white'
                           : 'text-gray-500 group-hover:text-green-600 group-hover:scale-110'
                       }`}
-                    />                    <span className="font-semibold text-base flex-1">{item.name}</span>
+                    />
+                    <span className="font-medium text-sm flex-1">{item.name}</span>
                     {isActive(item.path) && (
                       <div className="active-indicator bg-white animate-pulse"></div>
                     )}
@@ -194,12 +201,12 @@ const AdminSidebar = () => {
                       setIsCollapsed(true);
                     }
                   }}
-                  className="w-full flex items-center px-4 py-4 rounded-2xl text-gray-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 hover:text-red-600 transition-all duration-300 group hover:scale-102"
+                  className="w-full flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 hover:text-red-600 transition-all duration-300 group hover:scale-102"
                 >
-                  <svg className="w-6 h-6 mr-4 text-gray-500 group-hover:text-red-600 transition-all duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 mr-3 text-gray-500 group-hover:text-red-600 transition-all duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                   </svg>
-                  <span className="font-semibold text-base">Logout</span>
+                  <span className="font-medium text-sm">Logout</span>
                 </button>
               </div>
             </div>

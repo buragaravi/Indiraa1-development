@@ -9,7 +9,8 @@ import {
   FiBarChart,
   FiSettings,
   FiLogOut,
-  FiGrid
+  FiGrid,
+  FiTrendingUp
 } from 'react-icons/fi';
 
 const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
@@ -91,6 +92,13 @@ const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
       type: 'tab'
     },
     {
+      id: 'revenue-analytics',
+      name: 'Revenue Analytics',
+      icon: FiTrendingUp,
+      type: 'route',
+      route: '/sub-admin/revenue-analytics'
+    },
+    {
       id: 'settings',
       name: 'Settings',
       icon: FiSettings,
@@ -162,8 +170,8 @@ const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
                 <FiPackage className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-800 leading-tight">Warehouse Manager</h1>
-                <p className="text-sm text-gray-600">Inventory Control</p>
+                <h1 className="text-lg font-bold text-gray-800 leading-tight">Warehouse Manager</h1>
+                <p className="text-xs text-gray-600">Inventory Control</p>
               </div>
             </div>
 
@@ -193,20 +201,20 @@ const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
                         }
                       }
                     }}
-                    className={`w-full flex items-center px-4 py-4 rounded-2xl transition-all duration-300 group relative ${
+                    className={`w-full flex items-center px-4 py-3 rounded-xl transition-all duration-300 group relative ${
                       isActiveItem
                         ? 'bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-lg transform scale-105'
                         : 'text-gray-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-green-50 hover:shadow-md hover:scale-102'
                     }`}
                   >
                     <IconComponent
-                      className={`w-6 h-6 mr-4 transition-all duration-300 ${
+                      className={`w-5 h-5 mr-3 transition-all duration-300 ${
                         isActiveItem
                           ? 'text-white'
                           : 'text-gray-500 group-hover:text-emerald-600 group-hover:scale-110'
                       }`}
                     />
-                    <span className="font-semibold text-base flex-1">{item.name}</span>
+                    <span className="font-medium text-sm flex-1">{item.name}</span>
                     {isActiveItem && (
                       <div className="active-indicator bg-white animate-pulse"></div>
                     )}
@@ -226,10 +234,10 @@ const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
                       setIsCollapsed(true);
                     }
                   }}
-                  className="w-full flex items-center px-4 py-4 rounded-2xl text-gray-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 hover:text-red-600 transition-all duration-300 group hover:scale-102"
+                  className="w-full flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 hover:text-red-600 transition-all duration-300 group hover:scale-102"
                 >
-                  <FiLogOut className="w-6 h-6 mr-4 text-gray-500 group-hover:text-red-600 transition-all duration-300 group-hover:scale-110" />
-                  <span className="font-semibold text-base">Logout</span>
+                  <FiLogOut className="w-5 h-5 mr-3 text-gray-500 group-hover:text-red-600 transition-all duration-300 group-hover:scale-110" />
+                  <span className="font-medium text-sm">Logout</span>
                 </button>
               </div>
             </div>

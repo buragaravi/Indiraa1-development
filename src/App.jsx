@@ -40,6 +40,7 @@ import AdminUsers from './admin/pages/AdminUsers';
 import AdminCoupons from './admin/pages/AdminCoupons';
 import AdminComboPacks from './admin/pages/AdminComboPacks';
 import AdminBanners from './admin/pages/AdminBanners';
+import AdminRevenueAnalytics from './admin/pages/AdminRevenueAnalytics';
 import AdminSidebar from './admin/components/AdminSidebar';
 import AdminDashboard from './pages/AdminDashboard';
 import BulkUploadHome from './pages/BulkUploadHome';
@@ -57,6 +58,7 @@ import WarehouseManagerDashboard from './components/subadmin/WarehouseManagerDas
 import LogisticsManagerDashboard from './components/subadmin/LogisticsManagerDashboard';
 import SubAdminRouteGuard from './components/auth/SubAdminRouteGuard';
 import SubAdminOrderDetail from './pages/subadmin/SubAdminOrderDetail';
+import SubAdminRevenueAnalyticsPage from './pages/subadmin/SubAdminRevenueAnalytics';
 import SubAdminLayout from './components/subadmin/SubAdminLayout';
 // 404 Page
 import NotFound from './pages/NotFound';
@@ -234,6 +236,11 @@ function App() {
                 <AdminBanners />
               </AdminLayout>
             } />
+            <Route path="/admin/revenue-analytics" element={
+              <AdminLayout>
+                <AdminRevenueAnalytics />
+              </AdminLayout>
+            } />
             <Route path="/admin/sub-admins" element={
               <AdminLayout>
                 <SubAdminManagement />
@@ -253,11 +260,7 @@ function App() {
             {/* Sub Admin Routes - Must be before user routes */}
             <Route path="/sub-admin/login" element={<SubAdminLogin />} />
             <Route path="/sub-admin/verify-email" element={<SubAdminEmailVerification />} />
-            <Route path="/sub-admin/warehouse_manager" element={
-              <SubAdminLayout>
-                <WarehouseManagerDashboard />
-              </SubAdminLayout>
-            } />
+            <Route path="/sub-admin/warehouse_manager" element={<WarehouseManagerDashboard />} />
             <Route path="/sub-admin/warehouse_manager/batches" element={
               <SubAdminLayout>
                 <WarehouseBatchDashboard />
@@ -269,6 +272,7 @@ function App() {
               </SubAdminLayout>
             } />
             <Route path="/sub-admin/logistics_manager" element={<LogisticsManagerDashboard />} />
+            <Route path="/sub-admin/revenue-analytics" element={<SubAdminRevenueAnalyticsPage />} />
             <Route path="/sub-admin/dashboard" element={<SubAdminLogin />} /> {/* Redirect to login if no specific role */}
             <Route path="/dashboard/orders/:orderId" element={<SubAdminOrderDetail />} />
             

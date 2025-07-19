@@ -11,6 +11,8 @@ const SubAdminLayout = ({ children, userRole = 'warehouse_manager' }) => {
     const pathname = location.pathname;
     if (pathname.includes('/batches')) {
       setActiveTab('batches');
+    } else if (pathname.includes('/revenue-analytics')) {
+      setActiveTab('revenue-analytics');
     } else if (pathname.includes('/warehouse_manager')) {
       setActiveTab('dashboard');
     }
