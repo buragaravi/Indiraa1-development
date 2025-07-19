@@ -40,8 +40,8 @@ const LogisticsManagerDashboard = () => {
       };
       // Fetch orders and average rating
       const [ordersRes, ratingRes] = await Promise.allSettled([
-        fetch('https://indiraa1-backend.onrender.com/api/products/orders/all', { headers }),
-        fetch('https://indiraa1-backend.onrender.com/api/products/orders/ratings/average', { headers })
+        fetch('http://localhost:5001/api/products/orders/all', { headers }),
+        fetch('http://localhost:5001/api/products/orders/ratings/average', { headers })
       ]);
       let totalOrders = 0, pendingOrders = 0, deliveredOrders = 0, shippedOrders = 0, recentOrders = [];
       if (ordersRes.status === 'fulfilled' && ordersRes.value.ok) {

@@ -71,7 +71,7 @@ const WarehouseBatchDashboard = () => {
       
       console.log('[ADMIN] Fetching analytics data...');
       
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/batches/batch-groups/analytics', {
+      const response = await fetch('http://localhost:5001/api/batches/batch-groups/analytics', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ const WarehouseBatchDashboard = () => {
         if (value) queryParams.append(key, value);
       });
 
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/batches/batch-groups?${queryParams}`, {
+      const response = await fetch(`http://localhost:5001/api/batches/batch-groups?${queryParams}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

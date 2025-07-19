@@ -24,7 +24,7 @@ const SubAdminEmailVerification = () => {
         console.log('[EMAIL VERIFICATION] Verifying email:', email);
 
         const response = await fetch(
-          `https://indiraa1-backend.onrender.com/api/sub-admin/verify-email?token=${token}&email=${encodeURIComponent(email)}`,
+          `http://localhost:5001/api/sub-admin/verify-email?token=${token}&email=${encodeURIComponent(email)}`,
           {
             method: 'GET',
             headers: {
