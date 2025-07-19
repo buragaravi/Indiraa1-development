@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import ReturnOrderModal from '../components/ReturnOrderModal';
 import { 
   FiArrowLeft,
   FiShoppingBag, 
@@ -30,6 +31,7 @@ const OrderDetail = () => {
   const [error, setError] = useState(null);
   const [isDeliverySlotModalOpen, setIsDeliverySlotModalOpen] = useState(false);
   const [deliverySlotLoading, setDeliverySlotLoading] = useState(false);
+  const [returnModalOpen, setReturnModalOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -43,7 +45,7 @@ const OrderDetail = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:5001/api/products/orders/user/${orderId}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/user/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -76,7 +78,7 @@ const OrderDetail = () => {
     console.log('Sending delivery slot update:', { date: selectedDate, timeSlot: selectedTimeSlot });
     
     try {
-      const response = await fetch(`http://localhost:5001/api/orders/${orderId}/delivery-slot`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/orders/${orderId}/delivery-slot`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -880,11 +882,21 @@ const OrderDetail = () => {
                 <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg">
                   <FiDownload className="w-4 h-4" />
                   Download Invoice
-                </button>                {order.status?.toLowerCase() === 'delivered' && (
-                  <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-yellow-500 to-orange-600 text-white rounded-xl hover:from-yellow-600 hover:to-orange-700 transition-all duration-200 shadow-lg">
-                    <FiStar className="w-4 h-4" />
-                    Rate & Review
-                  </button>
+                </button>
+                {order.status?.toLowerCase() === 'delivered' && (
+                  <>
+                    <button 
+                      onClick={() => setReturnModalOpen(true)}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-xl hover:from-purple-600 hover:to-indigo-700 transition-all duration-200 shadow-lg"
+                    >
+                      <FiRefreshCw className="w-4 h-4" />
+                      Return Order
+                    </button>
+                    <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-yellow-500 to-orange-600 text-white rounded-xl hover:from-yellow-600 hover:to-orange-700 transition-all duration-200 shadow-lg">
+                      <FiStar className="w-4 h-4" />
+                      Rate & Review
+                    </button>
+                  </>
                 )}
                 {(order.status?.toLowerCase() === 'pending' || order.status?.toLowerCase() === 'confirmed') && (
                   <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-lg">
@@ -937,6 +949,13 @@ const OrderDetail = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      
+      {/* Return Order Modal */}
+      <ReturnOrderModal
+        isOpen={returnModalOpen}
+        onClose={() => setReturnModalOpen(false)}
+        orderId={orderId}
+      />
     </div>
   );
 };

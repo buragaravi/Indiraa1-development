@@ -19,7 +19,7 @@ const ReferralCodeInput = ({ onCodeChange, initialCode = '' }) => {
 
     setValidationStatus('validating');
     try {
-      const response = await fetch(`http://localhost:5001/api/referral/validate`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/referral/validate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

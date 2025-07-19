@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import ReturnOrderModal from '../components/ReturnOrderModal';
 import { 
   FiShoppingBag, 
   FiPackage, 
@@ -13,7 +14,8 @@ import {
   FiDollarSign,
   FiShoppingCart,
   FiFilter,
-  FiRefreshCw
+  FiRefreshCw,
+  FiRotateCcw
 } from 'react-icons/fi';
 
 const Orders = () => {
@@ -24,6 +26,8 @@ const Orders = () => {
   const [error, setError] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
+  const [returnModalOpen, setReturnModalOpen] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
   const statusOptions = [
     { value: 'all', label: 'All Orders', color: 'gray' },
     { value: 'Pending', label: 'Pending', color: 'orange' },
@@ -56,7 +60,7 @@ const Orders = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:5001/api/products/orders/user', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/orders/user', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -102,6 +106,16 @@ const Orders = () => {
     });
 
     setFilteredOrders(filtered);
+  };
+
+  const handleReturnOrder = (orderId) => {
+    setSelectedOrderId(orderId);
+    setReturnModalOpen(true);
+  };
+
+  const handleCloseReturnModal = () => {
+    setReturnModalOpen(false);
+    setSelectedOrderId(null);
   };
   const getStatusIcon = (status) => {
     switch (status) {
@@ -403,6 +417,37 @@ const Orders = () => {
                     </div>
                   </div>
                 )}
+
+                {/* Action Buttons for Delivered Orders */}
+                {order.status === 'delivered' && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-700">Quick Actions:</span>
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleReturnOrder(order._id);
+                          }}
+                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-md hover:shadow-lg text-sm font-medium"
+                        >
+                          <FiRotateCcw className="w-4 h-4" />
+                          Return Order
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/orders/${order._id}`);
+                          }}
+                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-md hover:shadow-lg text-sm font-medium"
+                        >
+                          <FiEye className="w-4 h-4" />
+                          View Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
@@ -440,6 +485,13 @@ const Orders = () => {
           </motion.div>
         )}
       </div>
+      
+      {/* Return Order Modal */}
+      <ReturnOrderModal
+        isOpen={returnModalOpen}
+        onClose={handleCloseReturnModal}
+        orderId={selectedOrderId}
+      />
     </div>
   );
 };

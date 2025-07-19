@@ -48,7 +48,7 @@ const AdminReturnManagement = () => {
   });
   const [actionLoading, setActionLoading] = useState(false);
 
-  const API_URL = 'http://localhost:5001';
+  const API_URL = 'https://indiraa1-backend.onrender.com';
 
   // Get admin token
   const getAdminToken = () => {

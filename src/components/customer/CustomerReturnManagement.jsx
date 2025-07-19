@@ -35,7 +35,7 @@ const CustomerReturnManagement = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [imageUploading, setImageUploading] = useState(false);
 
-  const API_URL = 'http://localhost:5001';
+  const API_URL = 'https://indiraa1-backend.onrender.com';
 
   // Get user token
   const getToken = () => {

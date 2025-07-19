@@ -55,7 +55,7 @@ const Profile = () => {
   const fetchRecentOrders = async () => {
     setOrdersLoading(true);
     try {
-      const response = await fetch('http://localhost:5001/api/products/orders/user', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/orders/user', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -77,7 +77,7 @@ const Profile = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/auth/me', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -128,7 +128,7 @@ const Profile = () => {
     setSuccess(null);
 
     try {
-      const response = await fetch('http://localhost:5001/api/auth/me', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/auth/me', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -161,7 +161,7 @@ const Profile = () => {
     setSuccess(null);
 
     try {
-      const response = await fetch('http://localhost:5001/api/auth/address/add', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/auth/address/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -13,7 +13,7 @@ const NavbarWalletBalance = () => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const response = await fetch('http://localhost:5001/api/wallet/balance', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/wallet/balance', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

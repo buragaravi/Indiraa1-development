@@ -17,7 +17,7 @@ const ReferralLeaderboard = () => {
         throw new Error('No authentication token found');
       }
 
-      const response = await fetch(`http://localhost:5001/api/referral/leaderboard?timeframe=${timeframe}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/referral/leaderboard?timeframe=${timeframe}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
