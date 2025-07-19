@@ -11,7 +11,9 @@ import {
   BannersIcon,
   SubAdminIcon,
   BatchIcon,
-  RevenueAnalyticsIcon
+  RevenueAnalyticsIcon,
+  ReturnIcon,
+  AnalyticsIcon
 } from './AdminIcons';
 
 const AdminSidebar = () => {
@@ -76,6 +78,16 @@ const AdminSidebar = () => {
       path: '/admin/orders',
       name: 'Orders',
       icon: OrdersIcon
+    },
+    {
+      path: '/admin/returns',
+      name: 'Return Management',
+      icon: ReturnIcon
+    },
+    {
+      path: '/admin/return-analytics',
+      name: 'Return Analytics',
+      icon: AnalyticsIcon
     },
     {
       path: '/admin/users',

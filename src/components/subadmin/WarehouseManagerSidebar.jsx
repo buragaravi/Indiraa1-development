@@ -10,7 +10,8 @@ import {
   FiSettings,
   FiLogOut,
   FiGrid,
-  FiTrendingUp
+  FiTrendingUp,
+  FiRotateCcw
 } from 'react-icons/fi';
 
 const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
@@ -65,6 +66,13 @@ const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
       name: 'Orders',
       icon: FiList,
       type: 'tab'
+    },
+    {
+      id: 'returns',
+      name: 'Return Management',
+      icon: FiRotateCcw,
+      type: 'route',
+      route: '/sub-admin/warehouse/returns'
     },
     {
       id: 'batches',

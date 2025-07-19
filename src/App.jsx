@@ -60,6 +60,12 @@ import SubAdminRouteGuard from './components/auth/SubAdminRouteGuard';
 import SubAdminOrderDetail from './pages/subadmin/SubAdminOrderDetail';
 import SubAdminRevenueAnalyticsPage from './pages/subadmin/SubAdminRevenueAnalytics';
 import SubAdminLayout from './components/subadmin/SubAdminLayout';
+// Return Management Components
+import CustomerReturnManagement from './components/customer/CustomerReturnManagement';
+import AdminReturnManagement from './components/admin/AdminReturnManagement';
+import WarehouseReturnManagement from './components/warehouse/WarehouseReturnManagement';
+import DeliveryAgentReturnManagement from './components/delivery/DeliveryAgentReturnManagement';
+import ReturnAnalyticsDashboard from './components/analytics/ReturnAnalyticsDashboard';
 // 404 Page
 import NotFound from './pages/NotFound';
 
@@ -246,6 +252,16 @@ function App() {
                 <SubAdminManagement />
               </AdminLayout>
             } />
+            <Route path="/admin/returns" element={
+              <AdminLayout>
+                <AdminReturnManagement />
+              </AdminLayout>
+            } />
+            <Route path="/admin/return-analytics" element={
+              <AdminLayout>
+                <ReturnAnalyticsDashboard />
+              </AdminLayout>
+            } />
             <Route path="/admin/batches" element={
               <AdminLayout>
                 <BatchDashboard />
@@ -272,6 +288,16 @@ function App() {
               </SubAdminLayout>
             } />
             <Route path="/sub-admin/logistics_manager" element={<LogisticsManagerDashboard />} />
+            <Route path="/sub-admin/warehouse/returns" element={
+              <SubAdminLayout>
+                <WarehouseReturnManagement />
+              </SubAdminLayout>
+            } />
+            <Route path="/sub-admin/delivery/returns" element={
+              <SubAdminLayout>
+                <DeliveryAgentReturnManagement />
+              </SubAdminLayout>
+            } />
             <Route path="/sub-admin/revenue-analytics" element={<SubAdminRevenueAnalyticsPage />} />
             <Route path="/sub-admin/dashboard" element={<SubAdminLogin />} /> {/* Redirect to login if no specific role */}
             <Route path="/dashboard/orders/:orderId" element={<SubAdminOrderDetail />} />
@@ -372,6 +398,15 @@ function App() {
                 <Navbar />
                 <main className="flex-grow">
                   <WalletDashboard />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/returns" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <CustomerReturnManagement />
                 </main>
                 <Footer />
               </>
