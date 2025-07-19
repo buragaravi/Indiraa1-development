@@ -14,7 +14,7 @@ const SubAdminBanners = () => {
   const [formLoading, setFormLoading] = useState(false);
 
   // API Base URL - using the correct backend port
-  const API_BASE_URL = 'http://localhost:5001/api';
+  const API_BASE_URL = 'https://indiraa1-backend.onrender.com/api';
 
   // Helper function for authenticated requests
   const getAuthHeaders = () => {

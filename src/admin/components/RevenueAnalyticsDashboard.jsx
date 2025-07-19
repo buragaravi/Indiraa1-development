@@ -45,7 +45,7 @@ const RevenueAnalyticsDashboard = () => {
       setError('');
       
       const token = localStorage.getItem('adminToken');
-      const response = await fetch('http://localhost:5001/api/revenue-analytics', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/revenue-analytics', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ const RevenueAnalyticsDashboard = () => {
   const handleCategoryClick = async (category, filter) => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`http://localhost:5001/api/revenue-analytics/details?category=${category}&filter=${filter}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/revenue-analytics/details?category=${category}&filter=${filter}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -157,49 +157,14 @@ const RevenueAnalyticsDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      {/* Header */}
-      <div className="bg-white/90 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-6">
-            <div className="flex items-center space-x-4">
-              <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl">
-                <BarChart3 className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  Revenue Analytics Dashboard
-                </h1>
-                <p className="text-sm text-gray-500">
-                  Last updated: {analytics?.lastUpdated ? new Date(analytics.lastUpdated).toLocaleString() : 'Unknown'}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <button
-                onClick={handleRefresh}
-                disabled={refreshing}
-                className="inline-flex items-center px-3 py-2 border border-blue-300 rounded-lg shadow-sm text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 transform hover:scale-105 transition-all duration-200"
-              >
-                <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
-                Refresh
-              </button>
-              <button className="inline-flex items-center px-3 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200">
-                <Download className="h-4 w-4 mr-2" />
-                Export
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-green-50 to-emerald-50">
+      <div className="w-full px-6 py-8">
         {/* Quick Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Total Revenue */}
-          <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-blue-100">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 hover:shadow-[0_12px_40px_0_rgba(34,197,94,0.3)]">
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-lg">
                 <DollarSign className="h-6 w-6 text-white" />
               </div>
               <div className="flex items-center text-green-600">
@@ -208,20 +173,20 @@ const RevenueAnalyticsDashboard = () => {
               </div>
             </div>
             <div className="mt-4">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-800">
                 {formatCurrency(analytics?.revenue?.summary?.totalRevenue)}
               </p>
-              <p className="text-sm font-medium text-gray-500 mt-1">Total Revenue</p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-sm font-medium text-gray-600 mt-1">Total Revenue</p>
+              <p className="text-xs text-gray-500 mt-1">
                 {formatNumber(analytics?.revenue?.summary?.totalOrders)} orders
               </p>
             </div>
           </div>
 
           {/* Received Revenue */}
-          <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-green-100">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 hover:shadow-[0_12px_40px_0_rgba(34,197,94,0.3)]">
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl shadow-lg">
                 <CheckCircle className="h-6 w-6 text-white" />
               </div>
               <div className="flex items-center text-green-600">
@@ -230,11 +195,11 @@ const RevenueAnalyticsDashboard = () => {
               </div>
             </div>
             <div className="mt-4">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-800">
                 {formatCurrency(analytics?.revenue?.summary?.receivedRevenue)}
               </p>
-              <p className="text-sm font-medium text-gray-500 mt-1">Received Revenue</p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-sm font-medium text-gray-600 mt-1">Received Revenue</p>
+              <p className="text-xs text-gray-500 mt-1">
                 {analytics?.revenue?.summary?.totalRevenue > 0 ? 
                   ((analytics.revenue.summary.receivedRevenue / analytics.revenue.summary.totalRevenue) * 100).toFixed(1) 
                   : 0}% of total
@@ -244,42 +209,42 @@ const RevenueAnalyticsDashboard = () => {
 
           {/* Pending Revenue */}
           <div 
-            className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-yellow-100 cursor-pointer"
+            className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 hover:shadow-[0_12px_40px_0_rgba(249,115,22,0.3)] cursor-pointer"
             onClick={() => handleCategoryClick('pending-revenue', '')}
           >
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl shadow-lg">
                 <Clock className="h-6 w-6 text-white" />
               </div>
-              <div className="flex items-center text-yellow-600">
+              <div className="flex items-center text-orange-600">
                 <Eye className="h-4 w-4" />
               </div>
             </div>
             <div className="mt-4">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-800">
                 {formatCurrency(analytics?.revenue?.summary?.pendingRevenue)}
               </p>
-              <p className="text-sm font-medium text-gray-500 mt-1">Pending Revenue</p>
-              <p className="text-xs text-gray-400 mt-1">Requires attention</p>
+              <p className="text-sm font-medium text-gray-600 mt-1">Pending Revenue</p>
+              <p className="text-xs text-gray-500 mt-1">Requires attention</p>
             </div>
           </div>
 
           {/* Inventory Value */}
-          <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-purple-100">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 hover:shadow-[0_12px_40px_0_rgba(34,197,94,0.3)]">
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-2xl shadow-lg">
                 <Package className="h-6 w-6 text-white" />
               </div>
-              <div className="flex items-center text-purple-600">
+              <div className="flex items-center text-teal-600">
                 <Activity className="h-4 w-4" />
               </div>
             </div>
             <div className="mt-4">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-800">
                 {formatCurrency(analytics?.inventory?.totalValue)}
               </p>
-              <p className="text-sm font-medium text-gray-500 mt-1">Inventory Value</p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-sm font-medium text-gray-600 mt-1">Inventory Value</p>
+              <p className="text-xs text-gray-500 mt-1">
                 {formatNumber(analytics?.inventory?.summary?.totalProducts)} products
               </p>
             </div>
@@ -289,34 +254,34 @@ const RevenueAnalyticsDashboard = () => {
         {/* Payment Method Analysis */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Payment Method Breakdown */}
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Payment Methods</h3>
-              <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg">
+              <h3 className="text-lg font-semibold text-gray-800">Payment Methods</h3>
+              <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl">
                 <CreditCard className="h-5 w-5 text-white" />
               </div>
             </div>
             
             <div className="space-y-4">
               {/* UPI */}
-              <div className="border border-blue-100 rounded-lg p-4 bg-blue-50">
+              <div className="border border-green-200/50 rounded-xl p-4 bg-green-50/50 backdrop-blur-sm">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium text-blue-900">UPI Payments</span>
-                  <span className="text-sm font-semibold text-blue-700">
+                  <span className="font-medium text-green-800">UPI Payments</span>
+                  <span className="text-sm font-semibold text-green-700">
                     {formatCurrency(analytics?.revenue?.byPaymentMethod?.UPI?.total)}
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div 
-                    className="cursor-pointer hover:bg-blue-100 p-2 rounded"
+                    className="cursor-pointer hover:bg-green-100/50 p-2 rounded-lg transition-colors"
                     onClick={() => handleCategoryClick('payment', 'UPI')}
                   >
                     <span className="text-green-600 font-medium">
                       Received: {formatCurrency(analytics?.revenue?.byPaymentMethod?.UPI?.received)}
                     </span>
                   </div>
-                  <div className="cursor-pointer hover:bg-blue-100 p-2 rounded">
-                    <span className="text-yellow-600 font-medium">
+                  <div className="cursor-pointer hover:bg-green-100/50 p-2 rounded-lg transition-colors">
+                    <span className="text-orange-600 font-medium">
                       Pending: {formatCurrency(analytics?.revenue?.byPaymentMethod?.UPI?.pending)}
                     </span>
                   </div>
@@ -324,24 +289,24 @@ const RevenueAnalyticsDashboard = () => {
               </div>
 
               {/* Cash */}
-              <div className="border border-green-100 rounded-lg p-4 bg-green-50">
+              <div className="border border-emerald-200/50 rounded-xl p-4 bg-emerald-50/50 backdrop-blur-sm">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium text-green-900">Cash Payments</span>
-                  <span className="text-sm font-semibold text-green-700">
+                  <span className="font-medium text-emerald-800">Cash Payments</span>
+                  <span className="text-sm font-semibold text-emerald-700">
                     {formatCurrency(analytics?.revenue?.byPaymentMethod?.CASH?.total)}
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div 
-                    className="cursor-pointer hover:bg-green-100 p-2 rounded"
+                    className="cursor-pointer hover:bg-emerald-100/50 p-2 rounded-lg transition-colors"
                     onClick={() => handleCategoryClick('payment', 'CASH')}
                   >
                     <span className="text-green-600 font-medium">
                       Collected: {formatCurrency(analytics?.revenue?.byPaymentMethod?.CASH?.received)}
                     </span>
                   </div>
-                  <div className="cursor-pointer hover:bg-green-100 p-2 rounded">
-                    <span className="text-yellow-600 font-medium">
+                  <div className="cursor-pointer hover:bg-emerald-100/50 p-2 rounded-lg transition-colors">
+                    <span className="text-orange-600 font-medium">
                       Pending: {formatCurrency(analytics?.revenue?.byPaymentMethod?.CASH?.pending)}
                     </span>
                   </div>
@@ -351,10 +316,10 @@ const RevenueAnalyticsDashboard = () => {
           </div>
 
           {/* Order Status Breakdown */}
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Order Status</h3>
-              <div className="p-2 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg">
+              <h3 className="text-lg font-semibold text-gray-800">Order Status</h3>
+              <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl">
                 <ShoppingCart className="h-5 w-5 text-white" />
               </div>
             </div>

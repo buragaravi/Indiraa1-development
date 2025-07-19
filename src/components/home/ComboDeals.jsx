@@ -107,7 +107,7 @@ const ComboDeals = () => {
 
   const fetchComboPacks = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/combo-packs/featured?limit=6');
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/combo-packs/featured?limit=6');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -130,7 +130,7 @@ const ComboDeals = () => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const response = await fetch('http://localhost:5001/api/combo-packs/wishlist/me', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/combo-packs/wishlist/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -159,8 +159,8 @@ const ComboDeals = () => {
     try {
       const isWishlisted = isInWishlist(comboPackId);
       const endpoint = isWishlisted 
-        ? 'http://localhost:5001/api/combo-packs/wishlist/remove'
-        : 'http://localhost:5001/api/combo-packs/wishlist/add';
+        ? 'https://indiraa1-backend.onrender.com/api/combo-packs/wishlist/remove'
+        : 'https://indiraa1-backend.onrender.com/api/combo-packs/wishlist/add';
 
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -190,7 +190,7 @@ const ComboDeals = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5001/api/combo-packs/cart/add', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/combo-packs/cart/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

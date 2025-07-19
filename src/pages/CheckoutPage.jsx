@@ -30,7 +30,7 @@ const CheckoutPage = () => {
         return;
       }
 
-      const response = await fetch('http://localhost:5001/api/products/cart/me', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -100,7 +100,7 @@ const CheckoutPage = () => {
         coinsUsed: coinDiscount?.coinsUsed || 0
       };
 
-      const orderResponse = await fetch('http://localhost:5001/api/products/orders', {
+      const orderResponse = await fetch('https://indiraa1-backend.onrender.com/api/products/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ const CheckoutPage = () => {
 
       // If coins were used, redeem them
       if (coinDiscount && coinDiscount.coinsUsed > 0) {
-        const redemptionResponse = await fetch('http://localhost:5001/api/wallet/redeem-coins', {
+        const redemptionResponse = await fetch('https://indiraa1-backend.onrender.com/api/wallet/redeem-coins', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ const CheckoutPage = () => {
       }
 
       // Clear cart
-      await fetch('http://localhost:5001/api/products/cart/clear', {
+      await fetch('https://indiraa1-backend.onrender.com/api/products/cart/clear', {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

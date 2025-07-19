@@ -26,8 +26,8 @@ const Login = () => {
     try {
       // Determine the endpoint based on login type
       const endpoint = loginType === 'admin' 
-        ? 'http://localhost:5001/api/auth/admin/login'
-        : 'http://localhost:5001/api/auth/login';
+        ? 'https://indiraa1-backend.onrender.com/api/auth/admin/login'
+        : 'https://indiraa1-backend.onrender.com/api/auth/login';
       
       const response = await fetch(endpoint, {
         method: 'POST',

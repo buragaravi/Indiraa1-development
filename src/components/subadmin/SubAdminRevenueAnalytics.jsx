@@ -36,8 +36,20 @@ const SubAdminRevenueAnalytics = () => {
       setLoading(true);
       setError('');
       
-      const token = localStorage.getItem('subAdminToken');
-      const response = await fetch('http://localhost:5001/api/revenue-analytics', {
+      // Check for both admin and sub-admin tokens (same pattern as other working components)
+      const adminToken = localStorage.getItem('adminToken');
+      const subAdminToken = localStorage.getItem('subAdminToken') || sessionStorage.getItem('subAdminToken');
+      const token = adminToken || subAdminToken;
+      
+      console.log('SubAdminRevenueAnalytics - Admin Token:', adminToken ? 'exists' : 'null');
+      console.log('SubAdminRevenueAnalytics - SubAdmin Token:', subAdminToken ? 'exists' : 'null');
+      console.log('SubAdminRevenueAnalytics - Using token:', token ? 'exists' : 'null');
+      
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+      
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/revenue-analytics', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -62,6 +74,60 @@ const SubAdminRevenueAnalytics = () => {
     setRefreshing(true);
     await fetchAnalytics();
     setRefreshing(false);
+  };
+
+  // Drill-down functionality for revenue analytics
+  const handleDrillDown = async (endpoint, title) => {
+    try {
+      console.log(`Drilling down to: ${title}`);
+      
+      // Get token for authentication
+      const adminToken = localStorage.getItem('adminToken');
+      const subAdminToken = localStorage.getItem('subAdminToken') || sessionStorage.getItem('subAdminToken');
+      const token = adminToken || subAdminToken;
+      
+      if (!token) {
+        alert('Authentication required');
+        return;
+      }
+      
+      // Fetch data from the endpoint
+      const response = await fetch(endpoint, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${title}`);
+      }
+      
+      const result = await response.json();
+      
+      // For now, log the results (you can later show in a modal or navigate to a detailed page)
+      console.log(`${title} Data:`, result);
+      
+      // Show a simple alert with the count (you can enhance this with a modal later)
+      const orderCount = result.orders?.length || 0;
+      const totalAmount = result.orders?.reduce((sum, order) => sum + (order.totalAmount || 0), 0) || 0;
+      
+      alert(`${title}:\n${orderCount} orders\nTotal Amount: ₹${totalAmount.toLocaleString('en-IN')}`);
+      
+    } catch (error) {
+      console.error('Drill-down error:', error);
+      alert(`Failed to load ${title}: ${error.message}`);
+    }
+  };
+
+  // Drill-down endpoints configuration
+  const drillDownEndpoints = {
+    pendingOrders: 'https://indiraa1-backend.onrender.com/api/admin/orders?status=pending',
+    upiPendingOrders: 'https://indiraa1-backend.onrender.com/api/admin/orders?status=pending&payment=upi',
+    deliveredCashOrders: 'https://indiraa1-backend.onrender.com/api/admin/orders?status=delivered&payment=cash',
+    allPendingRevenue: 'https://indiraa1-backend.onrender.com/api/admin/orders?status=pending',
+    cashPayments: 'https://indiraa1-backend.onrender.com/api/admin/orders?payment=cash',
+    upiPayments: 'https://indiraa1-backend.onrender.com/api/admin/orders?payment=upi'
   };
 
   const formatCurrency = (amount) => {
@@ -122,45 +188,14 @@ const SubAdminRevenueAnalytics = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      {/* Header */}
-      <div className="bg-white/90 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-6">
-            <div className="flex items-center space-x-4">
-              <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl">
-                <BarChart3 className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  Revenue Analytics Overview
-                </h1>
-                <p className="text-sm text-gray-500">
-                  Last updated: {analytics?.lastUpdated ? new Date(analytics.lastUpdated).toLocaleString() : 'Unknown'}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <button
-                onClick={handleRefresh}
-                disabled={refreshing}
-                className="inline-flex items-center px-3 py-2 border border-blue-300 rounded-lg shadow-sm text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 transform hover:scale-105 transition-all duration-200"
-              >
-                <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
-                Refresh
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-green-50 to-emerald-50">
+      <div className="w-full px-6 py-8">
         {/* Quick Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Total Revenue */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 transform hover:scale-105 transition-all duration-300 border border-white/30">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 hover:shadow-[0_12px_40px_0_rgba(34,197,94,0.3)]">
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-lg">
                 <DollarSign className="h-6 w-6 text-white" />
               </div>
               <div className="flex items-center text-green-600">
@@ -168,20 +203,20 @@ const SubAdminRevenueAnalytics = () => {
               </div>
             </div>
             <div className="mt-4">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-800">
                 {formatCurrency(analytics?.revenue?.summary?.totalRevenue)}
               </p>
-              <p className="text-sm font-medium text-gray-500 mt-1">Total Revenue</p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-sm font-medium text-gray-600 mt-1">Total Revenue</p>
+              <p className="text-xs text-gray-500 mt-1">
                 {formatNumber(analytics?.revenue?.summary?.totalOrders)} orders
               </p>
             </div>
           </div>
 
           {/* Received Revenue */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 transform hover:scale-105 transition-all duration-300 border border-white/30">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 hover:shadow-[0_12px_40px_0_rgba(34,197,94,0.3)]">
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl shadow-lg">
                 <CheckCircle className="h-6 w-6 text-white" />
               </div>
               <div className="flex items-center text-green-600">
@@ -189,11 +224,11 @@ const SubAdminRevenueAnalytics = () => {
               </div>
             </div>
             <div className="mt-4">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-800">
                 {formatCurrency(analytics?.revenue?.summary?.receivedRevenue)}
               </p>
-              <p className="text-sm font-medium text-gray-500 mt-1">Received Revenue</p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-sm font-medium text-gray-600 mt-1">Received Revenue</p>
+              <p className="text-xs text-gray-500 mt-1">
                 {analytics?.revenue?.summary?.totalRevenue > 0 ? 
                   ((analytics.revenue.summary.receivedRevenue / analytics.revenue.summary.totalRevenue) * 100).toFixed(1) 
                   : 0}% of total
@@ -201,10 +236,14 @@ const SubAdminRevenueAnalytics = () => {
             </div>
           </div>
 
-          {/* Pending Revenue */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 transform hover:scale-105 transition-all duration-300 border border-white/30">
+          {/* Pending Revenue - Clickable for drill-down */}
+          <div 
+            className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 hover:shadow-[0_12px_40px_0_rgba(251,191,36,0.3)] cursor-pointer"
+            onClick={() => handleDrillDown(drillDownEndpoints.pendingOrders, 'Pending Orders')}
+            title="Click to view pending orders"
+          >
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-2xl shadow-lg">
                 <Clock className="h-6 w-6 text-white" />
               </div>
               <div className="flex items-center text-yellow-600">
@@ -212,30 +251,30 @@ const SubAdminRevenueAnalytics = () => {
               </div>
             </div>
             <div className="mt-4">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-800">
                 {formatCurrency(analytics?.revenue?.summary?.pendingRevenue)}
               </p>
-              <p className="text-sm font-medium text-gray-500 mt-1">Pending Revenue</p>
-              <p className="text-xs text-gray-400 mt-1">Requires attention</p>
+              <p className="text-sm font-medium text-gray-600 mt-1">Pending Revenue</p>
+              <p className="text-xs text-gray-500 mt-1">Click to view details</p>
             </div>
           </div>
 
           {/* Inventory Value */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 transform hover:scale-105 transition-all duration-300 border border-white/30">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 hover:shadow-[0_12px_40px_0_rgba(168,85,247,0.3)]">
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl shadow-lg">
                 <Package className="h-6 w-6 text-white" />
               </div>
-              <div className="flex items-center text-purple-600">
+              <div className="flex items-center text-green-600">
                 <TrendingUp className="h-4 w-4" />
               </div>
             </div>
             <div className="mt-4">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-gray-800">
                 {formatCurrency(analytics?.inventory?.totalValue)}
               </p>
-              <p className="text-sm font-medium text-gray-500 mt-1">Inventory Value</p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-sm font-medium text-gray-600 mt-1">Inventory Value</p>
+              <p className="text-xs text-gray-500 mt-1">
                 {formatNumber(analytics?.inventory?.summary?.totalProducts)} products
               </p>
             </div>
@@ -245,66 +284,74 @@ const SubAdminRevenueAnalytics = () => {
         {/* Payment & Status Overview */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Payment Method Summary */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 border border-white/30">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Payment Overview</h3>
-              <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg">
+              <h3 className="text-lg font-semibold text-gray-800">Payment Overview</h3>
+              <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg">
                 <CreditCard className="h-5 w-5 text-white" />
               </div>
             </div>
-            
             <div className="space-y-4">
-              {/* UPI Summary */}
-              <div className="border border-blue-100 rounded-xl p-4 bg-blue-50/50">
+              {/* UPI Summary - Clickable for drill-down */}
+              <div 
+                className="border border-green-200 rounded-xl p-4 bg-emerald-50/50 cursor-pointer hover:bg-emerald-100/50 transition-colors"
+                onClick={() => handleDrillDown(drillDownEndpoints.upiPayments, 'UPI Payments')}
+                title="Click to view UPI payment orders"
+              >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium text-blue-900">UPI Payments</span>
-                  <span className="text-sm font-semibold text-blue-700">
+                  <span className="font-medium text-green-800">UPI Payments</span>
+                  <span className="text-sm font-semibold text-green-700">
                     {formatCurrency(analytics?.revenue?.byPaymentMethod?.UPI?.total)}
                   </span>
                 </div>
-                <div className="text-sm text-blue-600">
+                <div className="text-sm text-green-600">
                   Received: {formatCurrency(analytics?.revenue?.byPaymentMethod?.UPI?.received)} | 
                   Pending: {formatCurrency(analytics?.revenue?.byPaymentMethod?.UPI?.pending)}
                 </div>
+                <div className="text-xs text-green-500 mt-1">Click for UPI pending orders</div>
               </div>
 
-              {/* Cash Summary */}
-              <div className="border border-green-100 rounded-xl p-4 bg-green-50/50">
+              {/* Cash Summary - Clickable for drill-down */}
+              <div 
+                className="border border-emerald-200 rounded-xl p-4 bg-green-50/50 cursor-pointer hover:bg-green-100/50 transition-colors"
+                onClick={() => handleDrillDown(drillDownEndpoints.cashPayments, 'Cash Payments')}
+                title="Click to view cash payment orders"
+              >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium text-green-900">Cash Payments</span>
-                  <span className="text-sm font-semibold text-green-700">
+                  <span className="font-medium text-emerald-800">Cash Payments</span>
+                  <span className="text-sm font-semibold text-emerald-700">
                     {formatCurrency(analytics?.revenue?.byPaymentMethod?.CASH?.total)}
                   </span>
                 </div>
-                <div className="text-sm text-green-600">
+                <div className="text-sm text-emerald-600">
                   Collected: {formatCurrency(analytics?.revenue?.byPaymentMethod?.CASH?.received)} | 
                   Pending: {formatCurrency(analytics?.revenue?.byPaymentMethod?.CASH?.pending)}
                 </div>
+                <div className="text-xs text-green-500 mt-1">Click for delivered cash orders</div>
               </div>
             </div>
           </div>
 
           {/* Order Status Summary */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 border border-white/30">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Order Status</h3>
-              <div className="p-2 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg">
+              <h3 className="text-lg font-semibold text-gray-800">Order Status</h3>
+              <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg">
                 <ShoppingCart className="h-5 w-5 text-white" />
               </div>
             </div>
-            
             <div className="space-y-3">
               {Object.entries(analytics?.revenue?.byStatus || {}).map(([status, data]) => {
                 if (data.count === 0) return null;
                 return (
-                  <div key={status} className="flex items-center justify-between p-3 border border-gray-100 rounded-xl">
+                  <div key={status} className="flex items-center justify-between p-3 border border-green-100 rounded-xl bg-emerald-50/30">
                     <div className="flex items-center space-x-3">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(status)}`}>
                         {status.charAt(0).toUpperCase() + status.slice(1)}
                       </span>
                       <span className="text-sm text-gray-600">{data.count} orders</span>
                     </div>
-                    <span className="font-semibold text-gray-900">
+                    <span className="font-semibold text-gray-800">
                       {formatCurrency(data.amount)}
                     </span>
                   </div>
@@ -315,10 +362,10 @@ const SubAdminRevenueAnalytics = () => {
         </div>
 
         {/* Timeline Overview */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 border border-white/30 mb-8">
+        <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-gray-900">Revenue Timeline</h3>
-            <div className="p-2 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg">
+            <h3 className="text-lg font-semibold text-gray-800">Revenue Timeline</h3>
+            <div className="p-2 bg-gradient-to-r from-emerald-500 to-green-600 rounded-lg">
               <Calendar className="h-5 w-5 text-white" />
             </div>
           </div>
@@ -348,32 +395,31 @@ const SubAdminRevenueAnalytics = () => {
         {/* Business Metrics */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Performance Metrics */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 border border-white/30">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Performance Metrics</h3>
+              <h3 className="text-lg font-semibold text-gray-800">Performance Metrics</h3>
               <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg">
                 <Target className="h-5 w-5 text-white" />
               </div>
             </div>
-            
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 border border-green-100 rounded-xl bg-green-50/50">
-                <span className="font-medium text-green-900">Profit Margin</span>
-                <span className="text-lg font-bold text-green-700">
+              <div className="flex items-center justify-between p-3 border border-emerald-100 rounded-xl bg-emerald-50/50">
+                <span className="font-medium text-emerald-800">Profit Margin</span>
+                <span className="text-lg font-bold text-emerald-700">
                   {analytics?.profitability?.grossProfitMargin}%
                 </span>
               </div>
               
-              <div className="flex items-center justify-between p-3 border border-blue-100 rounded-xl bg-blue-50/50">
-                <span className="font-medium text-blue-900">Avg Order Value</span>
-                <span className="text-lg font-bold text-blue-700">
+              <div className="flex items-center justify-between p-3 border border-green-100 rounded-xl bg-green-50/50">
+                <span className="font-medium text-green-800">Avg Order Value</span>
+                <span className="text-lg font-bold text-green-700">
                   {formatCurrency(analytics?.profitability?.averageOrderValue)}
                 </span>
               </div>
               
-              <div className="flex items-center justify-between p-3 border border-purple-100 rounded-xl bg-purple-50/50">
-                <span className="font-medium text-purple-900">Products Sold</span>
-                <span className="text-lg font-bold text-purple-700">
+              <div className="flex items-center justify-between p-3 border border-teal-100 rounded-xl bg-teal-50/50">
+                <span className="font-medium text-teal-800">Products Sold</span>
+                <span className="text-lg font-bold text-teal-700">
                   {formatNumber(analytics?.profitability?.totalProductsSold)}
                 </span>
               </div>
@@ -381,32 +427,31 @@ const SubAdminRevenueAnalytics = () => {
           </div>
 
           {/* Inventory Health */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 border border-white/30">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Inventory Health</h3>
-              <div className="p-2 bg-gradient-to-r from-pink-500 to-rose-600 rounded-lg">
+              <h3 className="text-lg font-semibold text-gray-800">Inventory Health</h3>
+              <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg">
                 <Package className="h-5 w-5 text-white" />
               </div>
             </div>
-            
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 border border-blue-100 rounded-xl bg-blue-50/50">
-                <span className="font-medium text-blue-900">Available Stock</span>
-                <span className="text-lg font-bold text-blue-700">
+              <div className="flex items-center justify-between p-3 border border-emerald-100 rounded-xl bg-emerald-50/50">
+                <span className="font-medium text-emerald-800">Available Stock</span>
+                <span className="text-lg font-bold text-emerald-700">
                   {formatCurrency(analytics?.inventory?.availableValue)}
                 </span>
               </div>
               
-              <div className="flex items-center justify-between p-3 border border-yellow-100 rounded-xl bg-yellow-50/50">
-                <span className="font-medium text-yellow-900">Allocated Stock</span>
-                <span className="text-lg font-bold text-yellow-700">
+              <div className="flex items-center justify-between p-3 border border-green-100 rounded-xl bg-green-50/50">
+                <span className="font-medium text-green-800">Allocated Stock</span>
+                <span className="text-lg font-bold text-green-700">
                   {formatCurrency(analytics?.inventory?.allocatedValue)}
                 </span>
               </div>
               
-              <div className="flex items-center justify-between p-3 border border-green-100 rounded-lg bg-green-50">
-                <span className="font-medium text-green-900">Combo Pack Value</span>
-                <span className="text-lg font-bold text-green-700">
+              <div className="flex items-center justify-between p-3 border border-teal-100 rounded-lg bg-teal-50">
+                <span className="font-medium text-teal-800">Combo Pack Value</span>
+                <span className="text-lg font-bold text-teal-700">
                   {formatCurrency(analytics?.inventory?.comboPackValue)}
                 </span>
               </div>
@@ -416,10 +461,10 @@ const SubAdminRevenueAnalytics = () => {
 
         {/* Action Items for Sub-Admin */}
         {analytics?.actionItems?.length > 0 && (
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Important Alerts</h3>
-              <div className="p-2 bg-gradient-to-r from-red-500 to-pink-600 rounded-lg">
+              <h3 className="text-lg font-semibold text-gray-800">Important Alerts</h3>
+              <div className="p-2 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg">
                 <Zap className="h-5 w-5 text-white" />
               </div>
             </div>

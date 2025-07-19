@@ -8,7 +8,7 @@ const testSubAdminLogin = async () => {
   };
   
   try {
-    const response = await fetch('http://localhost:5001/api/sub-admin/login', {
+    const response = await fetch('https://indiraa1-backend.onrender.com/api/sub-admin/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

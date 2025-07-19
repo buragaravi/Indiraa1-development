@@ -18,7 +18,7 @@ const DeliveryRatingModal = ({ orderId, onReviewSubmitted }) => {
     setSubmitting(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5001/api/products/orders/${orderId}/review`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/${orderId}/review`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
