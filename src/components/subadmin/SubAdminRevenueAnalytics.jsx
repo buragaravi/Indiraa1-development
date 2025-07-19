@@ -49,7 +49,7 @@ const SubAdminRevenueAnalytics = () => {
         throw new Error('No authentication token found');
       }
       
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/revenue-analytics', {
+      const response = await fetch('http://localhost:5001/api/revenue-analytics', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -122,12 +122,12 @@ const SubAdminRevenueAnalytics = () => {
 
   // Drill-down endpoints configuration
   const drillDownEndpoints = {
-    pendingOrders: 'https://indiraa1-backend.onrender.com/api/admin/orders?status=pending',
-    upiPendingOrders: 'https://indiraa1-backend.onrender.com/api/admin/orders?status=pending&payment=upi',
-    deliveredCashOrders: 'https://indiraa1-backend.onrender.com/api/admin/orders?status=delivered&payment=cash',
-    allPendingRevenue: 'https://indiraa1-backend.onrender.com/api/admin/orders?status=pending',
-    cashPayments: 'https://indiraa1-backend.onrender.com/api/admin/orders?payment=cash',
-    upiPayments: 'https://indiraa1-backend.onrender.com/api/admin/orders?payment=upi'
+    pendingOrders: 'http://localhost:5001/api/admin/orders?status=pending',
+    upiPendingOrders: 'http://localhost:5001/api/admin/orders?status=pending&payment=upi',
+    deliveredCashOrders: 'http://localhost:5001/api/admin/orders?status=delivered&payment=cash',
+    allPendingRevenue: 'http://localhost:5001/api/admin/orders?status=pending',
+    cashPayments: 'http://localhost:5001/api/admin/orders?payment=cash',
+    upiPayments: 'http://localhost:5001/api/admin/orders?payment=upi'
   };
 
   const formatCurrency = (amount) => {

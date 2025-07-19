@@ -11,7 +11,7 @@ precacheAndRoute(self.__WB_MANIFEST)
 cleanupOutdatedCaches()
 
 // Advanced caching strategies
-const API_BASE_URL = 'https://indiraa1-backend.onrender.com/api'
+const API_BASE_URL = 'http://localhost:5001/api'
 
 // 1. API Caching with Background Sync
 const bgSyncPlugin = new BackgroundSyncPlugin('api-sync-queue', {
@@ -20,7 +20,7 @@ const bgSyncPlugin = new BackgroundSyncPlugin('api-sync-queue', {
 
 // API Routes with Network First strategy and background sync
 registerRoute(
-  ({ url }) => url.origin === 'https://indiraa1-backend.onrender.com' && url.pathname.startsWith('/api/'),
+  ({ url }) => url.origin === 'http://localhost:5001' && url.pathname.startsWith('/api/'),
   new NetworkFirst({
     cacheName: 'api-cache-v2',
     networkTimeoutSeconds: 10,

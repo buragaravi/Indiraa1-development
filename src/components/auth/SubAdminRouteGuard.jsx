@@ -25,7 +25,7 @@ const SubAdminRouteGuard = ({ children, requiredRole = null }) => {
         }
 
         // Verify token with backend
-        const apiUrl = 'https://indiraa1-backend.onrender.com';
+        const apiUrl = 'http://localhost:5001';
         console.log('[SUB ADMIN GUARD] Verifying token with backend...');
         
         const response = await fetch(`${apiUrl}/api/sub-admin/profile`, {

@@ -24,7 +24,7 @@ const ReferralLink = () => {
         throw new Error('No authentication token found');
       }
 
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/referral/code', {
+      const response = await fetch('http://localhost:5001/api/referral/code', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

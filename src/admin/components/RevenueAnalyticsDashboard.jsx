@@ -45,7 +45,7 @@ const RevenueAnalyticsDashboard = () => {
       setError('');
       
       const token = localStorage.getItem('adminToken');
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/revenue-analytics', {
+      const response = await fetch('http://localhost:5001/api/revenue-analytics', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ const RevenueAnalyticsDashboard = () => {
   const handleCategoryClick = async (category, filter) => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/revenue-analytics/details?category=${category}&filter=${filter}`, {
+      const response = await fetch(`http://localhost:5001/api/revenue-analytics/details?category=${category}&filter=${filter}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

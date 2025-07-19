@@ -36,7 +36,7 @@ const Wishlist = () => {  const [wishlistItems, setWishlistItems] = useState([])
 
   const fetchWishlist = async () => {
     try {
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/wishlist/me', {
+      const response = await fetch('http://localhost:5001/api/products/wishlist/me', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -61,7 +61,7 @@ const Wishlist = () => {  const [wishlistItems, setWishlistItems] = useState([])
     setRemovingItems(prev => new Set(prev).add(productId));
     
     try {
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/wishlist/remove', {
+      const response = await fetch('http://localhost:5001/api/products/wishlist/remove', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const Wishlist = () => {  const [wishlistItems, setWishlistItems] = useState([])
     
     try {
       // First add to cart
-      const addToCartResponse = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/add', {
+      const addToCartResponse = await fetch('http://localhost:5001/api/products/cart/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ const Wishlist = () => {  const [wishlistItems, setWishlistItems] = useState([])
   };
   const clearWishlist = async () => {
     try {
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/wishlist/clear', {
+      const response = await fetch('http://localhost:5001/api/products/wishlist/clear', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
