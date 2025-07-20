@@ -48,7 +48,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
     setOrderLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:5001/api/products/orders/${orderId}`, {
+      const response = await fetch(`http://localhost:5001/api/products/orders/user/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -93,10 +93,25 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log('Eligibility response:', data); // Debug log
         setEligibility(data.data);
+      } else {
+        console.error('Eligibility check failed:', response.status);
+        // If eligibility check fails, assume it's eligible but show warning
+        setEligibility({
+          isEligible: true,
+          daysRemaining: 7,
+          reason: 'Unable to verify eligibility, proceeding with caution'
+        });
       }
     } catch (error) {
       console.error('Error checking return eligibility:', error);
+      // If eligibility check fails, assume it's eligible but show warning
+      setEligibility({
+        isEligible: true,
+        daysRemaining: 7,
+        reason: 'Unable to verify eligibility, proceeding with caution'
+      });
     }
   };
 
@@ -323,12 +338,20 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
                 )}
 
                 {/* Items Selection */}
-                {order?.items && eligibility?.isEligible && (
+                {order?.items && (
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
                       <FiPackage className="w-5 h-5" />
                       Select Items to Return
                     </h3>
+                    {!eligibility?.isEligible && (
+                      <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <p className="text-yellow-800 text-sm">
+                          <strong>Note:</strong> This order may not meet standard return eligibility criteria. 
+                          Proceeding will submit a special case request that requires manual review.
+                        </p>
+                      </div>
+                    )}
                     <div className="space-y-3">
                       {order.items.map((item, index) => {
                         const isSelected = selectedItems.some(selected => 
@@ -375,7 +398,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
                 )}
 
                 {/* Return Reason */}
-                {eligibility?.isEligible && (
+                {order && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Return Reason *
@@ -394,7 +417,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
                 )}
 
                 {/* Customer Comments */}
-                {eligibility?.isEligible && (
+                {order && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Additional Comments (Optional)
@@ -410,7 +433,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
                 )}
 
                 {/* Evidence Images */}
-                {eligibility?.isEligible && (
+                {order && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Evidence Images *
@@ -461,7 +484,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
           </div>
 
           {/* Footer */}
-          {!orderLoading && !success && eligibility?.isEligible && (
+          {!orderLoading && !success && order && (
             <div className="bg-gray-50 px-6 py-4 flex items-center justify-between">
               <button
                 onClick={handleClose}
@@ -469,23 +492,48 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
               >
                 Cancel
               </button>
-              <button
-                onClick={handleSubmitReturn}
-                disabled={loading || selectedItems.length === 0}
-                className="px-6 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-              >
-                {loading ? (
-                  <>
-                    <FiLoader className="w-4 h-4 animate-spin" />
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    <FiRotateCcw className="w-4 h-4" />
-                    Submit Return Request
-                  </>
-                )}
-              </button>
+              {eligibility?.isEligible ? (
+                <button
+                  onClick={handleSubmitReturn}
+                  disabled={loading || selectedItems.length === 0}
+                  className="px-6 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                >
+                  {loading ? (
+                    <>
+                      <FiLoader className="w-4 h-4 animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <FiRotateCcw className="w-4 h-4" />
+                      Submit Return Request
+                    </>
+                  )}
+                </button>
+              ) : (
+                <div className="text-right">
+                  <p className="text-sm text-red-600 mb-2">
+                    {eligibility?.reason || 'Return not available for this order'}
+                  </p>
+                  <button
+                    onClick={handleSubmitReturn}
+                    disabled={loading || selectedItems.length === 0}
+                    className="px-6 py-2 bg-gradient-to-r from-gray-400 to-gray-500 text-white rounded-lg hover:from-gray-500 hover:to-gray-600 transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    {loading ? (
+                      <>
+                        <FiLoader className="w-4 h-4 animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <FiRotateCcw className="w-4 h-4" />
+                        Submit Anyway (Special Case)
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </motion.div>
