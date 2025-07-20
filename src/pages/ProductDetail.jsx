@@ -5,14 +5,6 @@ import toast from 'react-hot-toast';
 import { FiArrowLeft, FiHeart, FiShoppingCart, FiStar, FiChevronLeft, FiChevronRight, FiMinus, FiPlus } from 'react-icons/fi';
 import VariantSelector from '../components/VariantSelector';
 import VariantPopup from '../components/VariantPopup';
-// PWA Services
-import { 
-  getProductWithOffline, 
-  addToCartWithSync, 
-  addToWishlistWithSync,
-  getWishlistWithOffline,
-  removeFromWishlistWithSync
-} from '../services/apiWithOffline';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -37,18 +29,13 @@ const ProductDetail = () => {
     setIsAuthenticated(!!token);
 
     const timeout = setTimeout(() => {      setLoading(true);
-      // Fetch product details using PWA service
-      getProductWithOffline(id)
-        .then(response => {
-          const data = response.data;
+      // Fetch product details
+      fetch(`http://localhost:5001/api/products/${id}`)
+        .then(response => response.json())
+        .then(data => {
           setProduct(data.product || null);
           setReviews(data.product?.reviews || []);
           setLoading(false);
-          
-          // Show offline indicator if data is from cache
-          if (response.source === 'offline') {
-            toast('Product loaded from offline storage', { icon: '📦' });
-          }
           
           // Auto-select default variant if product has variants
           if (data.product?.hasVariants && data.product?.variants?.length > 0) {
@@ -79,14 +66,19 @@ const ProductDetail = () => {
 
   const checkWishlistStatus = async (productId, token) => {
     try {
-      // Use PWA-enabled wishlist service
-      const response = await getWishlistWithOffline();
-      const isInWishlist = response.data?.some(item => item._id === productId);
-      setWishlisted(isInWishlist || false);
+      const response = await fetch('http://localhost:5001/api/products/wishlist', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const isInWishlist = data?.some(item => item._id === productId);
+        setWishlisted(isInWishlist || false);
+      }
     } catch (error) {
       console.error('Error checking wishlist status:', error);
     }
   };
+  
   const handleWishlistToggle = async () => {
     if (!isAuthenticated) {
       toast.error('Please login to add to wishlist');
@@ -94,18 +86,16 @@ const ProductDetail = () => {
     }
     
     try {
-      let result;
-      if (wishlisted) {
-        result = await removeFromWishlistWithSync(id);
-      } else {
-        result = await addToWishlistWithSync(id);
-      }
+      const token = localStorage.getItem('token');
+      const method = wishlisted ? 'DELETE' : 'POST';
+      const response = await fetch(`http://localhost:5001/api/products/wishlist/${id}`, {
+        method,
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       
-      if (result.success) {
+      if (response.ok) {
         setWishlisted(!wishlisted);
-        const message = result.queued ? result.message : 
-          (wishlisted ? 'Removed from wishlist' : 'Added to wishlist!');
-        toast.success(message);
+        toast.success(wishlisted ? 'Removed from wishlist' : 'Added to wishlist!');
       } else {
         throw new Error('Failed to update wishlist');
       }
@@ -191,12 +181,19 @@ const ProductDetail = () => {
         requestBody.variantId = variantToUse.id;
       }
 
-      // Use PWA-enabled cart service
-      const result = await addToCartWithSync(productId, qty);
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:5001/api/products/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(requestBody)
+      });
 
-      if (result.success) {
+      if (response.ok) {
         const variantText = variantToUse ? ` (${variantToUse.label})` : '';
-        toast.success(result.queued ? result.message : `Added ${qty} ${product.name}${variantText} to cart`);
+        toast.success(`Added ${qty} ${product.name}${variantText} to cart`);
       } else {
         throw new Error('Failed to add to cart');
       }
@@ -264,9 +261,10 @@ const ProductDetail = () => {
       });
 
       const data = await res.json();      if (res.ok) {
-        // Refresh product data using PWA service
-        const updatedProductResponse = await getProductWithOffline(id);
-        setReviews(updatedProductResponse.data.product?.reviews || []);
+        // Refresh product data
+        const updatedProductResponse = await fetch(`/api/products/${id}`);
+        const updatedData = await updatedProductResponse.json();
+        setReviews(updatedData.product?.reviews || []);
         setMyRating(0);
         setMyComment('');
         toast.success('Review submitted successfully!');

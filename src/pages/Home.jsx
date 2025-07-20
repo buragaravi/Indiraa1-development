@@ -9,14 +9,6 @@ import ComboDeals from '../components/home/ComboDeals';
 import FeaturedProducts from '../components/home/FeaturedProducts';
 import DynamicHeroSection from '../components/DynamicHeroSection';
 
-// PWA Services
-import { 
-  getProductsWithOffline, 
-  addToCartWithSync, 
-  addToWishlistWithSync,
-  getWishlistWithOffline 
-} from '../services/apiWithOffline';
-
 // ProductCard component for other sections
 const ProductCard = ({ product, index, onAddToWishlist, onAddToCart, isInWishlist, navigate }) => {
   const productIsWishlisted = isInWishlist(product._id);
@@ -159,17 +151,12 @@ const Home = () => {
 
   const fetchProducts = async () => {
     try {
-      // Use PWA-enabled product service
-      const response = await getProductsWithOffline();
-      const data = response.data;
+      // Use standard API to fetch products
+      const response = await fetch('http://localhost:5001/api/products');
+      const data = await response.json();
       
       if (data.products && data.products.length > 0) {
         setProducts(data.products);
-        
-        // Show offline indicator if data is from cache
-        if (response.source === 'offline') {
-          toast('Products loaded from offline storage', { icon: '📦' });
-        }
         
         // Create new arrivals and top rated from the same data
         const shuffled = [...data.products].sort(() => 0.5 - Math.random());
@@ -189,9 +176,14 @@ const Home = () => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      // Use PWA-enabled wishlist service
-      const response = await getWishlistWithOffline();
-      setWishlistItems(response.data || []);
+      // Use standard API to fetch wishlist
+      const response = await fetch('http://localhost:5001/api/wishlist', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      setWishlistItems(data || []);
     } catch (error) {
       console.error('Error fetching wishlist:', error);
     }
@@ -242,13 +234,22 @@ const Home = () => {
     }
 
     try {
-      // Use PWA-enabled cart service
-      const result = await addToCartWithSync(productId, 1);
+      // Add to cart using standard API
+      const response = await fetch('/api/cart/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ productId, quantity: 1 })
+      });
 
-      if (result.success) {
-        toast.success(result.queued ? result.message : 'Added to cart!');
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        toast.success('Added to cart!');
       } else {
-        throw new Error('Failed to add to cart');
+        throw new Error(result.message || 'Failed to add to cart');
       }
     } catch (error) {
       toast.error('Error adding to cart');

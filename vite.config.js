@@ -38,7 +38,8 @@ export default defineConfig({
       },
       injectManifest: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-        swSrc: 'src/sw.js'
+        swSrc: 'src/sw.js',
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024 // 5MB limit instead of default 2MB
       },
       devOptions: {
         enabled: true,

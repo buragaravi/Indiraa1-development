@@ -1,25 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiWifi, FiWifiOff, FiDatabase, FiRefreshCw, FiX } from 'react-icons/fi'
-import { getOfflineStatus, triggerOnlineSync } from '../../services/apiWithOffline'
 
 const NetworkStatus = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
   const [showStatus, setShowStatus] = useState(false)
-  const [offlineData, setOfflineData] = useState(null)
 
   useEffect(() => {
     const handleOnline = async () => {
       setIsOnline(true)
       setShowStatus(true)
-      
-      // Trigger data sync
-      try {
-        await triggerOnlineSync()
-        console.log('✅ Data sync completed')
-      } catch (error) {
-        console.log('⚠️ Sync failed:', error)
-      }
       
       // Hide the "back online" message after 4 seconds
       setTimeout(() => setShowStatus(false), 4000)
@@ -28,14 +18,6 @@ const NetworkStatus = () => {
     const handleOffline = async () => {
       setIsOnline(false)
       setShowStatus(true)
-      
-      // Get offline data status
-      try {
-        const status = await getOfflineStatus()
-        setOfflineData(status.offlineData)
-      } catch (error) {
-        console.error('Failed to get offline status:', error)
-      }
       // Don't auto-hide offline message
     }
 
@@ -102,20 +84,6 @@ const NetworkStatus = () => {
                   <p className="text-xs opacity-80 mt-1">
                     You can still browse cached products and manage your cart
                   </p>
-                  {offlineData && (
-                    <div className="flex items-center gap-4 text-xs opacity-70 mt-2 pt-2 border-t border-white/20">
-                      <div className="flex items-center gap-1">
-                        <FiDatabase className="w-3 h-3" />
-                        <span>{offlineData.products} products</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span>{offlineData.cart} cart items</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span>{offlineData.wishlist} wishlist</span>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </>
             )}

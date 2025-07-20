@@ -12,12 +12,6 @@ import {
 } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 
-// PWA Services
-import { 
-  getWishlistWithOffline, 
-  addToCartWithSync 
-} from '../services/apiWithOffline';
-
 const Wishlist = () => {  const [wishlistItems, setWishlistItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

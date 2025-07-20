@@ -5,15 +5,10 @@ import { ThemeProvider } from './context/ThemeProvider';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 // PWA Components
-import NetworkStatus from './components/common/NetworkStatus';
 import PWAInstallPrompt from './components/pwa/PWAInstallPrompt';
 import PWAStatus from './components/pwa/PWAStatus';
-// Advanced PWA Services
-import { initializeOfflineStorage } from './services/apiWithOffline';
-import { syncManager } from './services/syncManager';
-import { cacheManager } from './services/cacheManager';
+// PWA Services (Push Notifications Only)
 import { notificationService } from './services/notificationService';
-import { appFeaturesService } from './services/appFeaturesService';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -109,28 +104,18 @@ const isAdmin = () => {
 };
 
 function App() {
-  // Initialize all PWA services
+  // Initialize PWA notification service only
   useEffect(() => {
     const initializePWAServices = async () => {
       try {
-        console.log('🚀 Initializing Advanced PWA Services...')
+        console.log('🚀 Initializing PWA Notification Service...')
         
-        // Initialize in order of dependency
-        await initializeOfflineStorage()
-        await syncManager.init()
-        await cacheManager.init()
         await notificationService.init()
-        await appFeaturesService.init()
         
-        console.log('✅ All PWA services initialized successfully')
-        
-        // Set up global error handling for PWA services
-        window.addEventListener('unhandledrejection', (event) => {
-          console.error('❌ Unhandled PWA service error:', event.reason)
-        })
+        console.log('✅ PWA notification service initialized successfully')
         
       } catch (error) {
-        console.error('❌ Failed to initialize PWA services:', error)
+        console.error('❌ Failed to initialize PWA notification service:', error)
       }
     }
     
@@ -142,46 +127,6 @@ function App() {
     window.walletNotifications = walletNotifications;
   }, []);
 
-  // Add online/offline event handlers for automatic sync
-  useEffect(() => {
-    const handleOnline = async () => {
-      console.log('🌐 Device came back online - triggering sync...')
-      try {
-        await syncManager.processQueue()
-        toast.success('✅ Synced offline changes!', { 
-          icon: '🔄',
-          duration: 3000 
-        })
-      } catch (error) {
-        console.error('❌ Failed to sync on coming online:', error)
-        toast.error('Failed to sync some changes', { icon: '⚠️' })
-      }
-    }
-
-    const handleOffline = () => {
-      console.log('📱 Device went offline - entering offline mode...')
-      toast('📱 You\'re now offline. Changes will sync when you\'re back online.', { 
-        icon: '📡',
-        duration: 4000 
-      })
-    }
-
-    // Add event listeners
-    window.addEventListener('online', handleOnline)
-    window.addEventListener('offline', handleOffline)
-
-    // Check initial state
-    if (navigator.onLine) {
-      // If already online, trigger a sync after a short delay
-      setTimeout(handleOnline, 2000)
-    }
-
-    return () => {
-      window.removeEventListener('online', handleOnline)
-      window.removeEventListener('offline', handleOffline)
-    }
-  }, [])
-
   return (
     <ThemeProvider>
       <Router>
@@ -190,7 +135,6 @@ function App() {
           <ReferralVisitTracker />
           
           {/* PWA Components */}
-          <NetworkStatus />
           <PWAInstallPrompt />
           <PWAStatus />
           

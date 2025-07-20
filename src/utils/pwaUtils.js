@@ -40,15 +40,6 @@ export const registerServiceWorker = () => {
           }
         }
       },
-      onOfflineReady() {
-        console.log('App ready to work offline')
-        if (window.toast) {
-          window.toast.success('App is ready to work offline!', {
-            icon: '📱',
-            duration: 4000
-          })
-        }
-      },
       onRegisterError(error) {
         console.error('SW registration error', error)
       }
