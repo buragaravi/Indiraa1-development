@@ -48,7 +48,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
     setOrderLoading(true);
     setError(null);
     try {
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/${orderId}`, {
+      const response = await fetch(`http://localhost:5001/api/products/orders/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -85,7 +85,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
 
   const checkReturnEligibility = async () => {
     try {
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/returns/orders/${orderId}/eligibility`, {
+      const response = await fetch(`http://localhost:5001/api/returns/orders/${orderId}/eligibility`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -163,7 +163,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
         formData.append('evidenceImages', file);
       });
 
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/returns/create', {
+      const response = await fetch('http://localhost:5001/api/returns/create', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

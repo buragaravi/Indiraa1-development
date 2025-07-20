@@ -41,7 +41,7 @@ const Register = () => {
       
       console.log('Registration data:', registrationData);
       
-      const res = await fetch('https://indiraa1-backend.onrender.com/api/auth/register', {
+      const res = await fetch('http://localhost:5001/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(registrationData),

@@ -104,7 +104,7 @@ const FeaturedProducts = () => {
   const fetchProducts = async () => {
     try {
       console.log('Fetching featured products...');
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products');
+      const response = await fetch('http://localhost:5001/api/products');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -134,7 +134,7 @@ const FeaturedProducts = () => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/wishlist/me', {
+      const response = await fetch('http://localhost:5001/api/products/wishlist/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -163,8 +163,8 @@ const FeaturedProducts = () => {
     try {
       const isWishlisted = isInWishlist(productId);
       const endpoint = isWishlisted 
-        ? 'https://indiraa1-backend.onrender.com/api/products/wishlist/remove'
-        : 'https://indiraa1-backend.onrender.com/api/products/wishlist/add';
+        ? 'http://localhost:5001/api/products/wishlist/remove'
+        : 'http://localhost:5001/api/products/wishlist/add';
 
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -194,7 +194,7 @@ const FeaturedProducts = () => {
     }
 
     try {
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/add', {
+      const response = await fetch('http://localhost:5001/api/products/cart/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

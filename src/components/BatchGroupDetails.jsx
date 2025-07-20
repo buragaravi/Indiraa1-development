@@ -89,7 +89,7 @@ const BatchGroupDetails = () => {
       
       console.log('[ADMIN] Fetching batch group details for ID:', id);
       
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/batches/batch-groups/${id}`, {
+      const response = await fetch(`http://localhost:5001/api/batches/batch-groups/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
