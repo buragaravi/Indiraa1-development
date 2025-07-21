@@ -816,7 +816,7 @@ DEBUG=vite:* npm run dev
 ### Getting Help
 - **Issues**: [GitHub Issues](link-to-issues)
 - **Discussions**: [GitHub Discussions](link-to-discussions)
-- **Email**: frontend-support@yourdomain.com
+- **Email**: frontend-support@pydahsoft.in
 
 ### Contributing
 1. Fork the repository
@@ -1034,13 +1034,13 @@ DEBUG=mongoose:* npm run dev
 - [Authentication Guide](#authentication--authorization) - Auth implementation
 
 ### Contact
-- **Email**: support@yourdomain.com
+- **Email**: support@pydahsoft.in
 - **Issues**: [GitHub Issues](link-to-issues)
 - **Discussions**: [GitHub Discussions](link-to-discussions)
 
 ### Community
 - **Discord**: [Join our Discord](link-to-discord)
-- **Stack Overflow**: Tag `your-project-name`
+- **Stack Overflow**: Tag `Pydah Ecommerce`
 
 ## 🔄 Changelog
 
@@ -1178,25 +1178,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ```
 MIT License
 
-Copyright (c) 2024 Your Company Name
+Copyright (c) 2024 PydahSoft
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 ```
 
 ---
@@ -1210,6 +1193,6 @@ SOFTWARE.
 
 ---
 
-**Made with ❤️ by [Your Team Name]**
+**Made with ❤️ by Pydah Soft**
 
-For more information, visit our [website](https://yourdomain.com) or contact us at [frontend-support@yourdomain.com](mailto:frontend-support@yourdomain.com)
+For more information, visit our [website](https://pydahsoft.in) or contact us at [frontend-support@pydahsoft.in](mailto:frontend-support@pydahsoft.in)
