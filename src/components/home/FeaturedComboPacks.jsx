@@ -17,7 +17,7 @@ const FeaturedComboPacks = () => {
   const fetchFeaturedComboPacks = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5001/api/combo-packs/featured?limit=6');
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/combo-packs/featured?limit=6');
       const data = await response.json();
       
       if (data.success) {

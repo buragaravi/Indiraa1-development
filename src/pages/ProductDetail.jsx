@@ -30,7 +30,7 @@ const ProductDetail = () => {
 
     const timeout = setTimeout(() => {      setLoading(true);
       // Fetch product details
-      fetch(`http://localhost:5001/api/products/${id}`)
+      fetch(`https://indiraa1-backend.onrender.com/api/products/${id}`)
         .then(response => response.json())
         .then(data => {
           setProduct(data.product || null);
@@ -66,7 +66,7 @@ const ProductDetail = () => {
 
   const checkWishlistStatus = async (productId, token) => {
     try {
-      const response = await fetch('http://localhost:5001/api/products/wishlist', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/wishlist', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) {
@@ -88,7 +88,7 @@ const ProductDetail = () => {
     try {
       const token = localStorage.getItem('token');
       const method = wishlisted ? 'DELETE' : 'POST';
-      const response = await fetch(`http://localhost:5001/api/products/wishlist/${id}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/wishlist/${id}`, {
         method,
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -182,7 +182,7 @@ const ProductDetail = () => {
       }
 
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/products/cart', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -251,7 +251,7 @@ const ProductDetail = () => {
     setSubmitting(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5001/api/products/${id}/reviews`, {
+      const res = await fetch(`https://indiraa1-backend.onrender.com/api/products/${id}/reviews`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

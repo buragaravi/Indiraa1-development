@@ -152,7 +152,7 @@ const Home = () => {
   const fetchProducts = async () => {
     try {
       // Use standard API to fetch products
-      const response = await fetch('http://localhost:5001/api/products');
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products');
       const data = await response.json();
       
       if (data.products && data.products.length > 0) {
@@ -177,7 +177,7 @@ const Home = () => {
       if (!token) return;
 
       // Use standard API to fetch wishlist
-      const response = await fetch('http://localhost:5001/api/wishlist', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/wishlist', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -203,8 +203,8 @@ const Home = () => {
     try {
       const isWishlisted = isInWishlist(productId);
       const endpoint = isWishlisted 
-        ? 'http://localhost:5001/api/products/wishlist/remove'
-        : 'http://localhost:5001/api/products/wishlist/add';
+        ? 'https://indiraa1-backend.onrender.com/api/products/wishlist/remove'
+        : 'https://indiraa1-backend.onrender.com/api/products/wishlist/add';
 
       const response = await fetch(endpoint, {
         method: 'POST',

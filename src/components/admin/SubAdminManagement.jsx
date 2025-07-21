@@ -91,7 +91,7 @@ const SubAdminManagement = () => {
     try {
       setLoading(true);
       const token = getAdminToken();
-      const apiUrl ='http://localhost:5001';
+      const apiUrl ='https://indiraa1-backend.onrender.com';
       
       if (!token) {
         throw new Error('Admin authentication required. Please login as admin first.');
@@ -173,7 +173,7 @@ const SubAdminManagement = () => {
 
     try {
       const token = getAdminToken();
-      const apiUrl = 'http://localhost:5001';
+      const apiUrl = 'https://indiraa1-backend.onrender.com';
       
       if (!token) {
         throw new Error('Admin authentication required. Please login as admin first.');
@@ -228,7 +228,7 @@ const SubAdminManagement = () => {
 
     try {
       const token = getAdminToken();
-      const apiUrl = 'http://localhost:5001';
+      const apiUrl = 'https://indiraa1-backend.onrender.com';
       
       if (!token) {
         throw new Error('Admin authentication required. Please login as admin first.');
@@ -277,7 +277,7 @@ const SubAdminManagement = () => {
 
     try {
       const token = getAdminToken();
-      const apiUrl = 'http://localhost:5001';
+      const apiUrl = 'https://indiraa1-backend.onrender.com';
       
       if (!token) {
         throw new Error('Admin authentication required. Please login as admin first.');

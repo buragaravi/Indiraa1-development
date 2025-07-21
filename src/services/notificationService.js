@@ -103,7 +103,7 @@ class NotificationService {
   // Send subscription to server
   async sendSubscriptionToServer(subscription) {
     try {
-      const response = await fetch('http://localhost:5001/api/notifications/subscribe', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/notifications/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -344,7 +344,7 @@ class NotificationService {
   // Helper methods
   async getCartData() {
     try {
-      const response = await fetch('http://localhost:5001/api/cart', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/cart', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -357,7 +357,7 @@ class NotificationService {
 
   async checkForPromotions() {
     try {
-      const response = await fetch('http://localhost:5001/api/promotions/active', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/promotions/active', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
