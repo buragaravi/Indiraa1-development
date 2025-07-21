@@ -400,23 +400,25 @@ const BulkUpload = ({ onSuccess, onClose }) => {
   };
 
   return (
-    <div className="py-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 py-4 sm:py-6 lg:py-8">
+      <div className="w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4 flex items-center justify-center gap-3">
-            <FiPackage className="w-8 h-8 text-blue-600" />
+        <div className="text-center mb-4 sm:mb-6 lg:mb-8">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 mb-2 sm:mb-3 lg:mb-4 flex items-center justify-center gap-2 sm:gap-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-200">
+              <FiPackage className="text-white text-sm sm:text-base lg:text-lg" />
+            </div>
             Bulk Product Upload
           </h1>
-          <p className="text-gray-600 text-lg">Upload multiple products with images using CSV/Excel files</p>
+          <p className="text-gray-600 text-sm sm:text-base lg:text-lg">Upload multiple products with images using CSV/Excel files</p>
         </div>
 
         {/* Progress Steps */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-xl border border-white/30 mb-8">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl shadow-emerald-100/50 border border-white/50 mb-4 sm:mb-6 lg:mb-8">
           <div className="flex items-center justify-between relative">
             <div className="absolute top-6 left-6 right-6 h-1 bg-gray-200 rounded-full"></div>
             <div 
-              className="absolute top-6 left-6 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-500"
+              className="absolute top-6 left-6 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500"
               style={{ width: `${Math.min((step / 4) * 100, 100)}%` }}
             />
             

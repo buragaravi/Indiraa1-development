@@ -192,32 +192,34 @@ const UserReturnDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-100 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 relative overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-100/30 rounded-full -translate-x-48 -translate-y-48"></div>
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-green-100/40 rounded-full translate-x-40 translate-y-40"></div>
-      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-teal-100/20 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute top-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-emerald-100/30 rounded-full -translate-x-32 -translate-y-32 sm:-translate-x-48 sm:-translate-y-48"></div>
+      <div className="absolute bottom-0 right-0 w-48 h-48 sm:w-80 sm:h-80 bg-green-100/40 rounded-full translate-x-24 translate-y-24 sm:translate-x-40 sm:translate-y-40"></div>
+      <div className="absolute top-1/2 left-1/2 w-32 h-32 sm:w-64 sm:h-64 bg-teal-100/20 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
       
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative z-10 w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 sm:py-6 lg:py-8">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <button
             onClick={() => navigate('/returns')}
-            className="flex items-center text-emerald-600 hover:text-emerald-700 mb-6 transition-all duration-200 group"
+            className="flex items-center text-emerald-600 hover:text-emerald-700 mb-4 sm:mb-6 transition-all duration-200 group"
           >
-            <FaArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform duration-200" />
-            <span className="font-medium">Back to My Returns</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center mr-2 shadow-lg group-hover:shadow-xl transition-all duration-200">
+              <FaArrowLeft className="text-white text-sm group-hover:-translate-x-1 transition-transform duration-200" />
+            </div>
+            <span className="font-medium text-sm sm:text-base">Back to My Returns</span>
           </button>
           
-          <div className="bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+          <div className="bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl relative overflow-hidden">
             {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-24 -translate-x-24"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 sm:w-64 sm:h-64 bg-white/10 rounded-full -translate-y-16 translate-x-16 sm:-translate-y-32 sm:translate-x-32"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-48 sm:h-48 bg-white/5 rounded-full translate-y-12 -translate-x-12 sm:translate-y-24 sm:-translate-x-24"></div>
             
             <div className="relative z-10">
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-4">
                 <div className="text-white">
-                  <h1 className="text-4xl font-bold mb-3 tracking-tight">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3 tracking-tight">[Updated responsive header]
                     Return #{returnDetails.returnRequestId || 'N/A'}
                   </h1>
                   <p className="text-emerald-100 text-lg font-medium">

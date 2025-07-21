@@ -214,26 +214,31 @@ const WarehouseBatchDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">
       {/* Header */}
-      <div className="bg-white shadow-lg border-b border-indigo-100">
-        <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="py-4">
-            <div className="flex items-center justify-between">
+      <div className="bg-white/80 backdrop-blur-sm shadow-xl shadow-emerald-100/50 border-b border-emerald-200">
+        <div className="w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
+          <div className="py-4 sm:py-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
               <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Admin Batch Management Dashboard</h1>
-                <p className="text-gray-600 mt-1 text-sm font-medium">Monitor and manage warehouse batch inventory</p>
+                <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 flex items-center">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-200 mr-3 sm:mr-4">
+                    <Package2 className="text-white text-sm sm:text-base lg:text-lg" />
+                  </div>
+                  Admin Batch Management Dashboard
+                </h1>
+                <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base lg:text-lg font-medium">Monitor and manage warehouse batch inventory</p>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <button
                   onClick={() => window.location.reload()}
-                  className="inline-flex items-center px-3 py-2 border border-indigo-300 rounded-lg shadow-sm text-sm font-medium text-indigo-700 bg-white hover:bg-indigo-50 transform hover:scale-105 transition-all duration-200"
+                  className="inline-flex items-center px-3 sm:px-4 py-2 sm:py-3 border border-emerald-300 rounded-lg sm:rounded-xl shadow-sm text-xs sm:text-sm font-medium text-emerald-700 bg-white/80 hover:bg-emerald-50 transform hover:scale-105 transition-all duration-200"
                 >
-                  <RefreshCw className="h-4 w-4 mr-2" />
+                  <RefreshCw className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                   Refresh
                 </button>
-                <button className="inline-flex items-center px-3 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200">
-                  <Download className="h-4 w-4 mr-2" />
+                <button className="inline-flex items-center px-3 sm:px-4 py-2 sm:py-3 border border-transparent rounded-lg sm:rounded-xl shadow-sm text-xs sm:text-sm font-medium text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 transform hover:scale-105 transition-all duration-200">
+                  <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                   Export Report
                 </button>
               </div>
@@ -242,7 +247,7 @@ const WarehouseBatchDashboard = () => {
         </div>
       </div>
 
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
+      <div className="w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 sm:py-6">
         {/* Analytics Overview */}
         {analytics && (
           <>

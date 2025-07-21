@@ -370,37 +370,46 @@ const SubAdminManagement = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center">
-              <FaUserShield className="mr-3 text-blue-600" />
-              Sub Admin Management
-            </h1>
-            <p className="mt-1 text-gray-600">Manage warehouse and logistics managers</p>
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 py-4 sm:py-6 lg:py-8">
+      <div className="w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
+        {/* Header */}
+        <div className="mb-4 sm:mb-6 lg:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+            <div>
+              <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 flex items-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-200 mr-3 sm:mr-4">
+                  <FaUserShield className="text-white text-sm sm:text-base lg:text-lg xl:text-xl" />
+                </div>
+                Sub Admin Management
+              </h1>
+              <p className="mt-1 sm:mt-2 text-sm sm:text-base lg:text-lg text-gray-600">
+                Manage warehouse and logistics managers
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <button
+                onClick={() => {
+                  resetForm();
+                  setShowCreateModal(true);
+                }}
+                className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg sm:rounded-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 flex items-center text-sm sm:text-base font-medium shadow-lg hover:shadow-xl"
+              >
+                <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white/20 rounded-md flex items-center justify-center mr-2">
+                  <FaPlus className="text-white text-xs" />
+                </div>
+                Add Sub Admin
+              </button>
+              
+              {/* Debug Token Button */}
+              <button
+                onClick={testAdminToken}
+                className="px-3 sm:px-4 py-2 sm:py-3 bg-gray-500 text-white rounded-lg sm:rounded-xl hover:bg-gray-600 transition-all duration-300 text-xs sm:text-sm font-medium shadow-lg"
+              >
+                Debug Token
+              </button>
+            </div>
           </div>
-          <button
-            onClick={() => {
-              resetForm();
-              setShowCreateModal(true);
-            }}
-            className="mt-4 sm:mt-0 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
-          >
-            <FaPlus className="mr-2" />
-            Add Sub Admin
-          </button>
-          
-          {/* Debug Token Button */}
-          <button
-            onClick={testAdminToken}
-            className="mt-4 sm:mt-0 ml-2 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors text-sm"
-          >
-            Debug Token
-          </button>
         </div>
-      </div>
 
       {/* Filters and Search */}
       <div className="bg-white rounded-lg shadow p-4 mb-6">
@@ -904,6 +913,7 @@ const SubAdminManagement = () => {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };

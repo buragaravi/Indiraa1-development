@@ -433,23 +433,27 @@ const WarehouseReturnManagement = () => {
   }, [filters]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
-      <div className="p-4 md:p-6 lg:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 py-4 sm:py-6 lg:py-8">
+      <div className="w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
+        <div className="mb-4 sm:mb-6 lg:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center">
-                <FaWarehouse className="mr-3 text-indigo-600" />
+              <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 flex items-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-200 mr-3 sm:mr-4">
+                  <FaWarehouse className="text-white text-sm sm:text-base lg:text-lg xl:text-xl" />
+                </div>
                 Warehouse Return Management
               </h1>
-              <p className="mt-2 text-gray-600 text-lg">
-                Manage assigned return requests and quality assessments with elegance
+              <p className="mt-1 sm:mt-2 text-sm sm:text-base lg:text-lg text-gray-600">
+                Manage assigned return requests and quality assessments
               </p>
             </div>
-            <div className="hidden md:flex items-center space-x-2">
-              <div className="px-4 py-2 bg-white/70 backdrop-blur-sm rounded-full shadow-lg border border-white/20">
-                <span className="text-sm font-medium text-gray-700">Total Returns: {assignedReturns.length}</span>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="px-3 sm:px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-white/20">
+                <span className="text-xs sm:text-sm font-medium text-gray-700">
+                  Total Returns: <span className="text-emerald-600 font-semibold">{assignedReturns.length}</span>
+                </span>
               </div>
             </div>
           </div>
