@@ -49,7 +49,7 @@ class ErrorBoundary extends React.Component {
                 Go Back
               </button>
             </div>
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {import.meta.env.DEV && this.state.error && (
               <div className="mt-8 text-left">
                 <p className="text-red-500 font-mono text-sm break-all">
                   {this.state.error.toString()}

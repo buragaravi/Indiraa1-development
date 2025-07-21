@@ -8,12 +8,12 @@ import {
   FaDollarSign,
   FaClock,
   FaPercentage,
-  FaTrendUp,
-  FaTrendDown,
-  FaEquals
+  FaArrowUp,
+  FaArrowDown,
+  FaMinus
 } from 'react-icons/fa';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const ReturnAnalyticsDashboard = () => {
   const [analytics, setAnalytics] = useState(null);
@@ -75,9 +75,9 @@ const ReturnAnalyticsDashboard = () => {
   };
 
   const getTrendIcon = (current, previous) => {
-    if (current > previous) return <FaTrendUp className="text-green-500" />;
-    if (current < previous) return <FaTrendDown className="text-red-500" />;
-    return <FaEquals className="text-gray-500" />;
+    if (current > previous) return <FaArrowUp className="text-green-500" />;
+    if (current < previous) return <FaArrowDown className="text-red-500" />;
+    return <FaMinus className="text-gray-500" />;
   };
 
   const getTrendColor = (current, previous) => {
