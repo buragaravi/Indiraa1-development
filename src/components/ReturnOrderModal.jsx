@@ -26,14 +26,13 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
   const [success, setSuccess] = useState(false);
 
   const returnReasons = [
-    'Defective/Damaged product',
-    'Wrong item received',
-    'Size/fit issues',
-    'Quality not as expected',
-    'Not as described',
-    'Changed mind',
-    'Received duplicate order',
-    'Other'
+    { value: 'defective', label: 'Defective/Damaged product' },
+    { value: 'wrong_item', label: 'Wrong item received' },
+    { value: 'size_issue', label: 'Size/fit issues' },
+    { value: 'quality_issue', label: 'Quality not as expected' },
+    { value: 'not_as_described', label: 'Not as described' },
+    { value: 'changed_mind', label: 'Changed mind' },
+    { value: 'damaged_in_transit', label: 'Damaged during delivery' }
   ];
 
   // Fetch order details and check eligibility
@@ -57,12 +56,13 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
       if (response.ok) {
         const data = await response.json();
         setOrder(data.order);
-        // Initialize all items as selected by default
+        // Initialize all items as selected by default with correct structure for backend
         if (data.order?.items) {
           setSelectedItems(data.order.items.map(item => ({
-            productId: item.productId,
+            orderItemId: item._id, // This is what backend expects
+            productId: item.id, // Keep for display
             variantId: item.variantId,
-            quantity: item.quantity || item.qty || 1,
+            quantity: item.qty || 1,
             name: item.name,
             variantName: item.variantName,
             price: item.price
@@ -120,7 +120,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
       setSelectedItems(prev => [...prev, item]);
     } else {
       setSelectedItems(prev => prev.filter(selected => 
-        selected.productId !== item.productId || selected.variantId !== item.variantId
+        selected.orderItemId !== item.orderItemId
       ));
     }
   };
@@ -245,17 +245,61 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
                 <FiRotateCcw className="w-6 h-6" />
                 <h2 className="text-2xl font-bold">Return Order</h2>
               </div>
-              <button
-                onClick={handleClose}
-                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-              >
-                <FiX className="w-6 h-6" />
-              </button>
+              <div className="flex items-center gap-3">
+                {/* Return Action Buttons in Header */}
+                {order && !orderLoading && !success && (
+                  <>
+                    <button
+                      onClick={handleClose}
+                      className="px-4 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    
+                    <button
+                      onClick={handleSubmitReturn}
+                      disabled={loading || selectedItems.length === 0 || !returnReason || evidenceImages.length === 0}
+                      className={`px-4 py-2 text-white rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 ${
+                        eligibility?.isEligible 
+                          ? 'bg-white/20 hover:bg-white/30 border border-white/30' 
+                          : 'bg-gray-600/80 hover:bg-gray-700/80 border border-gray-500/50'
+                      }`}
+                    >
+                      {loading ? (
+                        <>
+                          <FiLoader className="w-4 h-4 animate-spin" />
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          <FiRotateCcw className="w-4 h-4" />
+                          {eligibility?.isEligible ? 'Submit Return' : 'Submit Special Case'}
+                        </>
+                      )}
+                    </button>
+                  </>
+                )}
+                
+                <button
+                  onClick={handleClose}
+                  className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                >
+                  <FiX className="w-6 h-6" />
+                </button>
+              </div>
             </div>
             {order && (
-              <p className="mt-2 opacity-90">
-                Order #{order._id?.slice(-8)} - ₹{(order.totalAmount || order.total || 0).toLocaleString()}
-              </p>
+              <div className="mt-3 flex items-center justify-between">
+                <p className="opacity-90">
+                  Order #{order._id?.slice(-8)} - ₹{(order.totalAmount || order.total || 0).toLocaleString()}
+                </p>
+                {/* Eligibility status in header */}
+                {eligibility && !eligibility.isEligible && (
+                  <p className="text-sm bg-red-500/20 px-3 py-1 rounded-lg border border-red-300/30">
+                    {eligibility.reason || 'Return not available for this order'}
+                  </p>
+                )}
+              </div>
             )}
           </div>
 
@@ -355,7 +399,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
                     <div className="space-y-3">
                       {order.items.map((item, index) => {
                         const isSelected = selectedItems.some(selected => 
-                          selected.productId === item.productId && selected.variantId === item.variantId
+                          selected.orderItemId === item._id
                         );
                         return (
                           <div
@@ -364,9 +408,10 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
                               isSelected ? 'border-orange-500 bg-orange-50' : 'border-gray-200 hover:border-gray-300'
                             }`}
                             onClick={() => handleItemSelection({
-                              productId: item.productId,
+                              orderItemId: item._id, // This is what backend expects
+                              productId: item.id, // Keep for display  
                               variantId: item.variantId,
-                              quantity: item.quantity || item.qty || 1,
+                              quantity: item.qty || 1,
                               name: item.name,
                               variantName: item.variantName,
                               price: item.price
@@ -385,7 +430,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
                                   <p className="text-sm text-gray-600">Variant: {item.variantName}</p>
                                 )}
                                 <div className="flex items-center gap-4 text-sm text-gray-600 mt-1">
-                                  <span>Qty: {item.quantity || item.qty || 1}</span>
+                                  <span>Qty: {item.qty || 1}</span>
                                   <span>Price: ₹{(item.price || 0).toLocaleString()}</span>
                                 </div>
                               </div>
@@ -410,7 +455,7 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
                     >
                       <option value="">Select a reason</option>
                       {returnReasons.map((reason) => (
-                        <option key={reason} value={reason}>{reason}</option>
+                        <option key={reason.value} value={reason.value}>{reason.label}</option>
                       ))}
                     </select>
                   </div>
@@ -482,60 +527,6 @@ const ReturnOrderModal = ({ isOpen, onClose, orderId }) => {
               </div>
             )}
           </div>
-
-          {/* Footer */}
-          {!orderLoading && !success && order && (
-            <div className="bg-gray-50 px-6 py-4 flex items-center justify-between">
-              <button
-                onClick={handleClose}
-                className="px-6 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                Cancel
-              </button>
-              {eligibility?.isEligible ? (
-                <button
-                  onClick={handleSubmitReturn}
-                  disabled={loading || selectedItems.length === 0}
-                  className="px-6 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                >
-                  {loading ? (
-                    <>
-                      <FiLoader className="w-4 h-4 animate-spin" />
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      <FiRotateCcw className="w-4 h-4" />
-                      Submit Return Request
-                    </>
-                  )}
-                </button>
-              ) : (
-                <div className="text-right">
-                  <p className="text-sm text-red-600 mb-2">
-                    {eligibility?.reason || 'Return not available for this order'}
-                  </p>
-                  <button
-                    onClick={handleSubmitReturn}
-                    disabled={loading || selectedItems.length === 0}
-                    className="px-6 py-2 bg-gradient-to-r from-gray-400 to-gray-500 text-white rounded-lg hover:from-gray-500 hover:to-gray-600 transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                  >
-                    {loading ? (
-                      <>
-                        <FiLoader className="w-4 h-4 animate-spin" />
-                        Processing...
-                      </>
-                    ) : (
-                      <>
-                        <FiRotateCcw className="w-4 h-4" />
-                        Submit Anyway (Special Case)
-                      </>
-                    )}
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
         </motion.div>
       </motion.div>
     </AnimatePresence>

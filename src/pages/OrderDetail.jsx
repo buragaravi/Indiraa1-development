@@ -18,7 +18,10 @@ import {
   FiCreditCard,
   FiRefreshCw,
   FiDownload,
-  FiStar
+  FiStar,
+  FiRotateCcw,
+  FiEye,
+  FiAlertTriangle
 } from 'react-icons/fi';
 import DeliverySlotSelector from '../components/DeliverySlotSelector';
 import DeliveryRatingModal from '../components/DeliveryRatingModal';
@@ -32,6 +35,8 @@ const OrderDetail = () => {
   const [isDeliverySlotModalOpen, setIsDeliverySlotModalOpen] = useState(false);
   const [deliverySlotLoading, setDeliverySlotLoading] = useState(false);
   const [returnModalOpen, setReturnModalOpen] = useState(false);
+  const [orderReturns, setOrderReturns] = useState([]);
+  const [returnLoading, setReturnLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -40,6 +45,7 @@ const OrderDetail = () => {
       return;
     }
     fetchOrderDetail();
+    fetchOrderReturns();
   }, [orderId, navigate]);
   const fetchOrderDetail = async () => {
     setLoading(true);
@@ -69,6 +75,30 @@ const OrderDetail = () => {
       setError('Error fetching order details');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchOrderReturns = async () => {
+    setReturnLoading(true);
+    try {
+      const response = await fetch(`http://localhost:5001/api/returns/my-returns`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Filter returns for this specific order
+        const orderSpecificReturns = data.data?.returns?.filter(
+          returnItem => returnItem.orderId._id === orderId
+        ) || [];
+        setOrderReturns(orderSpecificReturns);
+      }
+    } catch (error) {
+      console.error('Error fetching order returns:', error);
+    } finally {
+      setReturnLoading(false);
     }
   };
 
@@ -111,6 +141,52 @@ const OrderDetail = () => {
       setDeliverySlotLoading(false);
     }
   };
+
+  // Return status utilities
+  const getReturnStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'requested':
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'admin_review':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'approved':
+        return 'bg-purple-100 text-purple-800 border-purple-200';
+      case 'rejected':
+        return 'bg-red-100 text-red-800 border-red-200';
+      case 'picked_up':
+        return 'bg-indigo-100 text-indigo-800 border-indigo-200';
+      case 'quality_checked':
+        return 'bg-orange-100 text-orange-800 border-orange-200';
+      case 'refund_approved':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'completed':
+        return 'bg-emerald-100 text-emerald-800 border-emerald-200';
+      case 'cancelled':
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
+  const getReturnStatusText = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'requested': return 'Return Requested';
+      case 'admin_review': return 'Under Review';
+      case 'approved': return 'Return Approved';
+      case 'rejected': return 'Return Rejected';
+      case 'picked_up': return 'Items Picked Up';
+      case 'quality_checked': return 'Quality Checked';
+      case 'refund_approved': return 'Refund Approved';
+      case 'completed': return 'Refund Completed';
+      case 'cancelled': return 'Return Cancelled';
+      default: return status;
+    }
+  };
+
+  const navigateToReturns = () => {
+    navigate('/returns');
+  };
+
   const getStatusIcon = (status) => {
     const normalizedStatus = status?.toLowerCase();
     switch (normalizedStatus) {
@@ -874,6 +950,118 @@ const OrderDetail = () => {
                 </div>
               )}
             </div>
+
+            {/* Return Information Section */}
+            {orderReturns.length > 0 && (
+              <motion.div 
+                className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-3">
+                  <FiRotateCcw className="w-5 h-5 text-purple-600" />
+                  Return Information
+                </h3>
+                
+                <div className="space-y-4">
+                  {orderReturns.map((returnRequest, index) => (
+                    <div 
+                      key={returnRequest._id}
+                      className="border border-gray-200 rounded-2xl p-4 hover:shadow-md transition-shadow"
+                    >
+                      <div className="flex justify-between items-start mb-3">
+                        <div>
+                          <h4 className="font-semibold text-gray-900">
+                            Return #{returnRequest.returnRequestId}
+                          </h4>
+                          <p className="text-sm text-gray-600">
+                            Requested: {new Date(returnRequest.requestedAt).toLocaleDateString('en-IN', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </p>
+                        </div>
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getReturnStatusColor(returnRequest.status)}`}>
+                          {getReturnStatusText(returnRequest.status)}
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                        <div>
+                          <span className="text-sm font-medium text-gray-700">Reason:</span>
+                          <p className="text-sm text-gray-600 mt-1 capitalize">
+                            {returnRequest.returnReason.replace(/_/g, ' ')}
+                          </p>
+                        </div>
+                        <div>
+                          <span className="text-sm font-medium text-gray-700">Items:</span>
+                          <p className="text-sm text-gray-600 mt-1">
+                            {returnRequest.items.length} item(s) returned
+                          </p>
+                        </div>
+                      </div>
+
+                      {returnRequest.customerComments && (
+                        <div className="mb-3">
+                          <span className="text-sm font-medium text-gray-700">Comments:</span>
+                          <p className="text-sm text-gray-600 mt-1 bg-gray-50 p-2 rounded-lg">
+                            {returnRequest.customerComments}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Return Progress Info */}
+                      <div className="flex flex-wrap gap-3 text-xs">
+                        {returnRequest.status === 'completed' && returnRequest.refund?.processing?.coinsCredited && (
+                          <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                            <FiCheck className="w-3 h-3" />
+                            <span>Refunded: {returnRequest.refund.processing.coinsCredited} coins</span>
+                          </div>
+                        )}
+                        {returnRequest.status === 'rejected' && (
+                          <div className="flex items-center gap-1 text-red-600 bg-red-50 px-2 py-1 rounded-full">
+                            <FiX className="w-3 h-3" />
+                            <span>Return was rejected</span>
+                          </div>
+                        )}
+                        {['requested', 'admin_review', 'approved'].includes(returnRequest.status) && (
+                          <div className="flex items-center gap-1 text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
+                            <FiClock className="w-3 h-3" />
+                            <span>Processing in progress</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Action Button */}
+                      <div className="mt-4 pt-3 border-t border-gray-100">
+                        <button
+                          onClick={navigateToReturns}
+                          className="flex items-center gap-2 text-purple-600 hover:text-purple-700 text-sm font-medium"
+                        >
+                          <FiEye className="w-4 h-4" />
+                          View Full Return Details
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Quick Actions for Returns */}
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <button
+                    onClick={navigateToReturns}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700 rounded-xl hover:from-purple-200 hover:to-indigo-200 transition-all duration-200 border border-purple-200"
+                  >
+                    <FiRotateCcw className="w-4 h-4" />
+                    Manage All Returns
+                  </button>
+                </div>
+              </motion.div>
+            )}
 
             {/* Actions */}
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20">

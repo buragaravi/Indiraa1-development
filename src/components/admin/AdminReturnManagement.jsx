@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   FaBoxOpen, 
   FaEye, 
@@ -17,6 +18,7 @@ import {
 } from 'react-icons/fa';
 
 const AdminReturnManagement = () => {
+  const navigate = useNavigate();
   const [returns, setReturns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -38,8 +40,7 @@ const AdminReturnManagement = () => {
   // Form states
   const [reviewForm, setReviewForm] = useState({
     decision: '',
-    adminComments: '',
-    assignToWarehouse: ''
+    adminComments: ''
   });
   const [refundForm, setRefundForm] = useState({
     finalRefundPercentage: 100,
@@ -48,7 +49,7 @@ const AdminReturnManagement = () => {
   });
   const [actionLoading, setActionLoading] = useState(false);
 
-  const API_URL = 'http://localhost:5001';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
   // Get admin token
   const getAdminToken = () => {
@@ -70,7 +71,7 @@ const AdminReturnManagement = () => {
         search: searchTerm
       });
 
-      const response = await fetch(`${API_URL}/api/admin/returns?${queryParams}`, {
+      const response = await fetch(`${API_URL}/api/admin/returns/all?${queryParams}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -82,11 +83,12 @@ const AdminReturnManagement = () => {
       }
 
       const data = await response.json();
-      setReturns(data.data || []);
-      setPagination(data.pagination || {});
+      setReturns(Array.isArray(data.data?.returns) ? data.data.returns : []);
+      setPagination(data.data?.pagination || {});
     } catch (error) {
       console.error('Error fetching returns:', error);
       setError(error.message);
+      setReturns([]); // Ensure array on error
     } finally {
       setLoading(false);
     }
@@ -107,8 +109,7 @@ const AdminReturnManagement = () => {
         },
         body: JSON.stringify({
           decision: reviewForm.decision,
-          adminComments: reviewForm.adminComments,
-          assignToWarehouse: reviewForm.assignToWarehouse
+          adminComments: reviewForm.adminComments
         })
       });
 
@@ -198,8 +199,7 @@ const AdminReturnManagement = () => {
     setSelectedReturn(returnRequest);
     setReviewForm({
       decision: '',
-      adminComments: '',
-      assignToWarehouse: ''
+      adminComments: ''
     });
     setShowReviewModal(true);
   };
@@ -373,7 +373,7 @@ const AdminReturnManagement = () => {
             <FaSpinner className="animate-spin text-2xl text-gray-400 mx-auto mb-2" />
             <p className="text-gray-600">Loading return requests...</p>
           </div>
-        ) : returns.length === 0 ? (
+        ) : !Array.isArray(returns) || returns.length === 0 ? (
           <div className="p-8 text-center">
             <FaBoxOpen className="mx-auto h-12 w-12 text-gray-400 mb-4" />
             <p className="text-gray-600">No return requests found</p>
@@ -414,7 +414,7 @@ const AdminReturnManagement = () => {
                             #{returnRequest.returnRequestId}
                           </div>
                           <div className="text-sm text-gray-500">
-                            Order: #{returnRequest.orderId?.slice(-8)}
+                            Order: #{(returnRequest.orderId?._id || returnRequest.orderId)?.toString()?.slice(-8) || 'N/A'}
                           </div>
                           <div className="text-sm text-gray-500">
                             {new Date(returnRequest.requestedAt).toLocaleDateString()}
@@ -459,10 +459,7 @@ const AdminReturnManagement = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex items-center justify-end space-x-2">
                           <button
-                            onClick={() => {
-                              setSelectedReturn(returnRequest);
-                              setShowDetailsModal(true);
-                            }}
+                            onClick={() => navigate(`/admin/returns/${returnRequest._id}`)}
                             className="text-blue-600 hover:text-blue-900 p-1"
                             title="View Details"
                           >
@@ -674,21 +671,6 @@ const AdminReturnManagement = () => {
                     <option value="reject">Reject</option>
                   </select>
                 </div>
-
-                {reviewForm.decision === 'approve' && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Assign to Warehouse Manager
-                    </label>
-                    <input
-                      type="text"
-                      value={reviewForm.assignToWarehouse}
-                      onChange={(e) => setReviewForm(prev => ({ ...prev, assignToWarehouse: e.target.value }))}
-                      placeholder="Warehouse Manager ID"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                )}
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">

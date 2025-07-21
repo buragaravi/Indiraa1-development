@@ -58,6 +58,8 @@ import SubAdminLayout from './components/subadmin/SubAdminLayout';
 // Return Management Components
 import CustomerReturnManagement from './components/customer/CustomerReturnManagement';
 import AdminReturnManagement from './components/admin/AdminReturnManagement';
+import ReturnDetailPage from './components/returns/ReturnDetailPage';
+import UserReturnDetailPage from './components/returns/UserReturnDetailPage';
 import WarehouseReturnManagement from './components/warehouse/WarehouseReturnManagement';
 import DeliveryAgentReturnManagement from './components/delivery/DeliveryAgentReturnManagement';
 import ReturnAnalyticsDashboard from './components/analytics/ReturnAnalyticsDashboard';
@@ -200,6 +202,16 @@ function App() {
               <AdminLayout>
                 <AdminReturnManagement />
               </AdminLayout>
+            } />
+            <Route path="/admin/returns/:returnId" element={
+              <AdminLayout>
+                <ReturnDetailPage />
+              </AdminLayout>
+            } />
+            <Route path="/sub-admin/warehouse/returns/:returnId" element={
+              <SubAdminLayout>
+                <ReturnDetailPage />
+              </SubAdminLayout>
             } />
             <Route path="/admin/return-analytics" element={
               <AdminLayout>
@@ -351,6 +363,15 @@ function App() {
                 <Navbar />
                 <main className="flex-grow">
                   <CustomerReturnManagement />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/user/return/:returnId" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <UserReturnDetailPage />
                 </main>
                 <Footer />
               </>

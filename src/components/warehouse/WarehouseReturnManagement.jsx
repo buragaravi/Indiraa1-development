@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   FaWarehouse, 
   FaTruck, 
@@ -17,10 +18,13 @@ import {
 } from 'react-icons/fa';
 
 const WarehouseReturnManagement = () => {
+  const navigate = useNavigate();
   const [assignedReturns, setAssignedReturns] = useState([]);
+  const [unassignedReturns, setUnassignedReturns] = useState([]);
   const [deliveryAgents, setDeliveryAgents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [activeTab, setActiveTab] = useState('assigned'); // 'assigned' or 'unassigned'
   const [filters, setFilters] = useState({
     status: 'all',
     page: 1,
@@ -32,6 +36,7 @@ const WarehouseReturnManagement = () => {
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [showQualityModal, setShowQualityModal] = useState(false);
   const [showRecommendationModal, setShowRecommendationModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
 
   // Form states
   const [assignForm, setAssignForm] = useState({
@@ -54,11 +59,16 @@ const WarehouseReturnManagement = () => {
     justification: ''
   });
 
+  const [reviewForm, setReviewForm] = useState({
+    decision: '',
+    comments: ''
+  });
+
   const [actionLoading, setActionLoading] = useState(false);
   const [uploadingImages, setUploadingImages] = useState(false);
   const [conditionImages, setConditionImages] = useState([]);
 
-  const API_URL = 'http://localhost:5001';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
   // Get warehouse manager token
   const getToken = () => {
@@ -76,7 +86,7 @@ const WarehouseReturnManagement = () => {
       }
 
       const queryParams = new URLSearchParams(filters);
-      const response = await fetch(`${API_URL}/api/warehouse/returns?${queryParams}`, {
+      const response = await fetch(`${API_URL}/api/warehouse/returns/assigned?${queryParams}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -98,7 +108,7 @@ const WarehouseReturnManagement = () => {
       }
 
       const data = await response.json();
-      setAssignedReturns(data.data || []);
+      setAssignedReturns(Array.isArray(data.data?.returns) ? data.data.returns : []);
       setError(''); // Clear any previous errors
     } catch (error) {
       console.error('Error fetching assigned returns:', error);
@@ -107,6 +117,7 @@ const WarehouseReturnManagement = () => {
       } else {
         setError(error.message);
       }
+      setAssignedReturns([]); // Ensure array on error
     } finally {
       setLoading(false);
     }
@@ -129,6 +140,41 @@ const WarehouseReturnManagement = () => {
       }
     } catch (error) {
       console.error('Error fetching delivery agents:', error);
+    }
+  };
+
+  // Review return request (approve/reject)
+  const reviewReturnRequest = async (e) => {
+    e.preventDefault();
+    setActionLoading(true);
+
+    try {
+      const token = getToken();
+      const response = await fetch(`${API_URL}/api/warehouse/returns/${selectedReturn._id}/review`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          decision: reviewForm.decision,
+          comments: reviewForm.comments
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to review return request');
+      }
+
+      alert(`Return request ${reviewForm.decision} successfully!`);
+      setShowReviewModal(false);
+      fetchAssignedReturns();
+      
+    } catch (error) {
+      console.error('Error reviewing return:', error);
+      alert(`Failed to review return: ${error.message}`);
+    } finally {
+      setActionLoading(false);
     }
   };
 
@@ -347,6 +393,16 @@ const WarehouseReturnManagement = () => {
     setShowRecommendationModal(true);
   };
 
+  // Open review modal
+  const openReviewModal = (returnRequest) => {
+    setSelectedReturn(returnRequest);
+    setReviewForm({
+      decision: '',
+      comments: ''
+    });
+    setShowReviewModal(true);
+  };
+
   // Remove uploaded image
   const removeImage = (index) => {
     setConditionImages(prev => prev.filter((_, i) => i !== index));
@@ -506,7 +562,7 @@ const WarehouseReturnManagement = () => {
               </div>
             </div>
           </div>
-        ) : assignedReturns.length === 0 ? (
+        ) : !Array.isArray(assignedReturns) || assignedReturns.length === 0 ? (
           <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-12 text-center">
             <div className="flex flex-col items-center space-y-4">
               <div className="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center">
@@ -606,6 +662,16 @@ const WarehouseReturnManagement = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex items-center justify-end space-x-2">
+                          {(returnRequest.status === 'requested' || returnRequest.status === 'admin_review') && (
+                            <button
+                              onClick={() => openReviewModal(returnRequest)}
+                              className="text-purple-600 hover:text-purple-900 p-1"
+                              title="Approve/Reject Return"
+                            >
+                              <FaCheck />
+                            </button>
+                          )}
+
                           {returnRequest.status === 'warehouse_assigned' && (
                             <button
                               onClick={() => openAssignModal(returnRequest)}
@@ -637,10 +703,7 @@ const WarehouseReturnManagement = () => {
                           )}
                           
                           <button
-                            onClick={() => {
-                              setSelectedReturn(returnRequest);
-                              // Could open a details modal here
-                            }}
+                            onClick={() => navigate(`/sub-admin/warehouse/returns/${returnRequest._id}`)}
                             className="text-gray-600 hover:text-gray-900 p-1"
                             title="View Details"
                           >
@@ -756,6 +819,74 @@ const WarehouseReturnManagement = () => {
                         <FaTruck className="mr-2" />
                         Assign Agent
                       </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Review Return Modal */}
+      {showReviewModal && selectedReturn && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-11/12 max-w-2xl shadow-lg rounded-md bg-white">
+            <div className="mt-3">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Review Return Request - #{selectedReturn.returnRequestId}
+              </h3>
+              
+              <form onSubmit={reviewReturnRequest} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Decision *
+                  </label>
+                  <select
+                    required
+                    value={reviewForm.decision}
+                    onChange={(e) => setReviewForm(prev => ({ ...prev, decision: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Select decision</option>
+                    <option value="approve">Approve</option>
+                    <option value="reject">Reject</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Comments
+                  </label>
+                  <textarea
+                    value={reviewForm.comments}
+                    onChange={(e) => setReviewForm(prev => ({ ...prev, comments: e.target.value }))}
+                    placeholder="Add your comments here..."
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+
+                <div className="flex justify-end space-x-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowReviewModal(false)}
+                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={actionLoading}
+                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md disabled:opacity-50 flex items-center"
+                  >
+                    {actionLoading ? (
+                      <>
+                        <FaSpinner className="animate-spin mr-2" />
+                        Processing...
+                      </>
+                    ) : (
+                      'Submit Review'
                     )}
                   </button>
                 </div>
