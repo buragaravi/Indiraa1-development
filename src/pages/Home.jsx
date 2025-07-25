@@ -1,13 +1,109 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
-import { FiShoppingBag, FiStar, FiTrendingUp, FiArrowRight, FiHeart, FiShoppingCart, FiEye, FiUsers, FiShield, FiTruck, FiPackage } from 'react-icons/fi';
+import { FiShoppingBag, FiStar, FiTrendingUp, FiArrowRight, FiHeart, FiShoppingCart, FiEye, FiUsers, FiShield, FiTruck, FiPackage, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
 // Import the new components
 import ComboDeals from '../components/home/ComboDeals';
 import FeaturedProducts from '../components/home/FeaturedProducts';
 import DynamicHeroSection from '../components/DynamicHeroSection';
+
+// Horizontal scrollable product section component
+const HorizontalProductSection = ({ title, products, icon: Icon, sectionId, onAddToWishlist, onAddToCart, isInWishlist, navigate }) => {
+  const scrollRef = useRef(null);
+  
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = 220; // Width of card + gap
+      const currentScroll = scrollRef.current.scrollLeft;
+      const targetScroll = direction === 'left' 
+        ? currentScroll - scrollAmount 
+        : currentScroll + scrollAmount;
+      
+      scrollRef.current.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  if (!products || products.length === 0) {
+    return (
+      <section className="py-6 px-4">
+        <div className="w-full">
+          <div className="flex items-center justify-between mb-4 px-4">
+            <div className="flex items-center gap-2">
+              <Icon className="w-5 h-5 text-[#2ecc71]" />
+              <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
+            </div>
+          </div>
+          <div className="text-center py-6 px-4">
+            <div className="bg-white rounded-xl p-4 shadow-[4px_4px_8px_#e8eae8,-4px_-4px_8px_#ffffff] max-w-sm mx-auto">
+              <Icon className="w-6 h-6 text-gray-300 mx-auto mb-2" />
+              <p className="text-sm text-gray-500">No products available</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="py-6 px-4">
+      <div className="w-full">
+        <div className="flex items-center justify-between mb-4 px-4">
+          <div className="flex items-center gap-2">
+            <Icon className="w-5 h-5 text-[#2ecc71]" />
+            <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
+            <span className="text-xs text-gray-500">({products.length} items)</span>
+          </div>
+          
+          {products.length > 6 && (
+            <div className="flex gap-2">
+              <button
+                onClick={() => scroll('left')}
+                className="p-2 bg-white rounded-lg shadow-[4px_4px_8px_#e8eae8,-4px_-4px_8px_#ffffff] hover:shadow-[6px_6px_12px_#e8eae8,-6px_-6px_12px_#ffffff] text-[#2ecc71] transition-all"
+              >
+                <FiChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => scroll('right')}
+                className="p-2 bg-white rounded-lg shadow-[4px_4px_8px_#e8eae8,-4px_-4px_8px_#ffffff] hover:shadow-[6px_6px_12px_#e8eae8,-6px_-6px_12px_#ffffff] text-[#2ecc71] transition-all"
+              >
+                <FiChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+        </div>
+        
+        <div className="relative px-4">
+          <div 
+            ref={scrollRef}
+            className="flex gap-4 overflow-x-auto scrollbar-hide pb-2"
+            style={{ 
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitScrollbarDisplay: 'none'
+            }}
+          >
+            {products.map((product, index) => (
+              <ProductCard 
+                key={product._id} 
+                product={product} 
+                index={index}
+                onAddToWishlist={onAddToWishlist}
+                onAddToCart={onAddToCart}
+                isInWishlist={isInWishlist}
+                navigate={navigate}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 // ProductCard component for other sections
 const ProductCard = ({ product, index, onAddToWishlist, onAddToCart, isInWishlist, navigate }) => {
@@ -18,65 +114,74 @@ const ProductCard = ({ product, index, onAddToWishlist, onAddToCart, isInWishlis
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
-      className="bg-white rounded-3xl p-6 shadow-[8px_8px_16px_#e8eae8,-8px_-8px_16px_#ffffff] hover:shadow-[12px_12px_24px_#e8eae8,-12px_-12px_24px_#ffffff] transition-all duration-300 group relative"
+      className="bg-white rounded-xl p-3 shadow-[4px_4px_8px_#e8eae8,-4px_-4px_8px_#ffffff] hover:shadow-[8px_8px_16px_#e8eae8,-8px_-8px_16px_#ffffff] transition-all duration-300 group relative min-w-[200px] flex-shrink-0 border border-white/50"
+      style={{ aspectRatio: '3/4' }}
+      whileHover={{ y: -5 }}
     >
       {/* Wishlist indicator - always visible if wishlisted */}
       {productIsWishlisted && (
-        <div className="absolute top-3 left-3 z-10">
-          <div className="p-2 bg-red-500 text-white rounded-xl shadow-lg">
-            <FiHeart className="w-4 h-4 fill-current" />
+        <div className="absolute top-2 left-2 z-10">
+          <div className="p-1.5 bg-red-500 text-white rounded-lg shadow-lg">
+            <FiHeart className="w-3 h-3 fill-current" />
           </div>
         </div>
       )}
       
-      <div className="relative mb-4">
-        <div className="w-full h-48 bg-[#f8faf8] rounded-2xl shadow-inner overflow-hidden">
+      <div className="relative mb-3">
+        <div className="w-full h-32 bg-gradient-to-br from-[#f8faf8] to-[#f0f4f0] rounded-lg shadow-inner overflow-hidden">
           <img
             src={product.images?.[0] || product.image || '/placeholder.png'}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
-        <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button
+        <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => onAddToWishlist(product._id)}
-            className={`p-2 rounded-xl shadow-[4px_4px_8px_#e8eae8,-4px_-4px_8px_#ffffff] transition-all ${
+            className={`p-1.5 rounded-lg shadow-[2px_2px_4px_#e8eae8,-2px_-2px_4px_#ffffff] transition-all ${
               productIsWishlisted 
                 ? 'bg-red-500 text-white hover:bg-red-600' 
                 : 'bg-white hover:bg-red-50 hover:text-red-500'
             }`}
           >
-            <FiHeart className={`w-4 h-4 ${productIsWishlisted ? 'fill-current' : ''}`} />
-          </button>
-          <button
+            <FiHeart className={`w-3 h-3 ${productIsWishlisted ? 'fill-current' : ''}`} />
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => navigate(`/products/${product._id}`)}
-            className="p-2 bg-white rounded-xl shadow-[4px_4px_8px_#e8eae8,-4px_-4px_8px_#ffffff] hover:bg-blue-50 hover:text-blue-500 transition-all"
+            className="p-1.5 bg-white rounded-lg shadow-[2px_2px_4px_#e8eae8,-2px_-2px_4px_#ffffff] hover:bg-blue-50 hover:text-blue-500 transition-all"
           >
-            <FiEye className="w-4 h-4" />
-          </button>
+            <FiEye className="w-3 h-3" />
+          </motion.button>
         </div>
       </div>
       
-      <div className="space-y-3">
-        <h3 className="font-semibold text-gray-800 line-clamp-2 group-hover:text-[#2ecc71] transition-colors">
+      <div className="space-y-2">
+        <h3 className="font-medium text-sm text-gray-800 line-clamp-2 group-hover:text-[#2ecc71] transition-colors leading-tight">
           {product.name}
         </h3>
         
         <div className="flex items-center justify-between">
-          <span className="text-[#2ecc71] font-bold text-lg">₹{product.price.toLocaleString()}</span>
+          <span className="text-[#2ecc71] font-semibold text-sm">₹{product.price.toLocaleString()}</span>
           <div className="flex items-center gap-1">
-            <FiStar className="w-4 h-4 text-yellow-400 fill-current" />
-            <span className="text-sm text-gray-600">4.5</span>
+            <FiStar className="w-3 h-3 text-yellow-400 fill-current" />
+            <span className="text-xs text-gray-600 font-medium">4.5</span>
           </div>
         </div>
         
-        <button
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           onClick={() => onAddToCart(product._id)}
-          className="w-full py-3 bg-[#2ecc71] text-white rounded-xl font-medium shadow-[0_4px_12px_rgba(46,204,113,0.2)] hover:shadow-[0_6px_16px_rgba(46,204,113,0.3)] hover:bg-[#27ae60] transition-all flex items-center justify-center gap-2"
+          className="w-full py-2 bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white rounded-lg font-medium text-xs shadow-[0_2px_6px_rgba(46,204,113,0.2)] hover:shadow-[0_4px_12px_rgba(46,204,113,0.3)] transition-all flex items-center justify-center gap-1 group"
         >
-          <FiShoppingCart className="w-4 h-4" />
+          <FiShoppingCart className="w-3 h-3 group-hover:rotate-12 transition-transform" />
           Add to Cart
-        </button>
+        </motion.button>
       </div>
     </motion.div>
   );
@@ -90,6 +195,8 @@ const Home = () => {
   const [topRated, setTopRated] = useState([]);
   const [wishlistItems, setWishlistItems] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [categorizedProducts, setCategorizedProducts] = useState({});
+  const [scrollPositions, setScrollPositions] = useState({});
   
   // All useRef hooks and navigate
   const navigate = useNavigate();
@@ -158,10 +265,21 @@ const Home = () => {
       if (data.products && data.products.length > 0) {
         setProducts(data.products);
         
+        // Organize products by categories
+        const categories = {};
+        data.products.forEach(product => {
+          const category = product.category || 'Others';
+          if (!categories[category]) {
+            categories[category] = [];
+          }
+          categories[category].push(product);
+        });
+        setCategorizedProducts(categories);
+        
         // Create new arrivals and top rated from the same data
         const shuffled = [...data.products].sort(() => 0.5 - Math.random());
-        setNewArrivals(shuffled.slice(6, 12));
-        setTopRated(shuffled.slice(12, 18));
+        setNewArrivals(shuffled.slice(0, 8));
+        setTopRated(shuffled.slice(8, 16));
       }
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -261,20 +379,30 @@ const Home = () => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="text-center mb-12"
+      className="text-center mb-6"
     >
-      <div className="flex items-center justify-center gap-3 mb-4">
-        <Icon className="w-8 h-8 text-[#2ecc71]" />
-        <h2 className="text-3xl font-bold text-gray-800">{title}</h2>
+      <div className="flex items-center justify-center gap-2 mb-2">
+        <Icon className="w-5 h-5 text-[#2ecc71]" />
+        <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
       </div>
-      <p className="text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
+      <p className="text-sm text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
     </motion.div>
   );  return (
     <motion.div 
       ref={containerRef}
-      className="min-h-screen bg-[#f8faf8] relative overflow-hidden"
+      className="min-h-screen bg-[#f8faf8] relative overflow-hidden w-full"
       onMouseMove={handleMouseMove}
     >
+      {/* Add custom styles for scrollbar hiding */}
+      <style jsx>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
       {/* Animated Background Elements */}
       <div className="fixed inset-0 pointer-events-none">
         {/* Floating Orbs */}
@@ -363,7 +491,7 @@ const Home = () => {
 
       {/* Dynamic Hero Banner Section Container */}
       <motion.section 
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        className="relative h-[60vh] flex items-center justify-center overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
@@ -408,218 +536,17 @@ const Home = () => {
         </div>
 
         {/* Clean Welcome Section Container - No special styling */}
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-4">
+        <div className="relative z-10 w-full px-4">
           
-          {/* The actual DynamicHeroSection component - TEMPORARILY HIDDEN */}
-          {/* <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="relative overflow-hidden rounded-[3rem]"
-          >
-            <DynamicHeroSection />
-          </motion.div> */}
-
-          {/* BEAUTIFUL WELCOME SECTION - Clean Container */}
+          {/* Dynamic Hero Section with 18:9 Aspect Ratio */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative overflow-hidden p-8 md:p-12 lg:p-16"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="relative overflow-hidden rounded-2xl w-full"
+            style={{ aspectRatio: '18/9' }}
           >
-            {/* Animated Background Pattern */}
-            <div className="absolute inset-0 overflow-hidden">
-              {/* Floating geometric shapes */}
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute"
-                  style={{
-                    left: `${20 + Math.random() * 60}%`,
-                    top: `${20 + Math.random() * 60}%`,
-                  }}
-                  animate={{
-                    y: [0, -30, 0],
-                    rotate: [0, 360],
-                    scale: [1, 1.2, 1],
-                  }}
-                  transition={{
-                    duration: 4 + Math.random() * 3,
-                    repeat: Infinity,
-                    delay: Math.random() * 2,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <div className={`w-4 h-4 ${i % 2 === 0 ? 'bg-[#2ecc71]/20' : 'bg-[#27ae60]/15'} rounded-full blur-sm`}></div>
-                </motion.div>
-              ))}
-              
-              {/* Gradient waves */}
-              <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-[#2ecc71]/5 to-transparent rounded-full blur-3xl"></div>
-              <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-[#27ae60]/5 to-transparent rounded-full blur-3xl"></div>
-            </div>
-
-            {/* Main Content */}
-            <div className="relative z-10 text-center">
-              {/* Logo/Brand Icon */}
-              <motion.div
-                initial={{ opacity: 0, y: -30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-                className="mb-8"
-              >
-                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-[#2ecc71] to-[#27ae60] rounded-3xl shadow-[8px_8px_16px_rgba(46,204,113,0.2)] flex items-center justify-center mb-4">
-                  <FiShoppingBag className="w-10 h-10 text-white" />
-                </div>
-                <motion.div
-                  animate={{ 
-                    rotate: [0, 5, -5, 0],
-                    scale: [1, 1.05, 1]
-                  }}
-                  transition={{ 
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#2ecc71] to-[#27ae60] bg-clip-text text-transparent"
-                >
-                  Indiraa1
-                </motion.div>
-              </motion.div>
-
-              {/* Welcome Text */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.7 }}
-                className="mb-8"
-              >
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4 leading-tight">
-                  Welcome to{' '}
-                  <motion.span
-                    animate={{ 
-                      backgroundPosition: ['0%', '100%', '0%'],
-                    }}
-                    transition={{ 
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    className="bg-gradient-to-r from-[#2ecc71] via-[#27ae60] to-[#2ecc71] bg-300% bg-clip-text text-transparent"
-                    style={{ backgroundSize: '300% 100%' }}
-                  >
-                    Excellence
-                  </motion.span>
-                </h1>
-                
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 1 }}
-                  className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
-                >
-                  Discover premium quality products at unbeatable prices. Your journey to 
-                  exceptional shopping experience starts here.
-                </motion.p>
-              </motion.div>
-
-              {/* Features Grid */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.9 }}
-                className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10"
-              >
-                {[
-                  { icon: FiShield, title: 'Premium Quality', desc: 'Only the finest products' },
-                  { icon: FiTruck, title: 'Fast Delivery', desc: 'Quick & reliable shipping' },
-                  { icon: FiHeart, title: 'Customer Love', desc: '99% satisfaction rate' }
-                ].map((feature, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.1 + index * 0.1 }}
-                    whileHover={{ 
-                      scale: 1.05,
-                      y: -5
-                    }}
-                    className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 shadow-[4px_4px_12px_rgba(46,204,113,0.1)] border border-white/50"
-                  >
-                    <feature.icon className="w-8 h-8 text-[#2ecc71] mx-auto mb-3" />
-                    <h3 className="font-semibold text-gray-800 mb-1">{feature.title}</h3>
-                    <p className="text-sm text-gray-600">{feature.desc}</p>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              {/* Call to Action Buttons */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.3 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-              >
-                <motion.button
-                  onClick={() => navigate('/products')}
-                  whileHover={{ 
-                    scale: 1.05,
-                    boxShadow: '0 12px 32px rgba(46,204,113,0.3)'
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white rounded-2xl font-semibold shadow-[0_8px_24px_rgba(46,204,113,0.2)] transition-all inline-flex items-center gap-3 group"
-                >
-                  <FiShoppingBag className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                  Start Shopping
-                  <motion.div
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <FiArrowRight className="w-5 h-5" />
-                  </motion.div>
-                </motion.button>
-
-                <motion.button
-                  onClick={() => navigate('/products')}
-                  whileHover={{ 
-                    scale: 1.05,
-                    backgroundColor: 'rgba(46,204,113,0.1)'
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-white/80 backdrop-blur-sm text-[#2ecc71] rounded-2xl font-semibold border-2 border-[#2ecc71]/20 hover:border-[#2ecc71]/40 transition-all inline-flex items-center gap-3 group"
-                >
-                  <FiEye className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  Explore Deals
-                </motion.button>
-              </motion.div>
-
-              {/* Floating Action Hint */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2 }}
-                className="mt-12"
-              >
-                <motion.div
-                  animate={{ 
-                    y: [0, -10, 0],
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="inline-flex items-center gap-2 text-sm text-gray-500 bg-white/40 backdrop-blur-sm px-4 py-2 rounded-full border border-white/50"
-                >
-                  <div className="w-2 h-2 bg-[#2ecc71] rounded-full animate-pulse"></div>
-                  Scroll down to discover more
-                </motion.div>
-              </motion.div>
-            </div>
-
-            {/* Decorative Corner Elements */}
-            <div className="absolute top-4 left-4 w-16 h-16 bg-gradient-to-br from-[#2ecc71]/10 to-transparent rounded-full blur-xl"></div>
-            <div className="absolute bottom-4 right-4 w-20 h-20 bg-gradient-to-tl from-[#27ae60]/10 to-transparent rounded-full blur-xl"></div>
+            <DynamicHeroSection />
           </motion.div>
 
           {/* Quality indicators footer */}
@@ -627,19 +554,19 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="text-center mt-6 sm:mt-8"
+            className="text-center mt-4"
           >
-            <div className="flex items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-600 flex-wrap">
+            <div className="flex items-center justify-center gap-6 text-sm text-gray-600 flex-wrap w-full">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-[#2ecc71] rounded-full shadow-[2px_2px_4px_rgba(46,204,113,0.3)]"></div>
                 <span className="font-medium">Premium Quality</span>
               </div>
-              <div className="w-px h-4 bg-gray-300 rounded-full hidden sm:block"></div>
+              <div className="w-px h-4 bg-gray-300 rounded-full"></div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-[#27ae60] rounded-full shadow-[2px_2px_4px_rgba(39,174,96,0.3)]"></div>
                 <span className="font-medium">Fast Delivery</span>
               </div>
-              <div className="w-px h-4 bg-gray-300 rounded-full hidden sm:block"></div>
+              <div className="w-px h-4 bg-gray-300 rounded-full"></div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-[#2ecc71] rounded-full shadow-[2px_2px_4px_rgba(46,204,113,0.3)]"></div>
                 <span className="font-medium">Best Prices</span>
@@ -651,13 +578,13 @@ const Home = () => {
 
       {/* Stats Section */}
       <motion.section 
-        className="py-16 px-4"
+        className="py-6 px-4"
         style={{
           y: statsY,
         }}
       >
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
+        <div className="w-full">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 px-4">
             {[
               { icon: FiUsers, number: '10K+', label: 'Happy Customers' },
               { icon: FiShoppingBag, number: '50K+', label: 'Products Sold' },
@@ -670,11 +597,11 @@ const Home = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center bg-white rounded-2xl lg:rounded-3xl p-4 lg:p-6 shadow-[8px_8px_16px_#e8eae8,-8px_-8px_16px_#ffffff]"
+                className="text-center bg-white rounded-xl p-3 lg:p-4 shadow-[4px_4px_8px_#e8eae8,-4px_-4px_8px_#ffffff] hover:shadow-[6px_6px_12px_#e8eae8,-6px_-6px_12px_#ffffff] transition-all duration-300"
               >
-                <stat.icon className="w-6 h-6 lg:w-8 lg:h-8 text-[#2ecc71] mx-auto mb-2 lg:mb-3" />
-                <div className="text-lg lg:text-2xl font-bold text-gray-800 mb-1">{stat.number}</div>
-                <div className="text-gray-600 text-xs lg:text-sm">{stat.label}</div>
+                <stat.icon className="w-5 h-5 text-[#2ecc71] mx-auto mb-2" />
+                <div className="text-lg font-semibold text-gray-800 mb-1">{stat.number}</div>
+                <div className="text-gray-600 text-xs font-medium">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -687,113 +614,95 @@ const Home = () => {
       {/* Featured Products Component */}
       <FeaturedProducts />
 
-      {/* New Arrivals */}
-      <motion.section 
-        className="py-16 px-4 bg-gradient-to-br from-[#f8faf8] to-white"
-        style={{
-          y: newArrivalsY,
-          scale: newArrivalsScale,
-        }}
-      >
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader
-            title="New Arrivals"
-            subtitle="Fresh products just added to our collection"
-            icon={FiTrendingUp}
+      {/* Category-based Product Sections */}
+      {Object.entries(categorizedProducts).map(([category, products]) => {
+        const categoryIcons = {
+          'Beverages': FiPackage,
+          'Electronics': FiTrendingUp,
+          'Spinach': FiShield,
+          'Accessories': FiHeart,
+          'Others': FiShoppingBag
+        };
+        
+        return (
+          <HorizontalProductSection
+            key={category}
+            title={category}
+            products={products}
+            icon={categoryIcons[category] || FiShoppingBag}
+            sectionId={category.toLowerCase()}
+            onAddToWishlist={addToWishlist}
+            onAddToCart={addToCart}
+            isInWishlist={isInWishlist}
+            navigate={navigate}
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {newArrivals.length > 0 ? (
-              newArrivals.map((product, index) => (
-                <ProductCard 
-                  key={product._id} 
-                  product={product} 
-                  index={index}
-                  onAddToWishlist={addToWishlist}
-                  onAddToCart={addToCart}
-                  isInWishlist={isInWishlist}
-                  navigate={navigate}
-                />
-              ))
-            ) : (
-              <div className="col-span-full text-center py-8">
-                <div className="bg-white rounded-3xl p-6 shadow-[8px_8px_16px_#e8eae8,-8px_-8px_16px_#ffffff] max-w-sm mx-auto">
-                  <FiTrendingUp className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                  <p className="text-gray-500">New arrivals coming soon!</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </motion.section>
+        );
+      })}
+
+      {/* New Arrivals */}
+      <HorizontalProductSection
+        title="New Arrivals"
+        products={newArrivals}
+        icon={FiTrendingUp}
+        sectionId="new-arrivals"
+        onAddToWishlist={addToWishlist}
+        onAddToCart={addToCart}
+        isInWishlist={isInWishlist}
+        navigate={navigate}
+      />
 
       {/* Top Rated */}
-      <motion.section 
-        className="py-16 px-4"
-        style={{
-          y: topRatedY,
-        }}
-      >
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader
-            title="Top Rated"
-            subtitle="Products with the highest customer ratings"
-            icon={FiShield}
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {topRated.length > 0 ? (
-              topRated.map((product, index) => (
-                <ProductCard 
-                  key={product._id} 
-                  product={product} 
-                  index={index}
-                  onAddToWishlist={addToWishlist}
-                  onAddToCart={addToCart}
-                  isInWishlist={isInWishlist}
-                  navigate={navigate}
-                />
-              ))
-            ) : (
-              <div className="col-span-full text-center py-8">
-                <div className="bg-white rounded-3xl p-6 shadow-[8px_8px_16px_#e8eae8,-8px_-8px_16px_#ffffff] max-w-sm mx-auto">
-                  <FiShield className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                  <p className="text-gray-500">Top rated products coming soon!</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </motion.section>
+      <HorizontalProductSection
+        title="Top Rated"
+        products={topRated}
+        icon={FiStar}
+        sectionId="top-rated"
+        onAddToWishlist={addToWishlist}
+        onAddToCart={addToCart}
+        isInWishlist={isInWishlist}
+        navigate={navigate}
+      />
 
       {/* CTA Section */}
       <motion.section 
-        className="py-20 px-4"
+        className="py-8 px-4 bg-gradient-to-br from-[#f8faf8] to-white"
         style={{
           y: ctaY,
           scale: ctaScale,
         }}
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="w-full">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-white rounded-3xl p-12 shadow-[8px_8px_16px_#e8eae8,-8px_-8px_16px_#ffffff] text-center"
+            className="bg-white rounded-2xl p-8 shadow-[4px_4px_8px_#e8eae8,-4px_-4px_8px_#ffffff] hover:shadow-[8px_8px_16px_#e8eae8,-8px_-8px_16px_#ffffff] transition-all duration-300 text-center mx-4"
           >
-            <h2 className="text-4xl font-bold text-gray-800 mb-6">
-              Ready to Start Shopping?
-            </h2>
-            <p className="text-gray-600 mb-8 text-lg">
-              Join thousands of satisfied customers and discover amazing deals on quality products.
-            </p>
+            <div className="mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-[#2ecc71] to-[#27ae60] rounded-2xl shadow-[4px_4px_8px_rgba(46,204,113,0.2)] flex items-center justify-center mx-auto mb-3">
+                <FiShoppingBag className="w-6 h-6 text-white" />
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+                Ready to Start Shopping?
+              </h2>
+              <p className="text-gray-600 text-sm max-w-md mx-auto">
+                Join thousands of satisfied customers and discover amazing deals on quality products.
+              </p>
+            </div>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/products')}
-              className="px-12 py-4 bg-[#2ecc71] text-white rounded-2xl font-semibold shadow-[0_8px_24px_rgba(46,204,113,0.2)] hover:shadow-[0_12px_32px_rgba(46,204,113,0.3)] transition-all inline-flex items-center gap-3"
+              className="px-8 py-3 bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white rounded-xl font-medium shadow-[0_4px_12px_rgba(46,204,113,0.2)] hover:shadow-[0_6px_16px_rgba(46,204,113,0.3)] transition-all inline-flex items-center gap-2 group"
             >
-              <FiShoppingBag className="w-5 h-5" />
+              <FiShoppingBag className="w-4 h-4 group-hover:rotate-12 transition-transform" />
               Explore All Products
-              <FiArrowRight className="w-5 h-5" />
+              <motion.div
+                animate={{ x: [0, 3, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <FiArrowRight className="w-4 h-4" />
+              </motion.div>
             </motion.button>
           </motion.div>
         </div>
