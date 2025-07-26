@@ -30,6 +30,8 @@ const Cart = () => {  const [cart, setCart] = useState([]);
       if (response.ok) {
         const data = await response.json();
         setCart(data.cart || []);
+        console.log('Cart fetched:', data.cart);
+
       } else {
         setError('Failed to fetch cart');
       }

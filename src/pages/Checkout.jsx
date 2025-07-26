@@ -390,7 +390,8 @@ const Checkout = () => {
     setShowPaymentModal(true);
       try {
       // Simulate processing delay
-      await new Promise(resolve => setTimeout(resolve, 1000));        const orderData = {
+      await new Promise(resolve => setTimeout(resolve, 1000));        
+      const orderData = {
         items: cart.map(item => ({
           id: item._id,
           name: item.name,
