@@ -49,7 +49,7 @@ const AdminReturnManagement = () => {
   });
   const [actionLoading, setActionLoading] = useState(false);
 
-  const API_URL = import.meta.env.VITE_API_URL || 'https://indiraa1-backend.onrender.com';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
   // Get admin token
   const getAdminToken = () => {

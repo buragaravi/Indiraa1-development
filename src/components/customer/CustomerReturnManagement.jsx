@@ -15,7 +15,7 @@ const CustomerReturnManagement = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const API_URL = 'https://indiraa1-backend.onrender.com';
+  const API_URL = 'http://localhost:5001';
 
   // Get user token
   const getToken = () => {

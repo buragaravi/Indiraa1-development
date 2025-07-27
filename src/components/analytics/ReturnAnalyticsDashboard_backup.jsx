@@ -44,7 +44,7 @@ const ReturnAnalyticsDashboard = () => {
     category: 'all'
   });
 
-  const API_URL = 'https://indiraa1-backend.onrender.com';
+  const API_URL = 'http://localhost:5001';
 
   // Get admin token
   const getToken = () => {

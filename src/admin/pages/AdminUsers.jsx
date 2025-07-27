@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useThemeContext } from '../../context/ThemeProvider';
 import { classNames } from '../utils/classNames';
 import { useAuth } from '../utils/useAuth';
+import { useAdminPermissions } from '../context/AdminPermissionContext';
+import PermissionButton from '../components/PermissionButton';
 import { 
   LoadingIcon, 
   EmptyIcon, 
@@ -17,12 +19,26 @@ import toast from 'react-hot-toast';
 const AdminUsers = () => {
   const { primary, mode } = useThemeContext();
   const { isAdmin } = useAuth();
+  const { hasModuleAccess } = useAdminPermissions();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
   const [userOrders, setUserOrders] = useState([]);
   const [showUserOrders, setShowUserOrders] = useState(false);
   const [loadingOrders, setLoadingOrders] = useState(false);
+
+  // Check module access
+  if (!hasModuleAccess('users')) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
+          <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
+          <p className="text-gray-600">You don't have permission to access user management.</p>
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     fetchUsers();
@@ -31,7 +47,7 @@ const AdminUsers = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/users/all', {
+      const response = await fetch('http://localhost:5001/api/products/users/all', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -55,7 +71,7 @@ const AdminUsers = () => {
     setLoadingOrders(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/user/${userId}`, {
+      const response = await fetch(`http://localhost:5001/api/products/orders/user/${userId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -178,13 +194,16 @@ const AdminUsers = () => {
                           </div>
                         </td>
                         <td className="p-6">
-                          <button
+                          <PermissionButton
+                            module="users"
+                            action="view"
                             onClick={() => handleViewOrders(user._id)}
                             className="neumorphic-button-small px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center"
+                            tooltip="View user's order history"
                           >
                             <ViewIcon className="w-4 h-4 mr-1" />
                             View Orders
-                          </button>
+                          </PermissionButton>
                         </td>
                       </tr>
                     ))}
@@ -230,13 +249,16 @@ const AdminUsers = () => {
                         </div>
                       </div>
                       
-                      <button
+                      <PermissionButton
+                        module="users"
+                        action="view"
                         onClick={() => handleViewOrders(user._id)}
                         className="w-full neumorphic-button-small px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
+                        tooltip="View user's order history"
                       >
                         <ViewIcon className="w-4 h-4 mr-2" />
                         View Orders
-                      </button>
+                      </PermissionButton>
                     </div>
                   ))}
                 </div>

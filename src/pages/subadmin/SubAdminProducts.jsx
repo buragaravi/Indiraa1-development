@@ -78,7 +78,7 @@ const SubAdminProducts = () => {
         return;
       }
       
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/', {
+      const response = await fetch('http://localhost:5001/api/products/', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -152,7 +152,7 @@ const SubAdminProducts = () => {
 
       let response;
       if (editingProduct) {
-        response = await fetch(`https://indiraa1-backend.onrender.com/api/products/${editingProduct._id}`, {
+        response = await fetch(`http://localhost:5001/api/products/${editingProduct._id}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -160,7 +160,7 @@ const SubAdminProducts = () => {
           body: formDataToSend
         });
       } else {
-        response = await fetch('https://indiraa1-backend.onrender.com/api/products/', {
+        response = await fetch('http://localhost:5001/api/products/', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -222,7 +222,7 @@ const SubAdminProducts = () => {
           return;
         }
         
-        const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/${productId}`, {
+        const response = await fetch(`http://localhost:5001/api/products/${productId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,

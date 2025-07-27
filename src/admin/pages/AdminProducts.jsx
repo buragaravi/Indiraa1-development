@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useThemeContext } from '../../context/ThemeProvider';
 import { classNames } from '../utils/classNames';
 import { useAuth } from '../utils/useAuth';
+import { useAdminPermission } from '../context/AdminPermissionContext';
+import PermissionButton from '../components/PermissionButton';
 import { 
   AddIcon, 
   EditIcon, 
@@ -20,7 +22,14 @@ import toast from 'react-hot-toast';
 
 const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
   const { primary, mode } = useThemeContext();
-  const { isAdmin } = useAuth();  const [products, setProducts] = useState([]);
+  const { isAdmin } = useAuth();
+  const { 
+    hasModuleAccess, 
+    canCreateProduct, 
+    canEditProduct, 
+    canDeleteProduct, 
+    canBulkUpload 
+  } = useAdminPermission();  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -52,13 +61,16 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    // Only fetch products if admin has module access
+    if (hasModuleAccess('products')) {
+      fetchProducts();
+    }
+  }, [hasModuleAccess]);
   const fetchProducts = async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/', {
+      const response = await fetch('http://localhost:5001/api/products/', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -123,7 +135,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
 
       let response;
       if (editingProduct) {
-        response = await fetch(`https://indiraa1-backend.onrender.com/api/products/${editingProduct._id}`, {
+        response = await fetch(`http://localhost:5001/api/products/${editingProduct._id}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -131,7 +143,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
           body: formDataToSend
         });
       } else {
-        response = await fetch('https://indiraa1-backend.onrender.com/api/products/', {
+        response = await fetch('http://localhost:5001/api/products/', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -184,7 +196,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/${productId}`, {
+        const response = await fetch(`http://localhost:5001/api/products/${productId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -282,13 +294,14 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
     setExpandedProduct(expandedProduct === productId ? null : productId);
   };
 
-  if (!isAdmin) {
+  // Check if current admin has access to products module
+  if (!hasModuleAccess('products')) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
           <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
-          <p className="text-gray-600">You need admin privileges to access this page.</p>
+          <p className="text-gray-600">You don't have permission to access Product Management.</p>
         </div>
       </div>
     );
@@ -301,23 +314,20 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
               Product Management
             </h1>
             <p className="text-gray-600 text-base lg:text-lg">
-              {isReadOnly && !isAdmin 
-                ? 'View and browse all products in your inventory (Read-only access)'
-                : 'Manage your store\'s products with ease'
-              }
+              Manage your store's products with ease
             </p>
             
-            {/* Read-Only Banner */}
-            {isReadOnly && !isAdmin && (
-              <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            {/* Limited Access Info */}
+            {(!canCreateProduct && !canEditProduct && !canDeleteProduct && !canBulkUpload) && (
+              <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <div className="flex items-center">
-                  <svg className="w-5 h-5 text-yellow-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  <svg className="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div>
-                    <h3 className="text-sm font-medium text-yellow-800">Read-Only Access</h3>
-                    <p className="text-sm text-yellow-700 mt-1">
-                      You can view products but cannot add, edit, or delete them.
+                    <h3 className="text-sm font-medium text-blue-800">View-Only Access</h3>
+                    <p className="text-sm text-blue-700 mt-1">
+                      You can view products but cannot create, edit, or delete them.
                     </p>
                   </div>
                 </div>
@@ -325,27 +335,30 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
             )}
           </div>
           
-          {/* Action Buttons - Only show for read-write users */}
-          {(!isReadOnly || isAdmin) && (
-            <div className="flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() => setShowBulkUpload(true)}
-                className="neumorphic-button px-6 lg:px-8 py-3 lg:py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 flex items-center justify-center"
-              >
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                </svg>
-                Bulk Upload
-              </button>
-              <button
-                onClick={() => setShowForm(true)}
-                className="neumorphic-button px-6 lg:px-8 py-3 lg:py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 flex items-center justify-center"
-              >
-                <AddIcon className="w-5 h-5 mr-2" />
-                Add New Product
-              </button>
-            </div>
-          )}
+          {/* Action Buttons - Permission-based visibility */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <PermissionButton
+              module="products"
+              action="bulk_upload"
+              onClick={() => setShowBulkUpload(true)}
+              className="neumorphic-button px-6 lg:px-8 py-3 lg:py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 flex items-center justify-center"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              Bulk Upload
+            </PermissionButton>
+            
+            <PermissionButton
+              module="products"
+              action="create_product"
+              onClick={() => setShowForm(true)}
+              className="neumorphic-button px-6 lg:px-8 py-3 lg:py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 flex items-center justify-center"
+            >
+              <AddIcon className="w-5 h-5 mr-2" />
+              Add New Product
+            </PermissionButton>
+          </div>
         </div>
 
         {/* Bulk Upload Section */}
@@ -679,31 +692,28 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                           </td>
                           <td className="p-3" onClick={(e) => e.stopPropagation()}>
                             <div className="flex gap-1">
-                              {(!isReadOnly || isAdmin) ? (
-                                <>
-                                  <button
-                                    onClick={() => handleEdit(product)}
-                                    className="neumorphic-button-small p-2 bg-blue-500 text-white rounded-lg hover:shadow-soft transition-all duration-300 flex items-center justify-center"
-                                    title="Edit Product"
-                                  >
-                                    <EditIcon className="w-4 h-4" />
-                                  </button>
-                                  <button
-                                    onClick={() => handleDelete(product._id)}
-                                    className="neumorphic-button-small p-2 bg-red-500 text-white rounded-lg hover:shadow-soft transition-all duration-300 flex items-center justify-center"
-                                    title="Delete Product"
-                                  >
-                                    <DeleteIcon className="w-4 h-4" />
-                                  </button>
-                                </>
-                              ) : (
-                                <div className="flex items-center gap-2 text-gray-500 text-sm">
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                  </svg>
-                                  View Only
-                                </div>
-                              )}
+                              <PermissionButton
+                                module="products"
+                                action="edit_product"
+                                onClick={() => handleEdit(product)}
+                                size="sm"
+                                className="neumorphic-button-small p-2 bg-blue-500 text-white rounded-lg hover:shadow-soft transition-all duration-300 flex items-center justify-center"
+                                title="Edit Product"
+                              >
+                                <EditIcon className="w-4 h-4" />
+                              </PermissionButton>
+                              
+                              <PermissionButton
+                                module="products"
+                                action="delete_product"
+                                onClick={() => handleDelete(product._id)}
+                                size="sm"
+                                variant="danger"
+                                className="neumorphic-button-small p-2 bg-red-500 text-white rounded-lg hover:shadow-soft transition-all duration-300 flex items-center justify-center"
+                                title="Delete Product"
+                              >
+                                <DeleteIcon className="w-4 h-4" />
+                              </PermissionButton>
                             </div>
                           </td>
                         </tr>                        {/* Expandable Details Row */}
@@ -851,31 +861,28 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                       )}
                       
                       <div className="flex gap-2">
-                        {(!isReadOnly || isAdmin) ? (
-                          <>
-                            <button
-                              onClick={() => handleEdit(product)}
-                              className="flex-1 neumorphic-button-small px-3 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
-                            >
-                              <EditIcon className="w-3 h-3 mr-1" />
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => handleDelete(product._id)}
-                              className="flex-1 neumorphic-button-small px-3 py-2 bg-red-500 text-white rounded-lg text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
-                            >
-                              <DeleteIcon className="w-3 h-3 mr-1" />
-                              Delete
-                            </button>
-                          </>
-                        ) : (
-                          <div className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-gray-100 text-gray-500 rounded-lg text-sm">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
-                            View Only Access
-                          </div>
-                        )}
+                        <PermissionButton
+                          module="products"
+                          action="edit_product"
+                          onClick={() => handleEdit(product)}
+                          size="sm"
+                          className="flex-1 neumorphic-button-small px-3 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
+                        >
+                          <EditIcon className="w-3 h-3 mr-1" />
+                          Edit
+                        </PermissionButton>
+                        
+                        <PermissionButton
+                          module="products"
+                          action="delete_product"
+                          onClick={() => handleDelete(product._id)}
+                          size="sm"
+                          variant="danger"
+                          className="flex-1 neumorphic-button-small px-3 py-2 bg-red-500 text-white rounded-lg text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
+                        >
+                          <DeleteIcon className="w-3 h-3 mr-1" />
+                          Delete
+                        </PermissionButton>
                       </div>
                     </div>
                   ))}

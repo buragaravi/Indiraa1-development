@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useThemeContext } from '../../context/ThemeProvider';
 import { classNames } from '../utils/classNames';
 import { useAuth } from '../utils/useAuth';
+import { useAdminPermissions } from '../context/AdminPermissionContext';
+import PermissionButton from '../components/PermissionButton';
 import { 
   LoadingIcon, 
   EmptyIcon, 
@@ -19,6 +21,7 @@ import toast from 'react-hot-toast';
 const AdminCoupons = () => {
   const { primary, mode } = useThemeContext();
   const { isAdmin } = useAuth();
+  const { hasModuleAccess } = useAdminPermissions();
   const [coupons, setCoupons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -34,6 +37,19 @@ const AdminCoupons = () => {
     validUntil: ''
   });
 
+  // Check module access
+  if (!hasModuleAccess('coupons')) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
+          <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
+          <p className="text-gray-600">You don't have permission to access coupon management.</p>
+        </div>
+      </div>
+    );
+  }
+
   useEffect(() => {
     fetchCoupons();
   }, []);
@@ -41,7 +57,7 @@ const AdminCoupons = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/coupons/', {
+      const response = await fetch('http://localhost:5001/api/coupons/', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -75,7 +91,7 @@ const AdminCoupons = () => {
     setSubmitting(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/coupons/', {
+      const response = await fetch('http://localhost:5001/api/coupons/', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -122,7 +138,7 @@ const AdminCoupons = () => {
     if (window.confirm('Are you sure you want to delete this coupon?')) {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`https://indiraa1-backend.onrender.com/api/coupons/${couponId}`, {
+        const response = await fetch(`http://localhost:5001/api/coupons/${couponId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -224,13 +240,16 @@ const AdminCoupons = () => {
               Create and manage discount coupons for your customers
             </p>
           </div>
-          <button
+          <PermissionButton
+            module="coupons"
+            action="create"
             onClick={() => setShowForm(true)}
             className="neumorphic-button w-full md:w-auto px-6 md:px-8 py-3 md:py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 flex items-center justify-center"
+            tooltip="Create a new coupon"
           >
               <AddIcon className="w-5 h-5 mr-2" />
               Create Coupon
-            </button>
+            </PermissionButton>
           </div>
 
           {/* Coupon Form */}

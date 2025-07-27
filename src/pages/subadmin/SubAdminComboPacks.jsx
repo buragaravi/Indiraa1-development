@@ -54,7 +54,7 @@ const SubAdminComboPacks = () => {
         return;
       }
       
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/combo-packs/all', {
+      const response = await fetch('http://localhost:5001/api/combo-packs/all', {
         headers
       });
       const data = await response.json();
@@ -78,7 +78,7 @@ const SubAdminComboPacks = () => {
     }
 
     try {
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/combo-packs/${comboPackId}`, {
+      const response = await fetch(`http://localhost:5001/api/combo-packs/${comboPackId}`, {
         method: 'DELETE',
         headers: getAuthHeaders()
       });
@@ -97,7 +97,7 @@ const SubAdminComboPacks = () => {
 
   const toggleVisibility = async (comboPackId, currentVisibility) => {
     try {
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/combo-packs/${comboPackId}`, {
+      const response = await fetch(`http://localhost:5001/api/combo-packs/${comboPackId}`, {
         method: 'PUT',
         headers: {
           ...getAuthHeaders(),
@@ -475,7 +475,7 @@ const ComboPackModal = ({ comboPack, onClose, onSuccess }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products');
+      const response = await fetch('http://localhost:5001/api/products');
       const data = await response.json();
       if (data.products) {
         setProducts(data.products);
@@ -505,8 +505,8 @@ const ComboPackModal = ({ comboPack, onClose, onSuccess }) => {
       };
 
       const url = comboPack 
-        ? `https://indiraa1-backend.onrender.com/api/combo-packs/${comboPack._id}`
-        : 'https://indiraa1-backend.onrender.com/api/combo-packs/create';
+        ? `http://localhost:5001/api/combo-packs/${comboPack._id}`
+        : 'http://localhost:5001/api/combo-packs/create';
       
       const method = comboPack ? 'PUT' : 'POST';
 

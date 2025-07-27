@@ -44,7 +44,7 @@ const Navbar = () => {
 
     try {
       // Fetch cart count
-      const cartResponse = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/me', {
+      const cartResponse = await fetch('http://localhost:5001/api/products/cart/me', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (cartResponse.ok) {
@@ -53,7 +53,7 @@ const Navbar = () => {
       }
 
       // Fetch wishlist count
-      const wishlistResponse = await fetch('https://indiraa1-backend.onrender.com/api/products/wishlist/me', {
+      const wishlistResponse = await fetch('http://localhost:5001/api/products/wishlist/me', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (wishlistResponse.ok) {

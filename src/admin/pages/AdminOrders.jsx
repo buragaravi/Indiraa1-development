@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useThemeContext } from '../../context/ThemeProvider';
 import { classNames } from '../utils/classNames';
 import { useAuth } from '../utils/useAuth';
+import { useAdminPermissions } from '../context/AdminPermissionContext';
 import { 
   LoadingIcon, 
   EmptyIcon, 
@@ -18,9 +19,23 @@ import toast from 'react-hot-toast';
 const AdminOrders = () => {
   const { primary, mode } = useThemeContext();
   const { isAdmin } = useAuth();
+  const { hasModuleAccess } = useAdminPermissions();
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Check module access
+  if (!hasModuleAccess('orders')) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
+          <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
+          <p className="text-gray-600">You don't have permission to access order management.</p>
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     fetchOrders();
@@ -29,7 +44,7 @@ const AdminOrders = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/orders/all', {
+      const response = await fetch('http://localhost:5001/api/products/orders/all', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

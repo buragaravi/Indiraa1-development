@@ -48,9 +48,9 @@ const ComboPackDetail = () => {
         
         // Try by ID first, then by slug if ID fails
         try {
-          response = await fetch(`https://indiraa1-backend.onrender.com/api/combo-packs/id/${id}`);
+          response = await fetch(`http://localhost:5001/api/combo-packs/id/${id}`);
         } catch (err) {
-          response = await fetch(`https://indiraa1-backend.onrender.com/api/combo-packs/slug/${id}`);
+          response = await fetch(`http://localhost:5001/api/combo-packs/slug/${id}`);
         }
 
         if (!response.ok) {
@@ -105,7 +105,7 @@ const ComboPackDetail = () => {
 
   const checkWishlistStatus = async (comboPackId, token) => {
     try {
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/combo-packs/wishlist/me', {
+      const response = await fetch('http://localhost:5001/api/combo-packs/wishlist/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -129,8 +129,8 @@ const ComboPackDetail = () => {
     
     try {
       const endpoint = wishlisted 
-        ? 'https://indiraa1-backend.onrender.com/api/combo-packs/wishlist/remove'
-        : 'https://indiraa1-backend.onrender.com/api/combo-packs/wishlist/add';
+        ? 'http://localhost:5001/api/combo-packs/wishlist/remove'
+        : 'http://localhost:5001/api/combo-packs/wishlist/add';
       
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -166,7 +166,7 @@ const ComboPackDetail = () => {
     }
     
     try {
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/combo-packs/cart/add', {
+      const response = await fetch('http://localhost:5001/api/combo-packs/cart/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -219,7 +219,7 @@ const ComboPackDetail = () => {
 
     setSubmitting(true);
     try {
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/combo-packs/${comboPack._id}/review`, {
+      const response = await fetch(`http://localhost:5001/api/combo-packs/${comboPack._id}/review`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

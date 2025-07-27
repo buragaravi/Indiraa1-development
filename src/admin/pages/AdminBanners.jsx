@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useAdminPermissions } from '../context/AdminPermissionContext';
+import PermissionButton from '../components/PermissionButton';
+import { EmptyIcon } from '../components/AdminIcons';
 import BannerForm from '../components/BannerForm';
 import BannerList from '../components/BannerList';
 
 const AdminBanners = () => {
+  const { hasModuleAccess } = useAdminPermissions();
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -13,8 +17,21 @@ const AdminBanners = () => {
   const [selectedBanner, setSelectedBanner] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
 
+  // Check module access
+  if (!hasModuleAccess('banners')) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
+          <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
+          <p className="text-gray-600">You don't have permission to access banner management.</p>
+        </div>
+      </div>
+    );
+  }
+
   // API Base URL - using the correct backend port
-  const API_BASE_URL = 'https://indiraa1-backend.onrender.com/api';
+  const API_BASE_URL = 'http://localhost:5001/api';
 
   // Helper function for authenticated requests
   const getAuthHeaders = () => {
@@ -354,18 +371,21 @@ const AdminBanners = () => {
           <h1 className="text-3xl font-bold text-gray-900">Banner Management</h1>
           <p className="text-gray-600 mt-1">Manage hero banners for your homepage</p>
         </div>
-        <button
+        <PermissionButton
+          module="banners"
+          action="create"
           onClick={() => {
             setSelectedBanner(null);
             setShowForm(true);
           }}
           className="bg-[#2ecc71] text-white px-6 py-3 rounded-lg hover:bg-[#27ae60] transition-colors font-medium flex items-center gap-2 shadow-md"
+          tooltip="Create a new banner"
         >
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
           Create Banner
-        </button>
+        </PermissionButton>
       </div>
 
       {/* Analytics Overview */}

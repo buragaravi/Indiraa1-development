@@ -51,7 +51,7 @@ const OrderDetail = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/user/${orderId}`, {
+      const response = await fetch(`http://localhost:5001/api/products/orders/user/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -81,7 +81,7 @@ const OrderDetail = () => {
   const fetchOrderReturns = async () => {
     setReturnLoading(true);
     try {
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/returns/my-returns`, {
+      const response = await fetch(`http://localhost:5001/api/returns/my-returns`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -108,7 +108,7 @@ const OrderDetail = () => {
     console.log('Sending delivery slot update:', { date: selectedDate, timeSlot: selectedTimeSlot });
     
     try {
-      const response = await fetch(`https://indiraa1-backend.onrender.com/api/orders/${orderId}/delivery-slot`, {
+      const response = await fetch(`http://localhost:5001/api/orders/${orderId}/delivery-slot`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

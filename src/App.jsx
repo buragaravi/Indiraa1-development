@@ -36,7 +36,9 @@ import AdminCoupons from './admin/pages/AdminCoupons';
 import AdminComboPacks from './admin/pages/AdminComboPacks';
 import AdminBanners from './admin/pages/AdminBanners';
 import AdminRevenueAnalytics from './admin/pages/AdminRevenueAnalytics';
+import AdminManagement from './admin/pages/AdminManagement';
 import AdminSidebar from './admin/components/AdminSidebar';
+import { AdminPermissionProvider } from './admin/context/AdminPermissionContext';
 import AdminDashboard from './pages/AdminDashboard';
 import BulkUploadHome from './pages/BulkUploadHome';
 // Batch Management Components
@@ -71,31 +73,33 @@ import './App.css';
 // Admin Layout Component
 const AdminLayout = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 admin-layout">
-      <AdminSidebar />
-      <div 
-        className="transition-all duration-300 ease-in-out"
-        style={{ 
-          marginLeft: 'var(--sidebar-width, 0px)',
-          width: 'calc(100% - var(--sidebar-width, 0px))'
-        }}
-      >
-        <main className="min-h-screen p-4 md:p-6 lg:p-8">
-          <div className="max-w-full mx-auto">
-            {children}
-          </div>
-        </main>
-      </div>
-      
-      <style>{`
-        @media (max-width: 768px) {
-          .admin-layout > div {
-            margin-left: 0 !important;
-            width: 100% !important;
+    <AdminPermissionProvider>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 admin-layout">
+        <AdminSidebar />
+        <div 
+          className="transition-all duration-300 ease-in-out"
+          style={{ 
+            marginLeft: 'var(--sidebar-width, 0px)',
+            width: 'calc(100% - var(--sidebar-width, 0px))'
+          }}
+        >
+          <main className="min-h-screen p-4 md:p-6 lg:p-8">
+            <div className="max-w-full mx-auto">
+              {children}
+            </div>
+          </main>
+        </div>
+        
+        <style>{`
+          @media (max-width: 768px) {
+            .admin-layout > div {
+              margin-left: 0 !important;
+              width: 100% !important;
+            }
           }
-        }
-      `}</style>
-    </div>
+        `}</style>
+      </div>
+    </AdminPermissionProvider>
   );
 };
 
@@ -196,6 +200,11 @@ function App() {
             <Route path="/admin/sub-admins" element={
               <AdminLayout>
                 <SubAdminManagement />
+              </AdminLayout>
+            } />
+            <Route path="/admin/manage-admins" element={
+              <AdminLayout>
+                <AdminManagement />
               </AdminLayout>
             } />
             <Route path="/admin/returns" element={

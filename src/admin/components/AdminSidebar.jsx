@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../utils/useAuth';
+import { PermissionGate, SuperAdminOnly } from './PermissionGate';
 import { 
   DashboardIcon, 
   ProductsIcon, 
@@ -52,62 +53,82 @@ const AdminSidebar = () => {
     {
       path: '/admin',
       name: 'Dashboard',
-      icon: DashboardIcon
+      icon: DashboardIcon,
+      module: null // Dashboard is always accessible
     },
     {
       path: '/admin/products',
       name: 'Products',
-      icon: ProductsIcon
+      icon: ProductsIcon,
+      module: 'products'
     },
     {
       path: '/admin/combo-packs',
       name: 'Combo Packs',
-      icon: PackageIcon
+      icon: PackageIcon,
+      module: 'combopacks'
     },
     {
       path: '/admin/banners',
       name: 'Banners',
-      icon: BannersIcon
+      icon: BannersIcon,
+      module: 'banners'
     },
     {
       path: '/admin/batches',
       name: 'Batch Management',
-      icon: BatchIcon
+      icon: BatchIcon,
+      module: 'inventory'
     },
     {
       path: '/admin/orders',
       name: 'Orders',
-      icon: OrdersIcon
+      icon: OrdersIcon,
+      module: 'orders'
     },
     {
       path: '/admin/returns',
       name: 'Return Management',
-      icon: ReturnIcon
+      icon: ReturnIcon,
+      module: 'returns'
     },
     {
       path: '/admin/return-analytics',
       name: 'Return Analytics',
-      icon: AnalyticsIcon
+      icon: AnalyticsIcon,
+      module: 'returns'
     },
     {
       path: '/admin/users',
       name: 'Users',
-      icon: UsersIcon
+      icon: UsersIcon,
+      module: 'users'
     },
     {
       path: '/admin/sub-admins',
       name: 'Sub Admins',
-      icon: SubAdminIcon
+      icon: SubAdminIcon,
+      module: 'sub_admins'
     },
     {
       path: '/admin/coupons',
       name: 'Coupons',
-      icon: CouponsIcon
+      icon: CouponsIcon,
+      module: 'coupons'
     },
     {
       path: '/admin/revenue-analytics',
       name: 'Revenue Analytics',
-      icon: RevenueAnalyticsIcon
+      icon: RevenueAnalyticsIcon,
+      module: 'analytics'
+    },
+    // NEW: Admin Management (Super Admin Only)
+    {
+      path: '/admin/manage-admins',
+      name: 'Admin Management',
+      icon: SubAdminIcon,
+      module: 'admin_management',
+      superAdminOnly: true
     }
   ];
 
@@ -174,9 +195,13 @@ const AdminSidebar = () => {
             <nav className="space-y-3">
               {menuItems.map((item) => {
                 const IconComponent = item.icon;
-                return (                  <Link
+                
+                // Render menu item with appropriate permission gate
+                const menuItem = (
+                  <Link
                     key={item.path}
-                    to={item.path}                    onClick={() => {
+                    to={item.path}
+                    onClick={() => {
                       // Close sidebar on mobile after navigation
                       if (isMobile) {
                         setIsCollapsed(true);
@@ -200,6 +225,31 @@ const AdminSidebar = () => {
                       <div className="active-indicator bg-white animate-pulse"></div>
                     )}
                   </Link>
+                );
+
+                // Super Admin Only items
+                if (item.superAdminOnly) {
+                  return (
+                    <SuperAdminOnly key={item.path}>
+                      {menuItem}
+                    </SuperAdminOnly>
+                  );
+                }
+
+                // Items that should always show (like sub-admins, dashboard)
+                if (item.showAlways || !item.module) {
+                  return menuItem;
+                }
+
+                // Module-based permission items
+                return (
+                  <PermissionGate 
+                    key={item.path}
+                    module={item.module}
+                    fallback={null}
+                  >
+                    {menuItem}
+                  </PermissionGate>
                 );
               })}
             </nav>

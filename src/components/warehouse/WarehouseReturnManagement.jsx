@@ -68,7 +68,7 @@ const WarehouseReturnManagement = () => {
   const [uploadingImages, setUploadingImages] = useState(false);
   const [conditionImages, setConditionImages] = useState([]);
 
-  const API_URL = import.meta.env.VITE_API_URL || 'https://indiraa1-backend.onrender.com';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
   // Get warehouse manager token
   const getToken = () => {
