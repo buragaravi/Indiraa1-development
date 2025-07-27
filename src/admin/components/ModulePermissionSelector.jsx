@@ -11,13 +11,14 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
       icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5zM10 18v-6h4v6h-4z" clipRule="evenodd" /></svg>,
       description: 'Manage products, categories, and inventory',
       actions: {
-        view_products: 'View Products List',
-        create_product: 'Create New Product',
-        edit_product: 'Edit Product Details',
-        delete_product: 'Delete Products',
+        view: 'View Products List',
+        create: 'Create New Products',
+        edit: 'Edit Product Details',
+        delete: 'Delete Products',
         bulk_upload: 'Bulk Upload Products',
-        export_products: 'Export Product Data',
-        manage_categories: 'Manage Categories'
+        activate: 'Activate Products',
+        deactivate: 'Deactivate Products',
+        export: 'Export Products Data'
       }
     },
     orders: {
@@ -25,12 +26,14 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
       icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" /></svg>,
       description: 'Handle orders, status updates, and tracking',
       actions: {
-        view_orders: 'View Orders List',
+        view: 'View Orders List',
+        edit: 'Edit Order Details',
+        delete: 'Delete Orders',
+        export: 'Export Order Data',
+        mark_paid: 'Mark Orders as Paid',
         update_status: 'Update Order Status',
-        cancel_order: 'Cancel Orders',
-        refund_order: 'Process Refunds',
-        export_orders: 'Export Order Data',
-        view_order_details: 'View Order Details'
+        cancel: 'Cancel Orders',
+        refund: 'Process Refunds'
       }
     },
     users: {
@@ -38,11 +41,13 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
       icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" /></svg>,
       description: 'Manage user accounts and activity',
       actions: {
-        view_users: 'View Users List',
-        edit_user: 'Edit User Details',
-        suspend_user: 'Suspend/Activate Users',
-        view_user_activity: 'View User Activity',
-        export_users: 'Export User Data'
+        view: 'View Users List',
+        create: 'Create New Users',
+        edit: 'Edit User Details',
+        delete: 'Delete Users',
+        activate: 'Activate Users',
+        deactivate: 'Deactivate Users',
+        export: 'Export User Data'
       }
     },
     banners: {
@@ -50,10 +55,14 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
       icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" /></svg>,
       description: 'Manage promotional banners and hero images',
       actions: {
-        view_banners: 'View Banners List',
-        create_banner: 'Create New Banner',
-        edit_banner: 'Edit Banner Details',
-        delete_banner: 'Delete Banners'
+        view: 'View Banners List',
+        create: 'Create New Banners',
+        edit: 'Edit Banner Details',
+        delete: 'Delete Banners',
+        activate: 'Activate Banners',
+        deactivate: 'Deactivate Banners',
+        reorder: 'Reorder Banner Priority',
+        schedule: 'Schedule Banner Display'
       }
     },
     coupons: {
@@ -61,10 +70,13 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
       icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" /></svg>,
       description: 'Manage discount coupons and promotional codes',
       actions: {
-        view_coupons: 'View Coupons List',
-        create_coupon: 'Create New Coupon',
-        edit_coupon: 'Edit Coupon Details',
-        delete_coupon: 'Delete Coupons'
+        view: 'View Coupons List',
+        create: 'Create New Coupons',
+        edit: 'Edit Coupon Details',
+        delete: 'Delete Coupons',
+        activate: 'Activate Coupons',
+        deactivate: 'Deactivate Coupons',
+        export: 'Export Coupon Data'
       }
     },
     sub_admins: {
@@ -72,10 +84,12 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
       icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" /></svg>,
       description: 'Manage sub-administrators and warehouse staff',
       actions: {
-        view_sub_admins: 'View Sub-Admins List',
-        create_sub_admin: 'Create New Sub-Admin',
-        edit_sub_admin: 'Edit Sub-Admin Details',
-        delete_sub_admin: 'Delete Sub-Admins'
+        view: 'View Sub-Admins List',
+        create: 'Create New Sub-Admins',
+        edit: 'Edit Sub-Admin Details',
+        delete: 'Delete Sub-Admins',
+        activate: 'Activate Sub-Admins',
+        deactivate: 'Deactivate Sub-Admins'
       }
     },
     combopacks: {
@@ -95,11 +109,13 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
       icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" /></svg>,
       description: 'Stock management and batch tracking',
       actions: {
-        view_stock: 'View Stock Levels',
-        update_stock: 'Update Stock Quantity',
-        batch_management: 'Manage Product Batches',
-        stock_alerts: 'Manage Stock Alerts',
-        inventory_reports: 'Generate Inventory Reports'
+        view: 'View Stock Levels',
+        create: 'Create Inventory Records',
+        edit: 'Update Stock Quantity',
+        delete: 'Delete Inventory Records',
+        batch_create: 'Batch Create Inventory',
+        batch_edit: 'Batch Edit Inventory',
+        export: 'Export Inventory Data'
       }
     },
     analytics: {
@@ -107,11 +123,12 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
       icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" /></svg>,
       description: 'Sales analytics and reporting',
       actions: {
-        view_dashboard: 'View Analytics Dashboard',
-        sales_reports: 'Generate Sales Reports',
-        user_analytics: 'View User Analytics',
-        export_reports: 'Export Report Data',
-        revenue_analysis: 'Revenue Analysis Tools'
+        view: 'View Analytics Dashboard',
+        export: 'Export Report Data',
+        revenue: 'Revenue Analysis',
+        sales: 'Sales Analytics',
+        users: 'User Analytics',
+        products: 'Product Analytics'
       }
     },
     returns: {
@@ -119,34 +136,12 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
       icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" /></svg>,
       description: 'Handle returns and refund processing',
       actions: {
-        view_returns: 'View Returns List',
-        process_return: 'Process Return Requests',
-        approve_refund: 'Approve Refunds',
-        return_analytics: 'Returns Analytics'
-      }
-    },
-    settings: {
-      name: 'System Settings',
-      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" /></svg>,
-      description: 'System configuration and settings',
-      actions: {
-        view_settings: 'View System Settings',
-        update_settings: 'Update Configuration',
-        system_config: 'Advanced System Config',
-        backup_restore: 'Backup & Restore'
-      }
-    },
-    admin_management: {
-      name: 'Admin Management',
-      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
-      description: 'Manage administrators and permissions',
-      actions: {
-        view_admins: 'View Admins List',
-        create_admin: 'Create New Admin',
-        edit_admin: 'Edit Admin Details',
-        delete_admin: 'Delete Admins',
-        manage_permissions: 'Manage Permissions',
-        view_activity_logs: 'View Activity Logs'
+        view: 'View Returns List',
+        process: 'Process Return Requests',
+        approve: 'Approve Returns',
+        reject: 'Reject Returns', 
+        refund: 'Process Refunds',
+        export: 'Export Returns Data'
       }
     }
   };

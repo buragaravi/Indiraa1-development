@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useThemeContext } from '../../context/ThemeProvider';
 import { classNames } from '../utils/classNames';
 import { useAuth } from '../utils/useAuth';
-import { useAdminPermissions } from '../context/AdminPermissionContext';
+import { useAdminPermission } from '../context/AdminPermissionContext';
 import PermissionButton from '../components/PermissionButton';
 import { 
   LoadingIcon, 
@@ -21,7 +21,7 @@ import toast from 'react-hot-toast';
 const AdminCoupons = () => {
   const { primary, mode } = useThemeContext();
   const { isAdmin } = useAuth();
-  const { hasModuleAccess } = useAdminPermissions();
+  const { hasModuleAccess } = useAdminPermission();
   const [coupons, setCoupons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -37,7 +37,7 @@ const AdminCoupons = () => {
     validUntil: ''
   });
 
-  // Check module access
+  // Check module access after all hooks
   if (!hasModuleAccess('coupons')) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
@@ -50,9 +50,6 @@ const AdminCoupons = () => {
     );
   }
 
-  useEffect(() => {
-    fetchCoupons();
-  }, []);
   const fetchCoupons = async () => {
     try {
       setLoading(true);
@@ -78,6 +75,10 @@ const AdminCoupons = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchCoupons();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -241,11 +242,11 @@ const AdminCoupons = () => {
             </p>
           </div>
           <PermissionButton
-            module="coupons"
-            action="create"
+            moduleName="coupons"
+            action="create_coupon"
             onClick={() => setShowForm(true)}
             className="neumorphic-button w-full md:w-auto px-6 md:px-8 py-3 md:py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 flex items-center justify-center"
-            tooltip="Create a new coupon"
+            disabledTooltip="You don't have permission to create coupons"
           >
               <AddIcon className="w-5 h-5 mr-2" />
               Create Coupon
@@ -479,13 +480,16 @@ const AdminCoupons = () => {
                             </span>
                           </td>
                           <td className="p-6">
-                            <button
+                            <PermissionButton
+                              moduleName="coupons"
+                              action="delete_coupon"
                               onClick={() => handleDelete(coupon._id)}
                               className="neumorphic-button-small px-4 py-2 bg-red-500 text-white rounded-xl text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center"
+                              disabledTooltip="You don't have permission to delete coupons"
                             >
                               <DeleteIcon className="w-4 h-4 mr-1" />
                               Delete
-                            </button>
+                            </PermissionButton>
                           </td>
                         </tr>
                       );
@@ -561,13 +565,16 @@ const AdminCoupons = () => {
                       </div>
 
                       {/* Actions */}
-                      <button
+                      <PermissionButton
+                        moduleName="coupons"
+                        action="delete_coupon"
                         onClick={() => handleDelete(coupon._id)}
                         className="w-full neumorphic-button-small px-3 py-2 bg-red-500 text-white rounded-lg text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
+                        disabledTooltip="You don't have permission to delete coupons"
                       >
                         <DeleteIcon className="w-4 h-4 mr-1" />
                         Delete
-                      </button>
+                      </PermissionButton>
                     </div>
                   );
                 })}

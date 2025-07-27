@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useThemeContext } from '../../context/ThemeProvider';
 import { classNames } from '../utils/classNames';
 import { useAuth } from '../utils/useAuth';
-import { useAdminPermissions } from '../context/AdminPermissionContext';
+import { useAdminPermission } from '../context/AdminPermissionContext';
 import { 
   LoadingIcon, 
   EmptyIcon, 
@@ -19,27 +19,15 @@ import toast from 'react-hot-toast';
 const AdminOrders = () => {
   const { primary, mode } = useThemeContext();
   const { isAdmin } = useAuth();
-  const { hasModuleAccess } = useAdminPermissions();
+  const { hasModuleAccess } = useAdminPermission();
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Check module access
-  if (!hasModuleAccess('orders')) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
-        <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
-          <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
-          <p className="text-gray-600">You don't have permission to access order management.</p>
-        </div>
-      </div>
-    );
-  }
-
   useEffect(() => {
     fetchOrders();
   }, []);
+
   const fetchOrders = async () => {
     try {
       setLoading(true);
@@ -64,6 +52,19 @@ const AdminOrders = () => {
       setLoading(false);
     }
   };
+
+  // Check access permissions after all hooks
+  if (!hasModuleAccess('orders')) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
+          <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
+          <p className="text-gray-600">You don't have permission to access order management.</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleOrderClick = (orderId) => {
     navigate(`/admin/orders/${orderId}`);
@@ -113,7 +114,7 @@ const AdminOrders = () => {
   }
   return (
     <>
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-3 text-gray-800 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">

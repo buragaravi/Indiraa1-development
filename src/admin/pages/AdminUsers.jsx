@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useThemeContext } from '../../context/ThemeProvider';
 import { classNames } from '../utils/classNames';
 import { useAuth } from '../utils/useAuth';
-import { useAdminPermissions } from '../context/AdminPermissionContext';
+import { useAdminPermission } from '../context/AdminPermissionContext';
 import PermissionButton from '../components/PermissionButton';
 import { 
   LoadingIcon, 
@@ -19,7 +19,7 @@ import toast from 'react-hot-toast';
 const AdminUsers = () => {
   const { primary, mode } = useThemeContext();
   const { isAdmin } = useAuth();
-  const { hasModuleAccess } = useAdminPermissions();
+  const { hasModuleAccess } = useAdminPermission();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -27,7 +27,7 @@ const AdminUsers = () => {
   const [showUserOrders, setShowUserOrders] = useState(false);
   const [loadingOrders, setLoadingOrders] = useState(false);
 
-  // Check module access
+  // Check module access after all hooks
   if (!hasModuleAccess('users')) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
@@ -40,9 +40,6 @@ const AdminUsers = () => {
     );
   }
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
   const fetchUsers = async () => {
     try {
       setLoading(true);
@@ -66,7 +63,13 @@ const AdminUsers = () => {
     } finally {
       setLoading(false);
     }
-  };  const handleViewOrders = async (userId) => {
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const handleViewOrders = async (userId) => {
     setSelectedUser(users.find(user => user._id === userId));
     setLoadingOrders(true);
     try {
@@ -195,11 +198,11 @@ const AdminUsers = () => {
                         </td>
                         <td className="p-6">
                           <PermissionButton
-                            module="users"
-                            action="view"
+                            moduleName="users"
+                            action="edit_user"
                             onClick={() => handleViewOrders(user._id)}
                             className="neumorphic-button-small px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center"
-                            tooltip="View user's order history"
+                            disabledTooltip="You don't have permission to view user details"
                           >
                             <ViewIcon className="w-4 h-4 mr-1" />
                             View Orders
@@ -250,11 +253,11 @@ const AdminUsers = () => {
                       </div>
                       
                       <PermissionButton
-                        module="users"
-                        action="view"
+                        moduleName="users"
+                        action="edit_user"
                         onClick={() => handleViewOrders(user._id)}
                         className="w-full neumorphic-button-small px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
-                        tooltip="View user's order history"
+                        disabledTooltip="You don't have permission to view user details"
                       >
                         <ViewIcon className="w-4 h-4 mr-2" />
                         View Orders

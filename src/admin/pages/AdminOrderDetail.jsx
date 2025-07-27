@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useThemeContext } from '../../context/ThemeProvider';
 import { classNames } from '../utils/classNames';
 import { useAuth } from '../utils/useAuth';
+import { useAdminPermission } from '../context/AdminPermissionContext';
+import PermissionButton from '../components/PermissionButton';
 import { 
   LoadingIcon, 
   EmptyIcon, 
@@ -24,6 +26,7 @@ import toast from 'react-hot-toast';
 const AdminOrderDetail = () => {
   const { primary, mode } = useThemeContext();
   const { isAdmin } = useAuth();
+  const { hasModuleAccess } = useAdminPermission();
   const { orderId } = useParams();
   const navigate = useNavigate();
   const [order, setOrder] = useState(null);
@@ -33,10 +36,6 @@ const AdminOrderDetail = () => {
   const [newStatus, setNewStatus] = useState('');
   const [deliveryOtp, setDeliveryOtp] = useState('');
   const [otpError, setOtpError] = useState('');
-
-  useEffect(() => {
-    fetchOrder();
-  }, [orderId]);
 
   const fetchOrder = async () => {
     try {
@@ -64,6 +63,23 @@ const AdminOrderDetail = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchOrder();
+  }, [orderId]);
+
+  // Check module access after all hooks are defined
+  if (!hasModuleAccess('orders')) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
+          <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
+          <p className="text-gray-600">You don't have permission to access order details.</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleStatusUpdate = async () => {
     if (!newStatus) return;
@@ -247,23 +263,31 @@ const AdminOrderDetail = () => {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-3 lg:gap-4">
-          <button
+          <PermissionButton
+            module="orders"
+            action="update_status"
             onClick={() => setShowStatusModal(true)}
             disabled={updating}
             className="neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 flex items-center justify-center text-sm lg:text-base"
+            disabledTooltip="You don't have permission to update order status"
+            title="Update order status"
           >
             <UpdateIcon className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
             Update Status
-          </button>
+          </PermissionButton>
           {order.paymentStatus !== 'Paid' && (
-            <button
+            <PermissionButton
+              module="orders"
+              action="update_status"
               onClick={handleMarkAsPaid}
               disabled={updating}
               className="neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 flex items-center justify-center text-sm lg:text-base"
+              disabledTooltip="You don't have permission to update payment status"
+              title="Mark order as paid"
             >
               <MoneyIcon className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
               Mark as Paid
-            </button>
+            </PermissionButton>
           )}
         </div>
       </div>

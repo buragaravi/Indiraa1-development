@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useAdminPermission } from '../../admin/context/AdminPermissionContext';
+import PermissionButton from '../../admin/components/PermissionButton';
 import { 
   FaPlus, 
   FaEdit, 
@@ -16,6 +18,8 @@ import {
 } from 'react-icons/fa';
 
 const SubAdminManagement = () => {
+  const { hasModuleAccess, hasActionPermission } = useAdminPermission();
+  
   // Helper function to get admin token from either storage location
   const getAdminToken = () => {
     return localStorage.getItem('adminToken') || localStorage.getItem('token');
@@ -369,6 +373,23 @@ const SubAdminManagement = () => {
     }
   };
 
+  // Check if user has access to sub-admin module
+  if (!hasModuleAccess('sub-admin')) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 py-4 sm:py-6 lg:py-8">
+        <div className="w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
+          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FaUserShield className="text-red-600 text-2xl" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Access Denied</h2>
+            <p className="text-gray-600">You don't have permission to access the Sub Admin Management module.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 py-4 sm:py-6 lg:py-8">
       <div className="w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
@@ -387,18 +408,21 @@ const SubAdminManagement = () => {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-              <button
+              <PermissionButton
+                moduleName="sub-admin"
+                action="create"
                 onClick={() => {
                   resetForm();
                   setShowCreateModal(true);
                 }}
                 className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg sm:rounded-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 flex items-center text-sm sm:text-base font-medium shadow-lg hover:shadow-xl"
+                disabledTooltip="You don't have permission to create sub-admins"
               >
                 <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white/20 rounded-md flex items-center justify-center mr-2">
                   <FaPlus className="text-white text-xs" />
                 </div>
                 Add Sub Admin
-              </button>
+              </PermissionButton>
               
               {/* Debug Token Button */}
               <button
@@ -589,20 +613,26 @@ const SubAdminManagement = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end space-x-2">
-                        <button
+                        <PermissionButton
+                          moduleName="sub-admin"
+                          action="edit"
                           onClick={() => openEditModal(subAdmin)}
                           className="text-blue-600 hover:text-blue-900 p-1"
+                          disabledTooltip="You don't have permission to edit sub-admins"
                           title="Edit"
                         >
                           <FaEdit />
-                        </button>
-                        <button
+                        </PermissionButton>
+                        <PermissionButton
+                          moduleName="sub-admin"
+                          action="delete"
                           onClick={() => handleDelete(subAdmin)}
                           className="text-red-600 hover:text-red-900 p-1"
+                          disabledTooltip="You don't have permission to delete sub-admins"
                           title="Delete"
                         >
                           <FaTrash />
-                        </button>
+                        </PermissionButton>
                       </div>
                     </td>
                   </tr>
@@ -786,13 +816,16 @@ const SubAdminManagement = () => {
                   >
                     Cancel
                   </button>
-                  <button
+                  <PermissionButton
+                    moduleName="sub-admin"
+                    action="create"
                     type="submit"
                     disabled={formLoading}
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                    disabledTooltip="You don't have permission to create sub-admins"
                   >
                     {formLoading ? 'Creating...' : 'Create Sub Admin'}
-                  </button>
+                  </PermissionButton>
                 </div>
               </form>
             </div>
@@ -900,13 +933,16 @@ const SubAdminManagement = () => {
                   >
                     Cancel
                   </button>
-                  <button
+                  <PermissionButton
+                    moduleName="sub-admin"
+                    action="edit"
                     type="submit"
                     disabled={formLoading}
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                    disabledTooltip="You don't have permission to edit sub-admins"
                   >
                     {formLoading ? 'Updating...' : 'Update Sub Admin'}
-                  </button>
+                  </PermissionButton>
                 </div>
               </form>
             </div>

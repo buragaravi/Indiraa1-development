@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useAdminPermissions } from '../context/AdminPermissionContext';
+import { useAdminPermission } from '../context/AdminPermissionContext';
 import PermissionButton from '../components/PermissionButton';
 import { EmptyIcon } from '../components/AdminIcons';
 import BannerForm from '../components/BannerForm';
 import BannerList from '../components/BannerList';
 
 const AdminBanners = () => {
-  const { hasModuleAccess } = useAdminPermissions();
+  const { hasModuleAccess } = useAdminPermission();
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -17,7 +17,10 @@ const AdminBanners = () => {
   const [selectedBanner, setSelectedBanner] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
 
-  // Check module access
+  // API Base URL - using the correct backend port
+  const API_BASE_URL = 'http://localhost:5001/api';
+
+  // Check module access after all hooks
   if (!hasModuleAccess('banners')) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
@@ -29,9 +32,6 @@ const AdminBanners = () => {
       </div>
     );
   }
-
-  // API Base URL - using the correct backend port
-  const API_BASE_URL = 'http://localhost:5001/api';
 
   // Helper function for authenticated requests
   const getAuthHeaders = () => {
@@ -372,14 +372,14 @@ const AdminBanners = () => {
           <p className="text-gray-600 mt-1">Manage hero banners for your homepage</p>
         </div>
         <PermissionButton
-          module="banners"
-          action="create"
+          moduleName="banners"
+          action="create_banner"
           onClick={() => {
             setSelectedBanner(null);
             setShowForm(true);
           }}
           className="bg-[#2ecc71] text-white px-6 py-3 rounded-lg hover:bg-[#27ae60] transition-colors font-medium flex items-center gap-2 shadow-md"
-          tooltip="Create a new banner"
+          disabledTooltip="You don't have permission to create banners"
         >
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
