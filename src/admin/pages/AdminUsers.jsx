@@ -30,7 +30,7 @@ const AdminUsers = () => {
   // Check module access after all hooks
   if (!hasModuleAccess('users')) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+      <div className="min-h-screen flex items-center justify-center admin-users-bg">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
           <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
@@ -115,7 +115,7 @@ const AdminUsers = () => {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+      <div className="min-h-screen flex items-center justify-center admin-users-bg">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
           <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
@@ -129,7 +129,7 @@ const AdminUsers = () => {
       <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-3 text-gray-800 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-3 text-gray-800 admin-users-title">
             User Management
           </h1>
           <p className="text-gray-600 text-lg">
@@ -146,7 +146,7 @@ const AdminUsers = () => {
               {/* Desktop Table View */}
               <div className="hidden lg:block overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gradient-to-r from-green-50 to-emerald-50">
+                  <thead className="admin-users-table-header">
                     <tr>
                       <th className="text-left p-6 font-semibold text-gray-700">User</th>
                       <th className="text-left p-6 font-semibold text-gray-700">Email</th>
@@ -161,7 +161,7 @@ const AdminUsers = () => {
                       <tr key={user._id} className="border-b border-gray-100/50 hover:bg-white/30 transition-colors">
                         <td className="p-6">
                           <div className="flex items-center">
-                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 shadow-soft flex items-center justify-center mr-4">
+                            <div className="w-12 h-12 rounded-2xl admin-users-user-avatar shadow-soft flex items-center justify-center mr-4">
                               <PeopleIcon className="w-6 h-6 text-white" />
                             </div>
                             <div>
@@ -221,7 +221,7 @@ const AdminUsers = () => {
                     <div key={user._id} className="neumorphic-card p-4 rounded-2xl bg-white/40 backdrop-blur-sm border border-white/20">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center">
-                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 shadow-soft flex items-center justify-center mr-3">
+                          <div className="w-10 h-10 rounded-xl admin-users-list-avatar shadow-soft flex items-center justify-center mr-3">
                             <PeopleIcon className="w-5 h-5 text-white" />
                           </div>
                           <div>
@@ -279,7 +279,7 @@ const AdminUsers = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mt-8">
             <div className="neumorphic-card p-4 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20">
               <div className="flex items-center">
-                <div className="neumorphic-icon p-3 lg:p-4 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 shadow-soft">
+                <div className="neumorphic-icon p-3 lg:p-4 rounded-xl admin-users-total-icon shadow-soft">
                   <PeopleIcon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
                 </div>
                 <div className="ml-3 lg:ml-4">
@@ -291,7 +291,7 @@ const AdminUsers = () => {
 
             <div className="neumorphic-card p-4 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20">
               <div className="flex items-center">
-                <div className="neumorphic-icon p-3 lg:p-4 rounded-xl bg-gradient-to-br from-purple-400 to-violet-500 shadow-soft">
+                <div className="neumorphic-icon p-3 lg:p-4 rounded-xl admin-users-active-icon shadow-soft">
                   <PeopleIcon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
                 </div>
                 <div className="ml-3 lg:ml-4">
@@ -305,7 +305,7 @@ const AdminUsers = () => {
 
             <div className="neumorphic-card p-4 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 sm:col-span-2 lg:col-span-1">
               <div className="flex items-center">
-                <div className="neumorphic-icon p-3 lg:p-4 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 shadow-soft">
+                <div className="neumorphic-icon p-3 lg:p-4 rounded-xl admin-users-admins-icon shadow-soft">
                   <PeopleIcon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
                 </div>
                 <div className="ml-3 lg:ml-4">
@@ -322,7 +322,7 @@ const AdminUsers = () => {
               <div className="neumorphic-card max-w-5xl w-full mx-auto p-4 lg:p-8 rounded-3xl max-h-[90vh] overflow-y-auto bg-white/80 backdrop-blur-sm">
                 <div className="flex justify-between items-center mb-4 lg:mb-6">
                   <h2 className="text-xl lg:text-2xl font-bold text-gray-800 flex items-center">
-                    <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-2 lg:mr-3"></span>
+                    <span className="w-2 h-6 lg:h-8 admin-users-divider rounded-full mr-2 lg:mr-3"></span>
                     <span className="truncate">Orders for {selectedUser.name}</span>
                   </h2>
                   <button

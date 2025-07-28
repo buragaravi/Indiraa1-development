@@ -848,11 +848,11 @@ const AdminReturnManagement = () => {
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl shadow-slate-300/30 border border-white/50 max-w-2xl w-full">
             <div className="p-8">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 admin-return-modal-icon rounded-2xl flex items-center justify-center shadow-lg">
                   <FaCoins className="text-white text-lg" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-orange-600 bg-clip-text text-transparent">
+                  <h3 className="text-2xl font-bold admin-return-modal-title">
                     Final Refund Decision
                   </h3>
                   <p className="text-slate-500 font-medium">#{selectedReturn.returnRequestId}</p>
@@ -861,7 +861,7 @@ const AdminReturnManagement = () => {
               
               <form onSubmit={makeFinalDecision} className="space-y-6">
                 {selectedReturn.refund?.warehouseRecommendation && (
-                  <div className="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 p-6 rounded-xl border border-blue-200/50">
+                  <div className="admin-return-modal-step-bg p-6 rounded-xl border border-blue-200/50">
                     <h4 className="font-bold text-indigo-900 mb-3 flex items-center gap-2">
                       <FaWarehouse className="text-indigo-600" />
                       Warehouse Recommendation
@@ -891,9 +891,9 @@ const AdminReturnManagement = () => {
                   />
                 </div>
 
-                <div className="bg-gradient-to-r from-emerald-50/50 to-green-50/50 p-6 rounded-xl border border-emerald-200/50">
+                <div className="admin-return-modal-success-bg p-6 rounded-xl border border-emerald-200/50">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-green-500 rounded-xl flex items-center justify-center">
+                    <div className="w-10 h-10 admin-return-modal-success-icon rounded-xl flex items-center justify-center">
                       <FaCoins className="text-white" />
                     </div>
                     <div>
@@ -929,7 +929,7 @@ const AdminReturnManagement = () => {
                   <button
                     type="submit"
                     disabled={actionLoading}
-                    className="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-500 text-white rounded-xl hover:from-emerald-600 hover:to-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 font-medium shadow-lg shadow-emerald-200/50"
+                    className="flex-1 px-6 py-3 admin-return-modal-confirm-btn text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 font-medium shadow-lg shadow-emerald-200/50"
                   >
                     {actionLoading ? (
                       <>

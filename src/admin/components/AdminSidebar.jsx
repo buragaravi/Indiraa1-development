@@ -182,7 +182,7 @@ const AdminSidebar = () => {
           <div className="p-6 h-full overflow-y-auto">
             {/* Logo/Header */}
             <div className="flex items-center mb-8">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg flex items-center justify-center mr-4">
+              <div className="w-12 h-12 rounded-2xl admin-sidebar-logo shadow-lg flex items-center justify-center mr-4">
                 <DashboardIcon className="w-7 h-7 text-white" />
               </div>
               <div>
@@ -209,8 +209,8 @@ const AdminSidebar = () => {
                     }}
                     className={`flex items-center px-4 py-3 rounded-xl transition-all duration-300 group relative ${
                       isActive(item.path)
-                        ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg transform scale-105'
-                        : 'text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 hover:shadow-md hover:scale-102'
+                        ? 'admin-sidebar-active text-white shadow-lg transform scale-105'
+                        : 'text-gray-700 admin-sidebar-hover hover:shadow-md hover:scale-102'
                     }`}
                   >
                     <IconComponent
@@ -263,7 +263,7 @@ const AdminSidebar = () => {
                       setIsCollapsed(true);
                     }
                   }}
-                  className="w-full flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 hover:text-red-600 transition-all duration-300 group hover:scale-102"
+                  className="w-full flex items-center px-4 py-3 rounded-xl text-gray-700 admin-sidebar-logout transition-all duration-300 group hover:scale-102"
                 >
                   <svg className="w-5 h-5 mr-3 text-gray-500 group-hover:text-red-600 transition-all duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

@@ -3667,3 +3667,549 @@ body {
   background: -webkit-linear-gradient(to right, #eef2ff, #ede9fe);
   background: linear-gradient(to right, #eef2ff, #ede9fe);
 }
+
+/* Admin Management Page Components */
+.admin-management-bg {
+  min-height: 100vh;
+  background: -webkit-linear-gradient(to bottom right, #f9fafb, #dbeafe, #eef2ff);
+  background: linear-gradient(to bottom right, #f9fafb, #dbeafe, #eef2ff);
+  padding: 1.5rem;
+}
+
+.admin-management-header-icon {
+  width: 2rem;
+  height: 2rem;
+  background: -webkit-linear-gradient(to bottom right, #3b82f6, #4f46e5);
+  background: linear-gradient(to bottom right, #3b82f6, #4f46e5);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75rem;
+}
+
+.admin-management-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  background: -webkit-linear-gradient(to right, #111827, #374151);
+  background: linear-gradient(to right, #111827, #374151);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.admin-management-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  background: -webkit-linear-gradient(to right, #dcfce7, #bbf7d0);
+  background: linear-gradient(to right, #dcfce7, #bbf7d0);
+  color: #047857;
+  border: 1px solid #16a34a;
+}
+
+.admin-management-card {
+  background: -webkit-linear-gradient(to bottom right, #f9fafb, #dbeafe);
+  background: linear-gradient(to bottom right, #f9fafb, #dbeafe);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.admin-management-add-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  background: -webkit-linear-gradient(to right, #2563eb, #4f46e5);
+  background: linear-gradient(to right, #2563eb, #4f46e5);
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  border: none;
+}
+
+.admin-management-add-btn:hover {
+  background: -webkit-linear-gradient(to right, #1d4ed8, #4338ca);
+  background: linear-gradient(to right, #1d4ed8, #4338ca);
+}
+
+.admin-management-table-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: -webkit-linear-gradient(to right, #f9fafb, #dbeafe);
+  background: linear-gradient(to right, #f9fafb, #dbeafe);
+}
+
+.admin-management-table-head {
+  background: -webkit-linear-gradient(to right, #f9fafb, #dbeafe);
+  background: linear-gradient(to right, #f9fafb, #dbeafe);
+}
+
+.admin-management-avatar {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  background: -webkit-linear-gradient(to bottom right, #dbeafe, #e0e7ff);
+  background: linear-gradient(to bottom right, #dbeafe, #e0e7ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Warehouse Batch Dashboard Components */
+.warehouse-batch-bg {
+  min-height: 100vh;
+  background: -webkit-linear-gradient(to bottom right, #dbeafe, #eef2ff, #ede9fe);
+  background: linear-gradient(to bottom right, #dbeafe, #eef2ff, #ede9fe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.warehouse-batch-loading-icon {
+  padding: 1rem;
+  background: -webkit-linear-gradient(to right, #4f46e5, #7c3aed);
+  background: linear-gradient(to right, #4f46e5, #7c3aed);
+  border-radius: 50%;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.warehouse-batch-error-icon {
+  padding: 1rem;
+  background: -webkit-linear-gradient(to right, #ef4444, #ec4899);
+  background: linear-gradient(to right, #ef4444, #ec4899);
+  border-radius: 50%;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.warehouse-batch-retry-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  background: -webkit-linear-gradient(to right, #4f46e5, #7c3aed);
+  background: linear-gradient(to right, #4f46e5, #7c3aed);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.warehouse-batch-retry-btn:hover {
+  background: -webkit-linear-gradient(to right, #4338ca, #6d28d9);
+  background: linear-gradient(to right, #4338ca, #6d28d9);
+  transform: scale(1.05);
+}
+
+.warehouse-batch-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: -webkit-linear-gradient(to right, #4f46e5, #7c3aed);
+  background: linear-gradient(to right, #4f46e5, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.warehouse-batch-add-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  background: -webkit-linear-gradient(to right, #4f46e5, #7c3aed);
+  background: linear-gradient(to right, #4f46e5, #7c3aed);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.warehouse-batch-add-btn:hover {
+  background: -webkit-linear-gradient(to right, #4338ca, #6d28d9);
+  background: linear-gradient(to right, #4338ca, #6d28d9);
+  transform: scale(1.05);
+}
+
+.warehouse-batch-stat-icon-blue {
+  flex-shrink: 0;
+  padding: 0.75rem;
+  background: -webkit-linear-gradient(to right, #3b82f6, #2563eb);
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.warehouse-batch-stat-icon-green {
+  flex-shrink: 0;
+  padding: 0.75rem;
+  background: -webkit-linear-gradient(to right, #10b981, #059669);
+  background: linear-gradient(to right, #10b981, #059669);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.warehouse-batch-stat-icon-purple {
+  flex-shrink: 0;
+  padding: 0.75rem;
+  background: -webkit-linear-gradient(to right, #8b5cf6, #7c3aed);
+  background: linear-gradient(to right, #8b5cf6, #7c3aed);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.warehouse-batch-stat-icon-orange {
+  flex-shrink: 0;
+  padding: 0.75rem;
+  background: -webkit-linear-gradient(to right, #f97316, #ea580c);
+  background: linear-gradient(to right, #f97316, #ea580c);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.warehouse-batch-section-header {
+  padding: 1rem;
+  border-bottom: 1px solid #c7d2fe;
+  background: -webkit-linear-gradient(to right, #eef2ff, #ede9fe);
+  background: linear-gradient(to right, #eef2ff, #ede9fe);
+}
+
+.warehouse-batch-section-icon {
+  padding: 0.5rem;
+  background: -webkit-linear-gradient(to right, #4f46e5, #7c3aed);
+  background: linear-gradient(to right, #4f46e5, #7c3aed);
+  border-radius: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.warehouse-batch-status-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: -webkit-linear-gradient(to right, #f9fafb, #f3f4f6);
+  background: linear-gradient(to right, #f9fafb, #f3f4f6);
+  border-radius: 0.5rem;
+}
+
+.warehouse-batch-location-header {
+  padding: 1rem;
+  border-bottom: 1px solid #a7f3d0;
+  background: -webkit-linear-gradient(to right, #f0fdf4, #dcfce7);
+  background: linear-gradient(to right, #f0fdf4, #dcfce7);
+}
+
+.warehouse-batch-location-icon {
+  padding: 0.5rem;
+  background: -webkit-linear-gradient(to right, #10b981, #059669);
+  background: linear-gradient(to right, #10b981, #059669);
+  border-radius: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.warehouse-batch-location-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: -webkit-linear-gradient(to right, #f9fafb, #f3f4f6);
+  background: linear-gradient(to right, #f9fafb, #f3f4f6);
+  border-radius: 0.5rem;
+}
+
+.warehouse-batch-location-indicator {
+  padding: 0.25rem;
+  background: -webkit-linear-gradient(to right, #10b981, #059669);
+  background: linear-gradient(to right, #10b981, #059669);
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.warehouse-batch-supplier-header {
+  padding: 1rem;
+  border-bottom: 1px solid #e9d5ff;
+  background: -webkit-linear-gradient(to right, #faf5ff, #fce7f3);
+  background: linear-gradient(to right, #faf5ff, #fce7f3);
+}
+
+.warehouse-batch-supplier-icon {
+  padding: 0.5rem;
+  background: -webkit-linear-gradient(to right, #8b5cf6, #ec4899);
+  background: linear-gradient(to right, #8b5cf6, #ec4899);
+  border-radius: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.warehouse-batch-supplier-item {
+  background: -webkit-linear-gradient(to right, #faf5ff, #fce7f3);
+  background: linear-gradient(to right, #faf5ff, #fce7f3);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #e9d5ff;
+}
+
+/* Admin Sidebar Components */
+.admin-sidebar-logo {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  background: -webkit-linear-gradient(to bottom right, #10b981, #059669);
+  background: linear-gradient(to bottom right, #10b981, #059669);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.admin-sidebar-nav-active {
+  background: -webkit-linear-gradient(to right, #10b981, #059669);
+  background: linear-gradient(to right, #10b981, #059669);
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.admin-sidebar-nav-hover {
+  color: #374151;
+  background: -webkit-linear-gradient(to right, #f0fdf4, #dcfce7);
+  background: linear-gradient(to right, #f0fdf4, #dcfce7);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02);
+}
+
+.admin-sidebar-logout-hover {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  color: #374151;
+  background: -webkit-linear-gradient(to right, #fef2f2, #fce7f3);
+  background: linear-gradient(to right, #fef2f2, #fce7f3);
+  color: #dc2626;
+  transition: all 0.3s ease;
+  transform: scale(1.02);
+}
+
+/* Warehouse Batch Details Components - Safari Compatible */
+.warehouse-batch-details-bg {
+  background: -webkit-linear-gradient(135deg, #eff6ff 0%, #e0e7ff 50%, #f3e8ff 100%);
+  background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 50%, #f3e8ff 100%);
+}
+
+.warehouse-batch-details-loading-icon {
+  background: -webkit-linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+.warehouse-batch-details-error-icon {
+  background: -webkit-linear-gradient(90deg, #ef4444 0%, #ec4899 100%);
+  background: linear-gradient(90deg, #ef4444 0%, #ec4899 100%);
+}
+
+.warehouse-batch-details-retry-btn {
+  background: -webkit-linear-gradient(90deg, #4f46e5 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #4f46e5 0%, #8b5cf6 100%);
+}
+
+.warehouse-batch-details-retry-btn:hover {
+  background: -webkit-linear-gradient(90deg, #4338ca 0%, #7c3aed 100%);
+  background: linear-gradient(90deg, #4338ca 0%, #7c3aed 100%);
+}
+
+.warehouse-batch-details-title {
+  background: -webkit-linear-gradient(90deg, #4f46e5 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #4f46e5 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.warehouse-batch-details-active-btn {
+  background: -webkit-linear-gradient(90deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.warehouse-batch-details-inactive-btn {
+  background: -webkit-linear-gradient(90deg, #eab308 0%, #ea580c 100%);
+  background: linear-gradient(90deg, #eab308 0%, #ea580c 100%);
+}
+
+.warehouse-batch-details-action-btn {
+  background: -webkit-linear-gradient(90deg, #4f46e5 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #4f46e5 0%, #8b5cf6 100%);
+}
+
+.warehouse-batch-details-action-btn:hover {
+  background: -webkit-linear-gradient(90deg, #4338ca 0%, #7c3aed 100%);
+  background: linear-gradient(90deg, #4338ca 0%, #7c3aed 100%);
+}
+
+.warehouse-batch-details-total-icon {
+  background: -webkit-linear-gradient(90deg, #3b82f6 0%, #3b82f6 100%);
+  background: linear-gradient(90deg, #3b82f6 0%, #3b82f6 100%);
+}
+
+.warehouse-batch-details-available-icon {
+  background: -webkit-linear-gradient(90deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.warehouse-batch-details-used-icon {
+  background: -webkit-linear-gradient(90deg, #8b5cf6 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #8b5cf6 0%, #8b5cf6 100%);
+}
+
+.warehouse-batch-details-expiring-icon {
+  background: -webkit-linear-gradient(90deg, #f97316 0%, #f97316 100%);
+  background: linear-gradient(90deg, #f97316 0%, #f97316 100%);
+}
+
+.warehouse-batch-details-batch-header {
+  background: -webkit-linear-gradient(90deg, #e0e7ff 0%, #f3e8ff 100%);
+  background: linear-gradient(90deg, #e0e7ff 0%, #f3e8ff 100%);
+}
+
+.warehouse-batch-details-batch-icon {
+  background: -webkit-linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+.warehouse-batch-details-batch-item-1 {
+  background: -webkit-linear-gradient(90deg, #dbeafe 0%, #e0e7ff 100%);
+  background: linear-gradient(90deg, #dbeafe 0%, #e0e7ff 100%);
+}
+
+.warehouse-batch-details-batch-item-2 {
+  background: -webkit-linear-gradient(90deg, #dcfce7 0%, #d1fae5 100%);
+  background: linear-gradient(90deg, #dcfce7 0%, #d1fae5 100%);
+}
+
+.warehouse-batch-details-batch-item-3 {
+  background: -webkit-linear-gradient(90deg, #faf5ff 0%, #fce7f3 100%);
+  background: linear-gradient(90deg, #faf5ff 0%, #fce7f3 100%);
+}
+
+.warehouse-batch-details-batch-item-4 {
+  background: -webkit-linear-gradient(90deg, #fff7ed 0%, #fef2f2 100%);
+  background: linear-gradient(90deg, #fff7ed 0%, #fef2f2 100%);
+}
+
+.warehouse-batch-details-batch-item-5 {
+  background: -webkit-linear-gradient(90deg, #fef2f2 0%, #fce7f3 100%);
+  background: linear-gradient(90deg, #fef2f2 0%, #fce7f3 100%);
+}
+
+.warehouse-batch-details-batch-item-6 {
+  background: -webkit-linear-gradient(90deg, #ecfeff 0%, #dbeafe 100%);
+  background: linear-gradient(90deg, #ecfeff 0%, #dbeafe 100%);
+}
+
+/* Admin Users Components - Safari Compatible */
+.admin-users-bg {
+  background: -webkit-linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+}
+
+.admin-users-title {
+  background: -webkit-linear-gradient(90deg, #16a34a 0%, #059669 100%);
+  background: linear-gradient(90deg, #16a34a 0%, #059669 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.admin-users-table-header {
+  background: -webkit-linear-gradient(90deg, #ecfdf5 0%, #d1fae5 100%);
+  background: linear-gradient(90deg, #ecfdf5 0%, #d1fae5 100%);
+}
+
+.admin-users-user-avatar {
+  background: -webkit-linear-gradient(135deg, #4ade80 0%, #10b981 100%);
+  background: linear-gradient(135deg, #4ade80 0%, #10b981 100%);
+}
+
+.admin-users-list-avatar {
+  background: -webkit-linear-gradient(135deg, #4ade80 0%, #10b981 100%);
+  background: linear-gradient(135deg, #4ade80 0%, #10b981 100%);
+}
+
+.admin-users-total-icon {
+  background: -webkit-linear-gradient(135deg, #60a5fa 0%, #06b6d4 100%);
+  background: linear-gradient(135deg, #60a5fa 0%, #06b6d4 100%);
+}
+
+.admin-users-active-icon {
+  background: -webkit-linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+}
+
+.admin-users-admins-icon {
+  background: -webkit-linear-gradient(135deg, #4ade80 0%, #10b981 100%);
+  background: linear-gradient(135deg, #4ade80 0%, #10b981 100%);
+}
+
+.admin-users-divider {
+  background: -webkit-linear-gradient(180deg, #4ade80 0%, #10b981 100%);
+  background: linear-gradient(180deg, #4ade80 0%, #10b981 100%);
+}
+
+/* Additional Admin Return Management Modal Components - Safari Compatible */
+.admin-return-modal-icon {
+  background: -webkit-linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+  background: linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+}
+
+.admin-return-modal-title {
+  background: -webkit-linear-gradient(90deg, #1e293b 0%, #ea580c 100%);
+  background: linear-gradient(90deg, #1e293b 0%, #ea580c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.admin-return-modal-step-bg {
+  background: -webkit-linear-gradient(90deg, rgba(59, 130, 246, 0.5) 0%, rgba(99, 102, 241, 0.5) 100%);
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.5) 0%, rgba(99, 102, 241, 0.5) 100%);
+}
+
+.admin-return-modal-success-bg {
+  background: -webkit-linear-gradient(90deg, rgba(16, 185, 129, 0.5) 0%, rgba(34, 197, 94, 0.5) 100%);
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.5) 0%, rgba(34, 197, 94, 0.5) 100%);
+}
+
+.admin-return-modal-success-icon {
+  background: -webkit-linear-gradient(135deg, #4ade80 0%, #10b981 100%);
+  background: linear-gradient(135deg, #4ade80 0%, #10b981 100%);
+}
+
+.admin-return-modal-confirm-btn {
+  background: -webkit-linear-gradient(90deg, #10b981 0%, #22c55e 100%);
+  background: linear-gradient(90deg, #10b981 0%, #22c55e 100%);
+}
+
+.admin-return-modal-confirm-btn:hover {
+  background: -webkit-linear-gradient(90deg, #059669 0%, #16a34a 100%);
+  background: linear-gradient(90deg, #059669 0%, #16a34a 100%);
+}

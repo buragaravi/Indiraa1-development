@@ -208,7 +208,7 @@ const AdminManagement = () => {
     if (admin.isSuperAdmin) {
       return (
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-800 border border-emerald-200">
+          <span className="admin-management-status-badge">
             <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
@@ -369,7 +369,7 @@ const AdminManagement = () => {
       });
 
     return (
-      <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-6 border border-gray-200 shadow-sm">
+      <div className="admin-management-card">
         <div className="flex items-center mb-4">
           <div className="flex-shrink-0 w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
             <svg className="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
@@ -447,7 +447,7 @@ const AdminManagement = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 p-6">
+    <div className="admin-management-bg">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -455,12 +455,12 @@ const AdminManagement = () => {
             <div className="flex justify-between items-start">
               <div>
                 <div className="flex items-center mb-2">
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                  <div className="admin-management-header-icon">
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                  <h1 className="admin-management-title">
                     Admin Management
                   </h1>
                 </div>
@@ -507,7 +507,7 @@ const AdminManagement = () => {
                   module="admin_management"
                   action="create_admin"
                   onClick={() => setShowCreateModal(true)}
-                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm"
+                  className="admin-management-add-btn"
                 >
                   <PlusIcon />
                   <span className="ml-2">Create Admin</span>
@@ -573,13 +573,13 @@ const AdminManagement = () => {
 
       {/* Admins Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50">
+        <div className="admin-management-table-header">
           <h3 className="text-lg font-semibold text-gray-900">Administrator Accounts</h3>
           <p className="text-sm text-gray-600 mt-1">Click "Details" to view specific permissions for each admin</p>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gradient-to-r from-gray-50 to-blue-50">
+            <thead className="admin-management-table-head">
               <tr>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Administrator
@@ -609,7 +609,7 @@ const AdminManagement = () => {
                     <td className="px-6 py-4">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-12 w-12">
-                          <div className="h-12 w-12 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center border-2 border-white shadow-sm">
+                          <div className="admin-management-avatar">
                             {admin.isSuperAdmin ? <SuperAdminIcon /> : <AdminIcon />}
                           </div>
                         </div>
