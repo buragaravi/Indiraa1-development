@@ -83,7 +83,7 @@ const LogisticsManagerDashboard = () => {
       case 'dashboard':
         if (loading) {
           return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-cyan-100">
+            <div className="logistics-manager-bg">
               <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
                 <div className="w-12 h-12 mx-auto mb-4 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
                 <p className="text-gray-600">Loading dashboard...</p>
@@ -98,7 +98,7 @@ const LogisticsManagerDashboard = () => {
               <div className="mb-6 md:mb-8">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                    <h1 className="logistics-manager-title">
                       Logistics Manager Dashboard
                     </h1>
                     <p className="text-gray-600 text-base md:text-lg">

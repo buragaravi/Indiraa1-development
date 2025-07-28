@@ -297,7 +297,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
   // Check if current admin has access to products module
   if (!hasModuleAccess('products')) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+      <div className="admin-products-bg">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
           <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
@@ -310,7 +310,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
       <div className="max-w-7xl mx-auto w-full">        {/* Header */}
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-8 space-y-4 lg:space-y-0">
           <div>
-            <h1 className="text-3xl lg:text-4xl font-bold mb-3 text-gray-800 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+            <h1 className="admin-products-title">
               Product Management
             </h1>
             <p className="text-gray-600 text-base lg:text-lg">
@@ -341,7 +341,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
               module="products"
               action="bulk_upload"
               onClick={() => setShowBulkUpload(true)}
-              className="neumorphic-button px-6 lg:px-8 py-3 lg:py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 flex items-center justify-center"
+              className="admin-products-blue-button"
             >
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
@@ -353,7 +353,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
               module="products"
               action="create_product"
               onClick={() => setShowForm(true)}
-              className="neumorphic-button px-6 lg:px-8 py-3 lg:py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 flex items-center justify-center"
+              className="admin-products-green-button"
             >
               <AddIcon className="w-5 h-5 mr-2" />
               Add New Product
@@ -393,7 +393,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
             <div className="neumorphic-card mb-8 p-4 lg:p-8 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
               <div className="flex justify-between items-center mb-4 lg:mb-6">
                 <h2 className="text-xl lg:text-2xl font-bold text-gray-800 flex items-center">
-                  <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-2 lg:mr-3"></span>
+                  <span className="admin-products-section-indicator"></span>
                   <span className="truncate">{editingProduct ? 'Edit Product' : 'Add New Product'}</span>
                 </h2>
                 <button
@@ -600,7 +600,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="neumorphic-button px-6 lg:px-8 py-3 lg:py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 flex items-center justify-center"
+                    className="admin-products-green-button"
                   >
                     {submitting ? (
                       <>
@@ -635,7 +635,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
             <div className="neumorphic-card rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20 overflow-hidden">              {/* Desktop Table View */}
               <div className="hidden lg:block overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gradient-to-r from-green-50 to-emerald-50">
+                  <thead className="admin-products-table-header">
                     <tr>                      <th className="text-left p-3 font-semibold text-gray-700 text-sm">Product</th>
                       <th className="text-left p-3 font-semibold text-gray-700 text-sm">Category</th>
                       <th className="text-left p-3 font-semibold text-gray-700 text-sm">Price</th>

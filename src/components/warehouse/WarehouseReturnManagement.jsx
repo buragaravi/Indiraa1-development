@@ -412,13 +412,13 @@ const WarehouseReturnManagement = () => {
   // Get status badge color
   const getStatusBadgeColor = (status) => {
     const colors = {
-      'warehouse_assigned': 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 border border-purple-200',
-      'pickup_scheduled': 'bg-gradient-to-r from-indigo-100 to-blue-100 text-indigo-800 border border-indigo-200',
-      'picked_up': 'bg-gradient-to-r from-cyan-100 to-teal-100 text-cyan-800 border border-cyan-200',
-      'in_warehouse': 'bg-gradient-to-r from-gray-100 to-slate-100 text-gray-800 border border-gray-200',
-      'quality_checked': 'bg-gradient-to-r from-orange-100 to-amber-100 text-orange-800 border border-orange-200'
+      'warehouse_assigned': 'warehouse-return-status-warehouse-assigned',
+      'pickup_scheduled': 'warehouse-return-status-pickup-scheduled',
+      'picked_up': 'warehouse-return-status-picked-up',
+      'in_warehouse': 'warehouse-return-status-in-warehouse',
+      'quality_checked': 'warehouse-return-status-quality-checked'
     };
-    return colors[status] || 'bg-gradient-to-r from-gray-100 to-slate-100 text-gray-800 border border-gray-200';
+    return colors[status] || 'warehouse-return-status-in-warehouse';
   };
 
   // Calculate refund amount
@@ -434,14 +434,14 @@ const WarehouseReturnManagement = () => {
   }, [filters]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 py-4 sm:py-6 lg:py-8">
+    <div className="warehouse-return-bg">
       <div className="w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Header */}
         <div className="mb-4 sm:mb-6 lg:mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
             <div>
               <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 flex items-center">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-200 mr-3 sm:mr-4">
+                <div className="warehouse-return-header-icon">
                   <FaWarehouse className="text-white text-sm sm:text-base lg:text-lg xl:text-xl" />
                 </div>
                 Warehouse Return Management
@@ -463,8 +463,8 @@ const WarehouseReturnManagement = () => {
         {/* Error/Success Display */}
         {error && (
           <div className={`mb-6 p-4 ${error.includes('successfully') 
-            ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-400' 
-            : 'bg-gradient-to-r from-red-50 to-pink-50 border-l-4 border-red-400'
+            ? 'warehouse-return-alert-success' 
+            : 'warehouse-return-alert-error'
             } rounded-lg shadow-lg`}>
             <div className="flex items-center">
               <div className="flex-shrink-0">
@@ -534,7 +534,7 @@ const WarehouseReturnManagement = () => {
               <button
                 onClick={fetchAssignedReturns}
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-3 rounded-xl hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl disabled:opacity-50"
+                className="warehouse-return-btn-primary"
               >
                 {loading ? (
                   <>
@@ -570,7 +570,7 @@ const WarehouseReturnManagement = () => {
         ) : !Array.isArray(assignedReturns) || assignedReturns.length === 0 ? (
           <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-12 text-center">
             <div className="flex flex-col items-center space-y-4">
-              <div className="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center">
+              <div className="warehouse-return-empty-icon">
                 <FaWarehouse className="text-3xl text-indigo-600" />
               </div>
               <div>
@@ -583,7 +583,7 @@ const WarehouseReturnManagement = () => {
           <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200/50">
-                <thead className="bg-gradient-to-r from-indigo-50 to-purple-50">
+                <thead className="warehouse-return-table-header">
                   <tr>
                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                       Return Details

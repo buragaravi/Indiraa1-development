@@ -554,8 +554,8 @@ const AdminReturnManagement = () => {
 
                 {/* Info Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                  <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-xl border border-blue-100/50">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center shadow-md">
+                  <div className="admin-return-blue-card">
+                    <div className="admin-return-blue-icon">
                       <FaUser className="text-white text-sm" />
                     </div>
                     <div>
@@ -565,8 +565,8 @@ const AdminReturnManagement = () => {
                       <p className="text-slate-500 text-xs">Customer</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-emerald-50/50 to-teal-50/50 rounded-xl border border-emerald-100/50">
-                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-md">
+                  <div className="admin-return-green-card">
+                    <div className="admin-return-green-icon">
                       <FaCoins className="text-white text-sm" />
                     </div>
                     <div>
@@ -574,11 +574,11 @@ const AdminReturnManagement = () => {
                       <p className="text-slate-500 text-xs">{returnRequest.items.length} item(s)</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-orange-50/50 to-red-50/50 rounded-xl border border-orange-100/50">
+                  <div className="admin-return-orange-card">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md ${
-                      priority === 'high' ? 'bg-gradient-to-br from-red-400 to-pink-500' :
-                      priority === 'medium' ? 'bg-gradient-to-br from-orange-400 to-yellow-500' :
-                      'bg-gradient-to-br from-green-400 to-emerald-500'
+                      priority === 'high' ? 'admin-return-priority-high' :
+                      priority === 'medium' ? 'admin-return-priority-medium' :
+                      'admin-return-priority-low'
                     }`}>
                       <FaExclamationTriangle className="text-white text-sm" />
                     </div>
@@ -597,7 +597,7 @@ const AdminReturnManagement = () => {
                         e.stopPropagation();
                         openReviewModal(returnRequest);
                       }}
-                      className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 text-sm font-medium flex items-center gap-2 shadow-lg shadow-blue-200/50"
+                      className="admin-return-btn-blue"
                     >
                       <div className="w-4 h-4 bg-white/20 rounded-md flex items-center justify-center">
                         <FaClipboardCheck className="text-white text-xs" />
@@ -612,7 +612,7 @@ const AdminReturnManagement = () => {
                         e.stopPropagation();
                         openRefundModal(returnRequest);
                       }}
-                      className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all duration-300 text-sm font-medium flex items-center gap-2 shadow-lg shadow-amber-200/50"
+                      className="admin-return-btn-amber"
                     >
                       <div className="w-4 h-4 bg-white/20 rounded-md flex items-center justify-center">
                         <FaCoins className="text-white text-xs" />
@@ -627,7 +627,7 @@ const AdminReturnManagement = () => {
                         e.stopPropagation();
                         processRefund(returnRequest._id);
                       }}
-                      className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-green-500 text-white rounded-xl hover:from-emerald-600 hover:to-green-600 transition-all duration-300 text-sm font-medium flex items-center gap-2 shadow-lg shadow-emerald-200/50"
+                      className="admin-return-btn-green"
                     >
                       <div className="w-4 h-4 bg-white/20 rounded-md flex items-center justify-center">
                         <FaCheckCircle className="text-white text-xs" />
@@ -662,7 +662,7 @@ const AdminReturnManagement = () => {
               >
                 Previous
               </button>
-              <div className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-xl font-bold shadow-lg shadow-indigo-200/50">
+              <div className="admin-return-header">
                 {filters.page} of {pagination.pages}
               </div>
               <button
@@ -769,11 +769,11 @@ const AdminReturnManagement = () => {
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl shadow-slate-300/30 border border-white/50 max-w-lg w-full">
             <div className="p-8">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="admin-return-modal-icon-blue">
                   <FaClipboardCheck className="text-white text-lg" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-indigo-700 bg-clip-text text-transparent">
+                  <h3 className="admin-return-modal-title-blue">
                     Review Return Request
                   </h3>
                   <p className="text-slate-500 font-medium">#{selectedReturn.returnRequestId}</p>
@@ -821,7 +821,7 @@ const AdminReturnManagement = () => {
                   <button
                     type="submit"
                     disabled={actionLoading || !reviewForm.decision}
-                    className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl hover:from-blue-600 hover:to-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 font-medium shadow-lg shadow-blue-200/50"
+                    className="admin-return-modal-btn-blue"
                   >
                     {actionLoading ? (
                       <>

@@ -113,7 +113,7 @@ const Admin = () => {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+      <div className="admin-main-bg">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
           <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
@@ -125,7 +125,7 @@ const Admin = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+      <div className="admin-main-bg">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">          <LoadingIcon className="w-12 h-12 text-green-500 mx-auto mb-4" />
           <p className="text-gray-600">Loading dashboard...</p>
         </div>
@@ -138,7 +138,7 @@ const Admin = () => {
       <div className="w-full">
         {/* Header */}
         <div className="mb-6 md:mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+          <h1 className="admin-main-title">
             Admin Dashboard
           </h1>
           <p className="text-gray-600 text-base md:text-lg">
@@ -147,7 +147,7 @@ const Admin = () => {
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 lg:gap-6 mb-8">
           <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
             <div className="flex items-center">
-              <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 shadow-soft">
+              <div className="admin-main-icon-green">
                 <PackageIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
               </div>
               <div className="ml-2 lg:ml-4 min-w-0">
@@ -159,7 +159,7 @@ const Admin = () => {
 
           <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
             <div className="flex items-center">
-              <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-purple-400 to-pink-500 shadow-soft">
+              <div className="admin-main-icon-purple">
                 <PackageIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
               </div>
               <div className="ml-2 lg:ml-4 min-w-0">
@@ -171,7 +171,7 @@ const Admin = () => {
 
           <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
             <div className="flex items-center">
-              <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 shadow-soft">
+              <div className="admin-main-icon-blue">
                 <OrdersIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
               </div>
               <div className="ml-2 lg:ml-4 min-w-0">
@@ -183,7 +183,7 @@ const Admin = () => {
 
           <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
             <div className="flex items-center">
-              <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-purple-400 to-violet-500 shadow-soft">
+              <div className="admin-main-icon-violet">
                 <PeopleIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
               </div>
               <div className="ml-2 lg:ml-4 min-w-0">
@@ -195,7 +195,7 @@ const Admin = () => {
 
           <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
             <div className="flex items-center">
-              <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 shadow-soft">
+              <div className="admin-main-icon-orange">
                 <TicketIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
               </div>
               <div className="ml-2 lg:ml-4 min-w-0">
@@ -207,7 +207,7 @@ const Admin = () => {
         </div>{/* Recent Orders */}
         <div className="neumorphic-card p-4 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 mb-8">
           <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
-            <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-2 lg:mr-3"></span>
+            <span className="admin-main-section-indicator"></span>
             Recent Orders
           </h2>
           {stats.recentOrders.length > 0 ? (
@@ -294,34 +294,34 @@ const Admin = () => {
         </div>        {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
           <div className="neumorphic-card p-4 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 text-center hover:shadow-soft-lg transition-all duration-300 cursor-pointer" onClick={() => navigate('/admin/orders')}>
-            <div className="w-14 h-14 lg:w-16 lg:h-16 mx-auto mb-3 lg:mb-4 rounded-2xl bg-gradient-to-br from-yellow-400 to-orange-500 shadow-soft flex items-center justify-center">
+            <div className="admin-main-card-icon-yellow">
               <PendingIcon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
             </div>
             <h3 className="text-lg lg:text-xl font-bold mb-2 text-gray-800">Pending Orders</h3>
             <p className="text-3xl lg:text-4xl font-bold mb-3 lg:mb-4 text-green-600">{stats.pendingOrders}</p>
-            <button className="neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 text-sm lg:text-base">
+            <button className="admin-main-green-button">
               View All Orders
             </button>
           </div>
 
           <div className="neumorphic-card p-4 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 text-center hover:shadow-soft-lg transition-all duration-300 cursor-pointer" onClick={() => navigate('/admin/products')}>
-            <div className="w-14 h-14 lg:w-16 lg:h-16 mx-auto mb-3 lg:mb-4 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 shadow-soft flex items-center justify-center">
+            <div className="admin-main-card-icon-green">
               <PackageIcon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
             </div>
             <h3 className="text-lg lg:text-xl font-bold mb-2 text-gray-800">Manage Products</h3>
             <p className="text-gray-600 mb-3 lg:mb-4 text-sm lg:text-base">Add, edit, or remove products</p>
-            <button className="neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 text-sm lg:text-base">
+            <button className="admin-main-green-button">
               Manage Products
             </button>
           </div>
 
           <div className="neumorphic-card p-4 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 text-center hover:shadow-soft-lg transition-all duration-300 cursor-pointer" onClick={() => navigate('/admin/coupons')}>
-            <div className="w-14 h-14 lg:w-16 lg:h-16 mx-auto mb-3 lg:mb-4 rounded-2xl bg-gradient-to-br from-purple-400 to-violet-500 shadow-soft flex items-center justify-center">
+            <div className="admin-main-card-icon-purple">
               <TicketIcon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
             </div>
             <h3 className="text-lg lg:text-xl font-bold mb-2 text-gray-800">Create Coupon</h3>
             <p className="text-gray-600 mb-3 lg:mb-4 text-sm lg:text-base">Generate new discount codes</p>
-            <button className="neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 text-sm lg:text-base">
+            <button className="admin-main-green-button">
               Create Coupon
             </button>
           </div>

@@ -202,7 +202,7 @@ const WarehouseManagerDashboard = () => {
       case 'dashboard':
         if (loading) {
           return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-green-100">
+            <div className="warehouse-manager-bg">
               <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
                 <LoadingIcon className="w-12 h-12 text-emerald-500 mx-auto mb-4" />
                 <p className="text-gray-600">Loading dashboard...</p>
@@ -218,7 +218,7 @@ const WarehouseManagerDashboard = () => {
               <div className="mb-6 md:mb-8">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800 bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
+                    <h1 className="warehouse-manager-title">
                       Warehouse Manager Dashboard
                     </h1>
                     <p className="text-gray-600 text-base md:text-lg">

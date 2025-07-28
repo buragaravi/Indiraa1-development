@@ -77,13 +77,13 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="admin-dashboard-bg">
       {/* Header */}
       <div className="bg-white/90 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
+              <div className="admin-dashboard-logo">
                 <FiGrid className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -114,7 +114,7 @@ const AdminDashboard = () => {
                     onClick={() => setActiveTab(tab.id)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 ${
                       activeTab === tab.id
-                        ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg'
+                        ? 'admin-dashboard-nav-active'
                         : 'text-gray-700 hover:bg-gray-100'
                     }`}
                     whileHover={{ scale: 1.02 }}
