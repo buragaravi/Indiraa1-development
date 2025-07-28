@@ -33,7 +33,6 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
         mark_paid: 'Mark Orders as Paid',
         update_status: 'Update Order Status',
         cancel: 'Cancel Orders',
-        refund: 'Process Refunds'
       }
     },
     users: {

@@ -409,7 +409,7 @@ const SubAdminManagement = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               <PermissionButton
-                moduleName="sub-admin"
+                module="sub-admin"
                 action="create"
                 onClick={() => {
                   resetForm();
@@ -614,7 +614,7 @@ const SubAdminManagement = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end space-x-2">
                         <PermissionButton
-                          moduleName="sub-admin"
+                          module="sub-admin"
                           action="edit"
                           onClick={() => openEditModal(subAdmin)}
                           className="text-blue-600 hover:text-blue-900 p-1"
@@ -624,7 +624,7 @@ const SubAdminManagement = () => {
                           <FaEdit />
                         </PermissionButton>
                         <PermissionButton
-                          moduleName="sub-admin"
+                          module="sub-admin"
                           action="delete"
                           onClick={() => handleDelete(subAdmin)}
                           className="text-red-600 hover:text-red-900 p-1"
@@ -817,7 +817,7 @@ const SubAdminManagement = () => {
                     Cancel
                   </button>
                   <PermissionButton
-                    moduleName="sub-admin"
+                    module="sub-admin"
                     action="create"
                     type="submit"
                     disabled={formLoading}
@@ -934,7 +934,7 @@ const SubAdminManagement = () => {
                     Cancel
                   </button>
                   <PermissionButton
-                    moduleName="sub-admin"
+                    module="sub-admin"
                     action="edit"
                     type="submit"
                     disabled={formLoading}

@@ -372,7 +372,7 @@ const AdminBanners = () => {
           <p className="text-gray-600 mt-1">Manage hero banners for your homepage</p>
         </div>
         <PermissionButton
-          moduleName="banners"
+          module="banners"
           action="create_banner"
           onClick={() => {
             setSelectedBanner(null);

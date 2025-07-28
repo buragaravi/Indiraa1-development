@@ -554,7 +554,7 @@ const ReturnDetailPage = () => {
       <div className="absolute bottom-0 right-0 w-80 h-80 bg-green-100/40 rounded-full translate-x-40 translate-y-40"></div>
       <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-teal-100/20 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
       
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 py-8">
         {/* Header */}
         <div className="mb-8">
           <button

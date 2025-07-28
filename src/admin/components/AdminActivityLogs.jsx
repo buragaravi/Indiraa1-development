@@ -1,4 +1,4 @@
-// AdminActivityLogs - Component for viewing admin activity logs
+// AdminActivityLogs - Enhanced modal component for viewing admin activity logs
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
@@ -7,6 +7,10 @@ const AdminActivityLogs = ({ admin, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [dateRange, setDateRange] = useState('7d');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedLogDetails, setSelectedLogDetails] = useState(null);
+  const logsPerPage = 10;
 
   // Fetch activity logs
   useEffect(() => {
@@ -18,7 +22,7 @@ const AdminActivityLogs = ({ admin, onClose }) => {
   const fetchActivityLogs = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
       
       const params = new URLSearchParams({
         adminId: admin._id,
@@ -28,7 +32,8 @@ const AdminActivityLogs = ({ admin, onClose }) => {
       
       const response = await fetch(`http://localhost:5001/api/admin/activity-logs?${params}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
       });
 
@@ -47,87 +52,147 @@ const AdminActivityLogs = ({ admin, onClose }) => {
     }
   };
 
-  // Activity type configurations
+  // Enhanced activity type configurations with more detailed info
   const activityTypes = {
     'admin_login': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clipRule="evenodd" /></svg>, 
-      color: 'text-blue-600 bg-blue-50', 
-      label: 'Login' 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clipRule="evenodd" /></svg>, 
+      color: 'text-emerald-700 bg-emerald-50 border-emerald-200', 
+      label: 'Admin Login',
+      description: 'Administrator logged into the system',
+      severity: 'info'
     },
     'admin_logout': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" /></svg>, 
-      color: 'text-gray-600 bg-gray-50', 
-      label: 'Logout' 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" /></svg>, 
+      color: 'text-gray-700 bg-gray-50 border-gray-200', 
+      label: 'Admin Logout',
+      description: 'Administrator logged out of the system',
+      severity: 'info'
     },
     'create_admin': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" /></svg>, 
-      color: 'text-green-600 bg-green-50', 
-      label: 'Create Admin' 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" /></svg>, 
+      color: 'text-blue-700 bg-blue-50 border-blue-200', 
+      label: 'Admin Created',
+      description: 'New administrator account was created',
+      severity: 'important'
     },
     'update_admin': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>, 
-      color: 'text-yellow-600 bg-yellow-50', 
-      label: 'Update Admin' 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>, 
+      color: 'text-amber-700 bg-amber-50 border-amber-200', 
+      label: 'Admin Modified',
+      description: 'Administrator account was updated',
+      severity: 'warning'
     },
     'delete_admin': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clipRule="evenodd" /><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" /></svg>, 
-      color: 'text-red-600 bg-red-50', 
-      label: 'Delete Admin' 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clipRule="evenodd" /><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" /></svg>, 
+      color: 'text-red-700 bg-red-50 border-red-200', 
+      label: 'Admin Deleted',
+      description: 'Administrator account was removed',
+      severity: 'critical'
     },
     'update_permissions': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-2a1 1 0 11-2 0 1 1 0 012 0z" clipRule="evenodd" /></svg>, 
-      color: 'text-purple-600 bg-purple-50', 
-      label: 'Update Permissions' 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-2a1 1 0 11-2 0 1 1 0 012 0z" clipRule="evenodd" /></svg>, 
+      color: 'text-purple-700 bg-purple-50 border-purple-200', 
+      label: 'Permissions Updated',
+      description: 'Administrator permissions were modified',
+      severity: 'important'
     },
-    'product_create': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5zM10 18v-6h4v6h-4z" clipRule="evenodd" /></svg>, 
-      color: 'text-green-600 bg-green-50', 
-      label: 'Create Product' 
+    'create_product': { 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5zM10 18v-6h4v6h-4z" clipRule="evenodd" /></svg>, 
+      color: 'text-green-700 bg-green-50 border-green-200', 
+      label: 'Product Created',
+      description: 'New product was added to catalog',
+      severity: 'info'
     },
-    'product_update': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>, 
-      color: 'text-blue-600 bg-blue-50', 
-      label: 'Update Product' 
+    'update_product': { 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>, 
+      color: 'text-blue-700 bg-blue-50 border-blue-200', 
+      label: 'Product Updated',
+      description: 'Product information was modified',
+      severity: 'info'
     },
-    'product_delete': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clipRule="evenodd" /><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" /></svg>, 
-      color: 'text-red-600 bg-red-50', 
-      label: 'Delete Product' 
+    'delete_product': { 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clipRule="evenodd" /><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" /></svg>, 
+      color: 'text-red-700 bg-red-50 border-red-200', 
+      label: 'Product Deleted',
+      description: 'Product was removed from catalog',
+      severity: 'warning'
     },
-    'order_update': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" /></svg>, 
-      color: 'text-blue-600 bg-blue-50', 
-      label: 'Update Order' 
+    'update_order': { 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" /></svg>, 
+      color: 'text-indigo-700 bg-indigo-50 border-indigo-200', 
+      label: 'Order Updated',
+      description: 'Order status or details were modified',
+      severity: 'info'
     },
-    'order_cancel': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clipRule="evenodd" /></svg>, 
-      color: 'text-red-600 bg-red-50', 
-      label: 'Cancel Order' 
+    'cancel_order': { 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clipRule="evenodd" /></svg>, 
+      color: 'text-red-700 bg-red-50 border-red-200', 
+      label: 'Order Cancelled',
+      description: 'Order was cancelled',
+      severity: 'warning'
     },
-    'user_suspend': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clipRule="evenodd" /></svg>, 
-      color: 'text-red-600 bg-red-50', 
-      label: 'Suspend User' 
+    'create_banner': { 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" /></svg>, 
+      color: 'text-pink-700 bg-pink-50 border-pink-200', 
+      label: 'Banner Created',
+      description: 'New banner was added',
+      severity: 'info'
     },
-    'user_activate': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>, 
-      color: 'text-green-600 bg-green-50', 
-      label: 'Activate User' 
-    },
-    'settings_update': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" /></svg>, 
-      color: 'text-gray-600 bg-gray-50', 
-      label: 'Update Settings' 
-    },
-    'export_data': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" /></svg>, 
-      color: 'text-indigo-600 bg-indigo-50', 
-      label: 'Export Data' 
-    },
-    'bulk_operation': { 
-      icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" /></svg>, 
-      color: 'text-orange-600 bg-orange-50', 
-      label: 'Bulk Operation' 
+    'update_banner': { 
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>, 
+      color: 'text-pink-700 bg-pink-50 border-pink-200', 
+      label: 'Banner Updated',
+      description: 'Banner was modified',
+      severity: 'info'
+    }
+  };
+
+  // Filter and search functionality
+  const filteredLogs = logs.filter(log => {
+    const matchesSearch = searchTerm === '' || 
+      log.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (log.details && log.details.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (log.adminName && log.adminName.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    return matchesSearch;
+  });
+
+  // Pagination
+  const totalPages = Math.ceil(filteredLogs.length / logsPerPage);
+  const startIndex = (currentPage - 1) * logsPerPage;
+  const paginatedLogs = filteredLogs.slice(startIndex, startIndex + logsPerPage);
+
+  // Helper functions
+  const formatRelativeTime = (timestamp) => {
+    const now = new Date();
+    const time = new Date(timestamp);
+    const diffInMinutes = Math.floor((now - time) / (1000 * 60));
+    
+    if (diffInMinutes < 1) return 'Just now';
+    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h ago`;
+    if (diffInMinutes < 10080) return `${Math.floor(diffInMinutes / 1440)}d ago`;
+    return time.toLocaleDateString();
+  };
+
+  const formatDateTime = (timestamp) => {
+    return new Date(timestamp).toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  };
+
+  const getActivityConfig = (action) => {
+    return activityTypes[action] || {
+      icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" /></svg>,
+      color: 'text-gray-700 bg-gray-50 border-gray-200',
+      label: action.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+      description: 'System activity',
+      severity: 'info'
     }
   };
 
@@ -152,21 +217,6 @@ const AdminActivityLogs = ({ admin, onClose }) => {
     { value: 'product_update', label: 'Product Updates' },
     { value: 'order_update', label: 'Order Updates' }
   ];
-
-  // Format relative time
-  const formatRelativeTime = (date) => {
-    const now = new Date();
-    const diff = now - new Date(date);
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff / 86400000);
-
-    if (minutes < 1) return 'Just now';
-    if (minutes < 60) return `${minutes}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    if (days < 7) return `${days}d ago`;
-    return new Date(date).toLocaleDateString();
-  };
 
   if (!admin) return null;
 
@@ -322,6 +372,12 @@ const AdminActivityLogs = ({ admin, onClose }) => {
               {/* Activity Timeline */}
               <div className="space-y-3">
                 {logs.map((log, index) => {
+                  // Debug logging to catch object rendering issues
+                  console.log('Rendering log:', index, 'log object:', log);
+                  if (log.details && typeof log.details === 'object') {
+                    console.warn('Object details detected:', log.details);
+                  }
+                  
                   const activityConfig = activityTypes[log.action] || {
                     icon: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" /></svg>,
                     color: 'text-gray-600 bg-gray-50',
@@ -342,16 +398,29 @@ const AdminActivityLogs = ({ admin, onClose }) => {
                             </h3>
                             {log.details && (
                               <p className="text-sm text-gray-600 mt-1">
-                                {log.details}
+                                {typeof log.details === 'object' && log.details !== null 
+                                  ? JSON.stringify(log.details) 
+                                  : String(log.details)}
                               </p>
                             )}
                             {log.metadata && Object.keys(log.metadata).length > 0 && (
                               <div className="mt-2 text-xs text-gray-500">
-                                {Object.entries(log.metadata).map(([key, value]) => (
-                                  <span key={key} className="inline-block mr-3">
-                                    <span className="font-medium">{key}:</span> {value}
-                                  </span>
-                                ))}
+                                {Object.entries(log.metadata).map(([key, value]) => {
+                                  // Debug logging to catch object rendering issues
+                                  if (typeof value === 'object' && value !== null) {
+                                    console.warn(`[ACTIVITY LOGS] Object value detected for key "${key}":`, value);
+                                  }
+                                  
+                                  return (
+                                    <span key={key} className="inline-block mr-3">
+                                      <span className="font-medium">{key}:</span> {
+                                        typeof value === 'object' && value !== null 
+                                          ? JSON.stringify(value)
+                                          : String(value)
+                                      }
+                                    </span>
+                                  );
+                                })}
                               </div>
                             )}
                           </div>

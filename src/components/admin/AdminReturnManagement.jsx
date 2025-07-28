@@ -12,6 +12,7 @@ import {
   FaWarehouse,
   FaClipboardCheck,
   FaClock,
+  FaUser,
   FaExclamationTriangle,
   FaCheckCircle,
   FaTimesCircle
@@ -280,122 +281,237 @@ const AdminReturnManagement = () => {
   }, [refundForm.finalRefundPercentage, selectedReturn]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 py-4 sm:py-6 lg:py-8">
-      <div className="w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 py-6">
         {/* Header */}
-        <div className="mb-4 sm:mb-6 lg:mb-8">
-          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 flex items-center">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-200 mr-3 sm:mr-4">
-              <FaBoxOpen className="text-white text-sm sm:text-base lg:text-lg xl:text-xl" />
+        <div className="mb-8">
+          <div className="flex items-center gap-4 mb-3">
+            <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200/50">
+              <FaBoxOpen className="text-white text-xl" />
             </div>
-            Return Management Dashboard
-          </h1>
-          <p className="mt-1 sm:mt-2 text-sm sm:text-base lg:text-lg text-gray-600">
-            Review and manage customer return requests
-          </p>
-        </div>
-
-        {/* Filters and Search */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl shadow-emerald-100/50 border border-white/50 p-4 sm:p-6 mb-4 sm:mb-6 lg:mb-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {/* Search */}
-            <div className="relative">
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-md flex items-center justify-center">
-                <FaSearch className="text-white text-xs" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search return ID, order ID..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-2 sm:py-3 border border-emerald-200 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white/80 backdrop-blur-sm text-sm sm:text-base transition-all duration-300"
-              />
+            <div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-800 via-indigo-700 to-purple-700 bg-clip-text text-transparent">
+                Return Management
+              </h1>
+              <p className="text-slate-600 mt-1">Streamlined return processing with elegant workflow management</p>
             </div>
           </div>
-
-            {/* Status Filter */}
-            <select
-              value={filters.status}
-              onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value, page: 1 }))}
-              className="w-full px-3 py-2 sm:py-3 border border-emerald-200 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white/80 backdrop-blur-sm text-sm sm:text-base transition-all duration-300"
-            >
-              <option value="all">All Status</option>
-              <option value="requested">Requested</option>
-              <option value="admin_review">Under Review</option>
-              <option value="approved">Approved</option>
-              <option value="rejected">Rejected</option>
-              <option value="quality_checked">Quality Checked</option>
-              <option value="refund_approved">Refund Approved</option>
-              <option value="completed">Completed</option>
-            </select>
-
-            {/* Return Reason Filter */}
-            <select
-              value={filters.returnReason}
-              onChange={(e) => setFilters(prev => ({ ...prev, returnReason: e.target.value, page: 1 }))}
-              className="w-full px-3 py-2 sm:py-3 border border-emerald-200 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white/80 backdrop-blur-sm text-sm sm:text-base transition-all duration-300"
-            >
-              <option value="all">All Reasons</option>
-              <option value="defective">Defective</option>
-              <option value="wrong_item">Wrong Item</option>
-              <option value="not_as_described">Not as Described</option>
-              <option value="quality_issue">Quality Issue</option>
-              <option value="changed_mind">Changed Mind</option>
-            </select>
-
-            {/* Items per page */}
-            <select
-              value={filters.limit}
-              onChange={(e) => setFilters(prev => ({ ...prev, limit: parseInt(e.target.value), page: 1 }))}
-              className="w-full px-3 py-2 sm:py-3 border border-emerald-200 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white/80 backdrop-blur-sm text-sm sm:text-base transition-all duration-300"
-          >
-            <option value="10">10 per page</option>
-            <option value="20">20 per page</option>
-            <option value="50">50 per page</option>
-          </select>
         </div>
-      </div>
+
+        {/* Modern Search and Quick Filters */}
+        <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/30 border border-white/60 p-6 mb-8">
+          {/* Search Bar */}
+          <div className="relative mb-6">
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+              <div className="w-5 h-5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center">
+                <FaSearch className="text-white text-xs" />
+              </div>
+            </div>
+            <input
+              type="text"
+              placeholder="Search by return ID, order ID, or customer name..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-14 pr-12 py-4 bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-300 transition-all duration-300 text-sm placeholder-slate-400 shadow-sm"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+              >
+                <FaTimes className="text-sm" />
+              </button>
+            )}
+          </div>
+
+          {/* Quick Filter Tabs */}
+          <div className="flex flex-wrap gap-3 mb-6">
+            <button
+              onClick={() => setFilters(prev => ({ ...prev, status: 'all', page: 1 }))}
+              className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
+                filters.status === 'all' 
+                  ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-200/50' 
+                  : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
+              }`}
+            >
+              All Returns
+            </button>
+            <button
+              onClick={() => setFilters(prev => ({ ...prev, status: 'requested', page: 1 }))}
+              className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
+                filters.status === 'requested' 
+                  ? 'bg-gradient-to-r from-amber-400 to-orange-400 text-white shadow-lg shadow-amber-200/50' 
+                  : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
+              }`}
+            >
+              <span className="mr-2">🟡</span>Pending Review
+            </button>
+            <button
+              onClick={() => setFilters(prev => ({ ...prev, status: 'admin_review', page: 1 }))}
+              className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
+                filters.status === 'admin_review' 
+                  ? 'bg-gradient-to-r from-blue-400 to-cyan-400 text-white shadow-lg shadow-blue-200/50' 
+                  : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
+              }`}
+            >
+              <span className="mr-2">🔍</span>Under Review
+            </button>
+            <button
+              onClick={() => setFilters(prev => ({ ...prev, status: 'approved', page: 1 }))}
+              className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
+                filters.status === 'approved' 
+                  ? 'bg-gradient-to-r from-emerald-400 to-green-400 text-white shadow-lg shadow-emerald-200/50' 
+                  : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
+              }`}
+            >
+              <span className="mr-2">✅</span>Approved
+            </button>
+            <button
+              onClick={() => setFilters(prev => ({ ...prev, status: 'quality_checked', page: 1 }))}
+              className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
+                filters.status === 'quality_checked' 
+                  ? 'bg-gradient-to-r from-violet-400 to-purple-400 text-white shadow-lg shadow-violet-200/50' 
+                  : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
+              }`}
+            >
+              <span className="mr-2">🔬</span>Quality Checked
+            </button>
+            <button
+              onClick={() => setFilters(prev => ({ ...prev, status: 'refund_approved', page: 1 }))}
+              className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
+                filters.status === 'refund_approved' 
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-200/50' 
+                  : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
+              }`}
+            >
+              <span className="mr-2">💰</span>Refund Ready
+            </button>
+            <button
+              onClick={() => setFilters(prev => ({ ...prev, status: 'completed', page: 1 }))}
+              className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
+                filters.status === 'completed' 
+                  ? 'bg-gradient-to-r from-slate-400 to-gray-500 text-white shadow-lg shadow-slate-200/50' 
+                  : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
+              }`}
+            >
+              <span className="mr-2">✔️</span>Completed
+            </button>
+          </div>
+
+          {/* Advanced Filters (Collapsible) */}
+          <details className="group">
+            <summary className="flex items-center gap-3 text-sm text-slate-600 cursor-pointer hover:text-slate-800 transition-colors p-3 bg-slate-50/50 rounded-lg">
+              <div className="w-5 h-5 bg-gradient-to-r from-slate-400 to-slate-500 rounded-lg flex items-center justify-center">
+                <FaFilter className="text-white text-xs" />
+              </div>
+              <span className="font-medium">Advanced Filters</span>
+              <svg className="w-4 h-4 transition-transform group-open:rotate-180 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </summary>
+            <div className="mt-6 pt-6 border-t border-slate-200/50 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-3">Return Reason</label>
+                <select
+                  value={filters.returnReason}
+                  onChange={(e) => setFilters(prev => ({ ...prev, returnReason: e.target.value, page: 1 }))}
+                  className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-300 text-sm transition-all duration-300"
+                >
+                  <option value="all">All Reasons</option>
+                  <option value="defective">Defective Product</option>
+                  <option value="wrong_item">Wrong Item Received</option>
+                  <option value="not_as_described">Not as Described</option>
+                  <option value="quality_issue">Quality Issues</option>
+                  <option value="changed_mind">Changed Mind</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-3">Items per Page</label>
+                <select
+                  value={filters.limit}
+                  onChange={(e) => setFilters(prev => ({ ...prev, limit: parseInt(e.target.value), page: 1 }))}
+                  className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-300 text-sm transition-all duration-300"
+                >
+                  <option value="10">10 per page</option>
+                  <option value="20">20 per page</option>
+                  <option value="50">50 per page</option>
+                </select>
+              </div>
+              <div className="flex items-end">
+                <button
+                  onClick={fetchReturns}
+                  className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-xl hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 text-sm font-medium flex items-center gap-2 shadow-lg shadow-indigo-200/50"
+                >
+                  <div className="w-4 h-4 bg-white/20 rounded-md flex items-center justify-center">
+                    <FaSearch className="text-white text-xs" />
+                  </div>
+                  Refresh
+                </button>
+              </div>
+            </div>
+          </details>
+        </div>
 
       {/* Error Display */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-          <p className="text-red-800">{error}</p>
+        <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200/50 rounded-2xl p-6 mb-8 shadow-lg shadow-red-100/50">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-red-400 to-pink-500 rounded-xl flex items-center justify-center">
+              <FaExclamationTriangle className="text-white" />
+            </div>
+            <p className="text-red-800 font-bold text-lg">Unable to Load Returns</p>
+          </div>
+          <p className="text-red-700 mb-4">{error}</p>
           <button 
             onClick={() => {
               setError('');
               fetchReturns();
             }}
-            className="mt-2 text-red-600 hover:text-red-800 underline"
+            className="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl hover:from-red-600 hover:to-pink-600 transition-all duration-300 font-medium shadow-lg shadow-red-200/50"
           >
-            Try again
+            Try Again
           </button>
         </div>
       )}
 
       {/* Returns Display */}
       {loading ? (
-        <div className="flex justify-center items-center py-16 sm:py-20 lg:py-24">
+        <div className="flex items-center justify-center py-24">
           <div className="text-center">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl shadow-emerald-200">
-              <FaSpinner className="animate-spin text-white text-lg sm:text-xl lg:text-2xl" />
+            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center mb-6 mx-auto shadow-xl shadow-indigo-200/50 animate-pulse">
+              <FaSpinner className="animate-spin text-white text-xl" />
             </div>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 font-medium">Loading return requests...</p>
+            <h3 className="text-xl font-bold bg-gradient-to-r from-slate-700 to-indigo-600 bg-clip-text text-transparent mb-2">
+              Loading Returns
+            </h3>
+            <p className="text-slate-500">Fetching the latest return requests...</p>
           </div>
         </div>
       ) : !Array.isArray(returns) || returns.length === 0 ? (
-        <div className="text-center py-16 sm:py-20 lg:py-24">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28 bg-gradient-to-br from-gray-300 via-gray-200 to-gray-300 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-gray-200">
-            <FaBoxOpen className="text-gray-500 text-xl sm:text-2xl lg:text-3xl xl:text-4xl" />
+        <div className="text-center py-24">
+          <div className="w-20 h-20 bg-gradient-to-br from-slate-200 to-slate-300 rounded-full flex items-center justify-center mb-6 mx-auto shadow-lg">
+            <FaBoxOpen className="text-slate-400 text-2xl" />
           </div>
-          <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-semibold text-gray-800 mb-2 sm:mb-3">
-            No Return Requests
-          </h3>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-600">
-            No return requests found matching your criteria
+          <h3 className="text-2xl font-bold text-slate-800 mb-3">No Return Requests Found</h3>
+          <p className="text-slate-500 mb-6 max-w-md mx-auto">
+            {searchTerm || filters.status !== 'all' || filters.returnReason !== 'all' 
+              ? 'No returns match your current search criteria. Try adjusting your filters.' 
+              : 'No return requests have been submitted yet. They will appear here when customers request returns.'}
           </p>
+          {(searchTerm || filters.status !== 'all' || filters.returnReason !== 'all') && (
+            <button
+              onClick={() => {
+                setSearchTerm('');
+                setFilters({ status: 'all', returnReason: 'all', page: 1, limit: 20 });
+              }}
+              className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-xl hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 font-medium shadow-lg shadow-indigo-200/50"
+            >
+              Clear All Filters
+            </button>
+          )}
         </div>
       ) : (
-        <div className="grid gap-4 sm:gap-6 lg:gap-8">
+        <div className="space-y-6">
           {returns.map((returnRequest) => {
             const priority = getPriorityLevel(returnRequest);
             const totalAmount = returnRequest.items.reduce((sum, item) => 
@@ -404,129 +520,125 @@ const AdminReturnManagement = () => {
             return (
               <div 
                 key={returnRequest._id} 
-                className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl shadow-emerald-100/50 border border-white/50 p-4 sm:p-6 lg:p-8 hover:shadow-2xl hover:shadow-emerald-200/70 transition-all duration-300 hover:scale-[1.01] group"
+                onClick={() => navigate(`/admin/returns/${returnRequest._id}`)}
+                className="group bg-white/60 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/30 border border-white/50 p-6 hover:shadow-2xl hover:shadow-slate-300/40 transition-all duration-500 cursor-pointer hover:scale-[1.02] hover:bg-white/80"
               >
-                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 sm:gap-6">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-200 group-hover:shadow-emerald-300 transition-all duration-300">
-                        <FaBoxOpen className="text-white text-sm sm:text-base lg:text-lg" />
-                      </div>
-                      <div>
-                        <h3 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-semibold text-gray-800">
-                          Return #{returnRequest.returnRequestId}
-                        </h3>
-                        <p className="text-xs sm:text-sm lg:text-base text-gray-600">
-                          Order: #{(returnRequest.orderId?._id || returnRequest.orderId)?.toString()?.slice(-8) || 'N/A'}
-                        </p>
-                        <p className="text-xs sm:text-sm lg:text-base text-gray-500">
-                          {new Date(returnRequest.requestedAt).toLocaleDateString()}
-                        </p>
-                      </div>
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200/50 group-hover:shadow-indigo-300/60 transition-all duration-500">
+                      <FaBoxOpen className="text-white text-lg" />
                     </div>
-
-                    {/* Customer Info */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-3 sm:mb-4">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center shadow-md">
-                          <FaUser className="text-white text-xs sm:text-sm" />
-                        </div>
-                        <div>
-                          <p className="text-xs sm:text-sm font-medium text-gray-700">
-                            {returnRequest.customerId?.name || 'N/A'}
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            {returnRequest.customerId?.email || 'N/A'}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center shadow-md">
-                          <FaCoins className="text-white text-xs sm:text-sm" />
-                        </div>
-                        <div>
-                          <p className="text-xs sm:text-sm font-medium text-gray-700">
-                            ₹{totalAmount.toFixed(2)}
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            {returnRequest.items.length} item(s)
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center shadow-md ${
-                          priority === 'high' ? 'bg-gradient-to-br from-red-500 to-pink-500' :
-                          priority === 'medium' ? 'bg-gradient-to-br from-yellow-500 to-orange-500' :
-                          'bg-gradient-to-br from-green-500 to-emerald-500'
-                        }`}>
-                          <FaExclamationTriangle className="text-white text-xs sm:text-sm" />
-                        </div>
-                        <div>
-                          <p className="text-xs sm:text-sm font-medium text-gray-700">
-                            {priority?.toUpperCase()} Priority
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            {returnRequest.returnReason}
-                          </p>
-                        </div>
-                      </div>
+                    <div>
+                      <h3 className="text-xl font-bold bg-gradient-to-r from-slate-800 via-indigo-700 to-purple-700 bg-clip-text text-transparent group-hover:from-indigo-600 group-hover:to-purple-600 transition-all duration-300">
+                        Return #{returnRequest.returnRequestId}
+                      </h3>
+                      <p className="text-slate-500 text-sm mt-1">
+                        Order #{(returnRequest.orderId?._id || returnRequest.orderId)?.toString()?.slice(-8) || 'N/A'}
+                      </p>
                     </div>
+                  </div>
+                  <div className="text-right">
+                    <span className={`inline-flex items-center px-4 py-2 rounded-xl text-xs font-semibold shadow-sm border border-white/50 backdrop-blur-sm ${getStatusBadgeColor(returnRequest.status)}`}>
+                      {returnRequest.status.replace('_', ' ').toUpperCase()}
+                    </span>
+                    <p className="text-slate-400 text-sm mt-2 font-medium">
+                      {new Date(returnRequest.requestedAt).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                      })}
+                    </p>
+                  </div>
+                </div>
 
-                    {/* Status Badge */}
-                    <div className="mb-3 sm:mb-4">
-                      <span className={`px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-medium border shadow-md ${getStatusBadgeColor(returnRequest.status)}`}>
-                        {returnRequest.status.replace('_', ' ').toUpperCase()}
-                      </span>
+                {/* Info Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                  <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-xl border border-blue-100/50">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center shadow-md">
+                      <FaUser className="text-white text-sm" />
                     </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex flex-wrap gap-2 sm:gap-3">
-                      <button
-                        onClick={() => navigate(`/admin/returns/${returnRequest._id}`)}
-                        className="px-3 sm:px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg sm:rounded-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 flex items-center text-xs sm:text-sm font-medium shadow-lg hover:shadow-xl"
-                      >
-                        <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white/20 rounded-md flex items-center justify-center mr-2">
-                          <FaEye className="text-white text-xs" />
-                        </div>
-                        View Details
-                      </button>
-
-                      {returnRequest.status === 'requested' && (
-                        <button
-                          onClick={() => openReviewModal(returnRequest)}
-                          className="px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg sm:rounded-xl hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 flex items-center text-xs sm:text-sm font-medium shadow-lg hover:shadow-xl"
-                        >
-                          <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white/20 rounded-md flex items-center justify-center mr-2">
-                            <FaClipboardCheck className="text-white text-xs" />
-                          </div>
-                          Review
-                        </button>
-                      )}
-
-                      {returnRequest.status === 'quality_checked' && (
-                        <button
-                          onClick={() => openRefundModal(returnRequest)}
-                          className="px-3 sm:px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg sm:rounded-xl hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 flex items-center text-xs sm:text-sm font-medium shadow-lg hover:shadow-xl"
-                        >
-                          <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white/20 rounded-md flex items-center justify-center mr-2">
-                            <FaCoins className="text-white text-xs" />
-                          </div>
-                          Final Decision
-                        </button>
-                      )}
-
-                      {returnRequest.status === 'refund_approved' && (
-                        <button
-                          onClick={() => processRefund(returnRequest._id)}
-                          className="px-3 sm:px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg sm:rounded-xl hover:from-green-600 hover:to-emerald-600 transition-all duration-300 flex items-center text-xs sm:text-sm font-medium shadow-lg hover:shadow-xl"
-                        >
-                          <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white/20 rounded-md flex items-center justify-center mr-2">
-                            <FaCheckCircle className="text-white text-xs" />
-                          </div>
-                          Process Refund
-                        </button>
-                      )}
+                    <div>
+                      <p className="text-slate-800 font-semibold text-sm">
+                        {returnRequest.customerId?.name || 'N/A'}
+                      </p>
+                      <p className="text-slate-500 text-xs">Customer</p>
                     </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-emerald-50/50 to-teal-50/50 rounded-xl border border-emerald-100/50">
+                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center shadow-md">
+                      <FaCoins className="text-white text-sm" />
+                    </div>
+                    <div>
+                      <p className="text-slate-800 font-semibold text-sm">₹{totalAmount.toFixed(2)}</p>
+                      <p className="text-slate-500 text-xs">{returnRequest.items.length} item(s)</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-orange-50/50 to-red-50/50 rounded-xl border border-orange-100/50">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md ${
+                      priority === 'high' ? 'bg-gradient-to-br from-red-400 to-pink-500' :
+                      priority === 'medium' ? 'bg-gradient-to-br from-orange-400 to-yellow-500' :
+                      'bg-gradient-to-br from-green-400 to-emerald-500'
+                    }`}>
+                      <FaExclamationTriangle className="text-white text-sm" />
+                    </div>
+                    <div>
+                      <p className="text-slate-800 font-semibold text-sm capitalize">{priority} Priority</p>
+                      <p className="text-slate-500 text-xs">{returnRequest.returnReason.replace('_', ' ')}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-200/50">
+                  {returnRequest.status === 'requested' && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openReviewModal(returnRequest);
+                      }}
+                      className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 text-sm font-medium flex items-center gap-2 shadow-lg shadow-blue-200/50"
+                    >
+                      <div className="w-4 h-4 bg-white/20 rounded-md flex items-center justify-center">
+                        <FaClipboardCheck className="text-white text-xs" />
+                      </div>
+                      Review Request
+                    </button>
+                  )}
+
+                  {returnRequest.status === 'quality_checked' && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openRefundModal(returnRequest);
+                      }}
+                      className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all duration-300 text-sm font-medium flex items-center gap-2 shadow-lg shadow-amber-200/50"
+                    >
+                      <div className="w-4 h-4 bg-white/20 rounded-md flex items-center justify-center">
+                        <FaCoins className="text-white text-xs" />
+                      </div>
+                      Final Decision
+                    </button>
+                  )}
+
+                  {returnRequest.status === 'refund_approved' && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        processRefund(returnRequest._id);
+                      }}
+                      className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-green-500 text-white rounded-xl hover:from-emerald-600 hover:to-green-600 transition-all duration-300 text-sm font-medium flex items-center gap-2 shadow-lg shadow-emerald-200/50"
+                    >
+                      <div className="w-4 h-4 bg-white/20 rounded-md flex items-center justify-center">
+                        <FaCheckCircle className="text-white text-xs" />
+                      </div>
+                      Process Refund
+                    </button>
+                  )}
+
+                  <div className="ml-auto flex items-center text-slate-400 group-hover:text-slate-600 transition-colors">
+                    <span className="text-xs font-medium mr-2">Click to view details</span>
+                    <FaEye className="text-sm" />
                   </div>
                 </div>
               </div>
@@ -535,58 +647,31 @@ const AdminReturnManagement = () => {
         </div>
       )}
 
-      {/* Pagination */}
+      {/* Elegant Pagination */}
       {pagination.pages > 1 && (
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl shadow-emerald-100/50 border border-white/50 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 mt-4 sm:mt-6 lg:mt-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-            <div className="flex justify-between sm:hidden">
+        <div className="bg-white/60 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/30 border border-white/50 px-8 py-6 mt-8">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-slate-600 font-medium">
+              Showing <span className="font-bold text-indigo-600">{((filters.page - 1) * filters.limit) + 1}</span> to <span className="font-bold text-indigo-600">{Math.min(filters.page * filters.limit, pagination.total)}</span> of <span className="font-bold text-indigo-600">{pagination.total}</span> results
+            </p>
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => setFilters(prev => ({ ...prev, page: Math.max(prev.page - 1, 1) }))}
                 disabled={filters.page === 1}
-                className="px-3 sm:px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm font-medium shadow-lg"
+                className="px-6 py-3 text-slate-600 bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl hover:bg-white hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-medium"
               >
                 Previous
               </button>
+              <div className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-xl font-bold shadow-lg shadow-indigo-200/50">
+                {filters.page} of {pagination.pages}
+              </div>
               <button
                 onClick={() => setFilters(prev => ({ ...prev, page: Math.min(prev.page + 1, pagination.pages) }))}
                 disabled={filters.page === pagination.pages}
-                className="px-3 sm:px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm font-medium shadow-lg"
+                className="px-6 py-3 text-slate-600 bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl hover:bg-white hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-medium"
               >
                 Next
               </button>
-            </div>
-            
-            <div className="hidden sm:flex sm:items-center sm:justify-between w-full">
-              <div>
-                <p className="text-xs sm:text-sm lg:text-base text-gray-700 font-medium">
-                  Showing{' '}
-                  <span className="font-semibold text-emerald-600">{((filters.page - 1) * filters.limit) + 1}</span>
-                  {' '}to{' '}
-                  <span className="font-semibold text-emerald-600">
-                    {Math.min(filters.page * filters.limit, pagination.total)}
-                  </span>
-                  {' '}of{' '}
-                  <span className="font-semibold text-emerald-600">{pagination.total}</span>
-                  {' '}results
-                </p>
-              </div>
-              <div>
-                <nav className="flex items-center gap-1 sm:gap-2">
-                  {Array.from({ length: pagination.pages }, (_, i) => i + 1).map((page) => (
-                    <button
-                      key={page}
-                      onClick={() => setFilters(prev => ({ ...prev, page }))}
-                      className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 shadow-md ${
-                        page === filters.page
-                          ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-200'
-                          : 'bg-white text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 border border-emerald-200'
-                      }`}
-                    >
-                      {page}
-                    </button>
-                  ))}
-                </nav>
-              </div>
             </div>
           </div>
         </div>
@@ -678,66 +763,74 @@ const AdminReturnManagement = () => {
         </div>
       )}
 
-      {/* Review Modal */}
+      {/* Elegant Review Modal */}
       {showReviewModal && selectedReturn && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-11/12 max-w-2xl shadow-lg rounded-md bg-white">
-            <div className="mt-3">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
-                Review Return Request - #{selectedReturn.returnRequestId}
-              </h3>
-              
-              <form onSubmit={reviewReturnRequest} className="space-y-4">
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl shadow-slate-300/30 border border-white/50 max-w-lg w-full">
+            <div className="p-8">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg">
+                  <FaClipboardCheck className="text-white text-lg" />
+                </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Decision *
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-indigo-700 bg-clip-text text-transparent">
+                    Review Return Request
+                  </h3>
+                  <p className="text-slate-500 font-medium">#{selectedReturn.returnRequestId}</p>
+                </div>
+              </div>
+              
+              <form onSubmit={reviewReturnRequest} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-3">
+                    Decision
                   </label>
                   <select
                     required
                     value={reviewForm.decision}
                     onChange={(e) => setReviewForm(prev => ({ ...prev, decision: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-300 transition-all duration-300"
                   >
-                    <option value="">Select decision</option>
-                    <option value="approve">Approve</option>
-                    <option value="reject">Reject</option>
+                    <option value="">Select your decision</option>
+                    <option value="approve">✅ Approve Return Request</option>
+                    <option value="reject">❌ Reject Return Request</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Admin Comments
+                  <label className="block text-sm font-bold text-slate-700 mb-3">
+                    Comments (Optional)
                   </label>
                   <textarea
                     value={reviewForm.adminComments}
                     onChange={(e) => setReviewForm(prev => ({ ...prev, adminComments: e.target.value }))}
-                    placeholder="Enter your comments..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    rows="3"
+                    placeholder="Add any comments about your decision..."
+                    className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-300 transition-all duration-300"
+                    rows="4"
                   />
                 </div>
 
-                <div className="flex justify-end space-x-3 pt-4">
+                <div className="flex gap-4 pt-6">
                   <button
                     type="button"
                     onClick={() => setShowReviewModal(false)}
-                    className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50"
+                    className="flex-1 px-6 py-3 text-slate-600 bg-white/60 backdrop-blur-sm border border-slate-200/50 rounded-xl hover:bg-white/80 transition-all duration-300 font-medium"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    disabled={actionLoading}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 flex items-center"
+                    disabled={actionLoading || !reviewForm.decision}
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl hover:from-blue-600 hover:to-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 font-medium shadow-lg shadow-blue-200/50"
                   >
                     {actionLoading ? (
                       <>
-                        <FaSpinner className="animate-spin mr-2" />
+                        <FaSpinner className="animate-spin" />
                         Processing...
                       </>
                     ) : (
                       <>
-                        <FaCheck className="mr-2" />
+                        <FaCheck />
                         Submit Review
                       </>
                     )}
@@ -749,28 +842,44 @@ const AdminReturnManagement = () => {
         </div>
       )}
 
-      {/* Refund Decision Modal */}
+      {/* Elegant Refund Decision Modal */}
       {showRefundModal && selectedReturn && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-11/12 max-w-2xl shadow-lg rounded-md bg-white">
-            <div className="mt-3">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
-                Final Refund Decision - #{selectedReturn.returnRequestId}
-              </h3>
-              
-              <form onSubmit={makeFinalDecision} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Warehouse Recommendation: {selectedReturn.refund?.warehouseRecommendation?.refundPercentage || 0}%
-                  </label>
-                  <div className="bg-blue-50 p-3 rounded text-sm">
-                    {selectedReturn.refund?.warehouseRecommendation?.recommendation || 'No recommendation provided'}
-                  </div>
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl shadow-slate-300/30 border border-white/50 max-w-2xl w-full">
+            <div className="p-8">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
+                  <FaCoins className="text-white text-lg" />
                 </div>
+                <div>
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-orange-600 bg-clip-text text-transparent">
+                    Final Refund Decision
+                  </h3>
+                  <p className="text-slate-500 font-medium">#{selectedReturn.returnRequestId}</p>
+                </div>
+              </div>
+              
+              <form onSubmit={makeFinalDecision} className="space-y-6">
+                {selectedReturn.refund?.warehouseRecommendation && (
+                  <div className="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 p-6 rounded-xl border border-blue-200/50">
+                    <h4 className="font-bold text-indigo-900 mb-3 flex items-center gap-2">
+                      <FaWarehouse className="text-indigo-600" />
+                      Warehouse Recommendation
+                    </h4>
+                    <div className="bg-white/60 p-4 rounded-lg mb-3">
+                      <p className="text-indigo-800 font-bold text-lg mb-2">
+                        Recommended Refund: {selectedReturn.refund.warehouseRecommendation.refundPercentage}%
+                      </p>
+                      <p className="text-indigo-700">
+                        {selectedReturn.refund.warehouseRecommendation.recommendation}
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Final Refund Percentage *
+                  <label className="block text-sm font-bold text-slate-700 mb-3">
+                    Final Refund Percentage
                   </label>
                   <input
                     type="number"
@@ -778,54 +887,58 @@ const AdminReturnManagement = () => {
                     max="100"
                     value={refundForm.finalRefundPercentage}
                     onChange={(e) => setRefundForm(prev => ({ ...prev, finalRefundPercentage: parseInt(e.target.value) || 0 }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl focus:ring-2 focus:ring-orange-500/50 focus:border-orange-300 transition-all duration-300 font-bold text-lg"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Coin Refund Amount
-                  </label>
-                  <div className="bg-green-50 p-3 rounded text-sm font-medium text-green-800">
-                    <FaCoins className="inline mr-2" />
-                    {refundForm.coinRefund} coins will be credited to customer
+                <div className="bg-gradient-to-r from-emerald-50/50 to-green-50/50 p-6 rounded-xl border border-emerald-200/50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-green-500 rounded-xl flex items-center justify-center">
+                      <FaCoins className="text-white" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-emerald-800 text-xl">
+                        {refundForm.coinRefund} coins
+                      </p>
+                      <p className="text-emerald-600 text-sm">Will be credited to customer</p>
+                    </div>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Admin Comments
+                  <label className="block text-sm font-bold text-slate-700 mb-3">
+                    Comments (Optional)
                   </label>
                   <textarea
                     value={refundForm.adminComments}
                     onChange={(e) => setRefundForm(prev => ({ ...prev, adminComments: e.target.value }))}
-                    placeholder="Enter final decision comments..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    rows="3"
+                    placeholder="Add comments about your final decision..."
+                    className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl focus:ring-2 focus:ring-orange-500/50 focus:border-orange-300 transition-all duration-300"
+                    rows="4"
                   />
                 </div>
 
-                <div className="flex justify-end space-x-3 pt-4">
+                <div className="flex gap-4 pt-6">
                   <button
                     type="button"
                     onClick={() => setShowRefundModal(false)}
-                    className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50"
+                    className="flex-1 px-6 py-3 text-slate-600 bg-white/60 backdrop-blur-sm border border-slate-200/50 rounded-xl hover:bg-white/80 transition-all duration-300 font-medium"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={actionLoading}
-                    className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 flex items-center"
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-500 text-white rounded-xl hover:from-emerald-600 hover:to-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 font-medium shadow-lg shadow-emerald-200/50"
                   >
                     {actionLoading ? (
                       <>
-                        <FaSpinner className="animate-spin mr-2" />
+                        <FaSpinner className="animate-spin" />
                         Processing...
                       </>
                     ) : (
                       <>
-                        <FaCoins className="mr-2" />
+                        <FaCoins />
                         Approve Refund
                       </>
                     )}
@@ -836,6 +949,7 @@ const AdminReturnManagement = () => {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };

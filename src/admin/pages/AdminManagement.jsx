@@ -60,6 +60,7 @@ const AdminManagement = () => {
   const [selectedAdmin, setSelectedAdmin] = useState(null);
   const [activityLogs, setActivityLogs] = useState([]);
   const [showLogs, setShowLogs] = useState(false);
+  const [expandedAdminId, setExpandedAdminId] = useState(null);
 
   // All hooks must be called before any conditional returns
   useEffect(() => {
@@ -187,12 +188,253 @@ const AdminManagement = () => {
       );
     }
 
-    const moduleCount = getEnabledModulesCount();
+    // Count enabled modules for this specific admin
+    let moduleCount = 0;
+    if (admin.permissions && admin.permissions.modules) {
+      moduleCount = Object.keys(admin.permissions.modules).filter(
+        module => admin.permissions.modules[module]?.enabled === true
+      ).length;
+    }
+
     return (
       <span className="inline-flex items-center px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
         <AdminIcon />
-        <span className="ml-1">Admin ({moduleCount} modules)</span>
+        <span className="ml-1">Admin ({moduleCount} module{moduleCount !== 1 ? 's' : ''})</span>
       </span>
+    );
+  };
+
+  const getPermissionsDisplay = (admin) => {
+    if (admin.isSuperAdmin) {
+      return (
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-800 border border-emerald-200">
+            <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            Full Access
+          </span>
+        </div>
+      );
+    }
+
+    // Check if permissions exist and have modules
+    if (!admin.permissions || !admin.permissions.modules || Object.keys(admin.permissions.modules).length === 0) {
+      return (
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600 border border-gray-200">
+            <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clipRule="evenodd" />
+            </svg>
+            No Access
+          </span>
+        </div>
+      );
+    }
+
+    // Get enabled modules from the correct path: permissions.modules.{moduleName}.enabled
+    const enabledModules = Object.keys(admin.permissions.modules).filter(
+      module => admin.permissions.modules[module]?.enabled === true
+    );
+
+    // Calculate total enabled actions across all enabled modules
+    const totalEnabledActions = enabledModules.reduce((total, module) => {
+      const modulePerms = admin.permissions.modules[module];
+      if (modulePerms && modulePerms.actions) {
+        const enabledActionsCount = Object.keys(modulePerms.actions).filter(
+          action => modulePerms.actions[action] === true
+        ).length;
+        console.log(`Module ${module}: ${enabledActionsCount} enabled actions out of ${Object.keys(modulePerms.actions).length} total actions`);
+        return total + enabledActionsCount;
+      }
+      return total;
+    }, 0);
+
+    console.log(`Total enabled actions for ${admin.name}: ${totalEnabledActions}`);
+
+    // If no modules are enabled
+    if (enabledModules.length === 0) {
+      return (
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-800 border border-amber-200">
+            <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            Limited Access
+          </span>
+        </div>
+      );
+    }
+
+    const isExpanded = expandedAdminId === admin._id;
+
+    return (
+      <div className="flex items-center gap-2">
+        <div className="flex flex-wrap gap-1">
+          <span className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700 border border-blue-200">
+            {enabledModules.length} module{enabledModules.length !== 1 ? 's' : ''}
+          </span>
+          <span className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-700 border border-purple-200">
+            {totalEnabledActions} action{totalEnabledActions !== 1 ? 's' : ''}
+          </span>
+        </div>
+        <button
+          onClick={() => setExpandedAdminId(isExpanded ? null : admin._id)}
+          className="inline-flex items-center px-2 py-1 text-xs font-medium text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 rounded-md transition-all duration-200"
+        >
+          <svg 
+            className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+          <span className="ml-1">{isExpanded ? 'Less' : 'Details'}</span>
+        </button>
+      </div>
+    );
+  };
+
+  const renderExpandedPermissions = (admin) => {
+    if (!admin.permissions?.modules) return null;
+
+    // Module name mapping for better display
+    const moduleDisplayNames = {
+      'products': 'Products',
+      'orders': 'Orders', 
+      'users': 'Users',
+      'banners': 'Banners',
+      'coupons': 'Coupons',
+      'sub_admins': 'Sub Admins',
+      'combopacks': 'Combo Packs',
+      'inventory': 'Inventory',
+      'analytics': 'Analytics',
+      'returns': 'Returns',
+      'settings': 'Settings',
+      'admin_management': 'Admin Management'
+    };
+
+    // Action name mapping for better display
+    const actionDisplayNames = {
+      'view_products': 'View Products',
+      'create_product': 'Create Products',
+      'edit_product': 'Edit Products',
+      'delete_product': 'Delete Products',
+      'bulk_upload': 'Bulk Upload',
+      'export_products': 'Export Products',
+      'manage_categories': 'Manage Categories',
+      'view_orders': 'View Orders',
+      'update_status': 'Update Status',
+      'cancel_order': 'Cancel Orders',
+      'refund_order': 'Process Refunds',
+      'export_orders': 'Export Orders',
+      'view_order_details': 'View Order Details',
+      'mark_paid': 'Mark as Paid',
+      'view_users': 'View Users',
+      'edit_user': 'Edit Users',
+      'suspend_user': 'Suspend Users',
+      'view_user_activity': 'View User Activity',
+      'export_users': 'Export Users',
+      'view_banners': 'View Banners',
+      'create_banner': 'Create Banners',
+      'edit_banner': 'Edit Banners',
+      'delete_banner': 'Delete Banners',
+      'activate': 'Activate/Deactivate',
+      'reorder': 'Reorder Items',
+      'create_admin': 'Create Admins',
+      'edit_admin': 'Edit Admins',
+      'delete_admin': 'Delete Admins'
+    };
+
+    const enabledModules = Object.keys(admin.permissions.modules)
+      .filter(module => admin.permissions.modules[module]?.enabled === true)
+      .map(module => {
+        const moduleActions = admin.permissions.modules[module].actions || {};
+        const enabledActions = Object.keys(moduleActions).filter(
+          action => moduleActions[action] === true
+        );
+        
+        console.log(`Filtering actions for module ${module}:`, {
+          allActions: Object.keys(moduleActions),
+          enabledActions: enabledActions,
+          actionValues: moduleActions
+        });
+        
+        return {
+          name: module,
+          displayName: moduleDisplayNames[module] || module.charAt(0).toUpperCase() + module.slice(1),
+          enabledActions: enabledActions
+        };
+      });
+
+    return (
+      <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-6 border border-gray-200 shadow-sm">
+        <div className="flex items-center mb-4">
+          <div className="flex-shrink-0 w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+            <svg className="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-2a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clipRule="evenodd" />
+            </svg>
+          </div>
+          <div className="ml-3">
+            <h4 className="text-lg font-semibold text-gray-900">
+              Permission Details for {admin.name}
+            </h4>
+            <p className="text-sm text-gray-600">
+              {enabledModules.length} enabled module{enabledModules.length !== 1 ? 's' : ''}
+            </p>
+          </div>
+        </div>
+
+        {enabledModules.length === 0 ? (
+          <div className="text-center py-8">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <p className="text-gray-500">No modules are enabled for this admin.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {enabledModules.map((module, index) => (
+              <div 
+                key={index} 
+                className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200"
+              >
+                <div className="flex items-center mb-3">
+                  <div className="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-md flex items-center justify-center">
+                    <svg className="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h12a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <h5 className="ml-2 text-sm font-semibold text-gray-900">
+                    {module.displayName}
+                  </h5>
+                </div>
+                
+                {module.enabledActions.length === 0 ? (
+                  <p className="text-xs text-gray-500 italic">No specific actions enabled</p>
+                ) : (
+                  <div className="space-y-1">
+                    {module.enabledActions.map((action, actionIndex) => (
+                      <div 
+                        key={actionIndex}
+                        className="inline-flex items-center px-2 py-1 text-xs rounded-md bg-green-50 text-green-700 border border-green-200 mr-1 mb-1"
+                      >
+                        <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        {actionDisplayNames[action] || action.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     );
   };
 
@@ -205,40 +447,75 @@ const AdminManagement = () => {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="mb-8">
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Admin Management</h1>
-            <p className="text-gray-600 mt-2">Manage administrator accounts and permissions</p>
-          </div>
-          <div className="flex space-x-3">
-            {/* View Activity Logs Button */}
-            <PermissionButton
-              module="admin_management"
-              action="view_activity_logs"
-              onClick={fetchActivityLogs}
-              variant="secondary"
-              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              <LogsIcon />
-              <span className="ml-2">Activity Logs</span>
-            </PermissionButton>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="flex justify-between items-start">
+              <div>
+                <div className="flex items-center mb-2">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                    Admin Management
+                  </h1>
+                </div>
+                <p className="text-gray-600 ml-11">Manage administrator accounts, permissions, and access controls</p>
+                
+                {/* Stats Row */}
+                <div className="flex items-center space-x-6 mt-4 ml-11">
+                  <div className="flex items-center">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                    <span className="text-sm text-gray-600">
+                      {admins.length} Total Admin{admins.length !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                    <span className="text-sm text-gray-600">
+                      {admins.filter(admin => admin.isActive).length} Active
+                    </span>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full mr-2"></div>
+                    <span className="text-sm text-gray-600">
+                      {admins.filter(admin => admin.isSuperAdmin).length} Super Admin{admins.filter(admin => admin.isSuperAdmin).length !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-3">
+                {/* View Activity Logs Button */}
+                <PermissionButton
+                  module="admin_management"
+                  action="view_activity_logs"
+                  onClick={fetchActivityLogs}
+                  variant="secondary"
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm"
+                >
+                  <LogsIcon />
+                  <span className="ml-2">Activity Logs</span>
+                </PermissionButton>
 
-            {/* Create Admin Button */}
-            <PermissionButton
-              module="admin_management"
-              action="create_admin"
-              onClick={() => setShowCreateModal(true)}
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm bg-blue-600 text-sm font-medium text-white hover:bg-blue-700"
-            >
-              <PlusIcon />
-              <span className="ml-2">Create Admin</span>
-            </PermissionButton>
+                {/* Create Admin Button */}
+                <PermissionButton
+                  module="admin_management"
+                  action="create_admin"
+                  onClick={() => setShowCreateModal(true)}
+                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm"
+                >
+                  <PlusIcon />
+                  <span className="ml-2">Create Admin</span>
+                </PermissionButton>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
       {/* Error Message */}
       {error && (
@@ -295,87 +572,110 @@ const AdminManagement = () => {
       </div>
 
       {/* Admins Table */}
-      <div className="bg-white shadow rounded-lg overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h3 className="text-lg font-medium text-gray-900">Administrator Accounts</h3>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50">
+          <h3 className="text-lg font-semibold text-gray-900">Administrator Accounts</h3>
+          <p className="text-sm text-gray-600 mt-1">Click "Details" to view specific permissions for each admin</p>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-gradient-to-r from-gray-50 to-blue-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Admin
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                  Administrator
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Role
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                  Permissions
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Created Date
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white">
               {admins.map((admin) => (
-                <tr key={admin._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 h-10 w-10">
-                        <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                          <AdminIcon />
+                <React.Fragment key={admin._id}>
+                  {/* Main Admin Row */}
+                  <tr className="hover:bg-gray-50 transition-colors duration-150 border-b border-gray-200">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0 h-12 w-12">
+                          <div className="h-12 w-12 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center border-2 border-white shadow-sm">
+                            {admin.isSuperAdmin ? <SuperAdminIcon /> : <AdminIcon />}
+                          </div>
+                        </div>
+                        <div className="ml-4">
+                          <div className="text-sm font-semibold text-gray-900">{admin.name}</div>
+                          <div className="text-sm text-gray-600">{admin.email}</div>
+                          <div className="text-xs text-gray-500">@{admin.username}</div>
                         </div>
                       </div>
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{admin.name}</div>
-                        <div className="text-sm text-gray-500">{admin.email}</div>
-                        <div className="text-sm text-gray-500">@{admin.username}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {getRoleBadge(admin)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {getStatusBadge(admin.isActive)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {formatDate(admin.createdAt)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                    {/* Edit Admin Button */}
-                    <PermissionButton
-                      module="admin_management"
-                      action="edit_admin"
-                      onClick={() => handleEditAdmin(admin)}
-                      variant="secondary"
-                      size="sm"
-                      className="inline-flex items-center px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 bg-white hover:bg-gray-50"
-                    >
-                      <EditIcon />
-                      <span className="ml-1">Edit</span>
-                    </PermissionButton>
+                    </td>
+                    <td className="px-6 py-4">
+                      {getRoleBadge(admin)}
+                    </td>
+                    <td className="px-6 py-4">
+                      {getStatusBadge(admin.isActive)}
+                    </td>
+                    <td className="px-6 py-4">
+                      {getPermissionsDisplay(admin)}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-500">
+                      {formatDate(admin.createdAt)}
+                    </td>
+                    <td className="px-6 py-4 text-sm font-medium">
+                      <div className="flex items-center space-x-2">
+                        {/* Edit Admin Button */}
+                        <PermissionButton
+                          module="admin_management"
+                          action="edit_admin"
+                          onClick={() => handleEditAdmin(admin)}
+                          variant="secondary"
+                          size="sm"
+                          className="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-lg text-sm text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm"
+                        >
+                          <EditIcon />
+                          <span className="ml-1.5">Edit</span>
+                        </PermissionButton>
 
-                    {/* Delete Admin Button */}
-                    {!admin.isSuperAdmin && (
-                      <PermissionButton
-                        module="admin_management"
-                        action="delete_admin"
-                        onClick={() => handleDeleteAdmin(admin._id)}
-                        variant="danger"
-                        size="sm"
-                        className="inline-flex items-center px-3 py-1 border border-red-300 rounded text-sm text-red-700 bg-white hover:bg-red-50"
-                      >
-                        <DeleteIcon />
-                        <span className="ml-1">Delete</span>
-                      </PermissionButton>
-                    )}
-                  </td>
-                </tr>
+                        {/* Delete Admin Button */}
+                        {!admin.isSuperAdmin && (
+                          <PermissionButton
+                            module="admin_management"
+                            action="delete_admin"
+                            onClick={() => handleDeleteAdmin(admin._id)}
+                            variant="danger"
+                            size="sm"
+                            className="inline-flex items-center px-3 py-1.5 border border-red-300 rounded-lg text-sm text-red-700 bg-white hover:bg-red-50 hover:border-red-400 transition-all duration-200 shadow-sm"
+                          >
+                            <DeleteIcon />
+                            <span className="ml-1.5">Delete</span>
+                          </PermissionButton>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                  
+                  {/* Expanded Permission Details Row */}
+                  {expandedAdminId === admin._id && (
+                    <tr className="bg-gray-50">
+                      <td colSpan="6" className="px-6 py-6">
+                        <div className="transform transition-all duration-300 ease-in-out animate-fade-in">
+                          {renderExpandedPermissions(admin)}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
               ))}
             </tbody>
           </table>
@@ -432,10 +732,22 @@ const AdminManagement = () => {
                     <div key={index} className="p-3 border rounded-lg">
                       <div className="flex justify-between items-start">
                         <div>
-                          <p className="text-sm font-medium text-gray-900">{log.action}</p>
-                          <p className="text-sm text-gray-600">{log.adminName}</p>
+                          <p className="text-sm font-medium text-gray-900">
+                            {typeof log.action === 'object' && log.action !== null 
+                              ? JSON.stringify(log.action) 
+                              : String(log.action)}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            {typeof log.adminName === 'object' && log.adminName !== null 
+                              ? JSON.stringify(log.adminName) 
+                              : String(log.adminName)}
+                          </p>
                           {log.details && (
-                            <p className="text-sm text-gray-500 mt-1">{log.details}</p>
+                            <p className="text-sm text-gray-500 mt-1">
+                              {typeof log.details === 'object' && log.details !== null 
+                                ? JSON.stringify(log.details) 
+                                : String(log.details)}
+                            </p>
                           )}
                         </div>
                         <span className="text-xs text-gray-400">
@@ -452,6 +764,7 @@ const AdminManagement = () => {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };

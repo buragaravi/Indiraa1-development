@@ -198,7 +198,7 @@ const AdminUsers = () => {
                         </td>
                         <td className="p-6">
                           <PermissionButton
-                            moduleName="users"
+                            module="users"
                             action="edit_user"
                             onClick={() => handleViewOrders(user._id)}
                             className="neumorphic-button-small px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center"
@@ -253,7 +253,7 @@ const AdminUsers = () => {
                       </div>
                       
                       <PermissionButton
-                        moduleName="users"
+                        module="users"
                         action="edit_user"
                         onClick={() => handleViewOrders(user._id)}
                         className="w-full neumorphic-button-small px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
