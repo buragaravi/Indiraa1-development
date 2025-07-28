@@ -355,7 +355,7 @@ const RevenueAnalyticsDashboard = () => {
           <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-900">Revenue Timeline</h3>
-              <div className="p-2 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg">
+              <div className="analytics-chart-customers-icon">
                 <Calendar className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -386,7 +386,7 @@ const RevenueAnalyticsDashboard = () => {
           <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-900">Profitability</h3>
-              <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg">
+              <div className="analytics-chart-growth-icon">
                 <Target className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -427,7 +427,7 @@ const RevenueAnalyticsDashboard = () => {
         <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 mb-8">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold text-gray-900">Inventory Analysis</h3>
-            <div className="p-2 bg-gradient-to-r from-pink-500 to-rose-600 rounded-lg">
+            <div className="analytics-chart-pending-icon">
               <Package className="h-5 w-5 text-white" />
             </div>
           </div>
@@ -493,7 +493,7 @@ const RevenueAnalyticsDashboard = () => {
           <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-900">Action Items</h3>
-              <div className="p-2 bg-gradient-to-r from-red-500 to-pink-600 rounded-lg">
+              <div className="analytics-chart-cancelled-icon">
                 <Zap className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -551,7 +551,7 @@ const RevenueAnalyticsDashboard = () => {
       {selectedCategory && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full mx-4 max-h-[80vh] overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-indigo-500 to-purple-600">
+            <div className="analytics-export-modal-header">
               <h3 className="text-lg font-semibold text-white">
                 {selectedCategory.category.replace('-', ' ').toUpperCase()} Details
                 {selectedCategory.filter && ` - ${selectedCategory.filter}`}

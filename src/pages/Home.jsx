@@ -128,13 +128,13 @@ const ProductCard = ({ product, index, onAddToWishlist, onAddToCart, isInWishlis
       )}
       
       <div className="relative mb-3">
-        <div className="w-full h-32 bg-gradient-to-br from-[#f8faf8] to-[#f0f4f0] rounded-lg shadow-inner overflow-hidden">
+        <div className="home-hero-banner-bg">
           <img
             src={product.images?.[0] || product.image || '/placeholder.png'}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="home-hero-overlay"></div>
         </div>
         <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
           <motion.button
@@ -177,7 +177,7 @@ const ProductCard = ({ product, index, onAddToWishlist, onAddToCart, isInWishlis
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => onAddToCart(product._id)}
-          className="w-full py-2 bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white rounded-lg font-medium text-xs shadow-[0_2px_6px_rgba(46,204,113,0.2)] hover:shadow-[0_4px_12px_rgba(46,204,113,0.3)] transition-all flex items-center justify-center gap-1 group"
+          className="home-add-to-cart-button group"
         >
           <FiShoppingCart className="w-3 h-3 group-hover:rotate-12 transition-transform" />
           Add to Cart
@@ -407,7 +407,7 @@ const Home = () => {
       <div className="fixed inset-0 pointer-events-none">
         {/* Floating Orbs */}
         <motion.div
-          className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-[#2ecc71]/10 to-[#27ae60]/5 blur-3xl"
+          className="home-bg-decoration-large"
           style={{
             x: springXTransform1,
             y: springYTransform1,
@@ -426,7 +426,7 @@ const Home = () => {
         />
         
         <motion.div
-          className="absolute right-0 top-1/4 w-64 h-64 rounded-full bg-gradient-to-l from-[#27ae60]/10 to-[#2ecc71]/5 blur-2xl"
+          className="home-bg-decoration-medium"
           style={{
             x: springXTransform2,
             y: springYTransform2,
@@ -443,7 +443,7 @@ const Home = () => {
         />
         
         <motion.div
-          className="absolute bottom-1/4 left-1/4 w-48 h-48 rounded-full bg-gradient-to-br from-[#2ecc71]/15 to-transparent blur-xl"
+          className="home-bg-decoration-medium"
           style={{
             y: backgroundY,
             scale: scaleTransform,
@@ -461,7 +461,7 @@ const Home = () => {
         
         {/* Scroll Progress Indicator */}
         <motion.div
-          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#2ecc71] to-[#27ae60] origin-left z-50"
+          className="home-progress-bar"
           style={{ scaleX: scrollYProgress }}
         />
         
@@ -497,17 +497,17 @@ const Home = () => {
         transition={{ duration: 1 }}
       >
         {/* Hero Section Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#f8faf8] via-white to-[#f0f4f0]">
+        <div className="home-main-content-bg">
           {/* Decorative geometric patterns */}
-          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-[#2ecc71]/10 to-transparent rounded-full blur-xl"></div>
-          <div className="absolute top-1/4 right-20 w-24 h-24 bg-gradient-to-bl from-[#27ae60]/15 to-transparent rounded-full blur-lg"></div>
-          <div className="absolute bottom-1/3 left-1/4 w-40 h-40 bg-gradient-to-tr from-[#2ecc71]/8 to-transparent rounded-full blur-2xl"></div>
+          <div className="home-decoration-circle-1"></div>
+          <div className="home-decoration-circle-2"></div>
+          <div className="home-decoration-circle-3"></div>
           
           {/* Floating coins animation */}
           {[...Array(8)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-6 h-6 bg-gradient-to-br from-[#2ecc71] to-[#27ae60] rounded-full shadow-lg"
+              className="home-floating-coin"
               style={{
                 left: `${15 + Math.random() * 70}%`,
                 top: `${20 + Math.random() * 60}%`,
@@ -524,15 +524,12 @@ const Home = () => {
                 ease: "easeInOut"
               }}
             >
-              <div className="w-full h-full rounded-full bg-gradient-to-br from-white/30 to-transparent"></div>
+              <div className="home-bubble-gradient"></div>
             </motion.div>
           ))}
           
           {/* Grid pattern overlay */}
-          <div className="absolute inset-0 opacity-5" style={{
-            backgroundImage: `radial-gradient(circle, #2ecc71 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
-          }}></div>
+          <div className="home-grid-pattern"></div>
         </div>
 
         {/* Clean Welcome Section Container - No special styling */}
@@ -665,7 +662,7 @@ const Home = () => {
 
       {/* CTA Section */}
       <motion.section 
-        className="py-8 px-4 bg-gradient-to-br from-[#f8faf8] to-white"
+        className="home-footer-cta-bg"
         style={{
           y: ctaY,
           scale: ctaScale,
@@ -679,7 +676,7 @@ const Home = () => {
             className="bg-white rounded-2xl p-8 shadow-[4px_4px_8px_#e8eae8,-4px_-4px_8px_#ffffff] hover:shadow-[8px_8px_16px_#e8eae8,-8px_-8px_16px_#ffffff] transition-all duration-300 text-center mx-4"
           >
             <div className="mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#2ecc71] to-[#27ae60] rounded-2xl shadow-[4px_4px_8px_rgba(46,204,113,0.2)] flex items-center justify-center mx-auto mb-3">
+              <div className="home-cta-icon-bg">
                 <FiShoppingBag className="w-6 h-6 text-white" />
               </div>
               <h2 className="text-2xl font-semibold text-gray-800 mb-2">
@@ -693,7 +690,7 @@ const Home = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/products')}
-              className="px-8 py-3 bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white rounded-xl font-medium shadow-[0_4px_12px_rgba(46,204,113,0.2)] hover:shadow-[0_6px_16px_rgba(46,204,113,0.3)] transition-all inline-flex items-center gap-2 group"
+              className="home-cta-button"
             >
               <FiShoppingBag className="w-4 h-4 group-hover:rotate-12 transition-transform" />
               Explore All Products

@@ -142,7 +142,7 @@ const UserReturnDetailPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-100 flex items-center justify-center">
+      <div className="user-return-loading-bg">
         <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center">
           <FaSpinner className="animate-spin text-emerald-500 text-4xl mb-4" />
           <p className="text-gray-600 text-lg">Loading your return details...</p>
@@ -153,7 +153,7 @@ const UserReturnDetailPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-rose-50 via-red-50 to-pink-100 flex items-center justify-center">
+      <div className="user-return-error-bg">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full mx-4">
           <div className="text-center">
             <FaTimesCircle className="text-rose-500 text-6xl mb-4 mx-auto" />
@@ -173,7 +173,7 @@ const UserReturnDetailPage = () => {
 
   if (!returnDetails) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-gray-100 flex items-center justify-center">
+      <div className="user-return-not-found-bg">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full mx-4">
           <div className="text-center">
             <FaBox className="text-gray-400 text-6xl mb-4 mx-auto" />
@@ -192,7 +192,7 @@ const UserReturnDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 relative overflow-hidden">
+    <div className="user-return-main-bg">
       {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-emerald-100/30 rounded-full -translate-x-32 -translate-y-32 sm:-translate-x-48 sm:-translate-y-48"></div>
       <div className="absolute bottom-0 right-0 w-48 h-48 sm:w-80 sm:h-80 bg-green-100/40 rounded-full translate-x-24 translate-y-24 sm:translate-x-40 sm:translate-y-40"></div>
@@ -205,13 +205,13 @@ const UserReturnDetailPage = () => {
             onClick={() => navigate('/returns')}
             className="flex items-center text-emerald-600 hover:text-emerald-700 mb-4 sm:mb-6 transition-all duration-200 group"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center mr-2 shadow-lg group-hover:shadow-xl transition-all duration-200">
+            <div className="user-return-back-button-icon">
               <FaArrowLeft className="text-white text-sm group-hover:-translate-x-1 transition-transform duration-200" />
             </div>
             <span className="font-medium text-sm sm:text-base">Back to My Returns</span>
           </button>
           
-          <div className="bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl relative overflow-hidden">
+          <div className="user-return-header-bg">
             {/* Decorative elements */}
             <div className="absolute top-0 right-0 w-32 h-32 sm:w-64 sm:h-64 bg-white/10 rounded-full -translate-y-16 translate-x-16 sm:-translate-y-32 sm:translate-x-32"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-48 sm:h-48 bg-white/5 rounded-full translate-y-12 -translate-x-12 sm:translate-y-24 sm:-translate-x-24"></div>
@@ -219,7 +219,7 @@ const UserReturnDetailPage = () => {
             <div className="relative z-10">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-4">
                 <div className="text-white">
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3 tracking-tight">[Updated responsive header]
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3 tracking-tight">
                     Return #{returnDetails.returnRequestId || 'N/A'}
                   </h1>
                   <p className="text-emerald-100 text-lg font-medium">
@@ -250,16 +250,16 @@ const UserReturnDetailPage = () => {
           <div className="lg:col-span-2 space-y-8">
             {/* Return Items */}
             <div className="bg-white rounded-3xl shadow-2xl p-8 border border-emerald-100 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-green-50 to-emerald-50 rounded-full -translate-y-12 -translate-x-12"></div>
+              <div className="user-return-items-decoration"></div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center relative z-10">
-                <div className="bg-gradient-to-br from-green-500 to-emerald-600 p-3 rounded-2xl mr-4 shadow-lg">
+                <div className="user-return-items-icon-bg">
                   <FaBox className="text-white text-xl" />
                 </div>
                 Return Items
               </h2>
               <div className="space-y-4 relative z-10">
                 {returnDetails.items?.map((item, index) => (
-                  <div key={index} className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-200">
+                  <div key={index} className="user-return-item-card">
                     <div className="flex justify-between items-start">
                       <div className="space-y-2">
                         <h3 className="font-bold text-gray-900 text-lg">{item.productName}</h3>
@@ -280,15 +280,15 @@ const UserReturnDetailPage = () => {
 
             {/* Return Reason & Comments */}
             <div className="bg-white rounded-3xl shadow-2xl p-8 border border-blue-100 relative overflow-hidden">
-              <div className="absolute bottom-0 right-0 w-28 h-28 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-full translate-y-14 translate-x-14"></div>
+              <div className="user-return-reason-decoration"></div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6 relative z-10">Return Reason & Comments</h2>
               <div className="space-y-6 relative z-10">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-100">
+                <div className="user-return-reason-card">
                   <label className="block text-sm font-bold text-blue-700 mb-2">Reason</label>
                   <p className="text-gray-900 font-bold text-lg capitalize">{returnDetails.returnReason?.replace('_', ' ')}</p>
                 </div>
                 {returnDetails.customerComments && (
-                  <div className="bg-gradient-to-r from-purple-50 to-violet-50 p-6 rounded-2xl border border-purple-100">
+                  <div className="user-return-comments-card">
                     <label className="block text-sm font-bold text-purple-700 mb-2">Your Comments</label>
                     <p className="text-gray-900 font-medium leading-relaxed">{returnDetails.customerComments}</p>
                   </div>
@@ -299,9 +299,9 @@ const UserReturnDetailPage = () => {
             {/* Evidence Images */}
             {returnDetails.evidenceImages && returnDetails.evidenceImages.length > 0 && (
               <div className="bg-white rounded-3xl shadow-2xl p-8 border border-amber-100 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-50 to-orange-50 rounded-full -translate-y-16 translate-x-16"></div>
+                <div className="user-return-evidence-decoration"></div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center relative z-10">
-                  <div className="bg-gradient-to-br from-amber-500 to-orange-600 p-3 rounded-2xl mr-4 shadow-lg">
+                  <div className="user-return-evidence-icon-bg">
                     <FaImage className="text-white text-xl" />
                   </div>
                   Evidence Images
@@ -331,21 +331,21 @@ const UserReturnDetailPage = () => {
             {returnDetails.refund && (
               <div className="bg-white rounded-2xl shadow-xl p-6 border border-emerald-100">
                 <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                  <div className="bg-gradient-to-br from-emerald-500 to-green-600 p-2 rounded-xl mr-3 shadow-md">
+                  <div className="user-return-refund-icon-bg">
                     <FaCoins className="text-white" />
                   </div>
                   Refund Status
                 </h3>
                 <div className="space-y-4">
                   {returnDetails.refund.processing?.coinsCredited && (
-                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border border-green-200">
+                    <div className="user-return-coins-credited-card">
                       <label className="block text-sm font-bold text-green-700 mb-1">Coins Credited</label>
                       <p className="text-gray-900 font-bold text-2xl">{returnDetails.refund.processing.coinsCredited} coins</p>
                       <p className="text-green-600 text-sm">≈ ₹{(returnDetails.refund.processing.coinsCredited / 5).toFixed(2)}</p>
                     </div>
                   )}
                   {returnDetails.refund.adminDecision?.finalCoins && !returnDetails.refund.processing?.coinsCredited && (
-                    <div className="bg-gradient-to-r from-emerald-50 to-green-50 p-4 rounded-xl border border-emerald-200">
+                    <div className="user-return-coins-approved-card">
                       <label className="block text-sm font-bold text-emerald-700 mb-1">Approved Refund</label>
                       <p className="text-gray-900 font-bold text-2xl">{returnDetails.refund.adminDecision.finalCoins} coins</p>
                       <p className="text-emerald-600 text-sm">≈ ₹{(returnDetails.refund.adminDecision.finalCoins / 5).toFixed(2)}</p>
@@ -353,7 +353,7 @@ const UserReturnDetailPage = () => {
                     </div>
                   )}
                   {returnDetails.refund.adminDecision?.deductions && returnDetails.refund.adminDecision.deductions.length > 0 && (
-                    <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-4 rounded-xl border border-amber-200">
+                    <div className="user-return-deductions-card">
                       <label className="block text-sm font-bold text-amber-700 mb-2">Deductions</label>
                       {returnDetails.refund.adminDecision.deductions.map((deduction, index) => (
                         <div key={index} className="flex justify-between items-center text-sm">
@@ -364,7 +364,7 @@ const UserReturnDetailPage = () => {
                     </div>
                   )}
                   {returnDetails.refund.processing?.processedAt && (
-                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-200">
+                    <div className="user-return-processed-card">
                       <label className="block text-sm font-bold text-blue-700 mb-1">Processed At</label>
                       <p className="text-gray-900 font-semibold">{new Date(returnDetails.refund.processing.processedAt).toLocaleString()}</p>
                     </div>
@@ -376,7 +376,7 @@ const UserReturnDetailPage = () => {
             {/* Status Timeline */}
             <div className="bg-white rounded-2xl shadow-xl p-6 border border-blue-100">
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-2 rounded-xl mr-3 shadow-md">
+                <div className="user-return-timeline-icon-bg">
                   <FaCalendarAlt className="text-white" />
                 </div>
                 Status Timeline
