@@ -24,6 +24,18 @@ body {
     @apply bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondary-dark transition-all duration-200;
   }
 
+  .btn-success {
+    @apply bg-success text-white px-4 py-2 rounded-md hover:bg-success-dark transition-all duration-200;
+  }
+
+  .btn-error {
+    @apply bg-error text-white px-4 py-2 rounded-md hover:bg-error-dark transition-all duration-200;
+  }
+
+  .btn-warning {
+    @apply bg-warning text-white px-4 py-2 rounded-md hover:bg-warning-dark transition-all duration-200;
+  }
+
   .card {
     @apply bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-200;
   }
@@ -51,11 +63,19 @@ body {
 
   /* Neumorphic design utility */
   .neumorphic-card {
-    @apply bg-white shadow-[8px_8px_16px_#d1d9d1,-8px_-8px_16px_#ffffff] border border-gray-100;
+    @apply bg-white shadow-neumorphic border border-gray-100;
   }
   
   .neumorphic-input {
-    @apply bg-white shadow-[inset_4px_4px_8px_#d1d9d1,inset_-4px_-4px_8px_#ffffff] border border-gray-200;
+    @apply bg-white shadow-neumorphic-inset border border-gray-200;
+  }
+
+  .neumorphic-button {
+    @apply bg-white shadow-neumorphic border border-gray-200 hover:shadow-soft transition-all duration-300;
+  }
+
+  .neumorphic-button-small {
+    @apply bg-white shadow-soft border border-gray-100 hover:shadow-soft-lg transition-all duration-300;
   }
 
   /* Gradient backgrounds */
@@ -70,6 +90,107 @@ body {
   .gradient-soft {
     @apply bg-gradient-to-br from-green-50 to-green-100;
   }
+
+  .gradient-success {
+    @apply bg-gradient-to-br from-success-500 to-success-700;
+  }
+
+  .gradient-error {
+    @apply bg-gradient-to-br from-error-500 to-error-700;
+  }
+
+  .gradient-warning {
+    @apply bg-gradient-to-br from-warning-500 to-warning-700;
+  }
+
+  /* Brand color utilities for direct hex replacements */
+  .bg-brand-green-main {
+    background-color: #2ecc71;
+  }
+
+  .hover\:bg-brand-green-hover:hover {
+    background-color: #27ae60;
+  }
+
+  .text-brand-green-main {
+    color: #2ecc71;
+  }
+
+  .border-brand-green-main {
+    border-color: #2ecc71;
+  }
+
+  /* Status badge utilities */
+  .status-pending {
+    @apply bg-yellow-100 text-yellow-700 border-yellow-200;
+  }
+
+  .status-processing {
+    @apply bg-blue-100 text-blue-700 border-blue-200;
+  }
+
+  .status-shipped {
+    @apply bg-blue-100 text-blue-700 border-blue-200;
+  }
+
+  .status-delivered {
+    @apply bg-green-100 text-green-700 border-green-200;
+  }
+
+  .status-cancelled {
+    @apply bg-red-100 text-red-700 border-red-200;
+  }
+
+  .status-completed {
+    @apply bg-green-100 text-green-700 border-green-200;
+  }
+
+  /* Enhanced scrollbar styles */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Custom elegant scrollbars with green theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(240, 253, 244, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(240, 253, 244, 0.3);
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4ade80 rgba(240, 253, 244, 0.3);
+}
+
+/* Smooth scroll behavior */
+.smooth-scroll {
+  scroll-behavior: smooth;
 }
 
 /* Custom scrollbar styles for smooth carousel */
