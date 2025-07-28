@@ -52,7 +52,7 @@ const DeliveryAgentReturnManagement = () => {
   const [pickupImages, setPickupImages] = useState([]);
   const [deliveryImages, setDeliveryImages] = useState([]);
 
-  const API_URL = 'http://localhost:5001';
+  const API_URL = 'https://indiraa1-backend.onrender.com';
 
   // Get delivery agent token
   const getToken = () => {

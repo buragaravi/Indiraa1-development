@@ -54,7 +54,7 @@ const AdminCoupons = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/coupons/', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/coupons/', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ const AdminCoupons = () => {
     setSubmitting(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/coupons/', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/coupons/', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -139,7 +139,7 @@ const AdminCoupons = () => {
     if (window.confirm('Are you sure you want to delete this coupon?')) {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:5001/api/coupons/${couponId}`, {
+        const response = await fetch(`https://indiraa1-backend.onrender.com/api/coupons/${couponId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,

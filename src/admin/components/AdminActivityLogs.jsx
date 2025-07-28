@@ -30,7 +30,7 @@ const AdminActivityLogs = ({ admin, onClose }) => {
         dateRange
       });
       
-      const response = await fetch(`http://localhost:5001/api/admin/activity-logs?${params}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/admin/activity-logs?${params}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

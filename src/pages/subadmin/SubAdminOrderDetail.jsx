@@ -57,7 +57,7 @@ const SubAdminOrderDetail = () => {
         return;
       }
       
-      const response = await fetch(`http://localhost:5001/api/products/orders/${orderId}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -118,7 +118,7 @@ const SubAdminOrderDetail = () => {
         requestBody.deliveryOtp = deliveryOtp;
       }
       
-      const response = await fetch(`http://localhost:5001/api/products/orders/${orderId}/status`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/${orderId}/status`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -172,7 +172,7 @@ const SubAdminOrderDetail = () => {
         return;
       }
       
-      const response = await fetch(`http://localhost:5001/api/products/orders/${orderId}/mark-paid`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/orders/${orderId}/mark-paid`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

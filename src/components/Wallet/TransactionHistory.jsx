@@ -47,7 +47,7 @@ const TransactionHistory = ({ limit = null, compact = false }) => {
         params.append('type', filterType);
       }
 
-      const response = await fetch(`http://localhost:5001/api/wallet/transactions?${params}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/wallet/transactions?${params}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

@@ -28,7 +28,7 @@ const UserReturnDetailPage = () => {
   const [selectedImage, setSelectedImage] = useState('');
   const [showImageModal, setShowImageModal] = useState(false);
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+  const API_URL = import.meta.env.VITE_API_URL || 'https://indiraa1-backend.onrender.com';
 
   // Get user auth token
   const getUserAuthToken = () => {

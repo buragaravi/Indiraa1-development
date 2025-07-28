@@ -90,7 +90,7 @@ const AdminManagement = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('adminToken');
-      const response = await fetch('http://localhost:5001/api/admin/list', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/admin/list', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -114,7 +114,7 @@ const AdminManagement = () => {
   const fetchActivityLogs = async () => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch('http://localhost:5001/api/admin/activity-logs', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/admin/activity-logs', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -146,7 +146,7 @@ const AdminManagement = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`http://localhost:5001/api/admin/${adminId}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/admin/${adminId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

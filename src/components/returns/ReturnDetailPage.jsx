@@ -84,7 +84,7 @@ const ReturnDetailPage = () => {
     receivedAt: new Date().toISOString().slice(0, 16)
   });
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+  const API_URL = import.meta.env.VITE_API_URL || 'https://indiraa1-backend.onrender.com';
 
   // Get auth token (works for admin, sub-admin, and warehouse)
   const getAuthToken = () => {

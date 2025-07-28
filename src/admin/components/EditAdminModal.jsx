@@ -66,7 +66,7 @@ const EditAdminModal = ({ admin, onClose, onSuccess }) => {
       setLoading(true);
       const token = localStorage.getItem('token');
       
-      const response = await fetch(`http://localhost:5001/api/admin/${admin._id}`, {
+      const response = await fetch(`https://indiraa1-backend.onrender.com/api/admin/${admin._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

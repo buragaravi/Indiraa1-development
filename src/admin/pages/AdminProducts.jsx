@@ -70,7 +70,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/products/', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -135,7 +135,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
 
       let response;
       if (editingProduct) {
-        response = await fetch(`http://localhost:5001/api/products/${editingProduct._id}`, {
+        response = await fetch(`https://indiraa1-backend.onrender.com/api/products/${editingProduct._id}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -143,7 +143,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
           body: formDataToSend
         });
       } else {
-        response = await fetch('http://localhost:5001/api/products/', {
+        response = await fetch('https://indiraa1-backend.onrender.com/api/products/', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -196,7 +196,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:5001/api/products/${productId}`, {
+        const response = await fetch(`https://indiraa1-backend.onrender.com/api/products/${productId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,

@@ -48,7 +48,7 @@ const ReferralVisitTracker = () => {
     try {
       console.log(`[VISIT TRACKER] Tracking referral visit for code: ${referralCode}`);
       
-      const response = await fetch('http://localhost:5001/api/referral/visit', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/referral/visit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -97,7 +97,7 @@ const ReferralVisitTracker = () => {
     try {
       console.log(`[VISIT TRACKER] Updating visit duration for visitId: ${visitId}`);
       
-      const response = await fetch('http://localhost:5001/api/referral/visit', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/referral/visit', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -226,7 +226,7 @@ const ReferralVisitTracker = () => {
       // Use sendBeacon for reliable tracking on page unload
       if (visitId.current) {
         navigator.sendBeacon && navigator.sendBeacon(
-          'http://localhost:5001/api/referral/visit',
+          'https://indiraa1-backend.onrender.com/api/referral/visit',
           JSON.stringify({
             visitId: visitId.current,
             endTime: new Date().toISOString()

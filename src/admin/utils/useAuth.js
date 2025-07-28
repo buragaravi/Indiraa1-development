@@ -33,7 +33,7 @@ export function useAuth() {
     
     try {
       setPermissionsLoading(true);
-      const response = await fetch('http://localhost:5001/api/admin/me', {
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/admin/me', {
         headers: { 
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
