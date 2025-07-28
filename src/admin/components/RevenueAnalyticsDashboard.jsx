@@ -125,9 +125,9 @@ const RevenueAnalyticsDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
+      <div className="analytics-loading-bg">
         <div className="text-center">
-          <div className="p-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full inline-block mb-4">
+          <div className="analytics-loading-icon">
             <RefreshCw className="h-8 w-8 text-white animate-spin" />
           </div>
           <p className="text-lg text-gray-600 font-medium">Loading Revenue Analytics...</p>
@@ -138,15 +138,15 @@ const RevenueAnalyticsDashboard = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
+      <div className="analytics-error-bg">
         <div className="text-center">
-          <div className="p-4 bg-gradient-to-r from-red-500 to-red-600 rounded-full inline-block mb-4">
+          <div className="analytics-error-icon">
             <AlertTriangle className="h-8 w-8 text-white" />
           </div>
           <p className="text-lg text-gray-600 mb-4">{error}</p>
           <button
             onClick={fetchAnalytics}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200"
+            className="analytics-retry-button"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
             Retry
@@ -157,14 +157,14 @@ const RevenueAnalyticsDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-green-50 to-emerald-50">
+    <div className="analytics-page-bg">
       <div className="w-full px-6 py-8">
         {/* Quick Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Total Revenue */}
           <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 hover:shadow-[0_12px_40px_0_rgba(34,197,94,0.3)]">
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-lg">
+              <div className="analytics-revenue-icon">
                 <DollarSign className="h-6 w-6 text-white" />
               </div>
               <div className="flex items-center text-green-600">
@@ -186,7 +186,7 @@ const RevenueAnalyticsDashboard = () => {
           {/* Received Revenue */}
           <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 hover:shadow-[0_12px_40px_0_rgba(34,197,94,0.3)]">
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl shadow-lg">
+              <div className="analytics-orders-icon">
                 <CheckCircle className="h-6 w-6 text-white" />
               </div>
               <div className="flex items-center text-green-600">
@@ -213,7 +213,7 @@ const RevenueAnalyticsDashboard = () => {
             onClick={() => handleCategoryClick('pending-revenue', '')}
           >
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl shadow-lg">
+              <div className="analytics-customers-icon">
                 <Clock className="h-6 w-6 text-white" />
               </div>
               <div className="flex items-center text-orange-600">
@@ -232,7 +232,7 @@ const RevenueAnalyticsDashboard = () => {
           {/* Inventory Value */}
           <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20 hover:shadow-[0_12px_40px_0_rgba(34,197,94,0.3)]">
             <div className="flex items-center justify-between">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-2xl shadow-lg">
+              <div className="analytics-growth-icon">
                 <Package className="h-6 w-6 text-white" />
               </div>
               <div className="flex items-center text-teal-600">
@@ -257,7 +257,7 @@ const RevenueAnalyticsDashboard = () => {
           <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-800">Payment Methods</h3>
-              <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl">
+              <div className="analytics-chart-revenue-icon">
                 <CreditCard className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -319,7 +319,7 @@ const RevenueAnalyticsDashboard = () => {
           <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white/20">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-800">Order Status</h3>
-              <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl">
+              <div className="analytics-chart-orders-icon">
                 <ShoppingCart className="h-5 w-5 text-white" />
               </div>
             </div>

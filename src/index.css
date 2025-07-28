@@ -511,6 +511,476 @@ body {
     border: 1px solid rgb(229 231 235) !important;
   }
 
+  /* ==========================================
+     RETURNS MODULE - SAFARI COMPATIBLE CLASSES
+     ========================================== */
+
+  /* Returns Page Background */
+  .returns-page-bg {
+    background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #f0fdfa 100%) !important;
+    background: -webkit-linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #f0fdfa 100%) !important;
+  }
+
+  /* Returns Header Icon */
+  .returns-header-icon {
+    background: linear-gradient(135deg, #059669 0%, #16a34a 50%, #0d9488 100%) !important;
+    background: -webkit-linear-gradient(135deg, #059669 0%, #16a34a 50%, #0d9488 100%) !important;
+    color: white !important;
+  }
+
+  /* Returns Status Classes */
+  .return-status-requested {
+    background-color: #fefce8 !important;
+    color: #a16207 !important;
+  }
+  
+  .return-status-admin-review {
+    background-color: #eff6ff !important;
+    color: #1d4ed8 !important;
+  }
+  
+  .return-status-approved {
+    background-color: #ecfdf5 !important;
+    color: #166534 !important;
+  }
+  
+  .return-status-rejected {
+    background-color: #fef2f2 !important;
+    color: #dc2626 !important;
+  }
+  
+  .return-status-warehouse-assigned {
+    background-color: #faf5ff !important;
+    color: #7c2d12 !important;
+  }
+  
+  .return-status-pickup-scheduled {
+    background-color: #eef2ff !important;
+    color: #4338ca !important;
+  }
+  
+  .return-status-picked-up {
+    background-color: #fff7ed !important;
+    color: #c2410c !important;
+  }
+  
+  .return-status-in-warehouse {
+    background-color: #f0fdfa !important;
+    color: #0f766e !important;
+  }
+  
+  .return-status-quality-checked {
+    background-color: #fff7ed !important;
+    color: #ea580c !important;
+  }
+  
+  .return-status-refund-approved {
+    background-color: #ecfdf5 !important;
+    color: #059669 !important;
+  }
+  
+  .return-status-refund-processed {
+    background-color: #ecfdf5 !important;
+    color: #166534 !important;
+  }
+  
+  .return-status-completed {
+    background-color: #ecfdf5 !important;
+    color: #166534 !important;
+  }
+  
+  .return-status-cancelled {
+    background-color: #fef2f2 !important;
+    color: #dc2626 !important;
+  }
+
+  /* Returns Detail Status Classes (Enhanced with borders) */
+  .return-detail-status-requested {
+    background-color: #fefce8 !important;
+    color: #a16207 !important;
+    border-color: #fcd34d !important;
+  }
+  
+  .return-detail-status-admin-review {
+    background-color: #eff6ff !important;
+    color: #1e40af !important;
+    border-color: #bfdbfe !important;
+  }
+  
+  .return-detail-status-approved {
+    background-color: #ecfdf5 !important;
+    color: #166534 !important;
+    border-color: #bbf7d0 !important;
+  }
+  
+  .return-detail-status-rejected {
+    background-color: #fef2f2 !important;
+    color: #dc2626 !important;
+    border-color: #fecaca !important;
+  }
+  
+  .return-detail-status-warehouse-assigned {
+    background-color: #faf5ff !important;
+    color: #7c2d12 !important;
+    border-color: #e9d5ff !important;
+  }
+  
+  .return-detail-status-pickup-scheduled {
+    background-color: #eef2ff !important;
+    color: #4338ca !important;
+    border-color: #c7d2fe !important;
+  }
+  
+  .return-detail-status-picked-up {
+    background-color: #fff7ed !important;
+    color: #c2410c !important;
+    border-color: #fed7aa !important;
+  }
+  
+  .return-detail-status-in-warehouse {
+    background-color: #f0fdfa !important;
+    color: #0f766e !important;
+    border-color: #5eead4 !important;
+  }
+  
+  .return-detail-status-quality-checked {
+    background-color: #fff7ed !important;
+    color: #ea580c !important;
+    border-color: #fed7aa !important;
+  }
+  
+  .return-detail-status-refund-approved {
+    background-color: #ecfdf5 !important;
+    color: #059669 !important;
+    border-color: #bbf7d0 !important;
+  }
+  
+  .return-detail-status-refund-processed {
+    background-color: #ecfdf5 !important;
+    color: #166534 !important;
+    border-color: #bbf7d0 !important;
+  }
+  
+  .return-detail-status-completed {
+    background-color: #ecfdf5 !important;
+    color: #166534 !important;
+    border-color: #bbf7d0 !important;
+  }
+
+  /* Returns Error/Loading States */
+  .returns-error-bg {
+    background-color: rgba(254, 242, 242, 0.8) !important;
+    background: rgba(254, 242, 242, 0.8) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    backdrop-filter: blur(4px) !important;
+    border-color: #fecaca !important;
+  }
+  
+  .returns-error-icon {
+    background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%) !important;
+    background: -webkit-linear-gradient(135deg, #ef4444 0%, #ec4899 100%) !important;
+    color: white !important;
+  }
+  
+  .returns-loading-spinner {
+    background: linear-gradient(135deg, #059669 0%, #0d9488 100%) !important;
+    background: -webkit-linear-gradient(135deg, #059669 0%, #0d9488 100%) !important;
+  }
+  
+  .returns-empty-state-icon {
+    background: linear-gradient(135deg, #d1d5db 0%, #e5e7eb 50%, #d1d5db 100%) !important;
+    background: -webkit-linear-gradient(135deg, #d1d5db 0%, #e5e7eb 50%, #d1d5db 100%) !important;
+  }
+
+  /* Returns Card Styles */
+  .returns-card {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    backdrop-filter: blur(4px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  }
+  
+  .returns-card:hover {
+    -webkit-box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+    transform: scale(1.02) !important;
+  }
+  
+  .returns-card-icon {
+    background: linear-gradient(135deg, #059669 0%, #16a34a 50%, #0d9488 100%) !important;
+    background: -webkit-linear-gradient(135deg, #059669 0%, #16a34a 50%, #0d9488 100%) !important;
+    color: white !important;
+  }
+  
+  .returns-card-icon:hover {
+    -webkit-box-shadow: 0 10px 15px -3px rgba(5, 150, 105, 0.4) !important;
+    box-shadow: 0 10px 15px -3px rgba(5, 150, 105, 0.4) !important;
+  }
+
+  /* Returns Info Icons */
+  .returns-info-icon {
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
+    background: -webkit-linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
+    color: white !important;
+  }
+  
+  .returns-reason-icon {
+    background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%) !important;
+    background: -webkit-linear-gradient(135deg, #9333ea 0%, #ec4899 100%) !important;
+    color: white !important;
+  }
+
+  /* Returns Action Buttons */
+  .returns-view-button {
+    background: linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+    background: -webkit-linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+    color: white !important;
+  }
+  
+  .returns-view-button:hover {
+    background: linear-gradient(90deg, #047857 0%, #0f766e 100%) !important;
+    background: -webkit-linear-gradient(90deg, #047857 0%, #0f766e 100%) !important;
+  }
+  
+  .returns-approve-button {
+    background: linear-gradient(90deg, #16a34a 0%, #059669 100%) !important;
+    background: -webkit-linear-gradient(90deg, #16a34a 0%, #059669 100%) !important;
+    color: white !important;
+  }
+  
+  .returns-approve-button:hover {
+    background: linear-gradient(90deg, #15803d 0%, #047857 100%) !important;
+    background: -webkit-linear-gradient(90deg, #15803d 0%, #047857 100%) !important;
+  }
+  
+  .returns-reject-button {
+    background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%) !important;
+    background: -webkit-linear-gradient(90deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+  }
+  
+  .returns-reject-button:hover {
+    background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%) !important;
+    background: -webkit-linear-gradient(90deg, #dc2626 0%, #b91c1c 100%) !important;
+  }
+
+  /* Returns Search and Filter */
+  .returns-search-focus:focus {
+    border-color: #059669 !important;
+    -webkit-box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1) !important;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1) !important;
+  }
+  
+  .returns-filter-active {
+    background: linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+    background: -webkit-linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+    color: white !important;
+  }
+
+  /* Returns Timeline Styles */
+  .returns-timeline-icon-completed {
+    background-color: #16a34a !important;
+    color: white !important;
+  }
+  
+  .returns-timeline-icon-current {
+    background-color: #3b82f6 !important;
+    color: white !important;
+  }
+  
+  .returns-timeline-icon-pending {
+    background-color: #e5e7eb !important;
+    color: #6b7280 !important;
+  }
+  
+  .returns-timeline-line-completed {
+    background-color: #16a34a !important;
+  }
+  
+  .returns-timeline-line-pending {
+    background-color: #e5e7eb !important;
+  }
+
+  /* ==========================================
+     END RETURNS MODULE CLASSES
+     ========================================== */
+
+  /* ==========================================
+     REVENUE ANALYTICS MODULE CLASSES
+     ========================================== */
+  
+  /* Page Backgrounds */
+  .analytics-page-bg {
+    min-height: 100vh !important;
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 50%, #f0f9ff 100%) !important;
+    background: -webkit-linear-gradient(135deg, #f9fafb 0%, #f3f4f6 50%, #f0f9ff 100%) !important;
+  }
+  
+  .analytics-loading-bg {
+    min-height: 100vh !important;
+    background: linear-gradient(135deg, #f9fafb 0%, #f0f9ff 100%) !important;
+    background: -webkit-linear-gradient(135deg, #f9fafb 0%, #f0f9ff 100%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  .analytics-error-bg {
+    min-height: 100vh !important;
+    background: linear-gradient(135deg, #f9fafb 0%, #f0f9ff 100%) !important;
+    background: -webkit-linear-gradient(135deg, #f9fafb 0%, #f0f9ff 100%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Header Icons */
+  .analytics-header-icon {
+    padding: 1rem !important;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
+    background: -webkit-linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
+    border-radius: 1rem !important;
+    display: inline-block !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .analytics-loading-icon {
+    padding: 1rem !important;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
+    background: -webkit-linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
+    border-radius: 9999px !important;
+    display: inline-block !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .analytics-error-icon {
+    padding: 1rem !important;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    background: -webkit-linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    border-radius: 9999px !important;
+    display: inline-block !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Stat Card Icons */
+  .analytics-revenue-icon {
+    flex-shrink: 0 !important;
+    padding: 0.75rem !important;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    background: -webkit-linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.2) !important;
+  }
+  
+  .analytics-orders-icon {
+    flex-shrink: 0 !important;
+    padding: 0.75rem !important;
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+    background: -webkit-linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.2) !important;
+  }
+  
+  .analytics-customers-icon {
+    flex-shrink: 0 !important;
+    padding: 0.75rem !important;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    background: -webkit-linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.2) !important;
+  }
+  
+  .analytics-growth-icon {
+    flex-shrink: 0 !important;
+    padding: 0.75rem !important;
+    background: linear-gradient(135deg, #14b8a6 0%, #0891b2 100%) !important;
+    background: -webkit-linear-gradient(135deg, #14b8a6 0%, #0891b2 100%) !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 10px 25px -5px rgba(20, 184, 166, 0.2) !important;
+  }
+  
+  /* Chart Container Icons */
+  .analytics-chart-revenue-icon {
+    padding: 0.5rem !important;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    background: -webkit-linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    border-radius: 0.75rem !important;
+  }
+  
+  .analytics-chart-orders-icon {
+    padding: 0.5rem !important;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    background: -webkit-linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    border-radius: 0.75rem !important;
+  }
+  
+  .analytics-chart-customers-icon {
+    padding: 0.5rem !important;
+    background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%) !important;
+    background: -webkit-linear-gradient(135deg, #f59e0b 0%, #dc2626 100%) !important;
+    border-radius: 0.5rem !important;
+  }
+  
+  .analytics-chart-growth-icon {
+    padding: 0.5rem !important;
+    background: linear-gradient(135deg, #059669 0%, #14b8a6 100%) !important;
+    background: -webkit-linear-gradient(135deg, #059669 0%, #14b8a6 100%) !important;
+    border-radius: 0.5rem !important;
+  }
+  
+  .analytics-chart-pending-icon {
+    padding: 0.5rem !important;
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%) !important;
+    background: -webkit-linear-gradient(135deg, #ec4899 0%, #be185d 100%) !important;
+    border-radius: 0.5rem !important;
+  }
+  
+  .analytics-chart-cancelled-icon {
+    padding: 0.5rem !important;
+    background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%) !important;
+    background: -webkit-linear-gradient(135deg, #ef4444 0%, #ec4899 100%) !important;
+    border-radius: 0.5rem !important;
+  }
+  
+  /* Button Styles */
+  .analytics-retry-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 0.5rem 1rem !important;
+    border: 1px solid transparent !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: white !important;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
+    background: -webkit-linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
+    transition: all 0.2s ease !important;
+    transform: scale(1) !important;
+  }
+  
+  .analytics-retry-button:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%) !important;
+    background: -webkit-linear-gradient(135deg, #2563eb 0%, #4f46e5 100%) !important;
+    transform: scale(1.05) !important;
+  }
+  
+  /* Export Modal Header */
+  .analytics-export-modal-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 1.5rem !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+    background: -webkit-linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+  }
+  
+  /* ==========================================
+     END REVENUE ANALYTICS MODULE CLASSES
+     ========================================== */
+
   .neumorphic-button {
     background-color: white !important;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;

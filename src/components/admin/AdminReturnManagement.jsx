@@ -231,20 +231,20 @@ const AdminReturnManagement = () => {
   // Get status badge color
   const getStatusBadgeColor = (status) => {
     const colors = {
-      'requested': 'bg-yellow-100 text-yellow-800',
-      'admin_review': 'bg-blue-100 text-blue-800',
-      'approved': 'bg-green-100 text-green-800',
-      'rejected': 'bg-red-100 text-red-800',
-      'warehouse_assigned': 'bg-purple-100 text-purple-800',
-      'pickup_scheduled': 'bg-indigo-100 text-indigo-800',
-      'picked_up': 'bg-cyan-100 text-cyan-800',
-      'in_warehouse': 'bg-gray-100 text-gray-800',
-      'quality_checked': 'bg-orange-100 text-orange-800',
-      'refund_approved': 'bg-emerald-100 text-emerald-800',
-      'refund_processed': 'bg-green-100 text-green-800',
-      'completed': 'bg-green-100 text-green-800'
+      'requested': 'admin-return-status-requested',
+      'admin_review': 'admin-return-status-review',
+      'approved': 'admin-return-status-approved',
+      'rejected': 'admin-return-status-rejected',
+      'warehouse_assigned': 'admin-return-status-warehouse',
+      'pickup_scheduled': 'admin-return-status-pickup',
+      'picked_up': 'admin-return-status-picked',
+      'in_warehouse': 'admin-return-status-in-warehouse',
+      'quality_checked': 'admin-return-status-quality',
+      'refund_approved': 'admin-return-status-refund-approved',
+      'refund_processed': 'admin-return-status-refund-processed',
+      'completed': 'admin-return-status-completed'
     };
-    return colors[status] || 'bg-gray-100 text-gray-800';
+    return colors[status] || 'admin-return-status-default';
   };
 
   // Get priority level
@@ -281,16 +281,16 @@ const AdminReturnManagement = () => {
   }, [refundForm.finalRefundPercentage, selectedReturn]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40">
+    <div className="admin-returns-page-bg">
       <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 py-6">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-3">
-            <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200/50">
+            <div className="admin-returns-header-icon">
               <FaBoxOpen className="text-white text-xl" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-800 via-indigo-700 to-purple-700 bg-clip-text text-transparent">
+              <h1 className="admin-returns-title">
                 Return Management
               </h1>
               <p className="text-slate-600 mt-1">Streamlined return processing with elegant workflow management</p>
@@ -303,7 +303,7 @@ const AdminReturnManagement = () => {
           {/* Search Bar */}
           <div className="relative mb-6">
             <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-              <div className="w-5 h-5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center">
+              <div className="admin-returns-search-icon">
                 <FaSearch className="text-white text-xs" />
               </div>
             </div>
@@ -330,7 +330,7 @@ const AdminReturnManagement = () => {
               onClick={() => setFilters(prev => ({ ...prev, status: 'all', page: 1 }))}
               className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
                 filters.status === 'all' 
-                  ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-200/50' 
+                  ? 'admin-returns-filter-active' 
                   : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
               }`}
             >
@@ -340,7 +340,7 @@ const AdminReturnManagement = () => {
               onClick={() => setFilters(prev => ({ ...prev, status: 'requested', page: 1 }))}
               className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
                 filters.status === 'requested' 
-                  ? 'bg-gradient-to-r from-amber-400 to-orange-400 text-white shadow-lg shadow-amber-200/50' 
+                  ? 'admin-returns-filter-requested' 
                   : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
               }`}
             >
@@ -350,7 +350,7 @@ const AdminReturnManagement = () => {
               onClick={() => setFilters(prev => ({ ...prev, status: 'admin_review', page: 1 }))}
               className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
                 filters.status === 'admin_review' 
-                  ? 'bg-gradient-to-r from-blue-400 to-cyan-400 text-white shadow-lg shadow-blue-200/50' 
+                  ? 'admin-returns-filter-review' 
                   : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
               }`}
             >
@@ -360,7 +360,7 @@ const AdminReturnManagement = () => {
               onClick={() => setFilters(prev => ({ ...prev, status: 'approved', page: 1 }))}
               className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
                 filters.status === 'approved' 
-                  ? 'bg-gradient-to-r from-emerald-400 to-green-400 text-white shadow-lg shadow-emerald-200/50' 
+                  ? 'admin-returns-filter-approved' 
                   : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
               }`}
             >
@@ -370,7 +370,7 @@ const AdminReturnManagement = () => {
               onClick={() => setFilters(prev => ({ ...prev, status: 'quality_checked', page: 1 }))}
               className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
                 filters.status === 'quality_checked' 
-                  ? 'bg-gradient-to-r from-violet-400 to-purple-400 text-white shadow-lg shadow-violet-200/50' 
+                  ? 'admin-returns-filter-quality' 
                   : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
               }`}
             >
@@ -380,7 +380,7 @@ const AdminReturnManagement = () => {
               onClick={() => setFilters(prev => ({ ...prev, status: 'refund_approved', page: 1 }))}
               className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
                 filters.status === 'refund_approved' 
-                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-200/50' 
+                  ? 'admin-returns-filter-refund' 
                   : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
               }`}
             >
@@ -390,7 +390,7 @@ const AdminReturnManagement = () => {
               onClick={() => setFilters(prev => ({ ...prev, status: 'completed', page: 1 }))}
               className={`px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 shadow-sm ${
                 filters.status === 'completed' 
-                  ? 'bg-gradient-to-r from-slate-400 to-gray-500 text-white shadow-lg shadow-slate-200/50' 
+                  ? 'admin-returns-filter-completed' 
                   : 'bg-white/60 text-slate-600 hover:bg-white/80 border border-slate-200/50 hover:shadow-md'
               }`}
             >
@@ -401,7 +401,7 @@ const AdminReturnManagement = () => {
           {/* Advanced Filters (Collapsible) */}
           <details className="group">
             <summary className="flex items-center gap-3 text-sm text-slate-600 cursor-pointer hover:text-slate-800 transition-colors p-3 bg-slate-50/50 rounded-lg">
-              <div className="w-5 h-5 bg-gradient-to-r from-slate-400 to-slate-500 rounded-lg flex items-center justify-center">
+              <div className="admin-returns-advanced-filter-icon">
                 <FaFilter className="text-white text-xs" />
               </div>
               <span className="font-medium">Advanced Filters</span>
@@ -440,7 +440,7 @@ const AdminReturnManagement = () => {
               <div className="flex items-end">
                 <button
                   onClick={fetchReturns}
-                  className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-xl hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 text-sm font-medium flex items-center gap-2 shadow-lg shadow-indigo-200/50"
+                  className="admin-returns-refresh-button"
                 >
                   <div className="w-4 h-4 bg-white/20 rounded-md flex items-center justify-center">
                     <FaSearch className="text-white text-xs" />
@@ -454,9 +454,9 @@ const AdminReturnManagement = () => {
 
       {/* Error Display */}
       {error && (
-        <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200/50 rounded-2xl p-6 mb-8 shadow-lg shadow-red-100/50">
+        <div className="admin-returns-error-container">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-red-400 to-pink-500 rounded-xl flex items-center justify-center">
+            <div className="admin-returns-error-icon">
               <FaExclamationTriangle className="text-white" />
             </div>
             <p className="text-red-800 font-bold text-lg">Unable to Load Returns</p>
@@ -467,7 +467,7 @@ const AdminReturnManagement = () => {
               setError('');
               fetchReturns();
             }}
-            className="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl hover:from-red-600 hover:to-pink-600 transition-all duration-300 font-medium shadow-lg shadow-red-200/50"
+            className="admin-returns-error-button"
           >
             Try Again
           </button>
@@ -478,10 +478,10 @@ const AdminReturnManagement = () => {
       {loading ? (
         <div className="flex items-center justify-center py-24">
           <div className="text-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center mb-6 mx-auto shadow-xl shadow-indigo-200/50 animate-pulse">
+            <div className="admin-returns-loading-icon">
               <FaSpinner className="animate-spin text-white text-xl" />
             </div>
-            <h3 className="text-xl font-bold bg-gradient-to-r from-slate-700 to-indigo-600 bg-clip-text text-transparent mb-2">
+            <h3 className="admin-returns-loading-title">
               Loading Returns
             </h3>
             <p className="text-slate-500">Fetching the latest return requests...</p>
@@ -489,7 +489,7 @@ const AdminReturnManagement = () => {
         </div>
       ) : !Array.isArray(returns) || returns.length === 0 ? (
         <div className="text-center py-24">
-          <div className="w-20 h-20 bg-gradient-to-br from-slate-200 to-slate-300 rounded-full flex items-center justify-center mb-6 mx-auto shadow-lg">
+          <div className="admin-returns-empty-icon">
             <FaBoxOpen className="text-slate-400 text-2xl" />
           </div>
           <h3 className="text-2xl font-bold text-slate-800 mb-3">No Return Requests Found</h3>
@@ -504,7 +504,7 @@ const AdminReturnManagement = () => {
                 setSearchTerm('');
                 setFilters({ status: 'all', returnReason: 'all', page: 1, limit: 20 });
               }}
-              className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-xl hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 font-medium shadow-lg shadow-indigo-200/50"
+              className="admin-returns-clear-filters-button"
             >
               Clear All Filters
             </button>
@@ -526,11 +526,11 @@ const AdminReturnManagement = () => {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200/50 group-hover:shadow-indigo-300/60 transition-all duration-500">
+                    <div className="admin-returns-card-icon">
                       <FaBoxOpen className="text-white text-lg" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold bg-gradient-to-r from-slate-800 via-indigo-700 to-purple-700 bg-clip-text text-transparent group-hover:from-indigo-600 group-hover:to-purple-600 transition-all duration-300">
+                      <h3 className="admin-returns-card-title">
                         Return #{returnRequest.returnRequestId}
                       </h3>
                       <p className="text-slate-500 text-sm mt-1">
@@ -539,7 +539,7 @@ const AdminReturnManagement = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className={`inline-flex items-center px-4 py-2 rounded-xl text-xs font-semibold shadow-sm border border-white/50 backdrop-blur-sm ${getStatusBadgeColor(returnRequest.status)}`}>
+                    <span className={`admin-returns-status-badge ${getStatusBadgeColor(returnRequest.status)}`}>
                       {returnRequest.status.replace('_', ' ').toUpperCase()}
                     </span>
                     <p className="text-slate-400 text-sm mt-2 font-medium">

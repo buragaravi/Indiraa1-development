@@ -548,7 +548,7 @@ const ReturnDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-100 relative overflow-hidden">
+    <div className="return-detail-page-bg">
       {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-100/30 rounded-full -translate-x-48 -translate-y-48"></div>
       <div className="absolute bottom-0 right-0 w-80 h-80 bg-green-100/40 rounded-full translate-x-40 translate-y-40"></div>
@@ -565,7 +565,7 @@ const ReturnDetailPage = () => {
             <span className="font-medium">Back to Returns</span>
           </button>
           
-          <div className="bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+          <div className="return-detail-header-bg">
             {/* Decorative elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-24 -translate-x-24"></div>
