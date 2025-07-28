@@ -120,28 +120,28 @@ const Orders = () => {
   const getStatusIcon = (status) => {
     switch (status) {
       case 'Delivered':
-        return <FiCheck className="w-5 h-5 text-green-500" />;
+        return <FiCheck className="w-5 h-5 icon-green" />;
       case 'Shipped':
-        return <FiTruck className="w-5 h-5 text-purple-500" />;
+        return <FiTruck className="w-5 h-5 icon-purple" />;
       case 'Cancelled':
-        return <FiX className="w-5 h-5 text-red-500" />;
+        return <FiX className="w-5 h-5 icon-red" />;
       case 'Pending':
       default:
-        return <FiClock className="w-5 h-5 text-orange-500" />;
+        return <FiClock className="w-5 h-5 icon-orange" />;
     }
   };
 
   const getStatusColor = (status) => {
     switch (status) {
       case 'Delivered':
-        return 'text-green-600 bg-green-50 border-green-200';
+        return 'status-delivered-bg';
       case 'Shipped':
-        return 'text-purple-600 bg-purple-50 border-purple-200';
+        return 'status-shipped-bg';
       case 'Cancelled':
-        return 'text-red-600 bg-red-50 border-red-200';
+        return 'status-cancelled-bg';
       case 'Pending':
       default:
-        return 'text-orange-600 bg-orange-50 border-orange-200';
+        return 'status-returned-bg';
     }
   };
   const getStatusMessage = (status) => {
@@ -176,13 +176,13 @@ const Orders = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 flex justify-center items-center">
+      <div className="min-h-screen orders-bg-gradient flex justify-center items-center">
         <motion.div 
-          className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl"
+          className="orders-card-glass rounded-3xl p-8 shadow-2xl"
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
         >
-          <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full"></div>
+          <div className="w-8 h-8 border-4 orders-spinner-border border-t-transparent rounded-full"></div>
         </motion.div>
       </div>
     );
@@ -190,18 +190,18 @@ const Orders = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 flex justify-center items-center">
+      <div className="min-h-screen orders-bg-gradient flex justify-center items-center">
         <motion.div 
-          className="text-center bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl max-w-md"
+          className="text-center orders-card-glass rounded-3xl p-8 shadow-2xl max-w-md"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
         >
-          <FiX className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <FiX className="w-16 h-16 orders-error-icon mx-auto mb-4" />
           <h3 className="text-xl font-semibold text-gray-800 mb-2">Error Loading Orders</h3>
           <p className="text-gray-600 mb-6">{error}</p>
           <button 
             onClick={fetchOrders}
-            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg mx-auto"
+            className="flex items-center gap-2 px-6 py-3 emerald-teal-gradient text-white rounded-xl transition-all duration-200 shadow-lg mx-auto"
           >
             <FiRefreshCw className="w-4 h-4" />
             Try Again
@@ -212,7 +212,7 @@ const Orders = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 py-8">
+    <div className="min-h-screen orders-bg-gradient py-8">
       <div className="container mx-auto px-4 max-w-7xl">        {/* Header */}
         <motion.div 
           className="text-center mb-6 md:mb-8"
@@ -225,7 +225,7 @@ const Orders = () => {
 
         {/* Filters and Sort */}
         <motion.div 
-          className="bg-white/80 backdrop-blur-sm rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-lg border border-white/20 mb-6 md:mb-8"
+          className="orders-card-glass rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-lg border border-white/20 mb-6 md:mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -243,7 +243,7 @@ const Orders = () => {
                     onClick={() => setStatusFilter(option.value)}
                     className={`px-3 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl text-xs md:text-sm font-medium transition-all duration-200 ${
                       statusFilter === option.value
-                        ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg'
+                        ? 'orders-filter-active'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                   >
@@ -258,7 +258,7 @@ const Orders = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="flex-1 lg:flex-none px-3 md:px-4 py-1.5 md:py-2 bg-white border border-gray-200 rounded-lg md:rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm md:text-base"
+                className="flex-1 lg:flex-none px-3 md:px-4 py-1.5 md:py-2 bg-white border border-gray-200 rounded-lg md:rounded-xl orders-search-focus text-sm md:text-base"
               >
                 {sortOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -274,7 +274,7 @@ const Orders = () => {
             {filteredOrders.map((order, index) => (
               <motion.div
                 key={order._id}
-                className="bg-white/80 backdrop-blur-sm rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-200 cursor-pointer"
+                className="orders-card-glass rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-200 cursor-pointer"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
@@ -283,7 +283,7 @@ const Orders = () => {
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                   {/* Order Info */}
                   <div className="flex items-start gap-3 md:gap-4">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl md:rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 md:w-16 md:h-16 orders-icon-gradient rounded-xl md:rounded-2xl flex items-center justify-center flex-shrink-0">
                       <FiShoppingBag className="w-6 h-6 md:w-8 md:h-8 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-3 mb-2">
@@ -357,7 +357,7 @@ const Orders = () => {
                           {order.items.slice(0, 2).map((item, itemIndex) => (
                             <span
                               key={itemIndex}
-                              className="px-2 py-1 bg-gray-100 rounded text-xs text-gray-700"
+                              className="px-2 py-1 gray-badge rounded text-xs"
                             >
                               {item.name || 'Product'}
                               {item.variantName && (
@@ -368,7 +368,7 @@ const Orders = () => {
                             </span>
                           ))}
                           {order.items.length > 2 && (
-                            <span className="px-2 py-1 bg-gray-100 rounded text-xs text-gray-700">
+                            <span className="px-2 py-1 gray-badge rounded text-xs">
                               +{order.items.length - 2} more
                             </span>
                           )}
@@ -429,7 +429,7 @@ const Orders = () => {
                             e.stopPropagation();
                             handleReturnOrder(order._id);
                           }}
-                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-md hover:shadow-lg text-sm font-medium"
+                          className="flex items-center gap-2 px-4 py-2 orders-action-delete rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm font-medium"
                         >
                           <FiRotateCcw className="w-4 h-4" />
                           Return Order
@@ -439,7 +439,7 @@ const Orders = () => {
                             e.stopPropagation();
                             navigate(`/orders/${order._id}`);
                           }}
-                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-md hover:shadow-lg text-sm font-medium"
+                          className="flex items-center gap-2 px-4 py-2 emerald-teal-gradient text-white rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm font-medium"
                         >
                           <FiEye className="w-4 h-4" />
                           View Details
@@ -470,14 +470,14 @@ const Orders = () => {
             {statusFilter === 'all' ? (
               <button
                 onClick={() => navigate('/products')}
-                className="w-full sm:w-auto px-6 md:px-8 py-2 md:py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg md:rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg text-sm md:text-base"
+                className="w-full sm:w-auto px-6 md:px-8 py-2 md:py-3 orders-continue-shopping rounded-lg md:rounded-xl transition-all duration-200 shadow-lg text-sm md:text-base"
               >
                 Start Shopping
               </button>
             ) : (
               <button
                 onClick={() => setStatusFilter('all')}
-                className="w-full sm:w-auto px-6 md:px-8 py-2 md:py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-lg md:rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-200 shadow-lg text-sm md:text-base"
+                className="w-full sm:w-auto px-6 md:px-8 py-2 md:py-3 gray-button-gradient rounded-lg md:rounded-xl transition-all duration-200 shadow-lg text-sm md:text-base"
               >
                 View All Orders
               </button>

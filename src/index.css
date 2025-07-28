@@ -88,6 +88,418 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
 
+  /* Icon Colors for OrderDetail */
+  .icon-green {
+    color: #059669 !important;
+  }
+  
+  .icon-blue {
+    color: #2563eb !important;
+  }
+  
+  .icon-red {
+    color: #dc2626 !important;
+  }
+  
+  .icon-purple {
+    color: #9333ea !important;
+  }
+  
+  .icon-orange {
+    color: #ea580c !important;
+  }
+
+  /* Status Colors for OrderDetail */
+  .status-color-green {
+    color: #059669 !important;
+    background-color: #ecfdf5 !important;
+    border-color: #bbf7d0 !important;
+  }
+  
+  .status-color-blue {
+    color: #2563eb !important;
+    background-color: #eff6ff !important;
+    border-color: #bfdbfe !important;
+  }
+  
+  .status-color-red {
+    color: #dc2626 !important;
+    background-color: #fef2f2 !important;
+    border-color: #fecaca !important;
+  }
+  
+  .status-color-purple {
+    color: #9333ea !important;
+    background-color: #faf5ff !important;
+    border-color: #e9d5ff !important;
+  }
+  
+  .status-color-orange {
+    color: #ea580c !important;
+    background-color: #fff7ed !important;
+    border-color: #fed7aa !important;
+  }
+
+  /* Timeline Status Classes */
+  .timeline-blue {
+    color: #2563eb !important;
+  }
+  
+  .timeline-blue-bg {
+    background-color: #eff6ff !important;
+  }
+  
+  .timeline-blue-border {
+    border-color: #bfdbfe !important;
+  }
+  
+  .timeline-green {
+    color: #059669 !important;
+  }
+  
+  .timeline-green-bg {
+    background-color: #ecfdf5 !important;
+  }
+  
+  .timeline-green-border {
+    border-color: #bbf7d0 !important;
+  }
+  
+  .timeline-red {
+    color: #dc2626 !important;
+  }
+  
+  .timeline-red-bg {
+    background-color: #fef2f2 !important;
+  }
+  
+  .timeline-red-border {
+    border-color: #fecaca !important;
+  }
+  
+  .timeline-purple {
+    color: #9333ea !important;
+  }
+  
+  .timeline-purple-bg {
+    background-color: #faf5ff !important;
+  }
+  
+  .timeline-purple-border {
+    border-color: #e9d5ff !important;
+  }
+  
+  .timeline-gray {
+    color: #4b5563 !important;
+  }
+  
+  .timeline-gray-bg {
+    background-color: #f9fafb !important;
+  }
+  
+  .timeline-gray-border {
+    border-color: #e5e7eb !important;
+  }
+  
+  .timeline-orange {
+    color: #ea580c !important;
+  }
+  
+  .timeline-orange-bg {
+    background-color: #fff7ed !important;
+  }
+  
+  .timeline-orange-border {
+    border-color: #fed7aa !important;
+  }
+
+  /* Additional Order Status Classes */
+  .order-status-cancelled {
+    color: #dc2626 !important;
+    background-color: #fef2f2 !important;
+    border-color: #fecaca !important;
+  }
+
+  /* OrderDetail Loading and Error Page Classes */
+  .orderdetail-bg-gradient {
+    background: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%) !important;
+    background: -webkit-linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%) !important;
+  }
+  
+  .orderdetail-spinner-border {
+    border-color: #059669 !important;
+  }
+  
+  .orderdetail-error-icon {
+    color: #dc2626 !important;
+  }
+  
+  .gray-button-gradient {
+    background: linear-gradient(90deg, #6b7280 0%, #4b5563 100%) !important;
+    background: -webkit-linear-gradient(90deg, #6b7280 0%, #4b5563 100%) !important;
+    color: white !important;
+  }
+  
+  .gray-button-gradient:hover {
+    background: linear-gradient(90deg, #4b5563 0%, #374151 100%) !important;
+    background: -webkit-linear-gradient(90deg, #4b5563 0%, #374151 100%) !important;
+  }
+
+  /* Rating and Review Section */
+  .rating-section-bg {
+    background-color: #fefce8 !important;
+    border-color: #fde047 !important;
+  }
+  
+  .rating-title {
+    color: #a16207 !important;
+  }
+  
+  .rating-star-icon {
+    color: #eab308 !important;
+  }
+  
+  .rating-label {
+    color: #a16207 !important;
+  }
+  
+  .rating-value {
+    color: #a16207 !important;
+  }
+
+  /* Timeline and Progress Elements */
+  .timeline-icon-bg {
+    background: linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+    background: -webkit-linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+  }
+  
+  .progress-bar-gradient {
+    background: linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+    background: -webkit-linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+  }
+
+  /* Return Request Button */
+  .return-request-button {
+    background-color: #ef4444 !important;
+    border-color: #ef4444 !important;
+    color: white !important;
+  }
+
+  /* Orders Page - Additional classes for remaining elements */
+  .orders-action-delete {
+    background: linear-gradient(90deg, #f97316 0%, #ef4444 100%) !important;
+    background: -webkit-linear-gradient(90deg, #f97316 0%, #ef4444 100%) !important;
+    color: white !important;
+  }
+  
+  .orders-action-delete:hover {
+    background: linear-gradient(90deg, #ea580c 0%, #dc2626 100%) !important;
+    background: -webkit-linear-gradient(90deg, #ea580c 0%, #dc2626 100%) !important;
+  }
+
+  .orders-spinner-border {
+    border-color: #059669 !important;
+  }
+  
+  .orders-error-icon {
+    color: #dc2626 !important;
+  }
+
+  .orders-continue-shopping {
+    background: linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+    background: -webkit-linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+    color: white !important;
+  }
+  
+  .orders-continue-shopping:hover {
+    background: linear-gradient(90deg, #047857 0%, #0f766e 100%) !important;
+    background: -webkit-linear-gradient(90deg, #047857 0%, #0f766e 100%) !important;
+  }
+
+  /* OrderDetail - Additional elements */
+  .order-timeline-complete {
+    background-color: #059669 !important;
+    border-color: #059669 !important;
+    color: white !important;
+  }
+  
+  .order-timeline-incomplete {
+    background-color: white !important;
+    border-color: #059669 !important;
+    color: #059669 !important;
+  }
+  
+  .order-timeline-progress {
+    background-color: #059669 !important;
+  }
+  
+  .order-image-placeholder {
+    background: linear-gradient(90deg, #e5e7eb 0%, #d1d5db 100%) !important;
+    background: -webkit-linear-gradient(90deg, #e5e7eb 0%, #d1d5db 100%) !important;
+  }
+  
+  .order-item-price {
+    color: #059669 !important;
+  }
+  
+  .order-summary-values {
+    color: #059669 !important;
+  }
+  
+  .delivery-info-bg {
+    background: linear-gradient(90deg, #eff6ff 0%, #e0e7ff 100%) !important;
+    background: -webkit-linear-gradient(90deg, #eff6ff 0%, #e0e7ff 100%) !important;
+    border-color: #bfdbfe !important;
+  }
+  
+  .delivery-info-title {
+    color: #1e40af !important;
+  }
+  
+  .delivery-info-icon-bg {
+    background-color: #3b82f6 !important;
+  }
+  
+  .delivery-info-content-bg {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border-color: #bfdbfe !important;
+  }
+
+  /* Delivery Tracking Section */
+  .delivery-tracking-text {
+    color: #2563eb !important;
+  }
+  
+  .delivery-tracking-id-bg {
+    color: #1d4ed8 !important;
+    background-color: #eff6ff !important;
+    border-color: #bfdbfe !important;
+  }
+  
+  .delivery-tracking-copy {
+    background-color: #3b82f6 !important;
+    color: white !important;
+  }
+  
+  .delivery-tracking-copy:hover {
+    background-color: #2563eb !important;
+  }
+  
+  .delivery-tracking-notes {
+    color: #3b82f6 !important;
+  }
+  
+  .delivery-slot-date-bg {
+    background-color: #eff6ff !important;
+  }
+  
+  .delivery-slot-date-text {
+    color: #2563eb !important;
+  }
+  
+  .delivery-slot-time-bg {
+    background-color: #ecfdf5 !important;
+  }
+  
+  .delivery-slot-time-text {
+    color: #059669 !important;
+  }
+  
+  .delivery-instructions-button {
+    background-color: white !important;
+    border-color: #93c5fd !important;
+    color: #2563eb !important;
+  }
+  
+  .delivery-instructions-button:hover {
+    background-color: #eff6ff !important;
+  }
+  
+  .track-order-button {
+    background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%) !important;
+    background: -webkit-linear-gradient(90deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: white !important;
+  }
+  
+  .track-order-button:hover {
+    background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%) !important;
+    background: -webkit-linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%) !important;
+  }
+
+  /* Returns Section */
+  .returns-icon {
+    color: #9333ea !important;
+  }
+  
+  .return-item-approved {
+    color: #059669 !important;
+    background-color: #ecfdf5 !important;
+  }
+  
+  .return-item-rejected {
+    color: #dc2626 !important;
+    background-color: #fef2f2 !important;
+  }
+  
+  .return-item-pending {
+    color: #2563eb !important;
+    background-color: #eff6ff !important;
+  }
+  
+  .returns-link {
+    color: #9333ea !important;
+  }
+  
+  .returns-link:hover {
+    color: #7c3aed !important;
+  }
+  
+  .returns-button {
+    background: linear-gradient(90deg, #a855f7 0%, #6366f1 100%) !important;
+    background: -webkit-linear-gradient(90deg, #a855f7 0%, #6366f1 100%) !important;
+    color: #7c3aed !important;
+    border-color: #c4b5fd !important;
+  }
+  
+  .returns-button:hover {
+    background: linear-gradient(90deg, #c4b5fd 0%, #a5b4fc 100%) !important;
+    background: -webkit-linear-gradient(90deg, #c4b5fd 0%, #a5b4fc 100%) !important;
+  }
+
+  /* Final Action Buttons */
+  .action-button-purple {
+    background: linear-gradient(90deg, #9333ea 0%, #6366f1 100%) !important;
+    background: -webkit-linear-gradient(90deg, #9333ea 0%, #6366f1 100%) !important;
+    color: white !important;
+  }
+  
+  .action-button-purple:hover {
+    background: linear-gradient(90deg, #7c3aed 0%, #4f46e5 100%) !important;
+    background: -webkit-linear-gradient(90deg, #7c3aed 0%, #4f46e5 100%) !important;
+  }
+  
+  .action-button-yellow {
+    background: linear-gradient(90deg, #eab308 0%, #ea580c 100%) !important;
+    background: -webkit-linear-gradient(90deg, #eab308 0%, #ea580c 100%) !important;
+    color: white !important;
+  }
+  
+  .action-button-yellow:hover {
+    background: linear-gradient(90deg, #d97706 0%, #dc2626 100%) !important;
+    background: -webkit-linear-gradient(90deg, #d97706 0%, #dc2626 100%) !important;
+  }
+  
+  .action-button-red {
+    background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%) !important;
+    background: -webkit-linear-gradient(90deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+  }
+  
+  .action-button-red:hover {
+    background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%) !important;
+    background: -webkit-linear-gradient(90deg, #dc2626 0%, #b91c1c 100%) !important;
+  }
+
   /* Neumorphic design utility - using standard shadows */
   .neumorphic-card {
     @apply bg-white shadow-lg border border-gray-100;
@@ -655,6 +1067,383 @@ body {
   .focus-ring-blue {
     outline: none !important;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5) !important;
+  }
+
+  /* PHASE 2: Complex Gradient Patterns - Safari Compatible */
+  
+  /* Wishlist page gradients */
+  .wishlist-bg-gradient {
+    /* Safari fallback */
+    background-color: #f8faf8 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #f8faf8, #ffffff) !important;
+    background: -moz-linear-gradient(135deg, #f8faf8, #ffffff) !important;
+    background: linear-gradient(135deg, #f8faf8, #ffffff) !important;
+  }
+
+  .wishlist-icon-gradient {
+    /* Safari fallback */
+    background-color: #f8faf8 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #f8faf8, #ffffff) !important;
+    background: -moz-linear-gradient(left, #f8faf8, #ffffff) !important;
+    background: linear-gradient(to right, #f8faf8, #ffffff) !important;
+  }
+
+  /* ProductList complex patterns */
+  .emerald-teal-gradient {
+    /* Safari fallback */
+    background-color: #10b981 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #10b981, #0d9488) !important;
+    background: -moz-linear-gradient(left, #10b981, #0d9488) !important;
+    background: linear-gradient(to right, #10b981, #0d9488) !important;
+    color: white !important;
+  }
+
+  .emerald-teal-gradient:hover {
+    /* Safari fallback */
+    background-color: #059669 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #059669, #0f766e) !important;
+    background: -moz-linear-gradient(left, #059669, #0f766e) !important;
+    background: linear-gradient(to right, #059669, #0f766e) !important;
+  }
+
+  .green-loading-gradient {
+    /* Safari fallback */
+    background-color: #f0fdf4 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+    background: -moz-linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+  }
+
+  .green-loading-bar {
+    /* Safari fallback */
+    background-color: #bbf7d0 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #bbf7d0, #86efac) !important;
+    background: -moz-linear-gradient(left, #bbf7d0, #86efac) !important;
+    background: linear-gradient(to right, #bbf7d0, #86efac) !important;
+  }
+
+  .product-card-gradient {
+    /* Safari fallback */
+    background-color: #f8faf8 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #f8faf8, #ffffff) !important;
+    background: -moz-linear-gradient(135deg, #f8faf8, #ffffff) !important;
+    background: linear-gradient(135deg, #f8faf8, #ffffff) !important;
+  }
+
+  /* Admin/SubAdmin page gradients */
+  .subadmin-bg-gradient {
+    /* Safari fallback */
+    background-color: #f0fdf4 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+    background: -moz-linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+  }
+
+  .revenue-analytics-gradient {
+    /* Safari fallback */
+    background-color: #eff6ff !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #eff6ff, #e0e7ff, #f3e8ff) !important;
+    background: -moz-linear-gradient(135deg, #eff6ff, #e0e7ff, #f3e8ff) !important;
+    background: linear-gradient(135deg, #eff6ff, #e0e7ff, #f3e8ff) !important;
+  }
+
+  .text-gradient-green {
+    /* Safari fallback */
+    color: #2ecc71 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #22c55e, #10b981) !important;
+    background: -moz-linear-gradient(left, #22c55e, #10b981) !important;
+    background: linear-gradient(to right, #22c55e, #10b981) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+
+  .accent-bar-gradient {
+    /* Safari fallback */
+    background-color: #4ade80 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(bottom, #4ade80, #10b981) !important;
+    background: -moz-linear-gradient(bottom, #4ade80, #10b981) !important;
+    background: linear-gradient(to top, #4ade80, #10b981) !important;
+  }
+
+  .table-header-gradient {
+    /* Safari fallback */
+    background-color: #f0fdf4 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #f0fdf4, #dcfce7) !important;
+    background: -moz-linear-gradient(left, #f0fdf4, #dcfce7) !important;
+    background: linear-gradient(to right, #f0fdf4, #dcfce7) !important;
+  }
+
+  /* Complex shadow patterns with Safari compatibility */
+  .shadow-brand-light {
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.05) !important;
+    box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.05) !important;
+  }
+
+  .shadow-brand-medium {
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.1) !important;
+    box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.1) !important;
+  }
+
+  .shadow-brand-strong {
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 8px 32px 0 rgba(46, 204, 113, 0.15) !important;
+    box-shadow: 0 8px 32px 0 rgba(46, 204, 113, 0.15) !important;
+  }
+
+  .shadow-brand-glow {
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.25) !important;
+    box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.25) !important;
+  }
+
+  .hover-shadow-brand:hover {
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 6px 20px 0 rgba(46, 204, 113, 0.3) !important;
+    box-shadow: 0 6px 20px 0 rgba(46, 204, 113, 0.3) !important;
+  }
+
+  /* Complex backdrop blur with Safari support */
+  .backdrop-glass-light {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    /* Webkit vendor prefix for Safari backdrop-filter */
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+  }
+
+  .backdrop-glass-strong {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    /* Webkit vendor prefix for Safari backdrop-filter */
+    -webkit-backdrop-filter: blur(16px) !important;
+    backdrop-filter: blur(16px) !important;
+  }
+
+  /* Border patterns with opacity */
+  .border-green-soft {
+    border-color: rgba(34, 197, 94, 0.1) !important;
+  }
+
+  .border-green-medium {
+    border-color: rgba(34, 197, 94, 0.3) !important;
+  }
+
+  .border-brand-soft {
+    border-color: rgba(46, 204, 113, 0.2) !important;
+  }
+
+  .border-brand-glow {
+    border-color: rgba(46, 204, 113, 0.4) !important;
+  }
+
+  /* Focus states for ProductList search and filters */
+  .search-focus {
+    outline: none !important;
+    background-color: white !important;
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.5), 0 10px 40px 0 rgba(46, 204, 113, 0.1) !important;
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.5), 0 10px 40px 0 rgba(46, 204, 113, 0.1) !important;
+  }
+
+  .filter-panel-backdrop {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    /* Webkit vendor prefix for Safari backdrop-filter */
+    -webkit-backdrop-filter: blur(20px) !important;
+    backdrop-filter: blur(20px) !important;
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 25px 50px -12px rgba(46, 204, 113, 0.1) !important;
+    box-shadow: 0 25px 50px -12px rgba(46, 204, 113, 0.1) !important;
+  }
+
+  /* PHASE 2 CONTINUED: Orders and OrderDetail Pages - Safari Compatible */
+  
+  /* Orders page gradients */
+  .orders-bg-gradient {
+    /* Safari fallback */
+    background-color: #ecfdf5 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #ecfdf5, #f0fdfa) !important;
+    background: -moz-linear-gradient(135deg, #ecfdf5, #f0fdfa) !important;
+    background: linear-gradient(135deg, #ecfdf5, #f0fdfa) !important;
+  }
+
+  .orders-card-glass {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    /* Webkit vendor prefix for Safari backdrop-filter */
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .orders-filter-active {
+    /* Safari fallback */
+    background-color: #10b981 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #10b981, #0d9488) !important;
+    background: -moz-linear-gradient(left, #10b981, #0d9488) !important;
+    background: linear-gradient(to right, #10b981, #0d9488) !important;
+    color: white !important;
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.25) !important;
+    box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.25) !important;
+  }
+
+  .orders-icon-gradient {
+    /* Safari fallback */
+    background-color: #10b981 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #10b981, #0d9488) !important;
+    background: -moz-linear-gradient(left, #10b981, #0d9488) !important;
+    background: linear-gradient(to right, #10b981, #0d9488) !important;
+  }
+
+  .orders-search-focus {
+    outline: none !important;
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5) !important;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5) !important;
+    border-color: transparent !important;
+  }
+
+  /* Order status specific classes - Safari compatible */
+  .status-pending-bg {
+    background-color: #fffbeb !important;
+    color: #92400e !important;
+    border-color: #fde68a !important;
+  }
+
+  .status-processing-bg {
+    background-color: #eff6ff !important;
+    color: #1e40af !important;
+    border-color: #bfdbfe !important;
+  }
+
+  .status-shipped-bg {
+    background-color: #f3e8ff !important;
+    color: #6b21a8 !important;
+    border-color: #d8b4fe !important;
+  }
+
+  .status-delivered-bg {
+    background-color: #ecfdf5 !important;
+    color: #065f46 !important;
+    border-color: #a7f3d0 !important;
+  }
+
+  .status-cancelled-bg {
+    background-color: #fef2f2 !important;
+    color: #991b1b !important;
+    border-color: #fecaca !important;
+  }
+
+  .status-returned-bg {
+    background-color: #fff7ed !important;
+    color: #ea580c !important;
+    border-color: #fed7aa !important;
+  }
+
+  /* OrderDetail page specific styles */
+  .order-detail-bg-gradient {
+    /* Safari fallback */
+    background-color: #ecfdf5 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #ecfdf5, #f0fdfa) !important;
+    background: -moz-linear-gradient(135deg, #ecfdf5, #f0fdfa) !important;
+    background: linear-gradient(135deg, #ecfdf5, #f0fdfa) !important;
+  }
+
+  .timeline-step-active {
+    background-color: #10b981 !important;
+    color: white !important;
+  }
+
+  .timeline-step-completed {
+    background-color: #22c55e !important;
+    color: white !important;
+  }
+
+  .timeline-step-pending {
+    background-color: #e5e7eb !important;
+    color: #6b7280 !important;
+  }
+
+  .timeline-connector-active {
+    background-color: #10b981 !important;
+  }
+
+  .timeline-connector-inactive {
+    background-color: #e5e7eb !important;
+  }
+
+  /* Order detail status badge variants */
+  .order-status-pending {
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+    border-color: #fde68a !important;
+  }
+
+  .order-status-confirmed {
+    background-color: #dbeafe !important;
+    color: #1e40af !important;
+    border-color: #93c5fd !important;
+  }
+
+  .order-status-processing {
+    background-color: #e0e7ff !important;
+    color: #3730a3 !important;
+    border-color: #c7d2fe !important;
+  }
+
+  .order-status-shipped {
+    background-color: #f3e8ff !important;
+    color: #6b21a8 !important;
+    border-color: #d8b4fe !important;
+  }
+
+  .order-status-delivered {
+    background-color: #dcfce7 !important;
+    color: #166534 !important;
+    border-color: #bbf7d0 !important;
+  }
+
+  .order-status-cancelled {
+    background-color: #fef2f2 !important;
+    color: #991b1b !important;
+    border-color: #fecaca !important;
+  }
+
+  .order-status-returned {
+    background-color: #fff7ed !important;
+    color: #ea580c !important;
+    border-color: #fed7aa !important;
+  }
+
+  /* Gray utility variants for order details */
+  .gray-badge {
+    background-color: #f3f4f6 !important;
+    color: #374151 !important;
+  }
+
+  .gray-badge-light {
+    background-color: #f9fafb !important;
+    color: #6b7280 !important;
   }
 
   /* Enhanced scrollbar styles */

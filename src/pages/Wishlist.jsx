@@ -133,9 +133,9 @@ const Wishlist = () => {  const [wishlistItems, setWishlistItems] = useState([])
     }
   };  if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#f8faf8] to-white flex justify-center items-center">
+      <div className="min-h-screen wishlist-bg-gradient flex justify-center items-center">
         <motion.div 
-          className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl"
+          className="backdrop-glass-light rounded-3xl p-8 shadow-2xl"
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
         >
@@ -146,7 +146,7 @@ const Wishlist = () => {  const [wishlistItems, setWishlistItems] = useState([])
   }
 
   if (error) {
-    return (      <div className="min-h-screen bg-gradient-to-br from-[#f8faf8] to-white flex justify-center items-center">
+    return (      <div className="min-h-screen wishlist-bg-gradient flex justify-center items-center">
         <motion.div 
           className="text-center bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl max-w-md"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -167,7 +167,7 @@ const Wishlist = () => {  const [wishlistItems, setWishlistItems] = useState([])
     );
   }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8faf8] to-white py-8">
+    <div className="min-h-screen wishlist-bg-gradient py-8">
       <div className="container mx-auto px-4 max-w-7xl">        {/* Header */}
         <motion.div 
           className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-8 gap-4"
@@ -206,7 +206,7 @@ const Wishlist = () => {  const [wishlistItems, setWishlistItems] = useState([])
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-xl border border-white/30 max-w-md mx-auto">
-              <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-[#f8faf8] to-white rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+              <div className="w-20 h-20 md:w-24 md:h-24 wishlist-icon-gradient rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
                 <FiHeart className="w-10 h-10 md:w-12 md:h-12 text-[#2ecc71]" />
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Your wishlist is empty</h3>

@@ -407,7 +407,7 @@ useEffect(() => {
           <p className="text-gray-600 mb-6">{error}</p>
           <button 
             onClick={() => window.location.reload()} 
-            className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg"
+            className="px-6 py-3 emerald-teal-gradient text-white rounded-xl hover:emerald-teal-gradient transition-all duration-200 shadow-lg"
           >
             Try Again
           </button>
@@ -430,7 +430,7 @@ useEffect(() => {
               className={`px-6 py-4 rounded-2xl shadow-2xl backdrop-blur-lg border ${
                 notification.type === 'error' 
                   ? 'bg-red-500/95 text-white border-red-400/40 shadow-red-500/25' 
-                  : 'bg-[#2ecc71]/95 text-white border-[#2ecc71]/40 shadow-[#2ecc71]/25'
+                  : 'btn-add-to-cart text-white shadow-brand-glow'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -582,7 +582,7 @@ useEffect(() => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-                      className="hidden md:block p-3 rounded-2xl bg-white/90 backdrop-blur-sm hover:bg-[#f8faf8] hover:shadow-lg hover:shadow-[#2ecc71]/10 transition-all duration-300 shadow-lg border border-green-100/50 group"
+                      className="hidden md:block p-3 rounded-2xl backdrop-glass-light hover:bg-[#f8faf8] hover:shadow-brand-medium transition-all duration-300 shadow-lg border-green-soft group"
                       title="Toggle View Mode"
                     >
                       {viewMode === 'grid' ? 
@@ -608,7 +608,7 @@ useEffect(() => {
                     <input
                       type="text"
                       placeholder="Search products..."
-                      className="block w-full pl-12 pr-4 py-4 border-0 rounded-2xl bg-white/90 backdrop-blur-lg shadow-lg shadow-[#2ecc71]/5 focus:ring-2 focus:ring-[#2ecc71]/50 focus:bg-white focus:shadow-xl focus:shadow-[#2ecc71]/10 transition-all duration-300 text-gray-800 placeholder-[#2ecc71]/50 border border-green-100/50"
+                      className="block w-full pl-12 pr-4 py-4 border-0 rounded-2xl backdrop-glass-light shadow-brand-light search-focus transition-all duration-300 text-gray-800 placeholder-[#2ecc71]/50 border-green-soft"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       autoFocus
@@ -644,7 +644,7 @@ useEffect(() => {
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: -300, opacity: 0 }}
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                className="fixed md:static inset-y-0 left-0 z-30 w-80 md:w-64 bg-white/95 backdrop-blur-xl p-6 rounded-3xl shadow-2xl shadow-[#2ecc71]/10 border border-green-100/50 space-y-6 overflow-y-auto"
+                className="fixed md:static inset-y-0 left-0 z-30 w-80 md:w-64 filter-panel-backdrop p-6 rounded-3xl border-green-soft space-y-6 overflow-y-auto"
               >                <div className="flex items-center justify-between">
                   <h2 className="text-lg font-semibold text-gray-800">Filters</h2>
                   <div className="flex gap-2">
@@ -779,13 +779,13 @@ useEffect(() => {
                     initial={{ opacity: 0, y: 20 }} 
                     animate={{ opacity: 1, y: 0 }} 
                     transition={{ delay: i * 0.1, type: "spring", stiffness: 400 }} 
-                    className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg shadow-[#2ecc71]/5 overflow-hidden animate-pulse border border-green-100/50"
+                    className="backdrop-glass-light rounded-3xl shadow-brand-light overflow-hidden animate-pulse border-green-soft"
                   >
-                    <div className="h-56 bg-gradient-to-br from-green-100 to-green-50"></div>
+                    <div className="h-56 green-loading-gradient"></div>
                     <div className="p-6 space-y-3">
                       <div className="h-4 bg-green-200/60 rounded-xl w-3/4"></div>
                       <div className="h-4 bg-green-200/40 rounded-xl w-1/2"></div>
-                      <div className="h-10 bg-gradient-to-r from-green-200/60 to-green-300/60 rounded-2xl w-full mt-4"></div>
+                      <div className="h-10 green-loading-bar rounded-2xl w-full mt-4"></div>
                     </div>
                   </motion.div>
                 ))}
@@ -797,16 +797,16 @@ useEffect(() => {
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 className="text-center py-20"
               >
-                <div className="w-32 h-32 bg-gradient-to-br from-green-100 to-green-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-[#2ecc71]/10">
+                <div className="w-32 h-32 green-loading-gradient rounded-full flex items-center justify-center mx-auto mb-6 shadow-brand-medium">
                   <FiSearch className="w-16 h-16 text-[#2ecc71]/60" />
                 </div>
-                <h3 className="text-2xl font-semibold bg-gradient-to-r from-[#2ecc71] to-[#27ae60] bg-clip-text text-transparent mb-3">No products found</h3>
+                <h3 className="text-2xl font-semibold text-gradient-green mb-3">No products found</h3>
                 <p className="text-[#2ecc71]/70 mb-8 text-lg">Try adjusting your filters or search terms</p>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={clearAllFilters}
-                  className="px-8 py-4 bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white rounded-2xl hover:shadow-lg hover:shadow-[#2ecc71]/25 transition-all duration-300 shadow-lg font-medium"
+                  className="px-8 py-4 btn-add-to-cart text-white rounded-2xl hover-shadow-brand transition-all duration-300 shadow-lg font-medium"
                 >
                   Clear Filters
                 </motion.button>
@@ -855,11 +855,11 @@ useEffect(() => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05, duration: 0.3 }}
                       whileHover={{ y: -4, scale: 1.01 }}
-                      className={`bg-white/90 backdrop-blur-lg rounded-3xl shadow-lg shadow-[#2ecc71]/10 hover:shadow-2xl hover:shadow-[#2ecc71]/20 transition-all duration-300 overflow-hidden group border border-green-100/50 ${
+                      className={`backdrop-glass-light rounded-3xl shadow-brand-light hover:shadow-brand-strong transition-all duration-300 overflow-hidden group border-green-soft ${
                         viewMode === 'list' ? 'flex' : ''
                       }`}
                     >{/* Product Image */}                      <div 
-                        className={`relative bg-gradient-to-br from-[#f8faf8] to-white cursor-pointer overflow-hidden ${
+                        className={`relative product-card-gradient cursor-pointer overflow-hidden ${
                           viewMode === 'list' ? 'w-48 h-48' : 'pt-[100%]'
                         }`}
                         onClick={() => navigate(`/products/${product._id}`)}
@@ -886,7 +886,7 @@ useEffect(() => {
                           className={`absolute top-4 right-4 p-3 rounded-2xl backdrop-blur-lg transition-all duration-300 shadow-lg ${
                             productIsWishlisted 
                               ? 'bg-red-500/90 text-white shadow-red-500/25 border border-red-400/30' 
-                              : 'bg-white/90 text-[#2ecc71] hover:bg-red-500/90 hover:text-white shadow-[#2ecc71]/10 border border-green-100/50'
+                              : 'btn-add-to-cart-in-cart text-[#2ecc71] hover:bg-red-500/90 hover:text-white shadow-brand-light border-green-soft'
                           }`}
                         >
                           <FiHeart className={`w-5 h-5 ${productIsWishlisted ? 'fill-current' : ''} transition-all duration-300`} />
