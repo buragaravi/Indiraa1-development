@@ -65,7 +65,7 @@ const Login = () => {
       setIsLoading(false);
     }
   };  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-green-50 p-4">
+    <div className="min-h-screen flex items-center justify-center login-bg p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -79,7 +79,7 @@ const Login = () => {
           transition={{ duration: 0.6, type: "spring", stiffness: 300 }}
           className="text-center mb-8 md:mb-10"
         >
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#2ecc71] via-[#27ae60] to-[#2ecc71] bg-clip-text text-transparent mb-3">
+          <h1 className="text-3xl md:text-4xl font-bold login-title mb-3">
             Welcome Back!
           </h1>
           <p className="text-[#2ecc71]/70 text-sm md:text-base font-medium">Sign in to continue your shopping journey</p>
@@ -100,7 +100,7 @@ const Login = () => {
                 onClick={() => setLoginType('user')}
                 className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-2xl font-semibold transition-all duration-300 text-sm md:text-base ${
                   loginType === 'user'
-                    ? 'bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white shadow-lg shadow-[#2ecc71]/25'
+                    ? 'login-tab-active text-white shadow-lg shadow-[#2ecc71]/25'
                     : 'text-[#2ecc71] hover:text-[#27ae60] hover:bg-[#f8faf8]'
                 }`}
                 whileHover={{ scale: 1.02 }}
@@ -114,7 +114,7 @@ const Login = () => {
                 onClick={() => setLoginType('admin')}
                 className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-2xl font-semibold transition-all duration-300 text-sm md:text-base ${
                   loginType === 'admin'
-                    ? 'bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white shadow-lg shadow-[#2ecc71]/25'
+                    ? 'login-tab-active text-white shadow-lg shadow-[#2ecc71]/25'
                     : 'text-[#2ecc71] hover:text-[#27ae60] hover:bg-[#f8faf8]'
                 }`}
                 whileHover={{ scale: 1.02 }}
@@ -202,7 +202,7 @@ const Login = () => {
               className={`w-full py-4 px-6 rounded-2xl text-white font-semibold transition-all duration-300 text-base shadow-2xl ${
                 isLoading 
                   ? 'bg-[#2ecc71]/70 cursor-not-allowed shadow-[#2ecc71]/20' 
-                  : 'bg-gradient-to-r from-[#2ecc71] to-[#27ae60] hover:shadow-lg hover:shadow-[#2ecc71]/30'
+                  : 'login-btn hover:shadow-lg hover:shadow-[#2ecc71]/30'
               }`}
             >
               {isLoading ? (

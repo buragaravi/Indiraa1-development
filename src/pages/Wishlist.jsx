@@ -244,7 +244,7 @@ const Wishlist = () => {  const [wishlistItems, setWishlistItems] = useState([])
                       alt={item.name}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 wishlist-overlay-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     {/* Quick Actions Overlay */}
                     <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">

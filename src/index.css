@@ -4213,3 +4213,294 @@ body {
   background: -webkit-linear-gradient(90deg, #059669 0%, #16a34a 100%);
   background: linear-gradient(90deg, #059669 0%, #16a34a 100%);
 }
+
+/* Customer Return Management Components - Safari Compatible */
+.customer-return-success-icon {
+  background: -webkit-linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.customer-return-error-icon {
+  background: -webkit-linear-gradient(135deg, #ef4444 0%, #ec4899 100%);
+  background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);
+}
+
+/* Return Detail Page Components - Safari Compatible */
+.return-detail-bg-1 {
+  background: -webkit-linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+}
+
+.return-detail-bg-2 {
+  background: -webkit-linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+  background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+}
+
+.return-detail-bg-3 {
+  background: -webkit-linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+}
+
+.return-detail-bg-4 {
+  background: -webkit-linear-gradient(135deg, #fff7ed 0%, #fce7f3 100%);
+  background: linear-gradient(135deg, #fff7ed 0%, #fce7f3 100%);
+}
+
+.return-detail-bg-5 {
+  background: -webkit-linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+}
+
+.return-detail-icon-1 {
+  background: -webkit-linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+}
+
+.return-detail-icon-2 {
+  background: -webkit-linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
+}
+
+.return-detail-section-1 {
+  background: -webkit-linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+}
+
+.return-detail-section-2 {
+  background: -webkit-linear-gradient(135deg, #dcfce7 0%, #d1fae5 100%);
+  background: linear-gradient(135deg, #dcfce7 0%, #d1fae5 100%);
+}
+
+.return-detail-section-3 {
+  background: -webkit-linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+}
+
+.return-detail-section-4 {
+  background: -webkit-linear-gradient(135deg, #fff7ed 0%, #fce7f3 100%);
+  background: linear-gradient(135deg, #fff7ed 0%, #fce7f3 100%);
+}
+
+.return-detail-section-5 {
+  background: -webkit-linear-gradient(90deg, #f9fafb 0%, #f1f5f9 100%);
+  background: linear-gradient(90deg, #f9fafb 0%, #f1f5f9 100%);
+}
+
+.return-detail-subsection-1 {
+  background: -webkit-linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+  background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+}
+
+.return-detail-subsection-2 {
+  background: -webkit-linear-gradient(135deg, #fef2f2 0%, #fce7f3 100%);
+  background: linear-gradient(135deg, #fef2f2 0%, #fce7f3 100%);
+}
+
+.return-detail-subsection-3 {
+  background: -webkit-linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+  background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+}
+
+.return-detail-subsection-4 {
+  background: -webkit-linear-gradient(135deg, #dcfce7 0%, #d1fae5 100%);
+  background: linear-gradient(135deg, #dcfce7 0%, #d1fae5 100%);
+}
+
+.return-detail-btn {
+  background: -webkit-linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+.return-detail-btn:hover {
+  background: -webkit-linear-gradient(90deg, #1d4ed8 0%, #7c3aed 100%);
+  background: linear-gradient(90deg, #1d4ed8 0%, #7c3aed 100%);
+}
+
+/* Product List Components - Safari Compatible */
+.product-list-sale-badge {
+  background: -webkit-linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+  background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+}
+
+.product-list-mobile-cart-btn {
+  background: -webkit-linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+  background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+}
+
+/* Login Page Components - Safari Compatible */
+.login-bg {
+  background: -webkit-linear-gradient(135deg, #ecfdf5 0%, #ffffff 50%, #ecfdf5 100%);
+  background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 50%, #ecfdf5 100%);
+}
+
+.login-title {
+  background: -webkit-linear-gradient(90deg, #2ecc71 0%, #27ae60 100%, #2ecc71 100%);
+  background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%, #2ecc71 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-tab-active {
+  background: -webkit-linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+  background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+}
+
+.login-btn {
+  background: -webkit-linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+  background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+}
+
+/* Register Page Components - Safari Compatible */
+.register-bg {
+  background: -webkit-linear-gradient(135deg, #ecfdf5 0%, #ffffff 50%, #ecfdf5 100%);
+  background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 50%, #ecfdf5 100%);
+}
+
+.register-title {
+  background: -webkit-linear-gradient(90deg, #2ecc71 0%, #27ae60 100%, #2ecc71 100%);
+  background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%, #2ecc71 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.register-btn {
+  background: -webkit-linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+  background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+}
+
+/* Forgot Password Page Components - Safari Compatible */
+.forgot-password-bg {
+  background: -webkit-linear-gradient(135deg, #f8fafc 0%, #dbeafe 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #dbeafe 100%);
+}
+
+.forgot-password-icon {
+  background: -webkit-linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+}
+
+.forgot-password-btn {
+  background: -webkit-linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+}
+
+.forgot-password-btn:hover {
+  background: -webkit-linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+  background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+}
+
+.forgot-password-success-btn {
+  background: -webkit-linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+  background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+}
+
+.forgot-password-success-btn:hover {
+  background: -webkit-linear-gradient(90deg, #16a34a 0%, #15803d 100%);
+  background: linear-gradient(90deg, #16a34a 0%, #15803d 100%);
+}
+
+/* NotFound Page Components - Safari Compatible */
+.notfound-bg {
+  background: -webkit-linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%);
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%);
+}
+
+.notfound-central-circle {
+  background: -webkit-linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+}
+
+.notfound-home-btn {
+  background: -webkit-linear-gradient(90deg, #22c55e 0%, #10b981 100%);
+  background: linear-gradient(90deg, #22c55e 0%, #10b981 100%);
+}
+
+.notfound-home-btn:hover {
+  background: -webkit-linear-gradient(90deg, #16a34a 0%, #059669 100%);
+  background: linear-gradient(90deg, #16a34a 0%, #059669 100%);
+}
+
+.notfound-404-text {
+  background: -webkit-linear-gradient(135deg, #22c55e 0%, #10b981 50%, #059669 100%);
+  background: linear-gradient(135deg, #22c55e 0%, #10b981 50%, #059669 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.notfound-title-text {
+  background: -webkit-linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+  background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.notfound-decorative-bg {
+  background: -webkit-linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+}
+
+.notfound-shadow-gradient {
+  background: -webkit-linear-gradient(90deg, transparent 0%, #bbf7d0 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, #bbf7d0 50%, transparent 100%);
+}
+
+.notfound-bottom-wave {
+  background: -webkit-linear-gradient(90deg, #bbf7d0 0%, #86efac 50%, #bbf7d0 100%);
+  background: linear-gradient(90deg, #bbf7d0 0%, #86efac 50%, #bbf7d0 100%);
+}
+
+/* Combo Pack Components - Safari Compatible */
+.combopack-bg {
+  background: -webkit-linear-gradient(135deg, #faf5ff 0%, #ffffff 50%, #fdf2f8 100%);
+  background: linear-gradient(135deg, #faf5ff 0%, #ffffff 50%, #fdf2f8 100%);
+}
+
+.combopack-detail-bg {
+  background: -webkit-linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #faf5ff 100%);
+  background: linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #faf5ff 100%);
+}
+
+.combopack-btn {
+  background: -webkit-linear-gradient(90deg, #9333ea 0%, #a855f7 100%);
+  background: linear-gradient(90deg, #9333ea 0%, #a855f7 100%);
+}
+
+.combopack-btn:hover {
+  background: -webkit-linear-gradient(90deg, #7c3aed 0%, #9333ea 100%);
+  background: linear-gradient(90deg, #7c3aed 0%, #9333ea 100%);
+}
+
+.combopack-tag {
+  background: -webkit-linear-gradient(90deg, #9333ea 0%, #ec4899 100%);
+  background: linear-gradient(90deg, #9333ea 0%, #ec4899 100%);
+}
+
+.combopack-detail-tag {
+  background: -webkit-linear-gradient(90deg, #9333ea 0%, #ec4899 100%);
+  background: linear-gradient(90deg, #9333ea 0%, #ec4899 100%);
+}
+
+.combopack-card-hover {
+  background: -webkit-linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* Wishlist Page Components - Safari Compatible */
+.wishlist-bg-gradient {
+  background: -webkit-linear-gradient(135deg, #f0f9ff 0%, #ffffff 50%, #fef7ff 100%);
+  background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 50%, #fef7ff 100%);
+}
+
+.wishlist-icon-gradient {
+  background: -webkit-linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+}
+
+.wishlist-overlay-gradient {
+  background: -webkit-linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%);
+}

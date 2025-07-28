@@ -245,7 +245,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen forgot-password-bg flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <motion.div 
         className="max-w-md w-full space-y-8"
         initial={{ opacity: 0, y: 20 }}
@@ -255,7 +255,7 @@ const ForgotPassword = () => {
         {/* Header */}
         <div className="text-center">
           <motion.div
-            className="mx-auto h-16 w-16 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg mb-6"
+            className="mx-auto h-16 w-16 forgot-password-icon rounded-2xl flex items-center justify-center shadow-lg mb-6"
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ duration: 0.8, type: "spring", stiffness: 200 }}
@@ -334,7 +334,7 @@ const ForgotPassword = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-4 rounded-xl hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full forgot-password-btn text-white py-3 px-4 rounded-xl hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <FiLoader className="animate-spin h-5 w-5" />
@@ -412,7 +412,7 @@ const ForgotPassword = () => {
                   <button
                     type="submit"
                     disabled={loading || otp.length !== 6}
-                    className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-4 rounded-xl hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
+                    className="w-full forgot-password-btn text-white py-3 px-4 rounded-xl hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
                   >
                     {loading ? (
                       <FiLoader className="animate-spin h-5 w-5" />
@@ -527,7 +527,7 @@ const ForgotPassword = () => {
                 <button
                   type="submit"
                   disabled={loading || newPassword.length < 6 || newPassword !== confirmPassword}
-                  className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-4 rounded-xl hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full forgot-password-btn text-white py-3 px-4 rounded-xl hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <FiLoader className="animate-spin h-5 w-5" />
@@ -566,7 +566,7 @@ const ForgotPassword = () => {
 
                 <button
                   onClick={() => navigate('/login')}
-                  className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-4 rounded-xl hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 shadow-lg flex items-center justify-center gap-2"
+                  className="w-full forgot-password-success-btn text-white py-3 px-4 rounded-xl hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 shadow-lg flex items-center justify-center gap-2"
                 >
                   <FiArrowLeft className="h-5 w-5" />
                   Back to Login

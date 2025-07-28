@@ -911,7 +911,7 @@ useEffect(() => {
 
                         {/* Discount Badge */}
                         {getDisplayOriginalPrice(product) && getDisplayOriginalPrice(product) > getDisplayPrice(product) && (
-                          <div className="absolute bottom-4 left-4 bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white px-3 py-2 rounded-2xl text-sm font-semibold shadow-lg shadow-[#2ecc71]/25">
+                          <div className="absolute bottom-4 left-4 product-list-sale-badge text-white px-3 py-2 rounded-2xl text-sm font-semibold shadow-lg shadow-[#2ecc71]/25">
                             {Math.round(((getDisplayOriginalPrice(product) - getDisplayPrice(product)) / getDisplayOriginalPrice(product)) * 100)}% OFF
                           </div>
                         )}
@@ -1043,7 +1043,7 @@ useEffect(() => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setShowFilters(true)}
-        className="md:hidden fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white rounded-2xl shadow-2xl shadow-[#2ecc71]/30 flex items-center justify-center z-30 border border-green-400/30 backdrop-blur-lg"
+        className="md:hidden fixed bottom-6 right-6 w-16 h-16 product-list-mobile-cart-btn text-white rounded-2xl shadow-2xl shadow-[#2ecc71]/30 flex items-center justify-center z-30 border border-green-400/30 backdrop-blur-lg"
       >
         <FiFilter className="w-6 h-6" />
       </motion.button>      {/* Back to Top Button */}

@@ -251,7 +251,7 @@ const CustomerReturnManagement = () => {
                           <div className="flex items-center space-x-2 text-xs sm:text-sm">
                             {returnRequest.status === 'completed' && (
                               <div className="flex items-center text-green-600 bg-green-50/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-green-100">
-                                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mr-2 shadow-md">
+                                <div className="w-5 h-5 sm:w-6 sm:h-6 customer-return-success-icon rounded-lg flex items-center justify-center mr-2 shadow-md">
                                   <FaCheckCircle className="text-white text-xs sm:text-sm" />
                                 </div>
                                 <span className="font-medium">Refund processed: {returnRequest.refund?.processing?.coinRefund || 0} coins</span>
@@ -259,7 +259,7 @@ const CustomerReturnManagement = () => {
                             )}
                             {returnRequest.status === 'rejected' && (
                               <div className="flex items-center text-red-600 bg-red-50/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-red-100">
-                                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-br from-red-500 to-pink-500 rounded-lg flex items-center justify-center mr-2 shadow-md">
+                                <div className="w-5 h-5 sm:w-6 sm:h-6 customer-return-error-icon rounded-lg flex items-center justify-center mr-2 shadow-md">
                                   <FaTimesCircle className="text-white text-xs sm:text-sm" />
                                 </div>
                                 <span className="font-medium">Return rejected</span>

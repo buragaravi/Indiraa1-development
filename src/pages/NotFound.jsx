@@ -81,7 +81,7 @@ const NotFound = () => {
   const handleMouseLeave = () => setIsHovering(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center p-6 overflow-hidden relative custom-cursor">
+    <div className="min-h-screen notfound-bg flex items-center justify-center p-6 overflow-hidden relative custom-cursor">
       {/* Custom cursor elements */}
       <div ref={cursorDotRef} className="cursor-dot"></div>
       <div 
@@ -108,7 +108,7 @@ const NotFound = () => {
 
       {/* More floating decorative elements with spacious layout */}
       <div className="absolute top-16 left-16 soft-float">
-        <div className="w-24 h-24 bg-gradient-to-br from-green-100 to-emerald-200 rounded-full shadow-lg elegant-glow opacity-60 morph-shape magnetic-hover"></div>
+        <div className="w-24 h-24 notfound-decorative-bg rounded-full shadow-lg elegant-glow opacity-60 morph-shape magnetic-hover"></div>
       </div>
       
       <div className="absolute top-1/4 right-1/5 soft-float-delayed">
@@ -118,7 +118,7 @@ const NotFound = () => {
       </div>
       
       <div className="absolute bottom-1/3 left-1/5 soft-float-slow">
-        <div className="w-20 h-20 bg-gradient-to-br from-emerald-100 to-green-200 rounded-full shadow-md gentle-pulse opacity-50 magnetic-hover"></div>
+        <div className="w-20 h-20 notfound-decorative-bg rounded-full shadow-md gentle-pulse opacity-50 magnetic-hover"></div>
       </div>
       
       <div className="absolute top-1/3 right-16 soft-float-extra">
@@ -133,7 +133,7 @@ const NotFound = () => {
       </div>
       
       <div className="absolute bottom-20 right-20 soft-float-delayed">
-        <div className="w-16 h-16 bg-gradient-to-br from-green-200 to-emerald-300 rounded-full shadow-lg gentle-pulse-delayed opacity-45 morph-shape"></div>
+        <div className="w-16 h-16 notfound-decorative-bg rounded-full shadow-lg gentle-pulse-delayed opacity-45 morph-shape"></div>
       </div>
       
       <div className="absolute top-1/2 left-16 soft-float-slow">
@@ -150,7 +150,7 @@ const NotFound = () => {
         {/* Main illustration area with more space */}
         <div className="relative mb-20 text-reveal">
           {/* Central elegant circle with enhanced size and breathing effect */}
-          <div className="relative mx-auto w-96 h-96 bg-gradient-to-br from-white to-green-50 rounded-full shadow-2xl elegant-glow elegant-backdrop border border-green-100 breathe">
+          <div className="relative mx-auto w-96 h-96 notfound-central-circle rounded-full shadow-2xl elegant-glow elegant-backdrop border border-green-100 breathe">
             
             {/* Enhanced inner decorative rings */}
             <div className="absolute inset-6 border-2 border-green-200 rounded-full opacity-30 soft-float"></div>
@@ -160,7 +160,7 @@ const NotFound = () => {
             {/* Central 404 with enhanced typography */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-10xl font-light gradient-text mb-6 breathe">
+                <div className="text-10xl font-light notfound-404-text mb-6 breathe">
                   404
                 </div>
                 <div className="text-xl text-green-600 font-light tracking-widest uppercase">
@@ -203,13 +203,13 @@ const NotFound = () => {
           </div>
 
           {/* Enhanced elegant shadow */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-80 h-8 bg-gradient-to-r from-transparent via-green-200 to-transparent opacity-20 blur-xl rounded-full"></div>
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-80 h-8 notfound-shadow-gradient opacity-20 blur-xl rounded-full"></div>
         </div>
 
         {/* Enhanced elegant text content with more spacing */}
         <div className="space-y-10">
           <h1 className="text-5xl md:text-6xl font-light text-gray-800 text-reveal-delay-1 leading-relaxed">
-            <span className="gradient-text">Oops!</span> Something went wrong
+            <span className="notfound-title-text">Oops!</span> Something went wrong
           </h1>
 
           <p className="text-2xl text-gray-600 font-light max-w-3xl mx-auto leading-relaxed text-reveal-delay-2">
@@ -231,7 +231,7 @@ const NotFound = () => {
             onClick={handleGoHome}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className="group px-12 py-5 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium rounded-full shadow-lg hover:shadow-2xl transform transition-all duration-500 flex items-center space-x-4 elegant-button text-lg"
+            className="group px-12 py-5 notfound-home-btn text-white font-medium rounded-full shadow-lg hover:shadow-2xl transform transition-all duration-500 flex items-center space-x-4 elegant-button text-lg"
           >
             <FaHome className="text-xl icon-float" />
             <span>Return Home</span>
@@ -287,7 +287,7 @@ const NotFound = () => {
             </p>
             
             {/* Enhanced bottom wave animation */}
-            <div className="absolute bottom-0 left-0 right-0 h-3 bg-gradient-to-r from-green-200 via-emerald-300 to-green-200 rounded-b-3xl wave-animation"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-3 notfound-bottom-wave rounded-b-3xl wave-animation"></div>
           </div>
         </div>
       </div>

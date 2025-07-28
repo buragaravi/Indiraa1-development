@@ -71,7 +71,7 @@ const Register = () => {
       setLoading(false);
     }
   };  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-green-50 p-4">
+    <div className="min-h-screen flex items-center justify-center register-bg p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -85,7 +85,7 @@ const Register = () => {
           transition={{ duration: 0.6, type: "spring", stiffness: 300 }}
           className="text-center mb-8 md:mb-10"
         >
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#2ecc71] via-[#27ae60] to-[#2ecc71] bg-clip-text text-transparent mb-3">
+          <h1 className="text-3xl md:text-4xl font-bold register-title mb-3">
             Join Our Family!
           </h1>
           <p className="text-[#2ecc71]/70 text-sm md:text-base font-medium">Create your account to start shopping</p>
@@ -268,7 +268,7 @@ const Register = () => {
               className={`w-full py-4 px-6 rounded-2xl text-white font-semibold transition-all duration-300 text-base shadow-2xl ${
                 loading 
                   ? 'bg-[#2ecc71]/70 cursor-not-allowed shadow-[#2ecc71]/20' 
-                  : 'bg-gradient-to-r from-[#2ecc71] to-[#27ae60] hover:shadow-lg hover:shadow-[#2ecc71]/30'
+                  : 'register-btn hover:shadow-lg hover:shadow-[#2ecc71]/30'
               }`}
             >
               {loading ? (

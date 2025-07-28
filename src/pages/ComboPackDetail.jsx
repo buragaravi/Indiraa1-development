@@ -280,7 +280,7 @@ const ComboPackDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+      <div className="min-h-screen combopack-detail-bg flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading combo pack details...</p>
@@ -291,14 +291,14 @@ const ComboPackDetail = () => {
 
   if (error || !comboPack) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+      <div className="min-h-screen combopack-detail-bg flex items-center justify-center">
         <div className="text-center">
           <FiPackage className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Combo Pack Not Found</h2>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={() => navigate('/products')}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-6 py-2 combopack-btn text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Browse Products
           </button>
@@ -308,7 +308,7 @@ const ComboPackDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen combopack-detail-bg">
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -401,7 +401,7 @@ const ComboPackDetail = () => {
             {/* Basic Info */}
             <div>
               {comboPack.badgeText && (
-                <span className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-medium mb-4">
+                <span className="inline-block combopack-detail-tag text-white px-3 py-1 rounded-full text-sm font-medium mb-4">
                   {comboPack.badgeText}
                 </span>
               )}

@@ -679,7 +679,7 @@ const ReturnDetailPage = () => {
           <div className="lg:col-span-2 space-y-8">
             {/* Customer Information */}
             <div className="bg-white rounded-3xl shadow-2xl p-8 border border-emerald-100 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-50 to-green-50 rounded-full -translate-y-16 translate-x-16"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 return-detail-bg-1 rounded-full -translate-y-16 translate-x-16"></div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center relative z-10">
                 <div className="return-detail-status-icon">
                   <FaUser className="text-white text-xl" />
@@ -708,7 +708,7 @@ const ReturnDetailPage = () => {
 
             {/* Return Items */}
             <div className="bg-white rounded-3xl shadow-2xl p-8 border border-emerald-100 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-green-50 to-emerald-50 rounded-full -translate-y-12 -translate-x-12"></div>
+              <div className="absolute top-0 left-0 w-24 h-24 return-detail-bg-2 rounded-full -translate-y-12 -translate-x-12"></div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center relative z-10">
                 <div className="return-detail-items-icon">
                   <FaBox className="text-white text-xl" />
@@ -737,7 +737,7 @@ const ReturnDetailPage = () => {
 
             {/* Return Reason & Comments */}
             <div className="bg-white rounded-3xl shadow-2xl p-8 border border-blue-100 relative overflow-hidden">
-              <div className="absolute bottom-0 right-0 w-28 h-28 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-full translate-y-14 translate-x-14"></div>
+              <div className="absolute bottom-0 right-0 w-28 h-28 return-detail-bg-3 rounded-full translate-y-14 translate-x-14"></div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6 relative z-10">Return Reason & Comments</h2>
               <div className="space-y-6 relative z-10">
                 <div className="return-detail-card-blue">
@@ -756,7 +756,7 @@ const ReturnDetailPage = () => {
             {/* Evidence Images */}
             {returnDetails.evidenceImages && returnDetails.evidenceImages.length > 0 && (
               <div className="bg-white rounded-3xl shadow-2xl p-8 border border-amber-100 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-50 to-orange-50 rounded-full -translate-y-16 translate-x-16"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 return-detail-bg-4 rounded-full -translate-y-16 translate-x-16"></div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center relative z-10">
                   <div className="return-detail-timeline-icon">
                     <FaImage className="text-white text-xl" />
@@ -886,32 +886,32 @@ const ReturnDetailPage = () => {
             {/* Quality Assessment Information */}
             {returnDetails.warehouseManagement?.qualityAssessment?.assessedAt && (
               <div className="bg-white rounded-3xl shadow-2xl p-8 border border-purple-100 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-28 h-28 bg-gradient-to-br from-purple-50 to-violet-50 rounded-full -translate-y-14 -translate-x-14"></div>
+                <div className="absolute top-0 left-0 w-28 h-28 return-detail-bg-5 rounded-full -translate-y-14 -translate-x-14"></div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center relative z-10">
-                  <div className="bg-gradient-to-br from-purple-500 to-violet-600 p-3 rounded-2xl mr-4 shadow-lg">
+                  <div className="return-detail-icon-1 p-3 rounded-2xl mr-4 shadow-lg">
                     <FaEye className="text-white text-xl" />
                   </div>
                   Quality Assessment Results
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-                  <div className="bg-gradient-to-br from-purple-50 to-violet-50 p-6 rounded-2xl border border-purple-100">
+                  <div className="return-detail-section-1 p-6 rounded-2xl border border-purple-100">
                     <label className="block text-sm font-bold text-purple-700 mb-2">Item Condition</label>
                     <p className="text-gray-900 font-bold text-lg capitalize">{returnDetails.warehouseManagement.qualityAssessment.itemCondition || 'N/A'}</p>
                   </div>
-                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-2xl border border-green-100">
+                  <div className="return-detail-section-2 p-6 rounded-2xl border border-green-100">
                     <label className="block text-sm font-bold text-green-700 mb-2">Refund Eligibility</label>
                     <p className="text-gray-900 font-bold text-lg capitalize">{returnDetails.warehouseManagement.qualityAssessment.refundEligibility || 'N/A'}</p>
                   </div>
-                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-100">
+                  <div className="return-detail-section-3 p-6 rounded-2xl border border-blue-100">
                     <label className="block text-sm font-bold text-blue-700 mb-2">Refund Percentage</label>
                     <p className="text-gray-900 font-bold text-lg">{returnDetails.warehouseManagement.qualityAssessment.refundPercentage}%</p>
                   </div>
-                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-2xl border border-amber-100">
+                  <div className="return-detail-section-4 p-6 rounded-2xl border border-amber-100">
                     <label className="block text-sm font-bold text-amber-700 mb-2">Assessed Date</label>
                     <p className="text-gray-900 font-bold text-lg">{new Date(returnDetails.warehouseManagement.qualityAssessment.assessedAt).toLocaleDateString()}</p>
                   </div>
                   {returnDetails.warehouseManagement.qualityAssessment.warehouseNotes && (
-                    <div className="md:col-span-2 bg-gradient-to-r from-gray-50 to-slate-50 p-6 rounded-2xl border border-gray-100">
+                    <div className="md:col-span-2 return-detail-section-5 p-6 rounded-2xl border border-gray-100">
                       <label className="block text-sm font-bold text-gray-700 mb-2">Assessment Notes</label>
                       <p className="text-gray-900 font-medium leading-relaxed">{returnDetails.warehouseManagement.qualityAssessment.warehouseNotes}</p>
                     </div>
@@ -920,19 +920,19 @@ const ReturnDetailPage = () => {
                     <div className="md:col-span-2">
                       <h3 className="text-lg font-bold text-gray-900 mb-4">Condition Details</h3>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div className="bg-gradient-to-br from-teal-50 to-cyan-50 p-4 rounded-xl border border-teal-100">
+                        <div className="return-detail-subsection-1 p-4 rounded-xl border border-teal-100">
                           <label className="block text-xs font-bold text-teal-700 mb-1">Packaging</label>
                           <p className="text-gray-900 font-semibold capitalize">{returnDetails.warehouseManagement.qualityAssessment.conditionDetails.packaging || 'N/A'}</p>
                         </div>
-                        <div className="bg-gradient-to-br from-rose-50 to-pink-50 p-4 rounded-xl border border-rose-100">
+                        <div className="return-detail-subsection-2 p-4 rounded-xl border border-rose-100">
                           <label className="block text-xs font-bold text-rose-700 mb-1">Product Condition</label>
                           <p className="text-gray-900 font-semibold capitalize">{returnDetails.warehouseManagement.qualityAssessment.conditionDetails.productCondition || 'N/A'}</p>
                         </div>
-                        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-4 rounded-xl border border-indigo-100">
+                        <div className="return-detail-subsection-3 p-4 rounded-xl border border-indigo-100">
                           <label className="block text-xs font-bold text-indigo-700 mb-1">Accessories</label>
                           <p className="text-gray-900 font-semibold capitalize">{returnDetails.warehouseManagement.qualityAssessment.conditionDetails.accessories || 'N/A'}</p>
                         </div>
-                        <div className="bg-gradient-to-br from-emerald-50 to-green-50 p-4 rounded-xl border border-emerald-100">
+                        <div className="return-detail-subsection-4 p-4 rounded-xl border border-emerald-100">
                           <label className="block text-xs font-bold text-emerald-700 mb-1">Functionality</label>
                           <p className="text-gray-900 font-semibold capitalize">{returnDetails.warehouseManagement.qualityAssessment.conditionDetails.functionality || 'N/A'}</p>
                         </div>
@@ -946,30 +946,30 @@ const ReturnDetailPage = () => {
             {/* Admin Review */}
             {returnDetails.adminReview && returnDetails.adminReview.reviewedAt && (
               <div className="bg-white rounded-3xl shadow-2xl p-8 border border-indigo-100 relative overflow-hidden">
-                <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-full translate-y-12 translate-x-12"></div>
+                <div className="absolute bottom-0 right-0 w-24 h-24 return-detail-bg-3 rounded-full translate-y-12 translate-x-12"></div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center relative z-10">
-                  <div className="bg-gradient-to-br from-indigo-500 to-blue-600 p-3 rounded-2xl mr-4 shadow-lg">
+                  <div className="return-detail-icon-2 p-3 rounded-2xl mr-4 shadow-lg">
                     <FaCheckCircle className="text-white text-xl" />
                   </div>
                   Admin Review
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-                  <div className="bg-gradient-to-br from-indigo-50 to-blue-50 p-6 rounded-2xl border border-indigo-100">
+                  <div className="return-detail-section-3 p-6 rounded-2xl border border-indigo-100">
                     <label className="block text-sm font-bold text-indigo-700 mb-2">Decision</label>
                     <p className="text-gray-900 font-bold text-lg capitalize">{returnDetails.adminReview.approved ? 'Approved' : 'Pending Review'}</p>
                   </div>
-                  <div className="bg-gradient-to-br from-purple-50 to-violet-50 p-6 rounded-2xl border border-purple-100">
+                  <div className="return-detail-section-1 p-6 rounded-2xl border border-purple-100">
                     <label className="block text-sm font-bold text-purple-700 mb-2">Reviewed Date</label>
                     <p className="text-gray-900 font-bold text-lg">{new Date(returnDetails.adminReview.reviewedAt).toLocaleDateString()}</p>
                   </div>
-                  <div className="bg-gradient-to-br from-emerald-50 to-green-50 p-6 rounded-2xl border border-emerald-100">
+                  <div className="return-detail-section-4 p-6 rounded-2xl border border-emerald-100">
                     <label className="block text-sm font-bold text-emerald-700 mb-2">Pickup Charge</label>
                     <p className="text-gray-900 font-bold text-lg">
                       {returnDetails.adminReview.pickupCharge?.isFree ? 'Free' : `₹${returnDetails.adminReview.pickupCharge?.amount || 50}`}
                     </p>
                   </div>
                   {returnDetails.adminReview.adminComments && (
-                    <div className="bg-gradient-to-br from-gray-50 to-slate-50 p-6 rounded-2xl border border-gray-100">
+                    <div className="return-detail-section-5 p-6 rounded-2xl border border-gray-100">
                       <label className="block text-sm font-bold text-gray-700 mb-2">Admin Comments</label>
                       <p className="text-gray-900 font-medium leading-relaxed">{returnDetails.adminReview.adminComments}</p>
                     </div>
@@ -1245,7 +1245,7 @@ const ReturnDetailPage = () => {
                   <button
                     type="submit"
                     disabled={actionLoading}
-                    className="px-6 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-md disabled:opacity-50 flex items-center"
+                    className="px-6 py-2 text-sm font-medium text-white return-detail-btn rounded-md disabled:opacity-50 flex items-center"
                   >
                     {actionLoading ? (
                       <>
