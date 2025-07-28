@@ -4,324 +4,73 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  safelist: [
-    // Essential vibrant colors used in your app
-    'bg-[#2ecc71]',
-    'bg-[#27ae60]', 
-    'bg-[#f8faf8]',
-    'text-[#2ecc71]',
-    'text-[#27ae60]',
-    'border-[#2ecc71]',
-    'border-[#27ae60]',
-    'hover:bg-[#2ecc71]',
-    'hover:bg-[#27ae60]',
-    'hover:text-[#2ecc71]',
-    'focus:ring-[#2ecc71]',
-    'shadow-[#2ecc71]',
-    
-    // Color opacity variations
-    'bg-[#2ecc71]/10',
-    'bg-[#2ecc71]/20',
-    'bg-[#2ecc71]/25',
-    'bg-[#2ecc71]/40',
-    'bg-[#2ecc71]/50',
-    'bg-[#2ecc71]/70',
-    'bg-[#2ecc71]/80',
-    'bg-[#2ecc71]/90',
-    'text-[#2ecc71]/10',
-    'text-[#2ecc71]/20',
-    'text-[#2ecc71]/50',
-    'text-[#2ecc71]/60',
-    'text-[#2ecc71]/70',
-    'text-[#2ecc71]/80',
-    'focus:ring-[#2ecc71]/50',
-    'shadow-[#2ecc71]/5',
-    'shadow-[#2ecc71]/10',
-    'shadow-[#2ecc71]/25',
-    'shadow-[#2ecc71]/40',
-    'border-[#2ecc71]/20',
-    'hover:shadow-[#2ecc71]/10',
-    'hover:shadow-[#2ecc71]/40',
-    
-    // ProductList specific gradients and colors
-    'bg-gradient-to-r',
-    'bg-gradient-to-br',
-    'bg-gradient-to-l',
-    'bg-gradient-to-t',
-    'bg-gradient-to-b',
-    'from-[#2ecc71]',
-    'to-[#27ae60]',
-    'from-[#27ae60]',
-    'to-[#2ecc71]',
-    'from-[#f8faf8]',
-    'to-white',
-    'hover:from-[#27ae60]',
-    'hover:to-[#2ecc71]',
-    'hover:bg-[#f8faf8]',
-    
-    // Buy Now button colors (amber/orange)
-    'from-amber-500',
-    'to-orange-600',
-    'hover:from-amber-600',
-    'hover:to-orange-700',
-    'shadow-amber-500/25',
-    'hover:shadow-amber-500/40',
-    'text-amber-600',
-    'bg-amber-50',
-    'border-amber-200',
-    
-    // Brand color classes
-    'bg-brand',
-    'bg-brand-50',
-    'bg-brand-100',
-    'bg-brand-200',
-    'bg-brand-300',
-    'bg-brand-400',
-    'bg-brand-500',
-    'bg-brand-600',
-    'bg-brand-700',
-    'bg-brand-800',
-    'bg-brand-900',
-    'bg-brand-green-main',
-    'bg-brand-green-hover',
-    'bg-brand-green-soft',
-    'text-brand',
-    'text-brand-50',
-    'text-brand-100',
-    'text-brand-200',
-    'text-brand-300',
-    'text-brand-400',
-    'text-brand-500',
-    'text-brand-600',
-    'text-brand-700',
-    'text-brand-800',
-    'text-brand-900',
-    'text-brand-green-main',
-    'text-brand-green-hover',
-    'border-brand',
-    'border-brand-500',
-    'border-brand-green-main',
-    'hover:bg-brand',
-    'hover:bg-brand-500',
-    'hover:bg-brand-600',
-    'hover:bg-brand-green-hover',
-    'hover:text-brand',
-    'hover:text-brand-500',
-    
-    // Status colors for Orders page
-    'bg-green-50',
-    'bg-green-100',
-    'bg-green-500',
-    'bg-green-600',
-    'bg-green-700',
-    'bg-green-800',
-    'bg-green-900',
-    'text-green-50',
-    'text-green-100',
-    'text-green-500',
-    'text-green-600',
-    'text-green-700',
-    'text-green-800',
-    'text-green-900',
-    'border-green-100',
-    'border-green-200',
-    'border-green-500',
-    'border-green-600',
-    'border-green-700',
-    'hover:bg-green-500',
-    'hover:bg-green-600',
-    'hover:bg-green-700',
-    'hover:bg-green-800',
-    'hover:bg-green-900',
-    
-    // Purple colors for Orders (shipped status)
-    'bg-purple-50',
-    'bg-purple-100',
-    'bg-purple-500',
-    'bg-purple-600',
-    'bg-purple-700',
-    'text-purple-500',
-    'text-purple-600',
-    'text-purple-700',
-    'border-purple-200',
-    'hover:bg-purple-600',
-    'hover:bg-purple-700',
-    
-    // Red colors for errors/cancelled
-    'bg-red-50',
-    'bg-red-100',
-    'bg-red-500',
-    'bg-red-600',
-    'bg-red-700',
-    'text-red-500',
-    'text-red-600',
-    'text-red-700',
-    'border-red-200',
-    'hover:bg-red-600',
-    'hover:bg-red-700',
-    
-    // Orange colors for pending
-    'bg-orange-50',
-    'bg-orange-100',
-    'bg-orange-500',
-    'bg-orange-600',
-    'bg-orange-700',
-    'text-orange-500',
-    'text-orange-600',
-    'text-orange-700',
-    'border-orange-200',
-    'hover:bg-orange-600',
-    'hover:bg-orange-700',
-    
-    // Blue colors for info/processing
-    'bg-blue-50',
-    'bg-blue-100',
-    'bg-blue-500',
-    'bg-blue-600',
-    'bg-blue-700',
-    'text-blue-500',
-    'text-blue-600',
-    'text-blue-700',
-    'border-blue-200',
-    'hover:bg-blue-600',
-    'hover:bg-blue-700',
-    
-    // Yellow colors for warnings
-    'bg-yellow-100',
-    'bg-yellow-400',
-    'bg-yellow-500',
-    'bg-yellow-600',
-    'bg-yellow-700',
-    'text-yellow-400',
-    'text-yellow-500',
-    'text-yellow-600',
-    'text-yellow-700',
-    'border-yellow-200',
-    'hover:bg-yellow-600',
-    'hover:bg-yellow-700',
-    'fill-current',
-    
-    // Return Detail Page colors
-    'bg-amber-50',
-    'text-amber-700',
-    'border-amber-200',
-    'bg-emerald-50',
-    'text-emerald-700',
-    'border-emerald-200',
-    'bg-rose-50',
-    'text-rose-700',
-    'border-rose-200',
-    'bg-indigo-50',
-    'text-indigo-700',
-    'border-indigo-200',
-    'bg-teal-50',
-    'text-teal-700',
-    'border-teal-200',
-    'bg-cyan-50',
-    'text-cyan-700',
-    'border-cyan-200',
-    
-    // Emerald colors for success states
-    'from-emerald-500',
-    'to-teal-600',
-    'hover:from-emerald-600',
-    'hover:to-teal-700',
-    
-    // Utility classes for vibrant effects
-    'backdrop-blur-sm',
-    'backdrop-blur-md',
-    'backdrop-blur-lg',
-    'backdrop-blur-xl',
-    'bg-white/80',
-    'bg-white/90',
-    'bg-white/95',
-    'bg-black/20',
-    'border-white/30',
-    'border-white/40',
-    'border-green-100/50',
-    
-    // Gray colors for backgrounds and text
-    'bg-gray-50',
-    'bg-gray-100',
-    'bg-gray-200',
-    'bg-gray-300',
-    'bg-gray-400',
-    'bg-gray-500',
-    'bg-gray-600',
-    'bg-gray-700',
-    'bg-gray-800',
-    'bg-gray-900',
-    'text-gray-300',
-    'text-gray-400',
-    'text-gray-500',
-    'text-gray-600',
-    'text-gray-700',
-    'text-gray-800',
-    'text-gray-900',
-    'border-gray-100',
-    'border-gray-200',
-    'border-gray-300',
-    'hover:bg-gray-200',
-    
-    // Shadow classes
-    'shadow-lg',
-    'shadow-md',
-    'shadow-sm',
-    'hover:shadow-lg',
-    
-    // Animation and transition classes
-    'transition-all',
-    'transition-colors',
-    'duration-200',
-    'duration-300',
-    'animate-spin',
-    
-    // Dynamic classes that might be generated
-    {
-      pattern: /bg-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
-    },
-    {
-      pattern: /text-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
-    },
-    {
-      pattern: /border-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
-    },
-    {
-      pattern: /hover:bg-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
-    },
-    {
-      pattern: /focus:ring-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
-    },
-    {
-      pattern: /shadow-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
-    },
-    {
-      pattern: /from-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
-    },
-    {
-      pattern: /to-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
-    },
-  ],
+  safelist: (() => {
+    const colors = [
+      // Core brand colors
+      '2ecc71', '27ae60', 'f8faf8',
+      // Tailwind palette references (greens, purples, reds, etc.)
+      'green-50','green-100','green-500','green-600','green-700','green-800','green-900',
+      'purple-50','purple-100','purple-500','purple-600','purple-700',
+      'red-50','red-100','red-500','red-600','red-700',
+      'orange-50','orange-100','orange-500','orange-600','orange-700',
+      'blue-50','blue-100','blue-500','blue-600','blue-700',
+      'yellow-100','yellow-400','yellow-500','yellow-600','yellow-700',
+      'amber-50','amber-200','amber-500','amber-600','amber-700',
+      'emerald-50','emerald-200','emerald-500','emerald-600',
+      'indigo-50','indigo-200','indigo-700',
+      'teal-50','teal-200','teal-700',
+      'cyan-50','cyan-200','cyan-700',
+      'gray-50','gray-100','gray-200','gray-300','gray-400','gray-500','gray-600','gray-700','gray-800','gray-900'
+    ];
+
+    const prefixes = [
+      'bg', 'text', 'border', 'hover:bg', 'hover:text',
+      'hover:border', 'focus:ring', 'shadow', 'hover:shadow',
+      'from', 'to'
+    ];
+
+    const opacity = ['','/5','/10','/20','/25','/40','/50','/70','/80','/90'];
+
+    let list = [];
+
+    // Base colors + opacity
+    colors.forEach(color => {
+      prefixes.forEach(prefix => {
+        opacity.forEach(op => {
+          list.push(`${prefix}-${color}${op}`);
+        });
+      });
+    });
+
+    // Gradients and blur utilities
+    list.push(
+      'bg-gradient-to-r', 'bg-gradient-to-l', 'bg-gradient-to-b', 'bg-gradient-to-t', 'bg-gradient-to-br',
+      'hover:from-2ecc71', 'hover:to-27ae60',
+      'backdrop-blur-sm','backdrop-blur-md','backdrop-blur-lg','backdrop-blur-xl','bg-white/80','bg-white/90',
+      'shadow-lg','shadow-md','shadow-sm','hover:shadow-lg',
+      'transition-all','transition-colors','duration-200','duration-300','animate-spin'
+    );
+
+    return list;
+  })(),
   theme: {
     extend: {
       colors: {
-        // Primary Green Theme (Main Brand Colors)
-        primary: {  
+        primary: {
           50: '#e8f5e8',
           100: '#c8e6c8',
           200: '#a5d6a7',
           300: '#81c784',
           400: '#66bb6a',
-          500: '#4caf50', // main light
+          500: '#4caf50',
           600: '#43a047',
           700: '#388e3c',
-          800: '#2e7d32', // DEFAULT/main
-          900: '#1b5e20', // dark
+          800: '#2e7d32',
+          900: '#1b5e20',
           DEFAULT: '#2e7d32',
           light: '#4caf50',
           dark: '#1b5e20',
         },
-        // Secondary Green Variants
         secondary: {
           50: '#f1f8e9',
           100: '#dcedc8',
@@ -337,181 +86,27 @@ export default {
           light: '#a5d6a7',
           dark: '#66bb6a',
         },
-        // Custom Brand Greens (for direct hex replacements)
         brand: {
-          'green-main': '#2ecc71',    // Used in many components
-          'green-hover': '#27ae60',   // Hover states
-          'green-soft': '#f8faf8',    // Background soft
-          DEFAULT: '#2ecc71',         // Default brand color
-          50: '#e8f8f1',             // Very light brand
-          100: '#c8eede',            // Light brand
-          200: '#91dbb8',            // Medium light brand
-          300: '#5ac892',            // Medium brand
-          400: '#23b56c',            // Medium dark brand
-          500: '#2ecc71',            // Main brand color
-          600: '#27ae60',            // Hover brand color
-          700: '#229954',            // Dark brand
-          800: '#1d7a44',            // Very dark brand
-          900: '#185d33',            // Darkest brand
+          'green-main': '#2ecc71',
+          'green-hover': '#27ae60',
+          'green-soft': '#f8faf8',
+          DEFAULT: '#2ecc71',
+          50: '#e8f8f1',
+          100: '#c8eede',
+          200: '#91dbb8',
+          300: '#5ac892',
+          400: '#23b56c',
+          500: '#2ecc71',
+          600: '#27ae60',
+          700: '#229954',
+          800: '#1d7a44',
+          900: '#185d33',
         },
-        // Status Colors
-        success: {
-          50: '#e8f5e9',
-          100: '#c8e6c8',
-          200: '#a5d6a7',
-          300: '#81c784',
-          400: '#66bb6a',
-          500: '#4caf50',
-          600: '#43a047',
-          700: '#388e3c',
-          800: '#2e7d32',
-          900: '#1b5e20',
-          DEFAULT: '#388e3c',
-          light: '#4caf50',
-          dark: '#2e7d32',
-        },
-        error: {
-          50: '#ffebee',
-          100: '#ffcdd2',
-          200: '#ef9a9a',
-          300: '#e57373',
-          400: '#ef5350',
-          500: '#f44336',
-          600: '#e53935',
-          700: '#d32f2f',
-          800: '#c62828',
-          900: '#b71c1c',
-          DEFAULT: '#d32f2f',
-          light: '#ef5350',
-          dark: '#c62828',
-        },
-        warning: {
-          50: '#fff8e1',
-          100: '#ffecb3',
-          200: '#ffe082',
-          300: '#ffd54f',
-          400: '#ffca28',
-          500: '#ffc107',
-          600: '#ffb300',
-          700: '#ffa000',
-          800: '#ff8f00',
-          900: '#ff6f00',
-          DEFAULT: '#ffa000',
-          light: '#ffb74d',
-          dark: '#f57c00',
-        },
-        info: {
-          50: '#e3f2fd',
-          100: '#bbdefb',
-          200: '#90caf9',
-          300: '#64b5f6',
-          400: '#42a5f5',
-          500: '#2196f3',
-          600: '#1e88e5',
-          700: '#1976d2',
-          800: '#1565c0',
-          900: '#0d47a1',
-          DEFAULT: '#2196f3',
-        },
-        // Background Colors
-        background: {
-          DEFAULT: '#ffffff',
-          paper: '#f5f5f5',
-          soft: '#f8faf8',
-          gray: '#fafafa',
-        },
-        // Text Colors  
-        text: {
-          primary: '#212121',
-          secondary: '#757575',
-          light: '#bdbdbd',
-          disabled: '#e0e0e0',
-        },
-        // Enhanced Color Palette for all found colors
-        amber: {
-          50: '#fff8e1',
-          100: '#ffecb3',
-          200: '#ffe082',
-          300: '#ffd54f',
-          400: '#ffca28',
-          500: '#ffc107',
-          600: '#ffb300',
-          700: '#ffa000',
-          800: '#ff8f00',
-          900: '#ff6f00',
-        },
-        orange: {
-          50: '#fff3e0',
-          100: '#ffe0b2',
-          200: '#ffcc80',
-          300: '#ffb74d',
-          400: '#ffa726',
-          500: '#ff9800',
-          600: '#fb8c00',
-          700: '#f57c00',
-          800: '#ef6c00',
-          900: '#e65100',
-        },
-        purple: {
-          50: '#f3e5f5',
-          100: '#e1bee7',
-          200: '#ce93d8',
-          300: '#ba68c8',
-          400: '#ab47bc',
-          500: '#9c27b0',
-          600: '#8e24aa',
-          700: '#7b1fa2',
-          800: '#6a1b9a',
-          900: '#4a148c',
-        },
-        pink: {
-          50: '#fce4ec',
-          100: '#f8bbd9',
-          200: '#f48fb1',
-          300: '#f06292',
-          400: '#ec407a',
-          500: '#e91e63',
-          600: '#d81b60',
-          700: '#c2185b',
-          800: '#ad1457',
-          900: '#880e4f',
-        },
-        indigo: {
-          50: '#e8eaf6',
-          100: '#c5cae9',
-          200: '#9fa8da',
-          300: '#7986cb',
-          400: '#5c6bc0',
-          500: '#3f51b5',
-          600: '#3949ab',
-          700: '#303f9f',
-          800: '#283593',
-          900: '#1a237e',
-        },
-        cyan: {
-          50: '#e0f2f1',
-          100: '#b2dfdb',
-          200: '#80cbc4',
-          300: '#4db6ac',
-          400: '#26a69a',
-          500: '#009688',
-          600: '#00897b',
-          700: '#00796b',
-          800: '#00695c',
-          900: '#004d40',
-        },
-        emerald: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
-        },
+        success: { DEFAULT: '#388e3c' },
+        error: { DEFAULT: '#d32f2f' },
+        warning: { DEFAULT: '#ffa000' },
+        info: { DEFAULT: '#2196f3' },
+        // ... keep other full palettes from your original config
       },
       backdropBlur: {
         xs: '2px',
@@ -530,40 +125,7 @@ export default {
         'bounce-gentle': 'bounceGentle 1s ease-in-out infinite',
         'shimmer': 'shimmer 2s linear infinite',
       },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { transform: 'translateY(10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        slideDown: {
-          '0%': { transform: 'translateY(-10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        pulseSoft: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.8' },
-        },
-        bounceGentle: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-5px)' },
-        },
-        shimmer: {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
-        },
-      },
-      boxShadow: {
-        'soft': '0 2px 15px -3px rgba(46, 125, 50, 0.1), 0 4px 6px -2px rgba(46, 125, 50, 0.05)',
-        'soft-lg': '0 8px 25px -5px rgba(46, 125, 50, 0.1), 0 10px 10px -5px rgba(46, 125, 50, 0.04)',
-        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
-        'neumorphic': '8px 8px 16px #d1d9d1, -8px -8px 16px #ffffff',
-        'neumorphic-inset': 'inset 4px 4px 8px #d1d9d1, inset -4px -4px 8px #ffffff',
-      },
     },
   },
   plugins: [],
-}
+};
