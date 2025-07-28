@@ -371,7 +371,7 @@ useEffect(() => {
       stars.push(
         <FiStar
           key={i}
-          className={`w-4 h-4 ${i <= rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+          className={`w-4 h-4 ${i <= rating ? 'star-filled' : 'star-empty'}`}
         />
       );
     }
@@ -394,7 +394,7 @@ useEffect(() => {
   if (error) {
     return (
       <motion.div 
-        className="flex flex-col items-center justify-center min-h-[60vh] bg-gradient-to-br from-gray-50 to-gray-100" 
+        className="flex flex-col items-center justify-center min-h-[60vh] error-state" 
         initial={{ opacity: 0, scale: 0.9 }} 
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
@@ -416,7 +416,7 @@ useEffect(() => {
     );
   }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50">
+    <div className="min-h-screen bg-page-gradient">
       {/* Notifications */}
       <AnimatePresence>
         <div className="fixed top-4 right-4 z-50 space-y-2">
@@ -445,7 +445,7 @@ useEffect(() => {
         initial={{ y: -10, opacity: 0 }} 
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.3 }}
-        className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-green-100/50 shadow-lg shadow-[#2ecc71]/5"
+        className="sticky top-0 z-40 glass-effect-medium border-b border-green-100/50 shadow-green-light"
       >
         <div className="max-w-7xl mx-auto px-4 py-6">
           {/* Back Button */}
@@ -454,21 +454,21 @@ useEffect(() => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate(-1)} 
-              className="p-3 rounded-2xl bg-white/90 backdrop-blur-sm hover:bg-[#f8faf8] hover:shadow-lg hover:shadow-[#2ecc71]/10 transition-all duration-300 shadow-lg border border-green-100/50 group" 
+              className="nav-button p-3 rounded-2xl transition-all duration-300 hover-scale group" 
               aria-label="Go back"
             >
-              <FiArrowLeft className="w-5 h-5 text-[#2ecc71] group-hover:text-[#27ae60] transition-colors" />
+              <FiArrowLeft className="nav-icon w-5 h-5 transition-colors" />
             </motion.button>
 
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-              className="md:hidden p-3 rounded-2xl bg-white/90 backdrop-blur-sm hover:bg-[#f8faf8] hover:shadow-lg hover:shadow-[#2ecc71]/10 transition-all duration-300 shadow-lg border border-green-100/50 group"
+              className="nav-button md:hidden p-3 rounded-2xl transition-all duration-300 hover-scale group"
             >
               {viewMode === 'grid' ? 
-                <FiList className="w-5 h-5 text-[#2ecc71] group-hover:text-[#27ae60] transition-colors" /> : 
-                <FiGrid className="w-5 h-5 text-[#2ecc71] group-hover:text-[#27ae60] transition-colors" />
+                <FiList className="nav-icon w-5 h-5 transition-colors" /> : 
+                <FiGrid className="nav-icon w-5 h-5 transition-colors" />
               }
             </motion.button>
           </div>
@@ -500,10 +500,10 @@ useEffect(() => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setIsSearchExpanded(true)}
-                      className="p-3 rounded-2xl bg-white/90 backdrop-blur-sm hover:bg-[#f8faf8] hover:shadow-lg hover:shadow-[#2ecc71]/10 transition-all duration-300 shadow-lg border border-green-100/50 group"
+                      className="nav-button p-3 rounded-2xl transition-all duration-300 hover-scale group"
                       title="Search Products"
                     >
-                      <FiSearch className="w-5 h-5 text-[#2ecc71] group-hover:text-[#27ae60] transition-colors" />
+                      <FiSearch className="nav-icon w-5 h-5 transition-colors" />
                     </motion.button>
 
                     {/* Filter Icon */}
@@ -511,15 +511,15 @@ useEffect(() => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setShowFilters(!showFilters)}
-                      className={`p-3 rounded-2xl backdrop-blur-sm transition-all duration-300 shadow-lg border group ${
+                      className={`p-3 rounded-2xl backdrop-blur-sm transition-all duration-300 border group ${
                         showFilters 
-                          ? 'bg-[#2ecc71] border-[#2ecc71] shadow-[#2ecc71]/20' 
-                          : 'bg-white/90 border-green-100/50 hover:bg-[#f8faf8] hover:shadow-lg hover:shadow-[#2ecc71]/10'
+                          ? 'btn-add-to-cart text-white' 
+                          : 'nav-button hover-scale'
                       }`}
                       title="Toggle Filters"
                     >
                       <FiFilter className={`w-5 h-5 transition-colors ${
-                        showFilters ? 'text-white' : 'text-[#2ecc71] group-hover:text-[#27ae60]'
+                        showFilters ? 'text-white' : 'nav-icon'
                       }`} />
                     </motion.button>
 
@@ -529,15 +529,15 @@ useEffect(() => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setShowSortDropdown(!showSortDropdown)}
-                        className={`p-3 rounded-2xl backdrop-blur-sm transition-all duration-300 shadow-lg border group ${
+                        className={`p-3 rounded-2xl backdrop-blur-sm transition-all duration-300 border group ${
                           showSortDropdown 
-                            ? 'bg-[#2ecc71] border-[#2ecc71] shadow-[#2ecc71]/20' 
-                            : 'bg-white/90 border-green-100/50 hover:bg-[#f8faf8] hover:shadow-lg hover:shadow-[#2ecc71]/10'
+                            ? 'btn-add-to-cart text-white' 
+                            : 'nav-button hover-scale'
                         }`}
                         title="Sort Products"
                       >
                         <FiChevronDown className={`w-5 h-5 transition-colors ${
-                          showSortDropdown ? 'text-white' : 'text-[#2ecc71] group-hover:text-[#27ae60]'
+                          showSortDropdown ? 'text-white' : 'nav-icon'
                         }`} />
                       </motion.button>
 
@@ -972,14 +972,14 @@ useEffect(() => {
                             whileTap={{ scale: 0.98 }}
                             onClick={() => handleAddToCart(product._id)}
                             disabled={getDisplayStock(product) <= 0 || getLoadingState(product._id, 'cart')}
-                            className={`flex items-center justify-center gap-2 px-4 py-3 rounded-2xl transition-all duration-300 font-semibold shadow-lg min-h-[48px] ${
+                            className={`flex items-center justify-center gap-2 px-4 py-3 rounded-2xl transition-all duration-300 font-semibold min-h-[48px] ${
                               isInCart
-                                ? 'bg-[#f8faf8] text-[#2ecc71] border-2 border-[#2ecc71]/20 shadow-[#2ecc71]/10'
-                                : 'bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white hover:from-[#27ae60] hover:to-[#2ecc71] shadow-[#2ecc71]/25 hover:shadow-[#2ecc71]/40'
+                                ? 'btn-add-to-cart-in-cart'
+                                : 'btn-add-to-cart'
                             } ${getDisplayStock(product) <= 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                           >
                             {getLoadingState(product._id, 'cart') ? (
-                              <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                              <div className="loading-spinner w-4 h-4" />
                             ) : isInCart ? (
                               <>
                                 <FiCheck className="w-4 h-4" />
@@ -997,10 +997,10 @@ useEffect(() => {
                             whileTap={{ scale: 0.98 }}
                             onClick={() => handleBuyNow(product._id)}
                             disabled={getDisplayStock(product) <= 0}
-                            className={`flex items-center justify-center gap-2 px-4 py-3 rounded-2xl transition-all duration-300 font-semibold shadow-lg min-h-[48px] ${
+                            className={`flex items-center justify-center gap-2 px-4 py-3 rounded-2xl transition-all duration-300 font-semibold min-h-[48px] ${
                               getDisplayStock(product) <= 0 
                                 ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                : 'bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700 shadow-amber-500/25 hover:shadow-amber-500/40'
+                                : 'btn-buy-now'
                             }`}                          >
                             <FiZap className="w-4 h-4" />
                             <span className="text-sm">

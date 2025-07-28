@@ -4,6 +4,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Essential vibrant colors as CSS custom properties */
+:root {
+  --color-brand-main: #2ecc71;
+  --color-brand-hover: #27ae60;
+  --color-brand-soft: #f8faf8;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-orange-600: #ea580c;
+  --color-orange-700: #c2410c;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+}
+
 /* Remove CSS variables and use Tailwind classes instead */
 body {
   margin: 0;
@@ -137,29 +152,311 @@ body {
     color: #2ecc71 !important;
   }
 
+  /* COMPLETE VIBRANT COLOR SYSTEM - ALL COLORS DIRECTLY DEFINED */
+  
+  /* ProductList Page - Add to Cart Button Colors */
+  .btn-add-to-cart {
+    background: linear-gradient(to right, #2ecc71, #27ae60) !important;
+    color: white !important;
+    box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.25) !important;
+  }
+  
+  .btn-add-to-cart:hover {
+    background: linear-gradient(to right, #27ae60, #2ecc71) !important;
+    box-shadow: 0 6px 20px 0 rgba(46, 204, 113, 0.4) !important;
+  }
+  
+  .btn-add-to-cart-in-cart {
+    background-color: #f8faf8 !important;
+    color: #2ecc71 !important;
+    border: 2px solid rgba(46, 204, 113, 0.2) !important;
+    box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.1) !important;
+  }
+  
+  /* ProductList Page - Buy Now Button Colors */
+  .btn-buy-now {
+    background: linear-gradient(to right, #f59e0b, #ea580c) !important;
+    color: white !important;
+    box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.25) !important;
+  }
+  
+  .btn-buy-now:hover {
+    background: linear-gradient(to right, #d97706, #c2410c) !important;
+    box-shadow: 0 6px 20px 0 rgba(245, 158, 11, 0.4) !important;
+  }
+  
+  /* Page Background Gradients */
+  .bg-page-gradient {
+    background: linear-gradient(135deg, #f0fdf4, #ffffff, #f0fdf4) !important;
+  }
+  
+  .bg-wishlist-gradient {
+    background: linear-gradient(135deg, #f8faf8, #ffffff) !important;
+  }
+  
+  /* Header Navigation Colors */
+  .nav-button {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(34, 197, 94, 0.1) !important;
+    box-shadow: 0 8px 32px 0 rgba(46, 204, 113, 0.05) !important;
+  }
+  
+  .nav-button:hover {
+    background: #f8faf8 !important;
+    box-shadow: 0 8px 32px 0 rgba(46, 204, 113, 0.1) !important;
+  }
+  
+  .nav-icon {
+    color: #2ecc71 !important;
+  }
+  
+  .nav-icon:hover {
+    color: #27ae60 !important;
+  }
+  
+  /* Orders Page - Status Colors */
+  .status-icon-delivered {
+    color: #22c55e !important;
+  }
+  
+  .status-icon-shipped {
+    color: #8b5cf6 !important;
+  }
+  
+  .status-icon-cancelled {
+    color: #ef4444 !important;
+  }
+  
+  .status-icon-pending {
+    color: #f97316 !important;
+  }
+  
+  .status-badge-delivered {
+    color: #166534 !important;
+    background-color: #f0fdf4 !important;
+    border-color: #bbf7d0 !important;
+  }
+  
+  .status-badge-shipped {
+    color: #6b21a8 !important;
+    background-color: #faf5ff !important;
+    border-color: #e9d5ff !important;
+  }
+  
+  .status-badge-cancelled {
+    color: #991b1b !important;
+    background-color: #fef2f2 !important;
+    border-color: #fecaca !important;
+  }
+  
+  .status-badge-pending {
+    color: #ea580c !important;
+    background-color: #fff7ed !important;
+    border-color: #fed7aa !important;
+  }
+  
+  /* Return Detail Page - All Status Colors */
+  .return-status-requested {
+    color: #92400e !important;
+    background-color: #fffbeb !important;
+    border-color: #fde68a !important;
+  }
+  
+  .return-status-approved {
+    color: #065f46 !important;
+    background-color: #ecfdf5 !important;
+    border-color: #a7f3d0 !important;
+  }
+  
+  .return-status-rejected {
+    color: #9f1239 !important;
+    background-color: #fff1f2 !important;
+    border-color: #fecdd3 !important;
+  }
+  
+  .return-status-warehouse-assigned {
+    color: #6b21a8 !important;
+    background-color: #faf5ff !important;
+    border-color: #e9d5ff !important;
+  }
+  
+  .return-status-pickup-scheduled {
+    color: #3730a3 !important;
+    background-color: #eef2ff !important;
+    border-color: #c7d2fe !important;
+  }
+  
+  .return-status-picked-up {
+    color: #ea580c !important;
+    background-color: #fff7ed !important;
+    border-color: #fed7aa !important;
+  }
+  
+  .return-status-in-warehouse {
+    color: #0f766e !important;
+    background-color: #f0fdfa !important;
+    border-color: #99f6e4 !important;
+  }
+  
+  .return-status-quality-checked {
+    color: #0e7490 !important;
+    background-color: #ecfeff !important;
+    border-color: #a5f3fc !important;
+  }
+  
+  .return-status-refund-approved {
+    color: #166534 !important;
+    background-color: #f0fdf4 !important;
+    border-color: #bbf7d0 !important;
+  }
+  
+  .return-status-completed {
+    color: #065f46 !important;
+    background-color: #ecfdf5 !important;
+    border-color: #a7f3d0 !important;
+  }
+  
+  /* Glass Morphism Effects */
+  .glass-effect-light {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  }
+  
+  .glass-effect-medium {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  }
+  
+  .glass-effect-strong {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  }
+  
+  /* Vibrant Shadow Effects */
+  .shadow-green-light {
+    box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.05) !important;
+  }
+  
+  .shadow-green-medium {
+    box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.1) !important;
+  }
+  
+  .shadow-green-strong {
+    box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.25) !important;
+  }
+  
+  .shadow-green-hover {
+    box-shadow: 0 6px 20px 0 rgba(46, 204, 113, 0.4) !important;
+  }
+  
+  /* Interactive Hover Effects */
+  .hover-lift:hover {
+    transform: translateY(-2px) !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.02) !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  /* Rating Stars */
+  .star-filled {
+    color: #fbbf24 !important;
+    fill: currentColor !important;
+  }
+  
+  .star-empty {
+    color: #d1d5db !important;
+  }
+  
+  /* Error and Success States */
+  .error-state {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2) !important;
+  }
+  
+  .success-state {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+  }
+  
+  /* Loading States */
+  .loading-spinner {
+    border: 2px solid #e5e7eb !important;
+    border-top: 2px solid #2ecc71 !important;
+    border-radius: 50% !important;
+    animation: spin 1s linear infinite !important;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Notification Colors */
+  .notification-success {
+    background-color: #dcfce7 !important;
+    color: #166534 !important;
+    border-left: 4px solid #22c55e !important;
+  }
+  
+  .notification-error {
+    background-color: #fef2f2 !important;
+    color: #991b1b !important;
+    border-left: 4px solid #ef4444 !important;
+  }
+  
+  .notification-warning {
+    background-color: #fffbeb !important;
+    color: #92400e !important;
+    border-left: 4px solid #f59e0b !important;
+  }
+  
+  .notification-info {
+    background-color: #eff6ff !important;
+    color: #1e40af !important;
+    border-left: 4px solid #3b82f6 !important;
+  }
+}
+
   /* Status badge utilities */
   .status-pending {
-    @apply bg-yellow-100 text-yellow-700 border-yellow-200;
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+    border-color: #fde68a !important;
   }
 
   .status-processing {
-    @apply bg-blue-100 text-blue-700 border-blue-200;
+    background-color: #dbeafe !important;
+    color: #1e40af !important;
+    border-color: #93c5fd !important;
   }
 
   .status-shipped {
-    @apply bg-blue-100 text-blue-700 border-blue-200;
+    background-color: #dbeafe !important;
+    color: #1e40af !important;
+    border-color: #93c5fd !important;
   }
 
   .status-delivered {
-    @apply bg-green-100 text-green-700 border-green-200;
+    background-color: #dcfce7 !important;
+    color: #166534 !important;
+    border-color: #bbf7d0 !important;
   }
 
   .status-cancelled {
-    @apply bg-red-100 text-red-700 border-red-200;
+    background-color: #fef2f2 !important;
+    color: #991b1b !important;
+    border-color: #fecaca !important;
   }
 
   .status-completed {
-    @apply bg-green-100 text-green-700 border-green-200;
+    background-color: #dcfce7 !important;
+    color: #166534 !important;
+    border-color: #bbf7d0 !important;
   }
 
   /* Enhanced scrollbar styles */
@@ -171,7 +468,7 @@ body {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-}
+
 
 /* Custom elegant scrollbars with green theme */
 ::-webkit-scrollbar {

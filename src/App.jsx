@@ -142,7 +142,6 @@ function App() {
           
           {/* PWA Components */}
           <PWAInstallPrompt />
-          <PWAStatus />
           
           <Routes>
             {/* Public Routes */}
