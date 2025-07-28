@@ -4,6 +4,184 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    // Essential vibrant colors used in your app
+    'bg-[#2ecc71]',
+    'bg-[#27ae60]', 
+    'bg-[#f8faf8]',
+    'text-[#2ecc71]',
+    'text-[#27ae60]',
+    'border-[#2ecc71]',
+    'border-[#27ae60]',
+    'hover:bg-[#2ecc71]',
+    'hover:bg-[#27ae60]',
+    'hover:text-[#2ecc71]',
+    'focus:ring-[#2ecc71]',
+    'shadow-[#2ecc71]',
+    
+    // Color opacity variations
+    'bg-[#2ecc71]/10',
+    'bg-[#2ecc71]/20',
+    'bg-[#2ecc71]/50',
+    'bg-[#2ecc71]/70',
+    'bg-[#2ecc71]/80',
+    'bg-[#2ecc71]/90',
+    'text-[#2ecc71]/10',
+    'text-[#2ecc71]/20',
+    'text-[#2ecc71]/50',
+    'text-[#2ecc71]/60',
+    'text-[#2ecc71]/70',
+    'text-[#2ecc71]/80',
+    'focus:ring-[#2ecc71]/50',
+    'shadow-[#2ecc71]/5',
+    'shadow-lg',
+    'shadow-md',
+    'shadow-sm',
+    
+    // Gradient backgrounds
+    'bg-gradient-to-br',
+    'bg-gradient-to-r',
+    'bg-gradient-to-l',
+    'bg-gradient-to-t',
+    'bg-gradient-to-b',
+    'from-[#f8faf8]',
+    'to-white',
+    'from-[#2ecc71]',
+    'to-[#27ae60]',
+    
+    // Border colors
+    'border-green-100',
+    'border-green-200',
+    'border-gray-100',
+    'border-gray-200',
+    
+    // Brand color classes
+    'bg-brand',
+    'bg-brand-50',
+    'bg-brand-100',
+    'bg-brand-200',
+    'bg-brand-300',
+    'bg-brand-400',
+    'bg-brand-500',
+    'bg-brand-600',
+    'bg-brand-700',
+    'bg-brand-800',
+    'bg-brand-900',
+    'bg-brand-green-main',
+    'bg-brand-green-hover',
+    'bg-brand-green-soft',
+    'text-brand',
+    'text-brand-50',
+    'text-brand-100',
+    'text-brand-200',
+    'text-brand-300',
+    'text-brand-400',
+    'text-brand-500',
+    'text-brand-600',
+    'text-brand-700',
+    'text-brand-800',
+    'text-brand-900',
+    'text-brand-green-main',
+    'text-brand-green-hover',
+    'border-brand',
+    'border-brand-500',
+    'border-brand-green-main',
+    'hover:bg-brand',
+    'hover:bg-brand-500',
+    'hover:bg-brand-600',
+    'hover:bg-brand-green-hover',
+    'hover:text-brand',
+    'hover:text-brand-500',
+    
+    // Status colors
+    'bg-green-100',
+    'bg-green-500',
+    'bg-green-600',
+    'bg-green-700',
+    'bg-green-800',
+    'bg-green-900',
+    'text-green-100',
+    'text-green-500',
+    'text-green-600',
+    'text-green-700',
+    'text-green-800',
+    'text-green-900',
+    'border-green-100',
+    'border-green-500',
+    'border-green-600',
+    'border-green-700',
+    'hover:bg-green-500',
+    'hover:bg-green-600',
+    'hover:bg-green-700',
+    'hover:bg-green-800',
+    'hover:bg-green-900',
+    
+    // Red colors for errors/warnings
+    'bg-red-100',
+    'bg-red-500',
+    'bg-red-600',
+    'bg-red-700',
+    'text-red-500',
+    'text-red-600',
+    'text-red-700',
+    'border-red-200',
+    'hover:bg-red-600',
+    'hover:bg-red-700',
+    
+    // Blue colors for info/processing
+    'bg-blue-100',
+    'bg-blue-500',
+    'bg-blue-600',
+    'bg-blue-700',
+    'text-blue-500',
+    'text-blue-600',
+    'text-blue-700',
+    'border-blue-200',
+    'hover:bg-blue-600',
+    'hover:bg-blue-700',
+    
+    // Yellow colors for warnings
+    'bg-yellow-100',
+    'bg-yellow-500',
+    'bg-yellow-600',
+    'bg-yellow-700',
+    'text-yellow-500',
+    'text-yellow-600',
+    'text-yellow-700',
+    'border-yellow-200',
+    'hover:bg-yellow-600',
+    'hover:bg-yellow-700',
+    
+    // Utility classes for vibrant effects
+    'backdrop-blur-sm',
+    'backdrop-blur-md',
+    'backdrop-blur-lg',
+    'bg-white/80',
+    'bg-white/90',
+    'bg-black/20',
+    'border-white/30',
+    'border-white/40',
+    
+    // Dynamic classes that might be generated
+    {
+      pattern: /bg-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
+    },
+    {
+      pattern: /text-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
+    },
+    {
+      pattern: /border-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
+    },
+    {
+      pattern: /hover:bg-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
+    },
+    {
+      pattern: /focus:ring-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
+    },
+    {
+      pattern: /shadow-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
+    },
+  ],
   theme: {
     extend: {
       colors: {
@@ -44,6 +222,17 @@ export default {
           'green-main': '#2ecc71',    // Used in many components
           'green-hover': '#27ae60',   // Hover states
           'green-soft': '#f8faf8',    // Background soft
+          DEFAULT: '#2ecc71',         // Default brand color
+          50: '#e8f8f1',             // Very light brand
+          100: '#c8eede',            // Light brand
+          200: '#91dbb8',            // Medium light brand
+          300: '#5ac892',            // Medium brand
+          400: '#23b56c',            // Medium dark brand
+          500: '#2ecc71',            // Main brand color
+          600: '#27ae60',            // Hover brand color
+          700: '#229954',            // Dark brand
+          800: '#1d7a44',            // Very dark brand
+          900: '#185d33',            // Darkest brand
         },
         // Status Colors
         success: {
