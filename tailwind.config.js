@@ -22,6 +22,8 @@ export default {
     // Color opacity variations
     'bg-[#2ecc71]/10',
     'bg-[#2ecc71]/20',
+    'bg-[#2ecc71]/25',
+    'bg-[#2ecc71]/40',
     'bg-[#2ecc71]/50',
     'bg-[#2ecc71]/70',
     'bg-[#2ecc71]/80',
@@ -34,26 +36,39 @@ export default {
     'text-[#2ecc71]/80',
     'focus:ring-[#2ecc71]/50',
     'shadow-[#2ecc71]/5',
-    'shadow-lg',
-    'shadow-md',
-    'shadow-sm',
+    'shadow-[#2ecc71]/10',
+    'shadow-[#2ecc71]/25',
+    'shadow-[#2ecc71]/40',
+    'border-[#2ecc71]/20',
+    'hover:shadow-[#2ecc71]/10',
+    'hover:shadow-[#2ecc71]/40',
     
-    // Gradient backgrounds
-    'bg-gradient-to-br',
+    // ProductList specific gradients and colors
     'bg-gradient-to-r',
+    'bg-gradient-to-br',
     'bg-gradient-to-l',
     'bg-gradient-to-t',
     'bg-gradient-to-b',
-    'from-[#f8faf8]',
-    'to-white',
     'from-[#2ecc71]',
     'to-[#27ae60]',
+    'from-[#27ae60]',
+    'to-[#2ecc71]',
+    'from-[#f8faf8]',
+    'to-white',
+    'hover:from-[#27ae60]',
+    'hover:to-[#2ecc71]',
+    'hover:bg-[#f8faf8]',
     
-    // Border colors
-    'border-green-100',
-    'border-green-200',
-    'border-gray-100',
-    'border-gray-200',
+    // Buy Now button colors (amber/orange)
+    'from-amber-500',
+    'to-orange-600',
+    'hover:from-amber-600',
+    'hover:to-orange-700',
+    'shadow-amber-500/25',
+    'hover:shadow-amber-500/40',
+    'text-amber-600',
+    'bg-amber-50',
+    'border-amber-200',
     
     // Brand color classes
     'bg-brand',
@@ -93,13 +108,15 @@ export default {
     'hover:text-brand',
     'hover:text-brand-500',
     
-    // Status colors
+    // Status colors for Orders page
+    'bg-green-50',
     'bg-green-100',
     'bg-green-500',
     'bg-green-600',
     'bg-green-700',
     'bg-green-800',
     'bg-green-900',
+    'text-green-50',
     'text-green-100',
     'text-green-500',
     'text-green-600',
@@ -107,6 +124,7 @@ export default {
     'text-green-800',
     'text-green-900',
     'border-green-100',
+    'border-green-200',
     'border-green-500',
     'border-green-600',
     'border-green-700',
@@ -116,7 +134,21 @@ export default {
     'hover:bg-green-800',
     'hover:bg-green-900',
     
-    // Red colors for errors/warnings
+    // Purple colors for Orders (shipped status)
+    'bg-purple-50',
+    'bg-purple-100',
+    'bg-purple-500',
+    'bg-purple-600',
+    'bg-purple-700',
+    'text-purple-500',
+    'text-purple-600',
+    'text-purple-700',
+    'border-purple-200',
+    'hover:bg-purple-600',
+    'hover:bg-purple-700',
+    
+    // Red colors for errors/cancelled
+    'bg-red-50',
     'bg-red-100',
     'bg-red-500',
     'bg-red-600',
@@ -128,7 +160,21 @@ export default {
     'hover:bg-red-600',
     'hover:bg-red-700',
     
+    // Orange colors for pending
+    'bg-orange-50',
+    'bg-orange-100',
+    'bg-orange-500',
+    'bg-orange-600',
+    'bg-orange-700',
+    'text-orange-500',
+    'text-orange-600',
+    'text-orange-700',
+    'border-orange-200',
+    'hover:bg-orange-600',
+    'hover:bg-orange-700',
+    
     // Blue colors for info/processing
+    'bg-blue-50',
     'bg-blue-100',
     'bg-blue-500',
     'bg-blue-600',
@@ -142,25 +188,93 @@ export default {
     
     // Yellow colors for warnings
     'bg-yellow-100',
+    'bg-yellow-400',
     'bg-yellow-500',
     'bg-yellow-600',
     'bg-yellow-700',
+    'text-yellow-400',
     'text-yellow-500',
     'text-yellow-600',
     'text-yellow-700',
     'border-yellow-200',
     'hover:bg-yellow-600',
     'hover:bg-yellow-700',
+    'fill-current',
+    
+    // Return Detail Page colors
+    'bg-amber-50',
+    'text-amber-700',
+    'border-amber-200',
+    'bg-emerald-50',
+    'text-emerald-700',
+    'border-emerald-200',
+    'bg-rose-50',
+    'text-rose-700',
+    'border-rose-200',
+    'bg-indigo-50',
+    'text-indigo-700',
+    'border-indigo-200',
+    'bg-teal-50',
+    'text-teal-700',
+    'border-teal-200',
+    'bg-cyan-50',
+    'text-cyan-700',
+    'border-cyan-200',
+    
+    // Emerald colors for success states
+    'from-emerald-500',
+    'to-teal-600',
+    'hover:from-emerald-600',
+    'hover:to-teal-700',
     
     // Utility classes for vibrant effects
     'backdrop-blur-sm',
     'backdrop-blur-md',
     'backdrop-blur-lg',
+    'backdrop-blur-xl',
     'bg-white/80',
     'bg-white/90',
+    'bg-white/95',
     'bg-black/20',
     'border-white/30',
     'border-white/40',
+    'border-green-100/50',
+    
+    // Gray colors for backgrounds and text
+    'bg-gray-50',
+    'bg-gray-100',
+    'bg-gray-200',
+    'bg-gray-300',
+    'bg-gray-400',
+    'bg-gray-500',
+    'bg-gray-600',
+    'bg-gray-700',
+    'bg-gray-800',
+    'bg-gray-900',
+    'text-gray-300',
+    'text-gray-400',
+    'text-gray-500',
+    'text-gray-600',
+    'text-gray-700',
+    'text-gray-800',
+    'text-gray-900',
+    'border-gray-100',
+    'border-gray-200',
+    'border-gray-300',
+    'hover:bg-gray-200',
+    
+    // Shadow classes
+    'shadow-lg',
+    'shadow-md',
+    'shadow-sm',
+    'hover:shadow-lg',
+    
+    // Animation and transition classes
+    'transition-all',
+    'transition-colors',
+    'duration-200',
+    'duration-300',
+    'animate-spin',
     
     // Dynamic classes that might be generated
     {
@@ -180,6 +294,12 @@ export default {
     },
     {
       pattern: /shadow-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
+    },
+    {
+      pattern: /from-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
+    },
+    {
+      pattern: /to-\[(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/,
     },
   ],
   theme: {
