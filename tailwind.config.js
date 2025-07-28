@@ -44,14 +44,19 @@ export default {
       });
     });
 
-    // Add gradients and utility classes
+    // Add gradients and utility classes + Safari compatibility patterns
     list.push(
       'bg-gradient-to-r','bg-gradient-to-l','bg-gradient-to-b','bg-gradient-to-t','bg-gradient-to-br',
       'hover:from-2ecc71','hover:to-27ae60',
       'backdrop-blur-sm','backdrop-blur-md','backdrop-blur-lg','backdrop-blur-xl',
+      '-webkit-backdrop-filter', // Safari vendor prefix
       'bg-white/80','bg-white/90','bg-white/95','bg-black/20',
       'shadow-lg','shadow-md','shadow-sm','hover:shadow-lg',
-      'transition-all','transition-colors','duration-200','duration-300','animate-spin'
+      'transition-all','transition-colors','duration-200','duration-300','animate-spin',
+      // Safari-specific gradients
+      '-webkit-linear-gradient', '-moz-linear-gradient',
+      // Safari box shadows
+      '-webkit-box-shadow'
     );
 
     return list;

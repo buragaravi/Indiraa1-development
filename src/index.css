@@ -63,17 +63,29 @@ body {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
-  /* Glass morphism utility classes */
+  /* Glass morphism utility classes - Safari Compatible */
   .glass {
-    @apply bg-white/80 backdrop-blur-sm border border-white/30;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    backdrop-filter: blur(4px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
   }
   
   .glass-strong {
-    @apply bg-white/90 backdrop-blur-md border border-white/40;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
   }
   
   .glass-dark {
-    @apply bg-black/20 backdrop-blur-sm border border-white/10;
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    background: rgba(0, 0, 0, 0.2) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    backdrop-filter: blur(4px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
 
   /* Neumorphic design utility - using standard shadows */
@@ -82,40 +94,74 @@ body {
   }
   
   .neumorphic-input {
-    @apply bg-white shadow-inner border border-gray-200;
+    background-color: white !important;
+    box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05) !important;
+    border: 1px solid rgb(229 231 235) !important;
   }
 
   .neumorphic-button {
-    @apply bg-white shadow-md border border-gray-200 hover:shadow-lg transition-all duration-300;
+    background-color: white !important;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+    border: 1px solid rgb(229 231 235) !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .neumorphic-button:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
   }
 
   .neumorphic-button-small {
-    @apply bg-white shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300;
+    background-color: white !important;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+    border: 1px solid rgb(243 244 246) !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .neumorphic-button-small:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
   }
 
-  /* Gradient backgrounds */
+  /* Gradient backgrounds - Safari Compatible */
   .gradient-primary {
-    @apply bg-gradient-to-br from-green-600 to-green-800;
+    background-color: #059669 !important;
+    background: -webkit-linear-gradient(135deg, #059669, #065f46) !important;
+    background: -moz-linear-gradient(135deg, #059669, #065f46) !important;
+    background: linear-gradient(135deg, #059669, #065f46) !important;
   }
   
   .gradient-secondary {
-    @apply bg-gradient-to-br from-green-400 to-green-600;
+    background-color: #16a34a !important;
+    background: -webkit-linear-gradient(135deg, #16a34a, #059669) !important;
+    background: -moz-linear-gradient(135deg, #16a34a, #059669) !important;
+    background: linear-gradient(135deg, #16a34a, #059669) !important;
   }
   
   .gradient-soft {
-    @apply bg-gradient-to-br from-green-50 to-green-100;
+    background-color: #f0fdf4 !important;
+    background: -webkit-linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+    background: -moz-linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
   }
 
   .gradient-success {
-    @apply bg-gradient-to-br from-emerald-500 to-emerald-700;
+    background-color: #10b981 !important;
+    background: -webkit-linear-gradient(135deg, #10b981, #047857) !important;
+    background: -moz-linear-gradient(135deg, #10b981, #047857) !important;
+    background: linear-gradient(135deg, #10b981, #047857) !important;
   }
 
   .gradient-error {
-    @apply bg-gradient-to-br from-red-500 to-red-700;
+    background-color: #ef4444 !important;
+    background: -webkit-linear-gradient(135deg, #ef4444, #b91c1c) !important;
+    background: -moz-linear-gradient(135deg, #ef4444, #b91c1c) !important;
+    background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
   }
 
   .gradient-warning {
-    @apply bg-gradient-to-br from-yellow-500 to-yellow-700;
+    background-color: #eab308 !important;
+    background: -webkit-linear-gradient(135deg, #eab308, #a16207) !important;
+    background: -moz-linear-gradient(135deg, #eab308, #a16207) !important;
+    background: linear-gradient(135deg, #eab308, #a16207) !important;
   }
 
   /* Brand color utilities for direct hex replacements */
@@ -154,15 +200,29 @@ body {
 
   /* COMPLETE VIBRANT COLOR SYSTEM - ALL COLORS DIRECTLY DEFINED */
   
-  /* ProductList Page - Add to Cart Button Colors */
+  /* ProductList Page - Add to Cart Button Colors - Safari Compatible */
   .btn-add-to-cart {
+    /* Safari fallback */
+    background-color: #2ecc71 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #2ecc71, #27ae60) !important;
+    background: -moz-linear-gradient(left, #2ecc71, #27ae60) !important;
     background: linear-gradient(to right, #2ecc71, #27ae60) !important;
     color: white !important;
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.25) !important;
     box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.25) !important;
   }
   
   .btn-add-to-cart:hover {
+    /* Safari fallback */
+    background-color: #27ae60 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #27ae60, #2ecc71) !important;
+    background: -moz-linear-gradient(left, #27ae60, #2ecc71) !important;
     background: linear-gradient(to right, #27ae60, #2ecc71) !important;
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 6px 20px 0 rgba(46, 204, 113, 0.4) !important;
     box-shadow: 0 6px 20px 0 rgba(46, 204, 113, 0.4) !important;
   }
   
@@ -173,37 +233,70 @@ body {
     box-shadow: 0 4px 14px 0 rgba(46, 204, 113, 0.1) !important;
   }
   
-  /* ProductList Page - Buy Now Button Colors */
+  /* ProductList Page - Buy Now Button Colors - Safari Compatible */
   .btn-buy-now {
+    /* Safari fallback */
+    background-color: #f59e0b !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #f59e0b, #ea580c) !important;
+    background: -moz-linear-gradient(left, #f59e0b, #ea580c) !important;
     background: linear-gradient(to right, #f59e0b, #ea580c) !important;
     color: white !important;
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.25) !important;
     box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.25) !important;
   }
   
   .btn-buy-now:hover {
+    /* Safari fallback */
+    background-color: #d97706 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #d97706, #c2410c) !important;
+    background: -moz-linear-gradient(left, #d97706, #c2410c) !important;
     background: linear-gradient(to right, #d97706, #c2410c) !important;
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 6px 20px 0 rgba(245, 158, 11, 0.4) !important;
     box-shadow: 0 6px 20px 0 rgba(245, 158, 11, 0.4) !important;
   }
   
-  /* Page Background Gradients */
+  /* Page Background Gradients - Safari Compatible */
   .bg-page-gradient {
+    /* Safari fallback */
+    background-color: #f0fdf4 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #f0fdf4, #ffffff, #f0fdf4) !important;
+    background: -moz-linear-gradient(135deg, #f0fdf4, #ffffff, #f0fdf4) !important;
     background: linear-gradient(135deg, #f0fdf4, #ffffff, #f0fdf4) !important;
   }
   
   .bg-wishlist-gradient {
+    /* Safari fallback */
+    background-color: #f8faf8 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #f8faf8, #ffffff) !important;
+    background: -moz-linear-gradient(135deg, #f8faf8, #ffffff) !important;
     background: linear-gradient(135deg, #f8faf8, #ffffff) !important;
   }
   
-  /* Header Navigation Colors */
+  /* Header Navigation Colors - Safari Compatible */
   .nav-button {
+    /* Safari fallback for backdrop-filter */
+    background-color: rgba(255, 255, 255, 0.9) !important;
     background: rgba(255, 255, 255, 0.9) !important;
+    /* Webkit vendor prefix for Safari backdrop-filter */
+    -webkit-backdrop-filter: blur(12px) !important;
     backdrop-filter: blur(12px) !important;
     border: 1px solid rgba(34, 197, 94, 0.1) !important;
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 8px 32px 0 rgba(46, 204, 113, 0.05) !important;
     box-shadow: 0 8px 32px 0 rgba(46, 204, 113, 0.05) !important;
   }
   
   .nav-button:hover {
+    background-color: #f8faf8 !important;
     background: #f8faf8 !important;
+    /* Safari shadow fallback */
+    -webkit-box-shadow: 0 8px 32px 0 rgba(46, 204, 113, 0.1) !important;
     box-shadow: 0 8px 32px 0 rgba(46, 204, 113, 0.1) !important;
   }
   
@@ -317,21 +410,30 @@ body {
     border-color: #a7f3d0 !important;
   }
   
-  /* Glass Morphism Effects */
+  /* Glass Morphism Effects - Safari Compatible */
   .glass-effect-light {
+    background-color: rgba(255, 255, 255, 0.8) !important;
     background: rgba(255, 255, 255, 0.8) !important;
+    /* Webkit vendor prefix for Safari backdrop-filter */
+    -webkit-backdrop-filter: blur(8px) !important;
     backdrop-filter: blur(8px) !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
   }
   
   .glass-effect-medium {
+    background-color: rgba(255, 255, 255, 0.9) !important;
     background: rgba(255, 255, 255, 0.9) !important;
+    /* Webkit vendor prefix for Safari backdrop-filter */
+    -webkit-backdrop-filter: blur(12px) !important;
     backdrop-filter: blur(12px) !important;
     border: 1px solid rgba(255, 255, 255, 0.4) !important;
   }
   
   .glass-effect-strong {
+    background-color: rgba(255, 255, 255, 0.95) !important;
     background: rgba(255, 255, 255, 0.95) !important;
+    /* Webkit vendor prefix for Safari backdrop-filter */
+    -webkit-backdrop-filter: blur(16px) !important;
     backdrop-filter: blur(16px) !important;
     border: 1px solid rgba(255, 255, 255, 0.5) !important;
   }
