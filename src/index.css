@@ -524,7 +524,7 @@ body {
   }
 }
 
-  /* Status badge utilities */
+  /* Status badge utilities - Safari Compatible with ALL patterns found */
   .status-pending {
     background-color: #fef3c7 !important;
     color: #92400e !important;
@@ -559,6 +559,102 @@ body {
     background-color: #dcfce7 !important;
     color: #166534 !important;
     border-color: #bbf7d0 !important;
+  }
+
+  .status-returned {
+    background-color: #fed7aa !important;
+    color: #ea580c !important;
+    border-color: #fb923c !important;
+  }
+
+  /* Admin page gradient backgrounds - Safari Compatible */
+  .admin-bg-gradient {
+    /* Safari fallback */
+    background-color: #f9fafb !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #f9fafb, #f3f4f6) !important;
+    background: -moz-linear-gradient(135deg, #f9fafb, #f3f4f6) !important;
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6) !important;
+  }
+
+  .admin-green-gradient {
+    /* Safari fallback */
+    background-color: #f0fdf4 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+    background: -moz-linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+  }
+
+  .admin-blue-gradient {
+    /* Safari fallback */
+    background-color: #eff6ff !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(135deg, #eff6ff, #dbeafe) !important;
+    background: -moz-linear-gradient(135deg, #eff6ff, #dbeafe) !important;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe) !important;
+  }
+
+  /* Button gradients found in admin pages - Safari Compatible */
+  .btn-admin-blue {
+    /* Safari fallback */
+    background-color: #3b82f6 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #3b82f6, #6366f1) !important;
+    background: -moz-linear-gradient(left, #3b82f6, #6366f1) !important;
+    background: linear-gradient(to right, #3b82f6, #6366f1) !important;
+    color: white !important;
+  }
+
+  .btn-admin-green {
+    /* Safari fallback */
+    background-color: #22c55e !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #22c55e, #10b981) !important;
+    background: -moz-linear-gradient(left, #22c55e, #10b981) !important;
+    background: linear-gradient(to right, #22c55e, #10b981) !important;
+    color: white !important;
+  }
+
+  .btn-admin-cyan {
+    /* Safari fallback */
+    background-color: #06b6d4 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #3b82f6, #06b6d4) !important;
+    background: -moz-linear-gradient(left, #3b82f6, #06b6d4) !important;
+    background: linear-gradient(to right, #3b82f6, #06b6d4) !important;
+    color: white !important;
+  }
+
+  .btn-emerald-teal {
+    /* Safari fallback */
+    background-color: #10b981 !important;
+    /* Webkit vendor prefix for Safari */
+    background: -webkit-linear-gradient(left, #10b981, #0d9488) !important;
+    background: -moz-linear-gradient(left, #10b981, #0d9488) !important;
+    background: linear-gradient(to right, #10b981, #0d9488) !important;
+    color: white !important;
+  }
+
+  /* Focus ring utilities - Safari Compatible */
+  .focus-ring-green {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.5) !important;
+  }
+
+  .focus-ring-brand {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.5) !important;
+  }
+
+  .focus-ring-red {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.5) !important;
+  }
+
+  .focus-ring-blue {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5) !important;
   }
 
   /* Enhanced scrollbar styles */

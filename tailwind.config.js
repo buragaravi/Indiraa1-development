@@ -5,22 +5,29 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: (() => {
+    // All hex colors found in codebase
     const hexColors = ['2ecc71', '27ae60', 'f8faf8'];
 
+    // All named colors found in codebase - EXPANDED for Safari compatibility
     const namedColors = [
       'primary','secondary','brand','success','error','warning','info',
       'amber','orange','purple','pink','indigo','cyan','emerald','gray',
-      'green','red','blue','yellow','teal'
+      'green','red','blue','yellow','teal','white','black','slate',
+      'zinc','neutral','stone','rose','fuchsia','violet','sky','lime'
     ];
 
-    const colorShades = ['50','100','200','300','400','500','600','700','800','900'];
+    // All color shades including new ones found
+    const colorShades = ['25','50','100','200','300','400','500','600','700','800','900','950'];
 
+    // All prefixes found in codebase - EXPANDED for Safari compatibility
     const prefixes = [
       'bg','text','border','hover:bg','hover:text','hover:border',
-      'focus:ring','shadow','hover:shadow','from','to'
+      'focus:ring','focus:border','shadow','hover:shadow','from','to',
+      'ring','divide','decoration','accent','caret','fill','stroke'
     ];
 
-    const opacities = ['','/5','/10','/20','/25','/40','/50','/70','/80','/90'];
+    // All opacity variants found - EXPANDED for Safari compatibility
+    const opacities = ['','/5','/10','/20','/25','/30','/40','/50','/60','/70','/80','/90','/95'];
 
     let list = [];
 
@@ -44,19 +51,77 @@ export default {
       });
     });
 
-    // Add gradients and utility classes + Safari compatibility patterns
+    // Add gradients and utility classes + Safari compatibility patterns + ALL FOUND PATTERNS
     list.push(
-      'bg-gradient-to-r','bg-gradient-to-l','bg-gradient-to-b','bg-gradient-to-t','bg-gradient-to-br',
+      // Basic gradients
+      'bg-gradient-to-r','bg-gradient-to-l','bg-gradient-to-b','bg-gradient-to-t',
+      'bg-gradient-to-br','bg-gradient-to-bl','bg-gradient-to-tr','bg-gradient-to-tl',
+      
+      // Hover gradients
       'hover:from-2ecc71','hover:to-27ae60',
+      'hover:from-emerald-600','hover:to-teal-700',
+      'hover:from-amber-600','hover:to-orange-700',
+      
+      // Backdrop blur variants
       'backdrop-blur-sm','backdrop-blur-md','backdrop-blur-lg','backdrop-blur-xl',
       '-webkit-backdrop-filter', // Safari vendor prefix
-      'bg-white/80','bg-white/90','bg-white/95','bg-black/20',
-      'shadow-lg','shadow-md','shadow-sm','hover:shadow-lg',
-      'transition-all','transition-colors','duration-200','duration-300','animate-spin',
+      
+      // Background opacities
+      'bg-white/60','bg-white/80','bg-white/90','bg-white/95','bg-black/20',
+      
+      // Shadows
+      'shadow-lg','shadow-md','shadow-sm','shadow-xl','shadow-2xl',
+      'hover:shadow-lg','hover:shadow-xl','hover:shadow-2xl',
+      'shadow-soft-lg', // Custom shadow
+      
+      // Transitions and animations
+      'transition-all','transition-colors','transition-transform',
+      'duration-200','duration-300','duration-500','animate-spin',
+      
       // Safari-specific gradients
       '-webkit-linear-gradient', '-moz-linear-gradient',
+      
       // Safari box shadows
-      '-webkit-box-shadow'
+      '-webkit-box-shadow',
+      
+      // Status badge patterns found in codebase
+      'bg-green-100','text-green-800','border-green-200','bg-green-50','hover:bg-green-200',
+      'bg-red-100','text-red-800','border-red-200','bg-red-50','hover:bg-red-200',
+      'bg-blue-100','text-blue-800','border-blue-200','bg-blue-50','hover:bg-blue-200',
+      'bg-yellow-100','text-yellow-800','border-yellow-200','bg-yellow-50','hover:bg-yellow-200',
+      'bg-orange-100','text-orange-800','border-orange-200','bg-orange-50','hover:bg-orange-200',
+      
+      // Admin page gradients found
+      'from-gray-50','to-gray-100','from-blue-50','to-blue-50',
+      'from-green-50','to-emerald-100','from-emerald-100','to-emerald-50',
+      'from-blue-600','to-indigo-600','from-green-500','to-emerald-600',
+      'from-blue-500','to-cyan-600','from-emerald-500','to-teal-600',
+      'from-green-600','to-emerald-600','from-yellow-400','to-yellow-500',
+      
+      // Focus ring patterns found
+      'focus:ring-2','focus:ring-green-500/50','focus:ring-brand-300',
+      'focus:ring-red-300','focus:ring-blue-500','focus:outline-none',
+      'focus:border-green-500','focus:border-brand-500','focus:border-red-500',
+      
+      // Text gradient patterns
+      'bg-clip-text','text-transparent',
+      
+      // Border patterns found
+      'border-red-400/40','border-green-400/30','border-white/20',
+      'border-white/30','border-white/40','border-red-100/50',
+      
+      // Shadow patterns with colors found
+      'shadow-red-500/25','shadow-green-500/25','shadow-amber-500/25',
+      'hover:shadow-red-500/10','hover:shadow-green-500/10',
+      
+      // Form checkbox patterns
+      'form-checkbox','text-green-600','rounded-full',
+      
+      // Glass morphism patterns
+      'backdrop-blur-sm','backdrop-blur-md',
+      
+      // Additional utility patterns found
+      'disabled:opacity-50','group','last:border-b-0'
     );
 
     return list;
@@ -77,6 +142,7 @@ export default {
         brand: {
           'green-main': '#2ecc71','green-hover': '#27ae60','green-soft': '#f8faf8',
           DEFAULT: '#2ecc71',
+          25: '#f0fdf4',
           50: '#e8f8f1',100: '#c8eede',200: '#91dbb8',300: '#5ac892',400: '#23b56c',
           500: '#2ecc71',600: '#27ae60',700: '#229954',800: '#1d7a44',900: '#185d33',
         },
