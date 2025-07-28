@@ -176,13 +176,13 @@ const Orders = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 flex justify-center items-center">
+      <div className="min-h-screen bg-orders-page flex justify-center items-center">
         <motion.div 
-          className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl"
+          className="glass-effect-medium rounded-3xl p-8 shadow-2xl"
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
         >
-          <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full"></div>
+          <div className="loading-spinner w-8 h-8"></div>
         </motion.div>
       </div>
     );
@@ -190,9 +190,9 @@ const Orders = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 flex justify-center items-center">
+      <div className="min-h-screen bg-orders-page flex justify-center items-center">
         <motion.div 
-          className="text-center bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl max-w-md"
+          className="text-center glass-effect-medium rounded-3xl p-8 shadow-2xl max-w-md"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
         >
@@ -201,7 +201,7 @@ const Orders = () => {
           <p className="text-gray-600 mb-6">{error}</p>
           <button 
             onClick={fetchOrders}
-            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg mx-auto"
+            className="flex items-center gap-2 px-6 py-3 btn-orders-primary rounded-xl mx-auto"
           >
             <FiRefreshCw className="w-4 h-4" />
             Try Again
@@ -212,7 +212,7 @@ const Orders = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 py-8">
+    <div className="min-h-screen bg-orders-page py-8">
       <div className="container mx-auto px-4 max-w-7xl">        {/* Header */}
         <motion.div 
           className="text-center mb-6 md:mb-8"
@@ -243,7 +243,7 @@ const Orders = () => {
                     onClick={() => setStatusFilter(option.value)}
                     className={`px-3 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl text-xs md:text-sm font-medium transition-all duration-200 ${
                       statusFilter === option.value
-                        ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg'
+                        ? 'btn-orders-filter-active'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                   >
@@ -283,7 +283,7 @@ const Orders = () => {
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                   {/* Order Info */}
                   <div className="flex items-start gap-3 md:gap-4">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl md:rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 md:w-16 md:h-16 icon-orders-primary rounded-xl md:rounded-2xl flex items-center justify-center flex-shrink-0">
                       <FiShoppingBag className="w-6 h-6 md:w-8 md:h-8 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-3 mb-2">
@@ -429,7 +429,7 @@ const Orders = () => {
                             e.stopPropagation();
                             handleReturnOrder(order._id);
                           }}
-                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:from-orange-600 hover:to-red-600 transition-all duration-200 shadow-md hover:shadow-lg text-sm font-medium"
+                          className="flex items-center gap-2 px-4 py-2 btn-return-order rounded-lg text-sm font-medium"
                         >
                           <FiRotateCcw className="w-4 h-4" />
                           Return Order
@@ -439,7 +439,7 @@ const Orders = () => {
                             e.stopPropagation();
                             navigate(`/orders/${order._id}`);
                           }}
-                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-md hover:shadow-lg text-sm font-medium"
+                          className="flex items-center gap-2 px-4 py-2 btn-view-order rounded-lg text-sm font-medium"
                         >
                           <FiEye className="w-4 h-4" />
                           View Details
@@ -470,14 +470,14 @@ const Orders = () => {
             {statusFilter === 'all' ? (
               <button
                 onClick={() => navigate('/products')}
-                className="w-full sm:w-auto px-6 md:px-8 py-2 md:py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg md:rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg text-sm md:text-base"
+                className="w-full sm:w-auto px-6 md:px-8 py-2 md:py-3 btn-orders-primary rounded-lg md:rounded-xl text-sm md:text-base"
               >
                 Start Shopping
               </button>
             ) : (
               <button
                 onClick={() => setStatusFilter('all')}
-                className="w-full sm:w-auto px-6 md:px-8 py-2 md:py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-lg md:rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-200 shadow-lg text-sm md:text-base"
+                className="w-full sm:w-auto px-6 md:px-8 py-2 md:py-3 btn-orders-secondary rounded-lg md:rounded-xl text-sm md:text-base"
               >
                 View All Orders
               </button>

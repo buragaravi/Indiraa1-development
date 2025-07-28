@@ -306,7 +306,7 @@ export default {
     extend: {
       colors: {
         // Primary Green Theme (Main Brand Colors)
-        primary: {
+        primary: {  
           50: '#e8f5e8',
           100: '#c8e6c8',
           200: '#a5d6a7',

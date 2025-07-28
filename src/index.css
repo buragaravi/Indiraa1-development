@@ -16,7 +16,79 @@
   --color-emerald-500: #10b981;
   --color-emerald-600: #059669;
   --color-teal-600: #0d9488;
-  --color-teal-700: #0f766e;
+  --color-teal-700: #0f/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #22c55e rgba(240, 253, 244, 0.3);
+}
+
+/* ===== ORDERS PAGE SPECIFIC CLASSES ===== */
+.bg-orders-page {
+  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%) !important;
+}
+
+.btn-orders-primary {
+  background: linear-gradient(135deg, #10b981 0%, #0d9488 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-orders-primary:hover {
+  background: linear-gradient(135deg, #059669 0%, #0f766e 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5) !important;
+}
+
+.btn-orders-filter-active {
+  background: linear-gradient(135deg, #10b981 0%, #0d9488 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+}
+
+.icon-orders-primary {
+  background: linear-gradient(135deg, #10b981 0%, #0d9488 100%) !important;
+  color: white !important;
+}
+
+.btn-return-order {
+  background: linear-gradient(135deg, #f97316 0%, #dc2626 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-return-order:hover {
+  background: linear-gradient(135deg, #ea580c 0%, #b91c1c 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(249, 115, 22, 0.5) !important;
+}
+
+.btn-view-order {
+  background: linear-gradient(135deg, #10b981 0%, #0d9488 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-view-order:hover {
+  background: linear-gradient(135deg, #059669 0%, #0f766e 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5) !important;
+}
+
+.btn-orders-secondary {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(107, 114, 128, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-orders-secondary:hover {
+  background: linear-gradient(135deg, #4b5563 0%, #374151 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(107, 114, 128, 0.5) !important;
+}
 }
 
 /* Remove CSS variables and use Tailwind classes instead */
