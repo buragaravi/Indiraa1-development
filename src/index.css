@@ -14,26 +14,26 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Define utility classes instead of CSS variables */
+/* Define utility classes with safe color references */
 @layer components {
   .btn-primary {
-    @apply bg-primary-800 text-white px-4 py-2 rounded-md hover:bg-primary-900 transition-colors duration-200;
+    @apply bg-green-800 text-white px-4 py-2 rounded-md hover:bg-green-900 transition-colors duration-200;
   }
 
   .btn-secondary {
-    @apply bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondary-dark transition-all duration-200;
+    @apply bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-200;
   }
 
   .btn-success {
-    @apply bg-success text-white px-4 py-2 rounded-md hover:bg-success-dark transition-all duration-200;
+    @apply bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-all duration-200;
   }
 
   .btn-error {
-    @apply bg-error text-white px-4 py-2 rounded-md hover:bg-error-dark transition-all duration-200;
+    @apply bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-all duration-200;
   }
 
   .btn-warning {
-    @apply bg-warning text-white px-4 py-2 rounded-md hover:bg-warning-dark transition-all duration-200;
+    @apply bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700 transition-all duration-200;
   }
 
   .card {
@@ -41,7 +41,7 @@ body {
   }
 
   .section-title {
-    @apply text-2xl font-bold mb-6 text-center text-primary-900;
+    @apply text-2xl font-bold mb-6 text-center text-green-900;
   }
 
   .container {
@@ -61,30 +61,30 @@ body {
     @apply bg-black/20 backdrop-blur-sm border border-white/10;
   }
 
-  /* Neumorphic design utility */
+  /* Neumorphic design utility - using standard shadows */
   .neumorphic-card {
-    @apply bg-white shadow-neumorphic border border-gray-100;
+    @apply bg-white shadow-lg border border-gray-100;
   }
   
   .neumorphic-input {
-    @apply bg-white shadow-neumorphic-inset border border-gray-200;
+    @apply bg-white shadow-inner border border-gray-200;
   }
 
   .neumorphic-button {
-    @apply bg-white shadow-neumorphic border border-gray-200 hover:shadow-soft transition-all duration-300;
+    @apply bg-white shadow-md border border-gray-200 hover:shadow-lg transition-all duration-300;
   }
 
   .neumorphic-button-small {
-    @apply bg-white shadow-soft border border-gray-100 hover:shadow-soft-lg transition-all duration-300;
+    @apply bg-white shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300;
   }
 
   /* Gradient backgrounds */
   .gradient-primary {
-    @apply bg-gradient-to-br from-primary-600 to-primary-800;
+    @apply bg-gradient-to-br from-green-600 to-green-800;
   }
   
   .gradient-secondary {
-    @apply bg-gradient-to-br from-secondary-400 to-secondary-600;
+    @apply bg-gradient-to-br from-green-400 to-green-600;
   }
   
   .gradient-soft {
@@ -92,15 +92,15 @@ body {
   }
 
   .gradient-success {
-    @apply bg-gradient-to-br from-success-500 to-success-700;
+    @apply bg-gradient-to-br from-emerald-500 to-emerald-700;
   }
 
   .gradient-error {
-    @apply bg-gradient-to-br from-error-500 to-error-700;
+    @apply bg-gradient-to-br from-red-500 to-red-700;
   }
 
   .gradient-warning {
-    @apply bg-gradient-to-br from-warning-500 to-warning-700;
+    @apply bg-gradient-to-br from-yellow-500 to-yellow-700;
   }
 
   /* Brand color utilities for direct hex replacements */
