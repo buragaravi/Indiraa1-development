@@ -130,7 +130,7 @@ const Cart = () => {  const [cart, setCart] = useState([]);
   const deliveryCharge = subtotal > 500 ? 0 : 50;
   const total = subtotal + deliveryCharge;
   if (loading) {
-    return (      <div className="min-h-screen bg-gradient-to-br from-[#f8faf8] to-white flex justify-center items-center">
+    return (      <div className="cart-empty-bg">
         <motion.div 
           className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl"
           animate={{ rotate: 360 }}

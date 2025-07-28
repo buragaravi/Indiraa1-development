@@ -2531,3 +2531,440 @@ body {
   margin-right: 0.75rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
+
+/* Profile Page Safari-Compatible Classes */
+.profile-loading-bg {
+  background: linear-gradient(to bottom right, #f8faf8, #ffffff);
+  background: -webkit-linear-gradient(to bottom right, #f8faf8, #ffffff);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-error-bg {
+  background: linear-gradient(to bottom right, #f8faf8, #ffffff);
+  background: -webkit-linear-gradient(to bottom right, #f8faf8, #ffffff);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-main-bg {
+  background: linear-gradient(to bottom right, #f8faf8, #ffffff);
+  background: -webkit-linear-gradient(to bottom right, #f8faf8, #ffffff);
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.profile-edit-icon-bg {
+  background: linear-gradient(to right, #3b82f6, #8b5cf6);
+  background: -webkit-linear-gradient(to right, #3b82f6, #8b5cf6);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-edit-button {
+  background: linear-gradient(to right, #3b82f6, #8b5cf6);
+  background: -webkit-linear-gradient(to right, #3b82f6, #8b5cf6);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.profile-edit-button:hover {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  background: -webkit-linear-gradient(to right, #2563eb, #7c3aed);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.profile-edit-form-bg {
+  background: linear-gradient(to right, #dbeafe, #e9d5ff);
+  background: -webkit-linear-gradient(to right, #dbeafe, #e9d5ff);
+  padding: 1rem;
+  border: 1px solid #3b82f6;
+  border-radius: 0.75rem;
+}
+
+/* CheckoutPage Components */
+.checkoutpage-success-card {
+  background: -webkit-linear-gradient(to right, #2ecc71, #27ae60);
+  background: linear-gradient(to right, #2ecc71, #27ae60);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  max-width: 24rem;
+}
+
+.checkoutpage-submit-button {
+  width: 100%;
+  padding: 1rem 0;
+  background: -webkit-linear-gradient(to right, #2ecc71, #27ae60);
+  background: linear-gradient(to right, #2ecc71, #27ae60);
+  color: white;
+  border-radius: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.checkoutpage-submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkoutpage-submit-button:hover:not(:disabled) {
+  background: -webkit-linear-gradient(to right, #27ae60, #229954);
+  background: linear-gradient(to right, #27ae60, #229954);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.profile-save-button {
+  background: linear-gradient(to right, #3b82f6, #8b5cf6);
+  background: -webkit-linear-gradient(to right, #3b82f6, #8b5cf6);
+  color: white;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.profile-save-button:hover {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  background: -webkit-linear-gradient(to right, #2563eb, #7c3aed);
+}
+
+.profile-save-button:disabled {
+  opacity: 0.5;
+}
+
+.profile-address-icon-bg {
+  background: linear-gradient(to right, #f97316, #dc2626);
+  background: -webkit-linear-gradient(to right, #f97316, #dc2626);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-add-address-button {
+  background: linear-gradient(to right, #f97316, #dc2626);
+  background: -webkit-linear-gradient(to right, #f97316, #dc2626);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.profile-add-address-button:hover {
+  background: linear-gradient(to right, #ea580c, #b91c1c);
+  background: -webkit-linear-gradient(to right, #ea580c, #b91c1c);
+}
+
+.profile-address-form-bg {
+  background: linear-gradient(to right, #fed7aa, #fecaca);
+  background: -webkit-linear-gradient(to right, #fed7aa, #fecaca);
+  padding: 1rem;
+  border: 1px solid #f97316;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-address-form-bg:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.profile-orders-fade-overlay {
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.9), transparent);
+  background: -webkit-linear-gradient(to top, rgba(255, 255, 255, 0.9), transparent);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5rem;
+  border-radius: 0 0 1.5rem 1.5rem;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+.profile-view-all-orders-button {
+  background: linear-gradient(to right, #f97316, #dc2626);
+  background: -webkit-linear-gradient(to right, #f97316, #dc2626);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
+}
+
+.profile-view-all-orders-button:hover {
+  background: linear-gradient(to right, #ea580c, #b91c1c);
+  background: -webkit-linear-gradient(to right, #ea580c, #b91c1c);
+}
+
+/* Cart & Checkout Safari-Compatible Classes */
+.cart-empty-bg {
+  background: linear-gradient(to bottom right, #f8faf8, #ffffff);
+  background: -webkit-linear-gradient(to bottom right, #f8faf8, #ffffff);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout-loading-bg {
+  background: linear-gradient(to bottom right, #d1fae5, #f0fdfa);
+  background: -webkit-linear-gradient(to bottom right, #d1fae5, #f0fdfa);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout-main-bg {
+  background: linear-gradient(to bottom right, #d1fae5, #f0fdfa);
+  background: -webkit-linear-gradient(to bottom right, #d1fae5, #f0fdfa);
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.checkout-progress-bar {
+  background: linear-gradient(to right, #10b981, #14b8a6);
+  background: -webkit-linear-gradient(to right, #10b981, #14b8a6);
+  height: 0.25rem;
+  border-radius: 9999px;
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+}
+
+.checkout-product-image-placeholder {
+  background: linear-gradient(to right, #e5e7eb, #d1d5db);
+  background: -webkit-linear-gradient(to right, #e5e7eb, #d1d5db);
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.checkout-add-address-button {
+  background: linear-gradient(to right, #10b981, #14b8a6);
+  background: -webkit-linear-gradient(to right, #10b981, #14b8a6);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkout-add-address-button:hover {
+  background: linear-gradient(to right, #059669, #0d9488);
+  background: -webkit-linear-gradient(to right, #059669, #0d9488);
+}
+
+.checkout-add-address-button:disabled {
+  opacity: 0.5;
+}
+
+.checkout-save-address-button {
+  background: linear-gradient(to right, #10b981, #14b8a6);
+  background: -webkit-linear-gradient(to right, #10b981, #14b8a6);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.checkout-save-address-button:hover {
+  background: linear-gradient(to right, #059669, #0d9488);
+  background: -webkit-linear-gradient(to right, #059669, #0d9488);
+}
+
+.checkout-add-address-form-button {
+  background: linear-gradient(to right, #10b981, #14b8a6);
+  background: -webkit-linear-gradient(to right, #10b981, #14b8a6);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.checkout-add-address-form-button:hover {
+  background: linear-gradient(to right, #059669, #0d9488);
+  background: -webkit-linear-gradient(to right, #059669, #0d9488);
+}
+
+.checkout-place-order-button {
+  background: linear-gradient(to right, #10b981, #14b8a6);
+  background: -webkit-linear-gradient(to right, #10b981, #14b8a6);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkout-place-order-button:hover {
+  background: linear-gradient(to right, #059669, #0d9488);
+  background: -webkit-linear-gradient(to right, #059669, #0d9488);
+}
+
+.checkout-place-order-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkout-payment-button {
+  background: linear-gradient(to right, #8b5cf6, #7c3aed);
+  background: -webkit-linear-gradient(to right, #8b5cf6, #7c3aed);
+  color: white;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.checkout-payment-button:hover {
+  background: linear-gradient(to right, #7c3aed, #6d28d9);
+  background: -webkit-linear-gradient(to right, #7c3aed, #6d28d9);
+}
+
+.checkout-summary-item-image {
+  background: linear-gradient(to right, #e5e7eb, #d1d5db);
+  background: -webkit-linear-gradient(to right, #e5e7eb, #d1d5db);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.checkout-success-icon-bg {
+  background: linear-gradient(to right, #10b981, #059669);
+  background: -webkit-linear-gradient(to right, #10b981, #059669);
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkout-success-info-bg {
+  background: linear-gradient(to right, #d1fae5, #f0fdfa);
+  background: -webkit-linear-gradient(to right, #d1fae5, #f0fdfa);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #10b981;
+}
+
+.checkout-success-progress-bar {
+  background: linear-gradient(to right, #10b981, #14b8a6);
+  background: -webkit-linear-gradient(to right, #10b981, #14b8a6);
+  height: 0.5rem;
+  border-radius: 9999px;
+}
+
+.checkout-success-continue-button {
+  background: linear-gradient(to right, #10b981, #14b8a6);
+  background: -webkit-linear-gradient(to right, #10b981, #14b8a6);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.checkout-success-continue-button:hover {
+  background: linear-gradient(to right, #059669, #0d9488);
+  background: -webkit-linear-gradient(to right, #059669, #0d9488);
+}
+
+.checkoutpage-success-bg {
+  background: linear-gradient(to right, #2ecc71, #27ae60);
+  background: -webkit-linear-gradient(to right, #2ecc71, #27ae60);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  max-width: 24rem;
+}
+
+.checkoutpage-place-order-button {
+  background: linear-gradient(to right, #2ecc71, #27ae60);
+  background: -webkit-linear-gradient(to right, #2ecc71, #27ae60);
+  color: white;
+  width: 100%;
+  padding: 1rem 0;
+  border-radius: 1rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.checkoutpage-place-order-button:hover {
+  background: linear-gradient(to right, #27ae60, #229954);
+  background: -webkit-linear-gradient(to right, #27ae60, #229954);
+}
+
+.checkoutpage-place-order-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

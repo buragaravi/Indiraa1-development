@@ -186,7 +186,7 @@ const Profile = () => {
   };
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#f8faf8] to-white flex justify-center items-center">
+      <div className="profile-loading-bg">
         <motion.div 
           className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl"
           animate={{ rotate: 360 }}
@@ -199,7 +199,7 @@ const Profile = () => {
   }
   if (!profileData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#f8faf8] to-white flex justify-center items-center">
+      <div className="profile-error-bg">
         <motion.div 
           className="text-center bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -213,7 +213,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8faf8] to-white py-8">
+    <div className="profile-main-bg">
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <motion.div 
@@ -395,14 +395,14 @@ const Profile = () => {
           >
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                <div className="profile-edit-icon-bg">
                   <FiMapPin className="w-6 h-6 text-white" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800">Addresses</h2>
               </div>
               <button
                 onClick={() => setShowAddAddress(!showAddAddress)}
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg"
+                className="profile-edit-button"
               >
                 <FiPlus className="w-4 h-4" />
                 Add Address
@@ -416,7 +416,7 @@ const Profile = () => {
                   {profileData.addresses.map((address, index) => (
                     <motion.div 
                       key={index} 
-                      className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl"
+                      className="profile-edit-form-bg"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
@@ -498,7 +498,7 @@ const Profile = () => {
                     <button
                       type="submit"
                       disabled={addressLoading}
-                      className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg disabled:opacity-50"
+                      className="profile-save-button"
                     >
                       <FiPlus className="w-4 h-4" />
                       {addressLoading ? 'Adding...' : 'Add Address'}
@@ -529,7 +529,7 @@ const Profile = () => {
         >
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl flex items-center justify-center">
+              <div className="profile-address-icon-bg">
                 <FiShoppingBag className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -539,7 +539,7 @@ const Profile = () => {
             </div>            {totalOrders > 5 && (
               <button
                 onClick={() => navigate('/orders')}
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl hover:from-orange-600 hover:to-red-700 transition-all duration-200 shadow-lg"
+                className="profile-add-address-button"
               >
                 <FiEye className="w-4 h-4" />
                 View All ({totalOrders})
@@ -555,7 +555,7 @@ const Profile = () => {
               {(showAllOrders ? allOrders : recentOrders).map((order, index) => (
                 <motion.div
                   key={order._id}
-                  className="p-4 bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-xl cursor-pointer hover:shadow-md transition-all duration-200"
+                  className="profile-address-form-bg"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}                  onClick={() => navigate(`/orders/${order._id}`)}
@@ -596,7 +596,7 @@ const Profile = () => {
                 </motion.div>
               ))}
                 {/* Blur effect for "see more" when orders > 5 */}              {totalOrders > 5 && !showAllOrders && (
-                <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white/90 to-transparent rounded-b-3xl flex items-end justify-center pb-4">
+                <div className="profile-orders-fade-overlay">
                   <button
                     onClick={() => navigate('/orders')}
                     className="px-6 py-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl hover:bg-white/90 transition-all duration-200 shadow-lg"
@@ -612,7 +612,7 @@ const Profile = () => {
               <p>No orders yet.</p>
               <button
                 onClick={() => navigate('/products')}
-                className="mt-4 px-6 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl hover:from-orange-600 hover:to-red-700 transition-all duration-200 shadow-lg"
+                className="profile-view-all-orders-button"
               >
                 Start Shopping
               </button>

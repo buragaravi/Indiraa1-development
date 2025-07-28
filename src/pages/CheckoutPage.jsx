@@ -225,7 +225,7 @@ const CheckoutPage = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 50 }}
-        className="bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white p-6 rounded-3xl shadow-lg max-w-sm"
+        className="checkoutpage-success-card"
       >
         <div className="flex items-center gap-3 mb-3">
           <FiCoins className="w-6 h-6" />
@@ -338,7 +338,7 @@ const CheckoutPage = () => {
                 whileTap={{ scale: 0.98 }}
                 onClick={processOrder}
                 disabled={isProcessing || cartItems.length === 0}
-                className="w-full py-4 bg-gradient-to-r from-[#2ecc71] to-[#27ae60] text-white rounded-2xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+                className="checkoutpage-submit-button"
               >
                 {isProcessing ? (
                   <>

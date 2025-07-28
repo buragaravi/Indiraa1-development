@@ -512,7 +512,7 @@ const Checkout = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 flex justify-center items-center">
+      <div className="checkout-loading-bg">
         <motion.div 
           className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl"
           animate={{ rotate: 360 }}
@@ -525,7 +525,7 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 py-8">
+    <div className="checkout-main-bg">
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <motion.div 
@@ -555,7 +555,7 @@ const Checkout = () => {
           <div className="flex items-center justify-between relative">
             {/* Progress Line */}
             <div className="absolute top-6 left-6 right-6 h-1 bg-gray-200 rounded-full"></div>            <motion.div 
-              className="absolute top-6 left-6 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"
+              className="checkout-progress-bar"
               initial={{ width: 0 }}
               animate={{ 
                 width: `${Math.min(((currentStep - 1) / (steps.length - 1)) * 100, 100)}%`
@@ -627,7 +627,7 @@ const Checkout = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                    >                      <div className="w-16 h-16 bg-gradient-to-r from-gray-200 to-gray-300 rounded-xl flex items-center justify-center overflow-hidden">
+                    >                      <div className="checkout-product-image-placeholder">
                         {(item.type === 'combo' ? (item.mainImage || item.products?.[0]?.images?.[0]?.url) : (item.image || (item.images && item.images[0]))) ? (
                           <img 
                             src={item.type === 'combo' 
@@ -720,7 +720,7 @@ const Checkout = () => {
                       <button
                         onClick={applyCoupon}
                         disabled={couponLoading || !couponCode.trim()}
-                        className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg disabled:opacity-50 flex items-center gap-2"
+                        className="checkout-primary-button"
                       >
                         {couponLoading ? (
                           <FiLoader className="w-4 h-4 animate-spin" />
@@ -805,7 +805,7 @@ const Checkout = () => {
               <div className="flex justify-end">
                 <button
                   onClick={nextStep}
-                  className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg"
+                  className="checkout-primary-button"
                 >
                   Continue to Address
                 </button>
@@ -830,7 +830,7 @@ const Checkout = () => {
                   </h2>
                   <button
                     onClick={() => setShowAddressForm(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg"
+                    className="checkout-small-button"
                   >
                     <FiPlus className="w-4 h-4" />
                     Add New Address
@@ -1045,7 +1045,7 @@ const Checkout = () => {
                           </button>
                           <button
                             type="submit"
-                            className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg"
+                            className="checkout-primary-button"
                           >
                             Save Address
                           </button>
@@ -1067,7 +1067,7 @@ const Checkout = () => {
                 <button
                   onClick={nextStep}
                   disabled={!selectedAddress}
-                  className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="checkout-primary-button-disabled"
                 >
                   Continue to Payment
                 </button>
@@ -1169,7 +1169,7 @@ const Checkout = () => {
                           <div className="space-y-3">
                             <button
                               onClick={() => window.open(generateUPIDeepLink(), '_blank')}
-                              className="w-full p-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-200 shadow-lg flex items-center justify-center gap-2"
+                              className="checkout-upi-button"
                             >
                               <FiPhoneCall className="w-5 h-5" />
                               Open UPI App
@@ -1260,7 +1260,7 @@ const Checkout = () => {
                 <button
                   onClick={nextStep}
                   disabled={paymentMethod === 'upi' && !utrNumber.trim()}
-                  className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="checkout-primary-button-disabled"
                 >
                   Review Order
                 </button>
@@ -1288,7 +1288,7 @@ const Checkout = () => {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800 mb-3">Items ({cart.length})</h3>
                     <div className="space-y-3">                      {cart.map((item, index) => (
-                        <div key={item._id || index} className="flex items-center gap-4 p-3 bg-gray-50 rounded-xl">                          <div className="w-12 h-12 bg-gradient-to-r from-gray-200 to-gray-300 rounded-lg flex items-center justify-center overflow-hidden">
+                        <div key={item._id || index} className="flex items-center gap-4 p-3 bg-gray-50 rounded-xl">                          <div className="checkout-small-product-image-placeholder">
                             {(item.type === 'combo' ? (item.mainImage || item.products?.[0]?.images?.[0]?.url) : (item.image || (item.images && item.images[0]))) ? (
                               <img 
                                 src={item.type === 'combo' 
@@ -1441,7 +1441,7 @@ const Checkout = () => {
                 </button>
                 <button
                   onClick={placeOrder}
-                  className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg flex items-center gap-2"
+                  className="checkout-primary-button"
                 >
                   <FiCheck className="w-5 h-5" />
                   Place Order
@@ -1542,7 +1542,7 @@ const Checkout = () => {
                               repeat: Infinity,
                               ease: "easeInOut"
                             }}
-                            className="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center"
+                            className="checkout-success-circle"
                           >
                             <FiCheckCircle className="w-10 h-10 text-white" />
                           </motion.div>
@@ -1572,7 +1572,7 @@ const Checkout = () => {
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 1 }}
-                          className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-6 mb-6 border border-emerald-200"
+                          className="checkout-success-card"
                         >
                           <div className="flex items-center justify-center gap-3 mb-4">
                             <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center">
@@ -1622,7 +1622,7 @@ const Checkout = () => {
                               initial={{ width: 0 }}
                               animate={{ width: "100%" }}
                               transition={{ duration: 3, ease: "easeInOut" }}
-                              className="bg-gradient-to-r from-emerald-500 to-teal-500 h-2 rounded-full"
+                              className="checkout-success-progress"
                             />
                           </div>
                         </motion.div>
@@ -1663,7 +1663,7 @@ const Checkout = () => {
                         <p className="text-gray-600 mb-6">{orderResult.message}</p>
                         <button
                           onClick={() => setShowPaymentModal(false)}
-                          className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-lg"
+                          className="checkout-primary-button"
                         >
                           Try Again
                         </button>
