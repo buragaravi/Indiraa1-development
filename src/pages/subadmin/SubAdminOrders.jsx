@@ -115,7 +115,7 @@ const SubAdminOrders = () => {
   
   if (!hasBasicAccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+      <div className="min-h-screen flex items-center justify-center subadmin-bg-green">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
           <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
@@ -129,7 +129,7 @@ const SubAdminOrders = () => {
       <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-3 text-gray-800 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-3 text-gray-800 subadmin-title-gradient">
             Order Management
           </h1>
           <p className="text-gray-600 text-lg">
@@ -166,7 +166,7 @@ const SubAdminOrders = () => {
               {/* Desktop Table View */}
               <div className="hidden lg:block overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gradient-to-r from-green-50 to-emerald-50">
+                  <thead className="subadmin-table-header">
                     <tr>
                       <th className="text-left p-6 font-semibold text-gray-700">Order ID</th>
                       <th className="text-left p-6 font-semibold text-gray-700">Customer</th>

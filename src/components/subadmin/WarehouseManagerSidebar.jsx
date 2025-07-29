@@ -174,7 +174,7 @@ const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
           <div className="p-6 h-full overflow-y-auto">
             {/* Logo/Header */}
             <div className="flex items-center mb-8">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 shadow-lg flex items-center justify-center mr-4">
+              <div className="w-12 h-12 rounded-2xl warehouse-icon-green shadow-lg flex items-center justify-center mr-4">
                 <FiPackage className="w-7 h-7 text-white" />
               </div>
               <div>
@@ -211,8 +211,8 @@ const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
                     }}
                     className={`w-full flex items-center px-4 py-3 rounded-xl transition-all duration-300 group relative ${
                       isActiveItem
-                        ? 'bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-lg transform scale-105'
-                        : 'text-gray-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-green-50 hover:shadow-md hover:scale-102'
+                        ? 'warehouse-btn-green text-white shadow-lg transform scale-105'
+                        : 'text-gray-700 hover:warehouse-bg-green-light hover:shadow-md hover:scale-102'
                     }`}
                   >
                     <IconComponent
@@ -242,7 +242,7 @@ const WarehouseManagerSidebar = ({ activeTab, setActiveTab }) => {
                       setIsCollapsed(true);
                     }
                   }}
-                  className="w-full flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 hover:text-red-600 transition-all duration-300 group hover:scale-102"
+                  className="w-full flex items-center px-4 py-3 rounded-xl text-gray-700 warehouse-logout-hover hover:text-red-600 transition-all duration-300 group hover:scale-102"
                 >
                   <FiLogOut className="w-5 h-5 mr-3 text-gray-500 group-hover:text-red-600 transition-all duration-300 group-hover:scale-110" />
                   <span className="font-medium text-sm">Logout</span>

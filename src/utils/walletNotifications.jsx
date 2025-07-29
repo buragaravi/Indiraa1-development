@@ -54,7 +54,7 @@ export const showCoinReward = (amount, reason, description) => {
     <div
       className={`${
         t.visible ? 'animate-enter' : 'animate-leave'
-      } max-w-md w-full bg-gradient-to-r ${getColor()} shadow-lg rounded-2xl pointer-events-auto flex ring-1 ring-black ring-opacity-5 transform transition-all duration-300`}
+      } max-w-md w-full wallet-notification-bg ${getColor()} shadow-lg rounded-2xl pointer-events-auto flex ring-1 ring-black ring-opacity-5 transform transition-all duration-300`}
     >
       <div className="flex-1 w-0 p-4">
         <div className="flex items-start">
@@ -96,7 +96,7 @@ export const showReferralSuccess = (referrerName, amount = 20) => {
     <div
       className={`${
         t.visible ? 'animate-enter' : 'animate-leave'
-      } max-w-md w-full bg-gradient-to-r from-purple-500 to-pink-600 shadow-lg rounded-2xl pointer-events-auto flex ring-1 ring-black ring-opacity-5 transform transition-all duration-300`}
+      } max-w-md w-full wallet-notification-purple shadow-lg rounded-2xl pointer-events-auto flex ring-1 ring-black ring-opacity-5 transform transition-all duration-300`}
     >
       <div className="flex-1 w-0 p-4">
         <div className="flex items-start">
@@ -141,8 +141,8 @@ export const showTransactionSuccess = (type, amount, description) => {
     <div
       className={`${
         t.visible ? 'animate-enter' : 'animate-leave'
-      } max-w-md w-full bg-gradient-to-r ${
-        isSpending ? 'from-blue-500 to-indigo-600' : 'from-green-500 to-emerald-600'
+      } max-w-md w-full ${
+        isSpending ? 'wallet-notification-blue' : 'wallet-notification-green'
       } shadow-lg rounded-2xl pointer-events-auto flex ring-1 ring-black ring-opacity-5 transform transition-all duration-300`}
     >
       <div className="flex-1 w-0 p-4">

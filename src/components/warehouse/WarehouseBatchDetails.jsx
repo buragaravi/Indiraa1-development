@@ -160,9 +160,9 @@ const WarehouseBatchDetails = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
+      <div className="min-h-screen warehouse-bg-blue flex items-center justify-center">
         <div className="text-center">
-          <div className="p-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full inline-block mb-4">
+          <div className="p-4 warehouse-icon-indigo rounded-full inline-block mb-4">
             <RefreshCw className="h-12 w-12 animate-spin text-white" />
           </div>
           <p className="text-gray-700 font-semibold text-lg">Loading batch details...</p>
@@ -173,16 +173,16 @@ const WarehouseBatchDetails = () => {
 
   if (error || !batchGroup) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
+      <div className="min-h-screen warehouse-bg-blue flex items-center justify-center">
         <div className="text-center">
-          <div className="p-4 bg-gradient-to-r from-red-500 to-pink-600 rounded-full inline-block mb-4">
+          <div className="p-4 warehouse-icon-red rounded-full inline-block mb-4">
             <AlertTriangle className="h-12 w-12 text-white" />
           </div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">Error Loading Batch Details</h3>
           <p className="text-gray-600 mb-6 font-medium">{error || 'Batch group not found'}</p>
           <button
             onClick={() => navigate('/sub-admin/warehouse_manager/batches')}
-            className="inline-flex items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200"
+            className="inline-flex items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white warehouse-btn-indigo hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Dashboard
@@ -207,7 +207,7 @@ const WarehouseBatchDetails = () => {
                   <ArrowLeft className="h-5 w-5" />
                 </button>
                 <div>
-                  <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                  <h1 className="text-xl font-bold warehouse-title-indigo">
                     {batchGroup.batchGroupNumber}
                   </h1>
                   <p className="text-gray-600 mt-1 text-sm font-medium">Warehouse Batch Details</p>
@@ -220,13 +220,13 @@ const WarehouseBatchDetails = () => {
                 {/* Quality Status */}
                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold shadow-sm ${
                   batchGroup.qualityChecked 
-                    ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white' 
-                    : 'bg-gradient-to-r from-yellow-500 to-orange-600 text-white'
+                    ? 'warehouse-status-green text-white' 
+                    : 'warehouse-status-yellow text-white'
                 }`}>
                   <CheckCircle className="h-3 w-3 mr-1" />
                   {batchGroup.qualityChecked ? 'Quality Verified' : 'Quality Pending'}
                 </span>
-                <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200">
+                <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white warehouse-btn-indigo hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200">
                   <Download className="h-4 w-4 mr-2" />
                   Export Report
                 </button>
@@ -241,7 +241,7 @@ const WarehouseBatchDetails = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-blue-100">
             <div className="flex items-center">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 warehouse-icon-blue rounded-xl shadow-lg">
                 <Package className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
@@ -254,7 +254,7 @@ const WarehouseBatchDetails = () => {
 
           <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-green-100">
             <div className="flex items-center">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 warehouse-icon-green rounded-xl shadow-lg">
                 <CheckCircle className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
@@ -267,7 +267,7 @@ const WarehouseBatchDetails = () => {
 
           <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-purple-100">
             <div className="flex items-center">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 warehouse-icon-purple rounded-xl shadow-lg">
                 <TrendingUp className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
@@ -280,7 +280,7 @@ const WarehouseBatchDetails = () => {
 
           <div className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all duration-300 border border-orange-100">
             <div className="flex items-center">
-              <div className="flex-shrink-0 p-3 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl shadow-lg">
+              <div className="flex-shrink-0 p-3 warehouse-icon-orange rounded-xl shadow-lg">
                 <Truck className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">

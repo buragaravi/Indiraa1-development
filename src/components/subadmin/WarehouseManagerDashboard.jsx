@@ -259,7 +259,7 @@ const WarehouseManagerDashboard = () => {
               <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 lg:gap-6 mb-8">
                 <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
                   <div className="flex items-center">
-                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-emerald-400 to-green-500 shadow-soft">
+                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl warehouse-icon-emerald shadow-soft">
                       <PackageIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
                     <div className="ml-2 lg:ml-4 min-w-0">
@@ -271,7 +271,7 @@ const WarehouseManagerDashboard = () => {
 
                 <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
                   <div className="flex items-center">
-                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-purple-400 to-pink-500 shadow-soft">
+                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl warehouse-icon-purple shadow-soft">
                       <PackageIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
                     <div className="ml-2 lg:ml-4 min-w-0">
@@ -283,7 +283,7 @@ const WarehouseManagerDashboard = () => {
 
                 <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
                   <div className="flex items-center">
-                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 shadow-soft">
+                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl warehouse-icon-blue shadow-soft">
                       <OrdersIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
                     <div className="ml-2 lg:ml-4 min-w-0">
@@ -295,7 +295,7 @@ const WarehouseManagerDashboard = () => {
 
                 <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
                   <div className="flex items-center">
-                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-purple-400 to-violet-500 shadow-soft">
+                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl warehouse-icon-violet shadow-soft">
                       <PeopleIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
                     <div className="ml-2 lg:ml-4 min-w-0">
@@ -307,7 +307,7 @@ const WarehouseManagerDashboard = () => {
 
                 <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
                   <div className="flex items-center">
-                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 shadow-soft">
+                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl warehouse-icon-orange shadow-soft">
                       <TicketIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
                     <div className="ml-2 lg:ml-4 min-w-0">
@@ -321,7 +321,7 @@ const WarehouseManagerDashboard = () => {
               {/* Recent Orders */}
               <div className="neumorphic-card p-4 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 mb-8">
                 <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
-                  <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-emerald-400 to-green-500 rounded-full mr-2 lg:mr-3"></span>
+                  <span className="w-2 h-6 lg:h-8 subadmin-indicator-green rounded-full mr-2 lg:mr-3"></span>
                   Recent Orders
                 </h2>
                 {stats.recentOrders.length > 0 ? (
@@ -421,7 +421,7 @@ const WarehouseManagerDashboard = () => {
                     setActiveTab('orders');
                   }}
                 >
-                  <div className="w-14 h-14 lg:w-16 lg:h-16 mx-auto mb-3 lg:mb-4 rounded-2xl bg-gradient-to-br from-yellow-400 to-orange-500 shadow-soft flex items-center justify-center">
+                  <div className="w-14 h-14 lg:w-16 lg:h-16 mx-auto mb-3 lg:mb-4 rounded-2xl warehouse-icon-orange shadow-soft flex items-center justify-center">
                     <PendingIcon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
                   </div>
                   <h3 className="text-lg lg:text-xl font-bold mb-2 text-gray-800">Pending Orders</h3>
@@ -430,7 +430,7 @@ const WarehouseManagerDashboard = () => {
                     className={`neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-xl text-white font-semibold transition-all duration-300 text-sm lg:text-base ${
                       isReadOnly 
                         ? 'bg-gray-400 cursor-not-allowed' 
-                        : 'bg-gradient-to-r from-emerald-500 to-green-600 hover:shadow-soft-lg'
+                        : 'warehouse-btn-green hover:shadow-soft-lg'
                     }`}
                     disabled={isReadOnly}
                   >
@@ -450,7 +450,7 @@ const WarehouseManagerDashboard = () => {
                     setActiveTab('products');
                   }}
                 >
-                  <div className="w-14 h-14 lg:w-16 lg:h-16 mx-auto mb-3 lg:mb-4 rounded-2xl bg-gradient-to-br from-emerald-400 to-green-500 shadow-soft flex items-center justify-center">
+                  <div className="w-14 h-14 lg:w-16 lg:h-16 mx-auto mb-3 lg:mb-4 rounded-2xl warehouse-icon-green shadow-soft flex items-center justify-center">
                     <PackageIcon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
                   </div>
                   <h3 className="text-lg lg:text-xl font-bold mb-2 text-gray-800">
@@ -463,7 +463,7 @@ const WarehouseManagerDashboard = () => {
                     className={`neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-xl text-white font-semibold transition-all duration-300 text-sm lg:text-base ${
                       isReadOnly 
                         ? 'bg-gray-400 cursor-not-allowed' 
-                        : 'bg-gradient-to-r from-emerald-500 to-green-600 hover:shadow-soft-lg'
+                        : 'warehouse-btn-green hover:shadow-soft-lg'
                     }`}
                     disabled={isReadOnly}
                   >
@@ -483,7 +483,7 @@ const WarehouseManagerDashboard = () => {
                     setActiveTab('combo-packs');
                   }}
                 >
-                  <div className="w-14 h-14 lg:w-16 lg:h-16 mx-auto mb-3 lg:mb-4 rounded-2xl bg-gradient-to-br from-purple-400 to-violet-500 shadow-soft flex items-center justify-center">
+                  <div className="w-14 h-14 lg:w-16 lg:h-16 mx-auto mb-3 lg:mb-4 rounded-2xl warehouse-icon-purple shadow-soft flex items-center justify-center">
                     <TicketIcon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
                   </div>
                   <h3 className="text-lg lg:text-xl font-bold mb-2 text-gray-800">
@@ -496,7 +496,7 @@ const WarehouseManagerDashboard = () => {
                     className={`neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-xl text-white font-semibold transition-all duration-300 text-sm lg:text-base ${
                       isReadOnly 
                         ? 'bg-gray-400 cursor-not-allowed' 
-                        : 'bg-gradient-to-r from-emerald-500 to-green-600 hover:shadow-soft-lg'
+                        : 'warehouse-btn-green hover:shadow-soft-lg'
                     }`}
                     disabled={isReadOnly}
                   >
@@ -570,7 +570,7 @@ const WarehouseManagerDashboard = () => {
   return (
     <>
       <WarehouseManagerSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-emerald-50" style={{ marginLeft: 'var(--sidebar-width, 0px)' }}>
+      <div className="min-h-screen warehouse-bg-gray" style={{ marginLeft: 'var(--sidebar-width, 0px)' }}>
         <div className="container mx-auto px-4 py-8">
           <div className="flex gap-8">
             {/* Main Content */}

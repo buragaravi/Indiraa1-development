@@ -227,7 +227,7 @@ const SubAdminOrderDetail = () => {
 
   if (hasAccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+      <div className="min-h-screen flex items-center justify-center subadmin-bg-green">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
           <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-4 text-gray-800">Access Denied</h1>
@@ -239,7 +239,7 @@ const SubAdminOrderDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+      <div className="min-h-screen flex items-center justify-center subadmin-bg-green">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
           <LoadingIcon className="w-16 h-16 text-green-500 mx-auto mb-4" />
           <p className="text-gray-600 text-lg">Loading order details...</p>
@@ -250,7 +250,7 @@ const SubAdminOrderDetail = () => {
 
   if (!order) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+      <div className="min-h-screen flex items-center justify-center subadmin-bg-green">
         <div className="text-center p-8 rounded-3xl shadow-soft bg-white/70 backdrop-blur-sm">
           <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-4 text-gray-800">Order Not Found</h1>
@@ -272,7 +272,7 @@ const SubAdminOrderDetail = () => {
             <BackIcon className="w-5 h-5 lg:w-6 lg:h-6 text-gray-600" />
           </button>
           <div className="min-w-0">
-            <h1 className="text-2xl lg:text-4xl font-bold mb-1 lg:mb-2 text-gray-800 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+            <h1 className="text-2xl lg:text-4xl font-bold mb-1 lg:mb-2 text-gray-800 subadmin-title-gradient">
               Order Details
             </h1>
             <p className="text-gray-600 text-sm lg:text-lg truncate">
@@ -290,7 +290,7 @@ const SubAdminOrderDetail = () => {
             <button
               onClick={() => setShowStatusModal(true)}
               disabled={updating}
-              className="neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 flex items-center justify-center text-sm lg:text-base"
+              className="neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-2xl subadmin-btn-blue text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 flex items-center justify-center text-sm lg:text-base"
             >
               <UpdateIcon className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
               Update Status
@@ -359,7 +359,7 @@ const SubAdminOrderDetail = () => {
                 <button
                   onClick={handleStatusUpdate}
                   disabled={!newStatus || updating}
-                  className="flex-1 neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 flex items-center justify-center text-sm lg:text-base"
+                  className="flex-1 neumorphic-button px-4 lg:px-6 py-2 lg:py-3 rounded-2xl subadmin-btn-green text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 flex items-center justify-center text-sm lg:text-base"
                 >
                   {updating ? (
                     <>
@@ -393,7 +393,7 @@ const SubAdminOrderDetail = () => {
           {order.deliveryRating && (
             <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-yellow-50 border border-yellow-200 mb-6">
               <h2 className="text-xl lg:text-2xl font-bold mb-4 text-yellow-800 flex items-center">
-                <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-yellow-400 to-yellow-500 rounded-full mr-2"></span>
+                <span className="w-2 h-6 lg:h-8 subadmin-indicator-yellow rounded-full mr-2"></span>
                 Delivery Rating & Review
               </h2>
               <div className="flex items-center mb-2">
@@ -411,7 +411,7 @@ const SubAdminOrderDetail = () => {
           {/* Order Status */}
           <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
             <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
-              <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-2 lg:mr-3"></span>
+              <span className="w-2 h-6 lg:h-8 subadmin-indicator-green rounded-full mr-2 lg:mr-3"></span>
               Order Status
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
@@ -444,7 +444,7 @@ const SubAdminOrderDetail = () => {
           {/* Order Items */}
           <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
             <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
-              <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-2 lg:mr-3"></span>
+              <span className="w-2 h-6 lg:h-8 subadmin-indicator-green rounded-full mr-2 lg:mr-3"></span>
               Order Items
             </h2>
             <div className="space-y-4">
@@ -487,7 +487,7 @@ const SubAdminOrderDetail = () => {
           {/* Shipping Information */}
           <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
             <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
-              <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-2 lg:mr-3"></span>
+              <span className="w-2 h-6 lg:h-8 subadmin-indicator-green rounded-full mr-2 lg:mr-3"></span>
               Shipping Information
             </h2>
             <div className="space-y-4 lg:space-y-6">
@@ -508,7 +508,7 @@ const SubAdminOrderDetail = () => {
           {/* Delivery Information (below Shipping Information) */}
           <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
             <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
-              <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-blue-400 to-indigo-500 rounded-full mr-2 lg:mr-3"></span>
+              <span className="w-2 h-6 lg:h-8 subadmin-indicator-blue rounded-full mr-2 lg:mr-3"></span>
               Delivery Information
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
@@ -558,7 +558,7 @@ const SubAdminOrderDetail = () => {
           {/* Order Summary */}
           <div className="neumorphic-card p-4 lg:p-6 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
             <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
-              <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-2 lg:mr-3"></span>
+              <span className="w-2 h-6 lg:h-8 subadmin-indicator-green rounded-full mr-2 lg:mr-3"></span>
               Order Summary
             </h2>
             <div className="space-y-3 lg:space-y-4">

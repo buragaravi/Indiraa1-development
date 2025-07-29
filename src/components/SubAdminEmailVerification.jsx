@@ -98,11 +98,11 @@ const SubAdminEmailVerification = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-green-50 p-4">
+    <div className="min-h-screen flex items-center justify-center subadmin-bg-green p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
         {/* Logo/Brand */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-[#2ecc71] via-[#27ae60] to-[#2ecc71] bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold subadmin-title-gradient">
             Indiraa E-commerce
           </h1>
           <p className="text-gray-600 text-sm">Sub Admin Panel</p>

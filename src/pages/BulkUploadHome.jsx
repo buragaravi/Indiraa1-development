@@ -12,11 +12,11 @@ import {
 
 const BulkUploadHome = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
+    <div className="min-h-screen bulk-upload-bg py-12">
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bulk-upload-icon rounded-2xl flex items-center justify-center mx-auto mb-6">
             <FiPackage className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
@@ -108,7 +108,7 @@ const BulkUploadHome = () => {
         <div className="text-center">
           <Link 
             to="/admin/dashboard"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-xl font-semibold text-lg"
+            className="inline-flex items-center gap-3 px-8 py-4 bulk-upload-btn text-white rounded-2xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-xl font-semibold text-lg"
           >
             <FiUpload className="w-6 h-6" />
             Start Bulk Upload

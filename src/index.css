@@ -4116,6 +4116,151 @@ body {
   background: linear-gradient(90deg, #fff7ed 0%, #fef2f2 100%);
 }
 
+/* Wallet Notifications Safari-Compatible Classes */
+.wallet-notification-green {
+  background: -webkit-linear-gradient(90deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.wallet-notification-blue {
+  background: -webkit-linear-gradient(90deg, #3b82f6 0%, #1e40af 100%);
+  background: linear-gradient(90deg, #3b82f6 0%, #1e40af 100%);
+  color: white;
+}
+
+.wallet-notification-purple {
+  background: -webkit-linear-gradient(90deg, #8b5cf6 0%, #6d28d9 100%);
+  background: linear-gradient(90deg, #8b5cf6 0%, #6d28d9 100%);
+  color: white;
+}
+
+/* BatchDashboard Safari-Compatible Classes */
+.batch-dashboard-bg {
+  background: -webkit-linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #f0fdfa 100%);
+  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #f0fdfa 100%);
+}
+
+.batch-dashboard-loading-bg {
+  background: -webkit-linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #f3e8ff 100%);
+  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #f3e8ff 100%);
+}
+
+.batch-dashboard-loading-icon {
+  background: -webkit-linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+.batch-dashboard-error-icon {
+  background: -webkit-linear-gradient(90deg, #ef4444 0%, #ec4899 100%);
+  background: linear-gradient(90deg, #ef4444 0%, #ec4899 100%);
+}
+
+.batch-dashboard-retry-btn {
+  background: -webkit-linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+.batch-dashboard-retry-btn:hover {
+  background: -webkit-linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+.batch-dashboard-header-icon {
+  background: -webkit-linear-gradient(135deg, #10b981 0%, #16a34a 50%, #0d9488 100%);
+  background: linear-gradient(135deg, #10b981 0%, #16a34a 50%, #0d9488 100%);
+}
+
+.batch-dashboard-export-btn {
+  background: -webkit-linear-gradient(90deg, #059669 0%, #0d9488 100%);
+  background: linear-gradient(90deg, #059669 0%, #0d9488 100%);
+}
+
+.batch-dashboard-export-btn:hover {
+  background: -webkit-linear-gradient(90deg, #047857 0%, #0f766e 100%);
+  background: linear-gradient(90deg, #047857 0%, #0f766e 100%);
+}
+
+.batch-dashboard-stat-icon-blue {
+  background: -webkit-linear-gradient(90deg, #3b82f6 0%, #3b82f6 100%);
+  background: linear-gradient(90deg, #3b82f6 0%, #3b82f6 100%);
+}
+
+.batch-dashboard-stat-icon-green {
+  background: -webkit-linear-gradient(90deg, #16a34a 0%, #059669 100%);
+  background: linear-gradient(90deg, #16a34a 0%, #059669 100%);
+}
+
+.batch-dashboard-stat-icon-purple {
+  background: -webkit-linear-gradient(90deg, #8b5cf6 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #8b5cf6 0%, #8b5cf6 100%);
+}
+
+.batch-dashboard-stat-icon-orange {
+  background: -webkit-linear-gradient(90deg, #f97316 0%, #f97316 100%);
+  background: linear-gradient(90deg, #f97316 0%, #f97316 100%);
+}
+
+.batch-dashboard-status-header {
+  background: -webkit-linear-gradient(90deg, #eef2ff 0%, #f3e8ff 100%);
+  background: linear-gradient(90deg, #eef2ff 0%, #f3e8ff 100%);
+}
+
+.batch-dashboard-status-icon {
+  background: -webkit-linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+.batch-dashboard-status-item {
+  background: -webkit-linear-gradient(90deg, #f9fafb 0%, #f3f4f6 100%);
+  background: linear-gradient(90deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+.batch-dashboard-location-header {
+  background: -webkit-linear-gradient(90deg, #f0fdf4 0%, #ecfdf5 100%);
+  background: linear-gradient(90deg, #f0fdf4 0%, #ecfdf5 100%);
+}
+
+.batch-dashboard-location-icon {
+  background: -webkit-linear-gradient(90deg, #16a34a 0%, #059669 100%);
+  background: linear-gradient(90deg, #16a34a 0%, #059669 100%);
+}
+
+.batch-dashboard-location-item {
+  background: -webkit-linear-gradient(90deg, #f9fafb 0%, #f3f4f6 100%);
+  background: linear-gradient(90deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+.batch-dashboard-location-indicator {
+  background: -webkit-linear-gradient(90deg, #16a34a 0%, #059669 100%);
+  background: linear-gradient(90deg, #16a34a 0%, #059669 100%);
+}
+
+.batch-dashboard-supplier-header {
+  background: -webkit-linear-gradient(90deg, #faf5ff 0%, #fce7f3 100%);
+  background: linear-gradient(90deg, #faf5ff 0%, #fce7f3 100%);
+}
+
+.batch-dashboard-supplier-icon {
+  background: -webkit-linear-gradient(90deg, #8b5cf6 0%, #ec4899 100%);
+  background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 100%);
+}
+
+.batch-dashboard-supplier-item {
+  background: -webkit-linear-gradient(90deg, #faf5ff 0%, #fce7f3 100%);
+  background: linear-gradient(90deg, #faf5ff 0%, #fce7f3 100%);
+}
+
+.batch-dashboard-table-header {
+  background: -webkit-linear-gradient(90deg, #eef2ff 0%, #f3e8ff 100%);
+  background: linear-gradient(90deg, #eef2ff 0%, #f3e8ff 100%);
+}
+
+.batch-dashboard-table-icon {
+  background: -webkit-linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+}
+
 .warehouse-batch-details-batch-item-5 {
   background: -webkit-linear-gradient(90deg, #fef2f2 0%, #fce7f3 100%);
   background: linear-gradient(90deg, #fef2f2 0%, #fce7f3 100%);
@@ -4503,4 +4648,228 @@ body {
 .wishlist-overlay-gradient {
   background: -webkit-linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%);
   background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%);
+}
+
+/* Remaining Safari-Compatible Classes - Critical Components */
+
+/* SubAdmin Pages */
+.subadmin-bg-green {
+  background: -webkit-linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.subadmin-title-gradient {
+  background: -webkit-linear-gradient(90deg, #059669 0%, #10b981 100%);
+  background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subadmin-btn-blue {
+  background: -webkit-linear-gradient(90deg, #3b82f6 0%, #06b6d4 100%);
+  background: linear-gradient(90deg, #3b82f6 0%, #06b6d4 100%);
+}
+
+.subadmin-btn-green {
+  background: -webkit-linear-gradient(90deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.subadmin-table-header {
+  background: -webkit-linear-gradient(90deg, #f0fdf4 0%, #dcfce7 100%);
+  background: linear-gradient(90deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.subadmin-indicator-yellow {
+  background: -webkit-linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+}
+
+.subadmin-indicator-green {
+  background: -webkit-linear-gradient(180deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+}
+
+.subadmin-indicator-blue {
+  background: -webkit-linear-gradient(180deg, #3b82f6 0%, #6366f1 100%);
+  background: linear-gradient(180deg, #3b82f6 0%, #6366f1 100%);
+}
+
+/* Warehouse Components */
+.warehouse-bg-gray {
+  background: -webkit-linear-gradient(135deg, #f9fafb 0%, #dcfce7 100%);
+  background: linear-gradient(135deg, #f9fafb 0%, #dcfce7 100%);
+}
+
+.warehouse-bg-blue {
+  background: -webkit-linear-gradient(135deg, #f9fafb 0%, #dbeafe 100%);
+  background: linear-gradient(135deg, #f9fafb 0%, #dbeafe 100%);
+}
+
+.warehouse-icon-emerald {
+  background: -webkit-linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.warehouse-icon-purple {
+  background: -webkit-linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+}
+
+.warehouse-icon-blue {
+  background: -webkit-linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+}
+
+.warehouse-icon-violet {
+  background: -webkit-linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+}
+
+.warehouse-icon-orange {
+  background: -webkit-linear-gradient(135deg, #fb923c 0%, #ef4444 100%);
+  background: linear-gradient(135deg, #fb923c 0%, #ef4444 100%);
+}
+
+.warehouse-icon-yellow {
+  background: -webkit-linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+  background: linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+}
+
+.warehouse-btn-indigo {
+  background: -webkit-linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
+  background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
+}
+
+.warehouse-btn-green {
+  background: -webkit-linear-gradient(90deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.warehouse-bg-light {
+  background: -webkit-linear-gradient(90deg, #f9fafb 0%, #f3f4f6 100%);
+  background: linear-gradient(90deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+.warehouse-bg-purple-light {
+  background: -webkit-linear-gradient(90deg, #faf5ff 0%, #fdf2f8 100%);
+  background: linear-gradient(90deg, #faf5ff 0%, #fdf2f8 100%);
+}
+
+.warehouse-bg-indigo-light {
+  background: -webkit-linear-gradient(90deg, #eef2ff 0%, #faf5ff 100%);
+  background: linear-gradient(90deg, #eef2ff 0%, #faf5ff 100%);
+}
+
+.warehouse-bg-blue-light {
+  background: -webkit-linear-gradient(90deg, #dbeafe 0%, #eef2ff 100%);
+  background: linear-gradient(90deg, #dbeafe 0%, #eef2ff 100%);
+}
+
+.warehouse-bg-green-light {
+  background: -webkit-linear-gradient(90deg, #d1fae5 0%, #dcfce7 100%);
+  background: linear-gradient(90deg, #d1fae5 0%, #dcfce7 100%);
+}
+
+.warehouse-bg-orange-light {
+  background: -webkit-linear-gradient(90deg, #fed7aa 0%, #fecaca 100%);
+  background: linear-gradient(90deg, #fed7aa 0%, #fecaca 100%);
+}
+
+.warehouse-progress-purple {
+  background: -webkit-linear-gradient(90deg, #a855f7 0%, #ec4899 100%);
+  background: linear-gradient(90deg, #a855f7 0%, #ec4899 100%);
+}
+
+.warehouse-row-hover {
+  background: -webkit-linear-gradient(90deg, #dbeafe 0%, #eef2ff 100%);
+  background: linear-gradient(90deg, #dbeafe 0%, #eef2ff 100%);
+}
+
+/* Bulk Upload */
+.bulk-upload-bg {
+  background: -webkit-linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+}
+
+.bulk-upload-icon {
+  background: -webkit-linear-gradient(90deg, #2563eb 0%, #6366f1 100%);
+  background: linear-gradient(90deg, #2563eb 0%, #6366f1 100%);
+}
+
+.bulk-upload-btn {
+  background: -webkit-linear-gradient(90deg, #2563eb 0%, #6366f1 100%);
+  background: linear-gradient(90deg, #2563eb 0%, #6366f1 100%);
+}
+
+.bulk-upload-btn:hover {
+  background: -webkit-linear-gradient(90deg, #1d4ed8 0%, #5b21b6 100%);
+  background: linear-gradient(90deg, #1d4ed8 0%, #5b21b6 100%);
+}
+
+/* Coin Redemption */
+.coin-widget-bg {
+  background: -webkit-linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.coin-widget-btn {
+  background: -webkit-linear-gradient(90deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.coin-widget-btn:hover {
+  background: -webkit-linear-gradient(90deg, #059669 0%, #047857 100%);
+  background: linear-gradient(90deg, #059669 0%, #047857 100%);
+}
+
+/* Admin Pages */
+.admin-bg-green {
+  background: -webkit-linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.admin-title-gradient {
+  background: -webkit-linear-gradient(90deg, #059669 0%, #10b981 100%);
+  background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.admin-btn-blue {
+  background: -webkit-linear-gradient(90deg, #3b82f6 0%, #06b6d4 100%);
+  background: linear-gradient(90deg, #3b82f6 0%, #06b6d4 100%);
+}
+
+.admin-btn-green {
+  background: -webkit-linear-gradient(90deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.admin-icon-blue {
+  background: -webkit-linear-gradient(90deg, #3b82f6 0%, #a855f7 100%);
+  background: linear-gradient(90deg, #3b82f6 0%, #a855f7 100%);
+}
+
+.admin-icon-green {
+  background: -webkit-linear-gradient(90deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.admin-icon-purple {
+  background: -webkit-linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+}
+
+.admin-table-header {
+  background: -webkit-linear-gradient(90deg, #f0fdf4 0%, #dcfce7 100%);
+  background: linear-gradient(90deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+/* Analytics Page */
+.analytics-bg {
+  background: -webkit-linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #faf5ff 100%);
+  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #faf5ff 100%);
 }

@@ -146,7 +146,7 @@ const CoinRedemptionWidget = ({ orderValue, onDiscountApply, appliedCoinDiscount
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="border border-gray-200 rounded-xl p-6 bg-gradient-to-br from-green-50 to-emerald-50"
+      className="border border-gray-200 rounded-xl p-6 coin-widget-bg"
     >
       <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
         <FiCircle className="w-5 h-5 text-green-600" />
@@ -308,7 +308,7 @@ const CoinRedemptionWidget = ({ orderValue, onDiscountApply, appliedCoinDiscount
             <button
               onClick={applyDiscount}
               disabled={loading || calculating}
-              className="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-200 shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full py-3 coin-widget-btn text-white rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-200 shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {loading ? (
                 <FiLoader className="w-4 h-4 animate-spin" />

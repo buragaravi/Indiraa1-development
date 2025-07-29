@@ -232,7 +232,7 @@ const WarehouseBatchDashboard = () => {
                   <RefreshCw className="h-4 w-4 mr-2" />
                   Refresh
                 </button>
-                <button className="inline-flex items-center px-3 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200">
+                <button className="inline-flex items-center px-3 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white warehouse-btn-indigo hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200">
                   <Download className="h-4 w-4 mr-2" />
                   Export Report
                 </button>
@@ -355,9 +355,9 @@ const WarehouseBatchDashboard = () => {
                 <div className="p-4">
                   <div className="space-y-2">
                     {Object.entries(analytics.breakdowns.location).map(([location, count]) => (
-                      <div key={location} className="flex items-center justify-between p-2 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
+                      <div key={location} className="flex items-center justify-between p-2 warehouse-bg-light rounded-lg">
                         <div className="flex items-center">
-                          <div className="p-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mr-2">
+                          <div className="p-1 warehouse-btn-green rounded-full mr-2">
                             <MapPin className="h-2 w-2 text-white" />
                           </div>
                           <span className="text-xs font-medium text-gray-700">{location}</span>
@@ -374,9 +374,9 @@ const WarehouseBatchDashboard = () => {
 
               {/* Supplier Performance */}
               <div className="bg-white rounded-xl shadow-lg border border-purple-100">
-                <div className="px-4 py-3 border-b border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50">
+                <div className="px-4 py-3 border-b border-purple-100 warehouse-bg-purple-light">
                   <div className="flex items-center">
-                    <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg mr-2">
+                    <div className="p-2 warehouse-icon-purple rounded-lg mr-2">
                       <Users className="h-4 w-4 text-white" />
                     </div>
                     <h3 className="text-sm font-bold text-gray-900">Top Suppliers</h3>
@@ -388,7 +388,7 @@ const WarehouseBatchDashboard = () => {
                       .sort(([,a], [,b]) => b - a)
                       .slice(0, 4)
                       .map(([supplier, count]) => (
-                      <div key={supplier} className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-2 border border-purple-100">
+                      <div key={supplier} className="warehouse-bg-purple-light rounded-lg p-2 border border-purple-100">
                         <div className="flex items-center justify-between">
                           <div>
                             <p className="text-xs font-medium text-gray-900 truncate">{supplier}</p>
@@ -410,10 +410,10 @@ const WarehouseBatchDashboard = () => {
 
         {/* Batch Groups Table */}
         <div className="bg-white shadow-xl rounded-xl border border-indigo-100">
-          <div className="px-6 py-4 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50">
+          <div className="px-6 py-4 border-b border-indigo-100 warehouse-bg-indigo-light">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg mr-3">
+                <div className="p-2 warehouse-btn-indigo rounded-lg mr-3">
                   <Package2 className="h-5 w-5 text-white" />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900">Batch Groups</h3>
@@ -462,7 +462,7 @@ const WarehouseBatchDashboard = () => {
           <div className="overflow-hidden">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gradient-to-r from-indigo-50 to-purple-50">
+                <thead className="warehouse-bg-indigo-light">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                       Batch Group
@@ -489,7 +489,7 @@ const WarehouseBatchDashboard = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {batchGroups.map((batchGroup) => (
-                    <tr key={batchGroup._id} className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
+                    <tr key={batchGroup._id} className="hover:warehouse-row-hover transition-all duration-200">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
                           <div className="text-sm font-bold text-gray-900">{batchGroup.batchGroupNumber}</div>
@@ -510,8 +510,8 @@ const WarehouseBatchDashboard = () => {
                       </td>
                       
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        <div className="flex items-center bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-2">
-                          <div className="p-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg mr-2">
+                        <div className="flex items-center warehouse-bg-blue-light rounded-lg p-2">
+                          <div className="p-1 warehouse-icon-blue rounded-lg mr-2">
                             <Package2 className="h-3 w-3 text-white" />
                           </div>
                           <div>
@@ -524,7 +524,7 @@ const WarehouseBatchDashboard = () => {
                       </td>
                       
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-2">
+                        <div className="warehouse-bg-green-light rounded-lg p-2">
                           <div className="text-sm font-bold text-gray-900">
                             Available: {formatNumber(batchGroup.statistics.availableItems)}
                           </div>
@@ -538,13 +538,13 @@ const WarehouseBatchDashboard = () => {
                       </td>
                       
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-2">
+                        <div className="warehouse-bg-purple-light rounded-lg p-2">
                           <div className="flex items-center">
                             <div className="text-sm font-bold text-gray-900">{batchGroup.statistics.utilizationRate}%</div>
                             <div className="ml-2 flex-1">
                               <div className="w-16 bg-gray-200 rounded-full h-2">
                                 <div 
-                                  className="bg-gradient-to-r from-purple-500 to-pink-600 h-2 rounded-full transition-all duration-300" 
+                                  className="warehouse-progress-purple h-2 rounded-full transition-all duration-300" 
                                   style={{ width: `${batchGroup.statistics.utilizationRate}%` }}
                                 ></div>
                               </div>
@@ -554,8 +554,8 @@ const WarehouseBatchDashboard = () => {
                       </td>
                       
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center text-sm text-gray-900 bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-2">
-                          <div className="p-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg mr-2">
+                        <div className="flex items-center text-sm text-gray-900 warehouse-bg-orange-light rounded-lg p-2">
+                          <div className="p-1 warehouse-icon-orange rounded-lg mr-2">
                             <MapPin className="h-3 w-3 text-white" />
                           </div>
                           <span className="font-medium">{batchGroup.location}</span>
@@ -584,7 +584,7 @@ const WarehouseBatchDashboard = () => {
 
           {batchGroups.length === 0 && (
             <div className="text-center py-16">
-              <div className="p-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full inline-block mb-4">
+              <div className="p-4 warehouse-icon-indigo rounded-full inline-block mb-4">
                 <Package2 className="mx-auto h-12 w-12 text-white" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">No batch groups found</h3>

@@ -133,7 +133,7 @@ const AdminManageAdmins = () => {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <div className="w-10 h-10 admin-icon-blue rounded-xl flex items-center justify-center">
                   <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                   </svg>
@@ -155,7 +155,7 @@ const AdminManageAdmins = () => {
               
               <button
                 onClick={() => setShowCreateModal(true)}
-                className="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:shadow-lg transition-all flex items-center gap-2"
+                className="px-6 py-2 admin-btn-green text-white rounded-lg hover:shadow-lg transition-all flex items-center gap-2"
               >
                 <span>➕</span> Create New Admin
               </button>
@@ -339,7 +339,7 @@ const AdminRow = ({ admin, onEdit, onDelete, onToggleStatus, onViewLogs }) => {
     <tr className="hover:bg-gray-50 transition-colors">
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex items-center">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
+          <div className="w-10 h-10 admin-icon-blue rounded-full flex items-center justify-center mr-4">
             <span className="text-white font-semibold">
               {admin.name.charAt(0).toUpperCase()}
             </span>

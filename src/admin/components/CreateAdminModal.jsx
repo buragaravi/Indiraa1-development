@@ -115,7 +115,7 @@ const CreateAdminModal = ({ onClose, onSuccess }) => {
         <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 admin-btn-green rounded-xl flex items-center justify-center">
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
@@ -310,7 +310,7 @@ const CreateAdminModal = ({ onClose, onSuccess }) => {
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 py-2 admin-btn-green text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {loading ? (
                 <>

@@ -117,7 +117,7 @@ const LogisticsManagerDashboard = () => {
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6 mb-8">
                 <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
                   <div className="flex items-center">
-                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 shadow-soft">
+                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl warehouse-icon-blue shadow-soft">
                       <FiList className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
                     <div className="ml-2 lg:ml-4 min-w-0">
@@ -128,7 +128,7 @@ const LogisticsManagerDashboard = () => {
                 </div>
                 <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
                   <div className="flex items-center">
-                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 shadow-soft">
+                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl warehouse-icon-yellow shadow-soft">
                       <FiList className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
                     <div className="ml-2 lg:ml-4 min-w-0">
@@ -139,7 +139,7 @@ const LogisticsManagerDashboard = () => {
                 </div>
                 <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
                   <div className="flex items-center">
-                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 shadow-soft">
+                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl warehouse-icon-emerald shadow-soft">
                       <FiList className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
                     <div className="ml-2 lg:ml-4 min-w-0">
@@ -150,7 +150,7 @@ const LogisticsManagerDashboard = () => {
                 </div>
                 <div className="neumorphic-card p-3 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 hover:shadow-soft-lg transition-all duration-300">
                   <div className="flex items-center">
-                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl bg-gradient-to-br from-purple-400 to-violet-500 shadow-soft">
+                    <div className="neumorphic-icon p-2 lg:p-4 rounded-xl warehouse-icon-violet shadow-soft">
                       <FiList className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
                     <div className="ml-2 lg:ml-4 min-w-0">
@@ -166,7 +166,7 @@ const LogisticsManagerDashboard = () => {
               {/* Recent Orders */}
               <div className="neumorphic-card p-4 lg:p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 mb-8">
                 <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-gray-800 flex items-center">
-                  <span className="w-2 h-6 lg:h-8 bg-gradient-to-b from-blue-400 to-cyan-500 rounded-full mr-2 lg:mr-3"></span>
+                  <span className="w-2 h-6 lg:h-8 subadmin-indicator-blue rounded-full mr-2 lg:mr-3"></span>
                   Recent Orders
                 </h2>
                 {stats.recentOrders.length > 0 ? (
@@ -283,7 +283,7 @@ const LogisticsManagerDashboard = () => {
   return (
     <>
       <LogisticsManagerSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50" style={{ marginLeft: 'var(--sidebar-width, 0px)' }}>
+      <div className="min-h-screen warehouse-bg-blue" style={{ marginLeft: 'var(--sidebar-width, 0px)' }}>
         <div className="container mx-auto px-4 py-8">
           <div className="flex gap-8">
             <div className="flex-1">
