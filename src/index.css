@@ -4261,6 +4261,43 @@ body {
   background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
 }
 
+/* LogisticsManagerSidebar Safari-Compatible Classes */
+.logistics-sidebar-logo {
+  background: -webkit-linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+}
+
+.logistics-sidebar-nav-active {
+  background: -webkit-linear-gradient(90deg, #3b82f6 0%, #06b6d4 100%);
+  background: linear-gradient(90deg, #3b82f6 0%, #06b6d4 100%);
+}
+
+.logistics-sidebar-nav-hover:hover {
+  background: -webkit-linear-gradient(90deg, #dbeafe 0%, #cffafe 100%);
+  background: linear-gradient(90deg, #dbeafe 0%, #cffafe 100%);
+}
+
+.logistics-sidebar-logout-hover:hover {
+  background: -webkit-linear-gradient(90deg, #fef2f2 0%, #fce7f3 100%);
+  background: linear-gradient(90deg, #fef2f2 0%, #fce7f3 100%);
+}
+
+/* Missing WarehouseManagerSidebar Classes */
+.warehouse-icon-green {
+  background: -webkit-linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.warehouse-bg-green-light:hover {
+  background: -webkit-linear-gradient(90deg, #f0fdf4 0%, #ecfdf5 100%);
+  background: linear-gradient(90deg, #f0fdf4 0%, #ecfdf5 100%);
+}
+
+.warehouse-logout-hover:hover {
+  background: -webkit-linear-gradient(90deg, #fef2f2 0%, #fce7f3 100%);
+  background: linear-gradient(90deg, #fef2f2 0%, #fce7f3 100%);
+}
+
 .warehouse-batch-details-batch-item-5 {
   background: -webkit-linear-gradient(90deg, #fef2f2 0%, #fce7f3 100%);
   background: linear-gradient(90deg, #fef2f2 0%, #fce7f3 100%);

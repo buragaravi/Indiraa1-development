@@ -98,7 +98,7 @@ const LogisticsManagerSidebar = ({ activeTab, setActiveTab }) => {
         <div className={`h-full overflow-hidden transition-opacity duration-300 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}>
           <div className="p-6 h-full overflow-y-auto">
             <div className="flex items-center mb-8">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 shadow-lg flex items-center justify-center mr-4">
+              <div className="w-12 h-12 rounded-2xl logistics-sidebar-logo shadow-lg flex items-center justify-center mr-4">
                 <FiList className="w-7 h-7 text-white" />
               </div>
               <div>
@@ -122,7 +122,7 @@ const LogisticsManagerSidebar = ({ activeTab, setActiveTab }) => {
                         setIsCollapsed(true);
                       }
                     }}
-                    className={`w-full flex items-center px-4 py-3 rounded-xl transition-all duration-300 group relative ${isActive(item.id) ? 'bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-lg transform scale-105' : 'text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 hover:shadow-md hover:scale-102'}`}
+                    className={`w-full flex items-center px-4 py-3 rounded-xl transition-all duration-300 group relative ${isActive(item.id) ? 'logistics-sidebar-nav-active text-white shadow-lg transform scale-105' : 'text-gray-700 logistics-sidebar-nav-hover hover:shadow-md hover:scale-102'}`}
                   >
                     <IconComponent className={`w-5 h-5 mr-3 transition-all duration-300 ${isActive(item.id) ? 'text-white' : 'text-gray-500 group-hover:text-blue-600 group-hover:scale-110'}`} />
                     <span className="font-medium text-sm flex-1">{item.name}</span>
@@ -142,7 +142,7 @@ const LogisticsManagerSidebar = ({ activeTab, setActiveTab }) => {
                       setIsCollapsed(true);
                     }
                   }}
-                  className="w-full flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 hover:text-red-600 transition-all duration-300 group hover:scale-102"
+                  className="w-full flex items-center px-4 py-3 rounded-xl text-gray-700 logistics-sidebar-logout-hover hover:text-red-600 transition-all duration-300 group hover:scale-102"
                 >
                   <FiLogOut className="w-5 h-5 mr-3 text-gray-500 group-hover:text-red-600 transition-all duration-300 group-hover:scale-110" />
                   <span className="font-medium text-sm">Logout</span>
