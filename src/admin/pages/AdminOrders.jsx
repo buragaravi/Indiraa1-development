@@ -132,100 +132,100 @@ const AdminOrders = () => {
           ) : (
             <div className="neumorphic-card rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20 overflow-hidden">
               {/* Desktop Table View */}
-              <div className="hidden lg:block overflow-x-auto">
+              <div className="hidden xl:block overflow-x-auto">
                 <table className="w-full">
-                  <thead className="admin-orders-table-header">
+                  <thead className="bg-gray-50/50">
                     <tr>
-                      <th className="text-left p-6 font-semibold text-gray-700">Order ID</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Customer</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Items</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Total</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Status</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Payment</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Delivery Slot</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Date</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Actions</th>
+                      <th className="text-left p-4 font-semibold text-gray-700 text-sm">Order ID</th>
+                      <th className="text-left p-4 font-semibold text-gray-700 text-sm">Customer</th>
+                      <th className="text-left p-4 font-semibold text-gray-700 text-sm">Items</th>
+                      <th className="text-left p-4 font-semibold text-gray-700 text-sm">Total</th>
+                      <th className="text-left p-4 font-semibold text-gray-700 text-sm">Status</th>
+                      <th className="text-left p-4 font-semibold text-gray-700 text-sm">Payment</th>
+                      <th className="text-left p-4 font-semibold text-gray-700 text-sm">Delivery</th>
+                      <th className="text-left p-4 font-semibold text-gray-700 text-sm">Date</th>
+                      <th className="text-left p-4 font-semibold text-gray-700 text-sm">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {orders.map((order) => (
                       <tr key={order._id} className="border-b border-gray-100/50 hover:bg-white/30 transition-colors">
-                        <td className="p-6">
+                        <td className="p-4">
                           <button
                             onClick={() => handleOrderClick(order._id)}
-                            className="font-mono text-sm text-gray-600 bg-gray-50/50 rounded-xl px-3 py-2 hover:bg-gray-100/70 transition-colors cursor-pointer text-left w-full"
+                            className="font-mono text-xs text-gray-600 bg-gray-50/50 rounded-lg px-2 py-1 hover:bg-gray-100/70 transition-colors cursor-pointer text-left w-full"
                           >
                             {order._id.slice(-8)}
                           </button>
                         </td>
-                        <td className="p-6">
+                        <td className="p-4">
                           <button
                             onClick={() => handleOrderClick(order._id)}
-                            className="text-left w-full hover:bg-gray-50/50 rounded-xl p-2 transition-colors"
+                            className="text-left w-full hover:bg-gray-50/50 rounded-lg p-2 transition-colors"
                           >
                             <div>
-                              <div className="font-semibold text-gray-800">{order.shipping?.name || 'N/A'}</div>
-                              <div className="text-sm text-gray-500">{order.shipping?.phone || 'N/A'}</div>
+                              <div className="font-semibold text-gray-800 text-sm">{order.shipping?.name || 'N/A'}</div>
+                              <div className="text-xs text-gray-500">{order.shipping?.phone || 'N/A'}</div>
                             </div>
                           </button>
                         </td>
-                        <td className="p-6">
+                        <td className="p-4">
                           <button
                             onClick={() => handleOrderClick(order._id)}
-                            className="text-left w-full hover:bg-gray-50/50 rounded-xl p-2 transition-colors"
+                            className="text-left w-full hover:bg-gray-50/50 rounded-lg p-2 transition-colors"
                           >
-                            <div className="text-sm text-gray-600 bg-blue-50/50 px-3 py-1 rounded-full inline-block">
+                            <div className="text-xs text-gray-600 bg-blue-50/50 px-2 py-1 rounded-full inline-block">
                               {order.items?.length || 0} items
                             </div>
                           </button>
                         </td>
-                        <td className="p-6">
+                        <td className="p-4">
                           <button
                             onClick={() => handleOrderClick(order._id)}
-                            className="text-left w-full hover:bg-gray-50/50 rounded-xl p-2 transition-colors"
+                            className="text-left w-full hover:bg-gray-50/50 rounded-lg p-2 transition-colors"
                           >
-                            <div className="font-semibold text-green-600 text-lg">₹{order.totalAmount}</div>
+                            <div className="font-semibold text-green-600">₹{order.totalAmount}</div>
                           </button>
                         </td>
-                        <td className="p-6">
+                        <td className="p-4">
                           <button
                             onClick={() => handleOrderClick(order._id)}
-                            className="text-left w-full hover:bg-gray-50/50 rounded-xl p-2 transition-colors"
+                            className="text-left w-full hover:bg-gray-50/50 rounded-lg p-2 transition-colors"
                           >
-                            <span className={classNames('px-4 py-2 rounded-full text-sm font-medium border flex items-center', getStatusColor(order.status))}>
+                            <span className={classNames('px-3 py-1 rounded-full text-xs font-medium border flex items-center', getStatusColor(order.status))}>
                               {getStatusIcon(order.status)}
                               <span className="ml-1">{order.status}</span>
                             </span>
                           </button>
                         </td>
-                        <td className="p-6">
+                        <td className="p-4">
                           <button
                             onClick={() => handleOrderClick(order._id)}
-                            className="text-left w-full hover:bg-gray-50/50 rounded-xl p-2 transition-colors"
+                            className="text-left w-full hover:bg-gray-50/50 rounded-lg p-2 transition-colors"
                           >
-                            <span className={classNames('px-4 py-2 rounded-full text-sm font-medium border flex items-center', 
+                            <span className={classNames('px-3 py-1 rounded-full text-xs font-medium border flex items-center', 
                               order.paymentStatus === 'Paid' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-yellow-100 text-yellow-700 border-yellow-200')}>
-                              {order.paymentStatus === 'Paid' && <PaidIcon className="w-4 h-4 mr-1" />}
+                              {order.paymentStatus === 'Paid' && <PaidIcon className="w-3 h-3 mr-1" />}
                               {order.paymentStatus || 'Pending'}
                             </span>
                           </button>
                         </td>
-                        <td className="p-6">
+                        <td className="p-4">
                           <button
                             onClick={() => handleOrderClick(order._id)}
-                            className="text-left w-full hover:bg-gray-50/50 rounded-xl p-2 transition-colors"
+                            className="text-left w-full hover:bg-gray-50/50 rounded-lg p-2 transition-colors"
                           >
                             <div className="space-y-1">
                               {order.deliverySlot?.date ? (
                                 <>
-                                  <div className="text-sm font-medium text-blue-600">
+                                  <div className="text-xs font-medium text-blue-600">
                                     📅 {new Date(order.deliverySlot.date).toLocaleDateString('en-IN', { 
                                       day: 'numeric', 
                                       month: 'short' 
                                     })}
                                   </div>
                                   {order.deliverySlot.timeSlot && (
-                                    <div className="text-xs text-gray-600 bg-blue-50 px-2 py-1 rounded-lg">
+                                    <div className="text-xs text-gray-600 bg-blue-50 px-1 py-0.5 rounded">
                                       🕐 {order.deliverySlot.timeSlot.split(' - ')[0]}
                                     </div>
                                   )}
@@ -238,23 +238,86 @@ const AdminOrders = () => {
                             </div>
                           </button>
                         </td>
-                        <td className="p-6">
+                        <td className="p-4">
                           <button
                             onClick={() => handleOrderClick(order._id)}
-                            className="text-left w-full hover:bg-gray-50/50 rounded-xl p-2 transition-colors"
+                            className="text-left w-full hover:bg-gray-50/50 rounded-lg p-2 transition-colors"
                           >
-                            <div className="text-sm text-gray-600">
+                            <div className="text-xs text-gray-600">
                               {formatDate(order.placedAt || order.createdAt)}
                             </div>
                           </button>
                         </td>
-                        <td className="p-6">
+                        <td className="p-4">
                           <button
                             onClick={() => handleOrderClick(order._id)}
-                            className="neumorphic-button-small px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center"
+                            className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-md hover:shadow-lg transition-all duration-300 flex items-center"
                           >
-                            <ViewIcon className="w-4 h-4 mr-1" />
-                            View Details
+                            <ViewIcon className="w-3 h-3 mr-1" />
+                            View
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Tablet Compact Table View */}
+              <div className="hidden lg:block xl:hidden overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-50/50">
+                    <tr>
+                      <th className="text-left p-3 font-semibold text-gray-700 text-sm">Order</th>
+                      <th className="text-left p-3 font-semibold text-gray-700 text-sm">Customer</th>
+                      <th className="text-left p-3 font-semibold text-gray-700 text-sm">Total</th>
+                      <th className="text-left p-3 font-semibold text-gray-700 text-sm">Status</th>
+                      <th className="text-left p-3 font-semibold text-gray-700 text-sm">Payment</th>
+                      <th className="text-left p-3 font-semibold text-gray-700 text-sm">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders.map((order) => (
+                      <tr key={order._id} className="border-b border-gray-100/50 hover:bg-white/30 transition-colors">
+                        <td className="p-3">
+                          <div>
+                            <div className="font-mono text-xs text-gray-600 bg-gray-50/50 rounded px-2 py-1 inline-block mb-1">
+                              #{order._id.slice(-8)}
+                            </div>
+                            <div className="text-xs text-gray-500 bg-blue-50/50 px-2 py-1 rounded-full inline-block">
+                              {order.items?.length || 0} items
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-3">
+                          <div>
+                            <div className="font-semibold text-gray-800 text-sm">{order.shipping?.name || 'N/A'}</div>
+                            <div className="text-xs text-gray-500">{order.shipping?.phone || 'N/A'}</div>
+                          </div>
+                        </td>
+                        <td className="p-3">
+                          <div className="font-semibold text-green-600">₹{order.totalAmount}</div>
+                        </td>
+                        <td className="p-3">
+                          <span className={classNames('px-2 py-1 rounded-full text-xs font-medium border flex items-center w-fit', getStatusColor(order.status))}>
+                            {getStatusIcon(order.status)}
+                            <span className="ml-1">{order.status}</span>
+                          </span>
+                        </td>
+                        <td className="p-3">
+                          <span className={classNames('px-2 py-1 rounded-full text-xs font-medium border flex items-center w-fit', 
+                            order.paymentStatus === 'Paid' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-yellow-100 text-yellow-700 border-yellow-200')}>
+                            {order.paymentStatus === 'Paid' && <PaidIcon className="w-3 h-3 mr-1" />}
+                            {order.paymentStatus || 'Pending'}
+                          </span>
+                        </td>
+                        <td className="p-3">
+                          <button
+                            onClick={() => handleOrderClick(order._id)}
+                            className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-md hover:shadow-lg transition-all duration-300 flex items-center"
+                          >
+                            <ViewIcon className="w-3 h-3 mr-1" />
+                            View
                           </button>
                         </td>
                       </tr>
@@ -265,12 +328,13 @@ const AdminOrders = () => {
 
               {/* Mobile Card View */}
               <div className="lg:hidden">
-                <div className="space-y-4 p-4">
+                <div className="space-y-3 p-4">
                   {orders.map((order) => (
-                    <div key={order._id} className="neumorphic-card p-4 rounded-2xl bg-white/40 backdrop-blur-sm border border-white/20">
+                    <div key={order._id} className="bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-white/20 shadow-md">
+                      {/* Header Row */}
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <div className="font-mono text-sm text-gray-600 bg-gray-50/50 rounded-lg px-2 py-1 inline-block mb-1">
+                          <div className="font-mono text-xs text-gray-600 bg-gray-50 rounded-lg px-2 py-1 inline-block mb-1">
                             #{order._id.slice(-8)}
                           </div>
                           <div className="font-semibold text-gray-800 text-sm">{order.shipping?.name || 'N/A'}</div>
@@ -278,12 +342,13 @@ const AdminOrders = () => {
                         </div>
                         <div className="text-right">
                           <div className="font-semibold text-green-600 text-lg">₹{order.totalAmount}</div>
-                          <div className="text-xs text-gray-500 bg-blue-50/50 px-2 py-1 rounded-full inline-block">
+                          <div className="text-xs text-gray-500 bg-blue-50 px-2 py-1 rounded-full inline-block">
                             {order.items?.length || 0} items
                           </div>
                         </div>
                       </div>
                       
+                      {/* Status Row */}
                       <div className="flex flex-wrap gap-2 mb-3">
                         <span className={classNames('px-3 py-1 rounded-full text-xs font-medium border flex items-center', getStatusColor(order.status))}>
                           {getStatusIcon(order.status)}
@@ -296,17 +361,37 @@ const AdminOrders = () => {
                         </span>
                       </div>
                       
-                      <div className="text-xs text-gray-500 mb-3">
-                        {formatDate(order.placedAt || order.createdAt)}
-                      </div>
+                      {/* Delivery Info */}
+                      {order.deliverySlot?.date && (
+                        <div className="mb-3 p-2 bg-blue-50/50 rounded-lg">
+                          <div className="text-xs font-medium text-blue-600 mb-1">
+                            📅 Delivery: {new Date(order.deliverySlot.date).toLocaleDateString('en-IN', { 
+                              day: 'numeric', 
+                              month: 'short',
+                              year: 'numeric'
+                            })}
+                          </div>
+                          {order.deliverySlot.timeSlot && (
+                            <div className="text-xs text-gray-600">
+                              🕐 {order.deliverySlot.timeSlot}
+                            </div>
+                          )}
+                        </div>
+                      )}
                       
-                      <button
-                        onClick={() => handleOrderClick(order._id)}
-                        className="w-full neumorphic-button-small px-4 py-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
-                      >
-                        <ViewIcon className="w-4 h-4 mr-2" />
-                        View Details
-                      </button>
+                      {/* Date and Action Row */}
+                      <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                        <div className="text-xs text-gray-500">
+                          {formatDate(order.placedAt || order.createdAt)}
+                        </div>
+                        <button
+                          onClick={() => handleOrderClick(order._id)}
+                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 flex items-center"
+                        >
+                          <ViewIcon className="w-4 h-4 mr-2" />
+                          View Details
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
