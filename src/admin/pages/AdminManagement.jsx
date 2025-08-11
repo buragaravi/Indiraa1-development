@@ -369,18 +369,18 @@ const AdminManagement = () => {
       });
 
     return (
-      <div className="admin-management-card">
-        <div className="flex items-center mb-4">
-          <div className="flex-shrink-0 w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
-            <svg className="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+      <div className="bg-white rounded-xl shadow-md border border-green-200 p-4">
+        <div className="flex items-center mb-3">
+          <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+            <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-2a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clipRule="evenodd" />
             </svg>
           </div>
           <div className="ml-3">
-            <h4 className="text-lg font-semibold text-gray-900">
+            <h4 className="text-lg font-semibold text-green-800">
               Permission Details for {admin.name}
             </h4>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-green-600">
               {enabledModules.length} enabled module{enabledModules.length !== 1 ? 's' : ''}
             </p>
           </div>
@@ -400,21 +400,21 @@ const AdminManagement = () => {
             {enabledModules.map((module, index) => (
               <div 
                 key={index} 
-                className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200"
+                className="bg-green-50 rounded-lg p-4 border border-green-200 shadow-sm hover:shadow-md transition-shadow duration-200"
               >
                 <div className="flex items-center mb-3">
-                  <div className="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-md flex items-center justify-center">
-                    <svg className="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="flex-shrink-0 w-6 h-6 bg-green-100 rounded-md flex items-center justify-center">
+                    <svg className="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h12a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <h5 className="ml-2 text-sm font-semibold text-gray-900">
+                  <h5 className="ml-2 text-sm font-semibold text-green-800">
                     {module.displayName}
                   </h5>
                 </div>
                 
                 {module.enabledActions.length === 0 ? (
-                  <p className="text-xs text-gray-500 italic">No specific actions enabled</p>
+                  <p className="text-xs text-green-500 italic">No specific actions enabled</p>
                 ) : (
                   <div className="space-y-1">
                     {module.enabledActions.map((action, actionIndex) => (
@@ -441,48 +441,48 @@ const AdminManagement = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="admin-management-bg">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen p-4">
+      <div className="w-full">
         {/* Header */}
-        <div className="mb-8">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="mb-6">
+          <div className="bg-white rounded-xl shadow-md border border-green-100 p-5">
             <div className="flex justify-between items-start">
               <div>
                 <div className="flex items-center mb-2">
-                  <div className="admin-management-header-icon">
+                  <div className="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center shadow-md">
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <h1 className="admin-management-title">
+                  <h1 className="ml-3 text-xl font-bold text-green-800">
                     Admin Management
                   </h1>
                 </div>
-                <p className="text-gray-600 ml-11">Manage administrator accounts, permissions, and access controls</p>
+                <p className="text-green-600 ml-13 text-sm">Manage administrator accounts, permissions, and access controls</p>
                 
                 {/* Stats Row */}
-                <div className="flex items-center space-x-6 mt-4 ml-11">
+                <div className="flex items-center space-x-6 mt-3 ml-13">
                   <div className="flex items-center">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
-                    <span className="text-sm text-gray-600">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                    <span className="text-xs text-green-700">
                       {admins.length} Total Admin{admins.length !== 1 ? 's' : ''}
                     </span>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                    <span className="text-sm text-gray-600">
+                    <div className="w-2 h-2 bg-green-600 rounded-full mr-2"></div>
+                    <span className="text-xs text-green-700">
                       {admins.filter(admin => admin.isActive).length} Active
                     </span>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full mr-2"></div>
-                    <span className="text-sm text-gray-600">
+                    <div className="w-2 h-2 bg-green-800 rounded-full mr-2"></div>
+                    <span className="text-xs text-green-700">
                       {admins.filter(admin => admin.isSuperAdmin).length} Super Admin{admins.filter(admin => admin.isSuperAdmin).length !== 1 ? 's' : ''}
                     </span>
                   </div>
@@ -496,7 +496,7 @@ const AdminManagement = () => {
                   action="view_activity_logs"
                   onClick={fetchActivityLogs}
                   variant="secondary"
-                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm"
+                  className="inline-flex items-center px-4 py-2 border border-green-300 rounded-lg text-sm font-medium text-green-700 bg-white hover:bg-green-50 hover:border-green-400 transition-all duration-200 shadow-sm"
                 >
                   <LogsIcon />
                   <span className="ml-2">Activity Logs</span>
@@ -507,7 +507,7 @@ const AdminManagement = () => {
                   module="admin_management"
                   action="create_admin"
                   onClick={() => setShowCreateModal(true)}
-                  className="admin-management-add-btn"
+                  className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-all duration-200 shadow-md"
                 >
                   <PlusIcon />
                   <span className="ml-2">Create Admin</span>
@@ -519,11 +519,11 @@ const AdminManagement = () => {
 
       {/* Error Message */}
       {error && (
-        <div className="mb-6 p-4 border border-red-300 rounded-md bg-red-50">
-          <p className="text-red-700">{error}</p>
+        <div className="mb-4 p-4 border border-red-300 rounded-xl bg-red-50">
+          <p className="text-red-700 text-sm">{error}</p>
           <button 
             onClick={() => setError('')}
-            className="mt-2 text-sm text-red-600 hover:text-red-500"
+            className="mt-2 text-xs text-red-600 hover:text-red-500"
           >
             Dismiss
           </button>
@@ -531,39 +531,39 @@ const AdminManagement = () => {
       )}
 
       {/* Admin Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="bg-white p-4 rounded-xl shadow-md border border-green-100 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center">
-            <div className="p-2 bg-blue-100 rounded-lg">
+            <div className="p-3 bg-green-500 rounded-xl shadow-md">
               <AdminIcon />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Admins</p>
-              <p className="text-2xl font-bold text-gray-900">{admins.length}</p>
+              <p className="text-xs font-semibold text-green-600 uppercase tracking-wide">Total Admins</p>
+              <p className="text-lg font-bold text-green-800">{admins.length}</p>
             </div>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white p-4 rounded-xl shadow-md border border-green-100 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center">
-            <div className="p-2 bg-green-100 rounded-lg">
+            <div className="p-3 bg-green-600 rounded-xl shadow-md">
               <SuperAdminIcon />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Active Admins</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-xs font-semibold text-green-600 uppercase tracking-wide">Active Admins</p>
+              <p className="text-lg font-bold text-green-800">
                 {admins.filter(admin => admin.isActive).length}
               </p>
             </div>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white p-4 rounded-xl shadow-md border border-green-100 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center">
-            <div className="p-2 bg-purple-100 rounded-lg">
+            <div className="p-3 bg-green-800 rounded-xl shadow-md">
               <SuperAdminIcon />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Super Admins</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-xs font-semibold text-green-600 uppercase tracking-wide">Super Admins</p>
+              <p className="text-lg font-bold text-green-800">
                 {admins.filter(admin => admin.isSuperAdmin).length}
               </p>
             </div>
@@ -572,31 +572,31 @@ const AdminManagement = () => {
       </div>
 
       {/* Admins Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="admin-management-table-header">
-          <h3 className="text-lg font-semibold text-gray-900">Administrator Accounts</h3>
-          <p className="text-sm text-gray-600 mt-1">Click "Details" to view specific permissions for each admin</p>
+      <div className="bg-white rounded-xl shadow-md border border-green-100 overflow-hidden">
+        <div className="px-6 py-4 bg-green-50 border-b border-green-100">
+          <h3 className="text-lg font-semibold text-green-800">Administrator Accounts</h3>
+          <p className="text-sm text-green-600 mt-1">Click "Details" to view specific permissions for each admin</p>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="admin-management-table-head">
+            <thead className="bg-green-50">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                   Administrator
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                   Role
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                   Permissions
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                   Created Date
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
@@ -605,18 +605,18 @@ const AdminManagement = () => {
               {admins.map((admin) => (
                 <React.Fragment key={admin._id}>
                   {/* Main Admin Row */}
-                  <tr className="hover:bg-gray-50 transition-colors duration-150 border-b border-gray-200">
+                  <tr className="hover:bg-green-50 transition-colors duration-150 border-b border-green-100">
                     <td className="px-6 py-4">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 h-12 w-12">
-                          <div className="admin-management-avatar">
+                        <div className="flex-shrink-0 h-10 w-10">
+                          <div className="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center shadow-md">
                             {admin.isSuperAdmin ? <SuperAdminIcon /> : <AdminIcon />}
                           </div>
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-semibold text-gray-900">{admin.name}</div>
-                          <div className="text-sm text-gray-600">{admin.email}</div>
-                          <div className="text-xs text-gray-500">@{admin.username}</div>
+                          <div className="text-sm font-semibold text-green-800">{admin.name}</div>
+                          <div className="text-sm text-green-600">{admin.email}</div>
+                          <div className="text-xs text-green-500">@{admin.username}</div>
                         </div>
                       </div>
                     </td>
@@ -641,7 +641,7 @@ const AdminManagement = () => {
                           onClick={() => handleEditAdmin(admin)}
                           variant="secondary"
                           size="sm"
-                          className="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-lg text-sm text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm"
+                          className="inline-flex items-center px-3 py-1.5 border border-green-300 rounded-lg text-sm text-green-700 bg-white hover:bg-green-50 hover:border-green-400 transition-all duration-200 shadow-sm"
                         >
                           <EditIcon />
                           <span className="ml-1.5">Edit</span>
@@ -655,7 +655,7 @@ const AdminManagement = () => {
                             onClick={() => handleDeleteAdmin(admin._id)}
                             variant="danger"
                             size="sm"
-                            className="inline-flex items-center px-3 py-1.5 border border-red-300 rounded-lg text-sm text-red-700 bg-white hover:bg-red-50 hover:border-red-400 transition-all duration-200 shadow-sm"
+                            className="inline-flex items-center px-3 py-1.5 border border-red-200 rounded-lg text-sm text-red-600 bg-red-50 hover:bg-red-100 hover:border-red-300 hover:text-red-700 transition-all duration-200 shadow-sm"
                           >
                             <DeleteIcon />
                             <span className="ml-1.5">Delete</span>
@@ -667,8 +667,8 @@ const AdminManagement = () => {
                   
                   {/* Expanded Permission Details Row */}
                   {expandedAdminId === admin._id && (
-                    <tr className="bg-gray-50">
-                      <td colSpan="6" className="px-6 py-6">
+                    <tr className="bg-green-50">
+                      <td colSpan="6" className="px-6 py-4">
                         <div className="transform transition-all duration-300 ease-in-out animate-fade-in">
                           {renderExpandedPermissions(admin)}
                         </div>
