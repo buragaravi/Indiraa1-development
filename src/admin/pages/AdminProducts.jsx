@@ -341,7 +341,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
               module="products"
               action="bulk_upload"
               onClick={() => setShowBulkUpload(true)}
-              className="admin-products-blue-button"
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
             >
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
@@ -353,7 +353,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
               module="products"
               action="create_product"
               onClick={() => setShowForm(true)}
-              className="admin-products-green-button"
+              className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
             >
               <AddIcon className="w-5 h-5 mr-2" />
               Add New Product
@@ -398,7 +398,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                 </h2>
                 <button
                   onClick={resetForm}
-                  className="neumorphic-button-small w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gray-500 text-white flex items-center justify-center hover:shadow-soft transition-all duration-300 flex-shrink-0"
+                  className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gray-500 hover:bg-gray-600 text-white flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 flex-shrink-0"
                 >
                   <CloseIcon className="w-4 h-4 lg:w-5 lg:h-5" />
                 </button>
@@ -498,7 +498,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                       <button
                         type="button"
                         onClick={addVariant}
-                        className="neumorphic-button-small px-4 py-2 bg-green-500 text-white rounded-xl text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center"
+                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 flex items-center"
                       >
                         <AddIcon className="w-4 h-4 mr-1" />
                         Add Variant
@@ -575,7 +575,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                                   onClick={() => setDefaultVariant(i)}
                                   className={classNames(
                                     'flex-1 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 flex items-center justify-center',
-                                    i === index ? 'bg-green-500 text-white shadow-soft' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                    i === index ? 'bg-green-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                   )}
                                   type="button"
                                 >
@@ -600,7 +600,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="admin-products-green-button"
+                    className="px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center disabled:opacity-50"
                   >
                     {submitting ? (
                       <>
@@ -618,7 +618,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                     type="button"
                     disabled={submitting}
                     onClick={resetForm}
-                    className="neumorphic-button px-6 lg:px-8 py-3 lg:py-4 rounded-2xl bg-gray-500 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50"
+                    className="px-6 py-3 rounded-xl bg-gray-500 hover:bg-gray-600 text-white font-semibold shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-50"
                   >
                     Cancel
                   </button>
@@ -697,7 +697,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                                 action="edit_product"
                                 onClick={() => handleEdit(product)}
                                 size="sm"
-                                className="neumorphic-button-small p-2 bg-blue-500 text-white rounded-lg hover:shadow-soft transition-all duration-300 flex items-center justify-center"
+                                className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
                                 title="Edit Product"
                               >
                                 <EditIcon className="w-4 h-4" />
@@ -709,7 +709,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                                 onClick={() => handleDelete(product._id)}
                                 size="sm"
                                 variant="danger"
-                                className="neumorphic-button-small p-2 bg-red-500 text-white rounded-lg hover:shadow-soft transition-all duration-300 flex items-center justify-center"
+                                className="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
                                 title="Delete Product"
                               >
                                 <DeleteIcon className="w-4 h-4" />
@@ -866,7 +866,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                           action="edit_product"
                           onClick={() => handleEdit(product)}
                           size="sm"
-                          className="flex-1 neumorphic-button-small px-3 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
+                          className="flex-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
                         >
                           <EditIcon className="w-3 h-3 mr-1" />
                           Edit
@@ -878,7 +878,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                           onClick={() => handleDelete(product._id)}
                           size="sm"
                           variant="danger"
-                          className="flex-1 neumorphic-button-small px-3 py-2 bg-red-500 text-white rounded-lg text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
+                          className="flex-1 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
                         >
                           <DeleteIcon className="w-3 h-3 mr-1" />
                           Delete
