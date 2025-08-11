@@ -28,7 +28,7 @@ const AdminCoupons = () => {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     code: '',
-    type: 'percent',
+    type: 'percentage',
     amount: '',
     maxDiscount: '',
     minAmount: '',
@@ -114,7 +114,7 @@ const AdminCoupons = () => {
         setShowForm(false);
         setFormData({
           code: '',
-          type: 'percent',
+          type: 'percentage',
           amount: '',
           maxDiscount: '',
           minAmount: '',
@@ -165,7 +165,7 @@ const AdminCoupons = () => {
     setShowForm(false);
     setFormData({
       code: '',
-      type: 'percent',
+      type: 'percentage',
       amount: '',
       maxDiscount: '',
       minAmount: '',
@@ -230,14 +230,14 @@ const AdminCoupons = () => {
     );
   }  return (
     <>
-      <div className="w-full">
+      <div className="w-full min-h-screen p-4">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6 md:mb-8 space-y-4 md:space-y-0">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4 space-y-3 md:space-y-0">
           <div>
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 text-gray-800 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+            <h1 className="text-xl md:text-2xl font-bold mb-1 text-green-800">
               Coupon Management
             </h1>
-            <p className="text-gray-600 text-sm md:text-base lg:text-lg">
+            <p className="text-green-600 text-sm">
               Create and manage discount coupons for your customers
             </p>
           </div>
@@ -245,145 +245,145 @@ const AdminCoupons = () => {
             moduleName="coupons"
             action="create_coupon"
             onClick={() => setShowForm(true)}
-            className="neumorphic-button w-full md:w-auto px-6 md:px-8 py-3 md:py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 flex items-center justify-center"
+            className="w-full md:w-auto px-4 py-2 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-all duration-200 flex items-center justify-center shadow-md"
             disabledTooltip="You don't have permission to create coupons"
           >
-              <AddIcon className="w-5 h-5 mr-2" />
+              <AddIcon className="w-4 h-4 mr-2" />
               Create Coupon
             </PermissionButton>
           </div>
 
           {/* Coupon Form */}
           {showForm && (
-            <div className="neumorphic-card mb-8 p-8 rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-800 flex items-center">
-                  <span className="w-2 h-8 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full mr-3"></span>
+            <div className="bg-white rounded-xl shadow-md border border-green-100 mb-4 p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg font-bold text-green-800 flex items-center">
+                  <span className="w-1 h-6 bg-green-600 rounded-full mr-2"></span>
                   Create New Coupon
                 </h2>
                 <button
                   onClick={resetForm}
-                  className="neumorphic-button-small w-10 h-10 rounded-full bg-gray-500 text-white flex items-center justify-center hover:shadow-soft transition-all duration-300"
+                  className="w-8 h-8 rounded-lg bg-gray-500 text-white flex items-center justify-center hover:bg-gray-600 transition-colors duration-200"
                 >
-                  <CloseIcon className="w-5 h-5" />
+                  <CloseIcon className="w-4 h-4" />
                 </button>
               </div>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold mb-3 text-gray-700">Coupon Code</label>
+                    <label className="block text-sm font-medium mb-2 text-green-700">Coupon Code</label>
                     <input
                       type="text"
                       name="code"
                       value={formData.code}
                       onChange={handleInputChange}
-                      className="neumorphic-input w-full p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                      className="w-full p-3 rounded-lg bg-green-50 border border-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       required
                       placeholder="e.g., SAVE20"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-3 text-gray-700">Discount Type</label>
+                    <label className="block text-sm font-medium mb-2 text-green-700">Discount Type</label>
                     <select
                       name="type"
                       value={formData.type}
                       onChange={handleInputChange}
-                      className="neumorphic-input w-full p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                      className="w-full p-3 rounded-lg bg-green-50 border border-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     >
-                      <option value="percent">Percentage</option>
-                      <option value="fixed">Fixed Amount</option>
+                      <option value="percentage">Percentage</option>
+                      <option value="flat">Fixed Amount</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-3 text-gray-700">
-                      {formData.type === 'percent' ? 'Discount Percentage' : 'Discount Amount (₹)'}
+                    <label className="block text-sm font-medium mb-2 text-green-700">
+                      {formData.type === 'percentage' ? 'Discount Percentage' : 'Discount Amount (₹)'}
                     </label>
                     <input
                       type="number"
                       name="amount"
                       value={formData.amount}
                       onChange={handleInputChange}
-                      className="neumorphic-input w-full p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                      className="w-full p-3 rounded-lg bg-green-50 border border-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       required
                       min="0"
-                      max={formData.type === 'percent' ? "100" : undefined}
-                      step={formData.type === 'percent' ? "1" : "0.01"}
+                      max={formData.type === 'percentage' ? "100" : undefined}
+                      step={formData.type === 'percentage' ? "1" : "0.01"}
                     />
                   </div>
-                  {formData.type === 'percent' && (
+                  {formData.type === 'percentage' && (
                     <div>
-                      <label className="block text-sm font-semibold mb-3 text-gray-700">Maximum Discount (₹)</label>
+                      <label className="block text-sm font-medium mb-2 text-green-700">Maximum Discount (₹)</label>
                       <input
                         type="number"
                         name="maxDiscount"
                         value={formData.maxDiscount}
                         onChange={handleInputChange}
-                        className="neumorphic-input w-full p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                        className="w-full p-3 rounded-lg bg-green-50 border border-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         min="0"
                         step="0.01"
                       />
                     </div>
                   )}
                   <div>
-                    <label className="block text-sm font-semibold mb-3 text-gray-700">Minimum Order Amount (₹)</label>
+                    <label className="block text-sm font-medium mb-2 text-green-700">Minimum Order Amount (₹)</label>
                     <input
                       type="number"
                       name="minAmount"
                       value={formData.minAmount}
                       onChange={handleInputChange}
-                      className="neumorphic-input w-full p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                      className="w-full p-3 rounded-lg bg-green-50 border border-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       min="0"
                       step="0.01"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-3 text-gray-700">Maximum Uses</label>
+                    <label className="block text-sm font-medium mb-2 text-green-700">Maximum Uses</label>
                     <input
                       type="number"
                       name="maxUses"
                       value={formData.maxUses}
                       onChange={handleInputChange}
-                      className="neumorphic-input w-full p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                      className="w-full p-3 rounded-lg bg-green-50 border border-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       min="1"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-3 text-gray-700">Valid From</label>
+                    <label className="block text-sm font-medium mb-2 text-green-700">Valid From</label>
                     <input
                       type="datetime-local"
                       name="validFrom"
                       value={formData.validFrom}
                       onChange={handleInputChange}
-                      className="neumorphic-input w-full p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                      className="w-full p-3 rounded-lg bg-green-50 border border-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-3 text-gray-700">Valid Until</label>
+                    <label className="block text-sm font-medium mb-2 text-green-700">Valid Until</label>
                     <input
                       type="datetime-local"
                       name="validUntil"
                       value={formData.validUntil}
                       onChange={handleInputChange}
-                      className="neumorphic-input w-full p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                      className="w-full p-3 rounded-lg bg-green-50 border border-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       required
                     />
                   </div>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="neumorphic-button px-8 py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50 flex items-center"
+                    className="px-6 py-2 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 flex items-center justify-center"
                   >
                     {submitting ? (
                       <>
-                        <LoadingIcon className="w-5 h-5 mr-2" />
+                        <LoadingIcon className="w-4 h-4 mr-2" />
                         Creating...
                       </>
                     ) : (
                       <>
-                        <SaveIcon className="w-5 h-5 mr-2" />
+                        <SaveIcon className="w-4 h-4 mr-2" />
                         Create Coupon
                       </>
                     )}
@@ -392,7 +392,7 @@ const AdminCoupons = () => {
                     type="button"
                     disabled={submitting}
                     onClick={resetForm}
-                    className="neumorphic-button px-8 py-4 rounded-2xl bg-gray-500 text-white font-semibold hover:shadow-soft-lg transition-all duration-300 disabled:opacity-50"
+                    className="px-6 py-2 rounded-lg bg-gray-500 text-white font-medium hover:bg-gray-600 transition-colors duration-200 disabled:opacity-50"
                   >
                     Cancel
                   </button>
@@ -401,25 +401,26 @@ const AdminCoupons = () => {
             </div>
           )}
 
-          {/* Coupons List */}          {loading ? (
-            <div className="text-center py-12">
-              <LoadingIcon className="w-16 h-16 text-green-500 mx-auto mb-4" />
-              <p className="text-gray-600 text-lg">Loading coupons...</p>
+          {/* Coupons List */}
+          {loading ? (
+            <div className="text-center py-8">
+              <LoadingIcon className="w-12 h-12 text-green-500 mx-auto mb-3" />
+              <p className="text-green-600 text-sm">Loading coupons...</p>
             </div>
           ) : (
-            <div className="neumorphic-card rounded-3xl bg-white/60 backdrop-blur-sm border border-white/20 overflow-hidden">
+            <div className="bg-white rounded-xl shadow-md border border-green-100 overflow-hidden">
               {/* Desktop Table View */}
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gradient-to-r from-green-50 to-emerald-50">
+                  <thead className="bg-green-50">
                     <tr>
-                      <th className="text-left p-6 font-semibold text-gray-700">Code</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Type</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Discount</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Usage</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Valid Period</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Status</th>
-                      <th className="text-left p-6 font-semibold text-gray-700">Actions</th>
+                      <th className="text-left p-4 text-sm font-medium text-green-700">Code</th>
+                      <th className="text-left p-4 text-sm font-medium text-green-700">Type</th>
+                      <th className="text-left p-4 text-sm font-medium text-green-700">Discount</th>
+                      <th className="text-left p-4 text-sm font-medium text-green-700">Usage</th>
+                      <th className="text-left p-4 text-sm font-medium text-green-700">Valid Period</th>
+                      <th className="text-left p-4 text-sm font-medium text-green-700">Status</th>
+                      <th className="text-left p-4 text-sm font-medium text-green-700">Actions</th>
                     </tr>
                   </thead>
                   <tbody>                    {coupons.map((coupon) => {
@@ -427,67 +428,69 @@ const AdminCoupons = () => {
                       const statusInfo = getCouponStatus(coupon);
                       
                       return (
-                        <tr key={coupon._id} className="border-b border-gray-100/50 hover:bg-white/30 transition-colors">
-                          <td className="p-6">
+                        <tr key={coupon._id} className="border-b border-green-100 hover:bg-green-50 transition-colors">
+                          <td className="p-4">
                             <div className="flex items-center">
-                              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-400 to-violet-500 shadow-soft flex items-center justify-center mr-3">
-                                <TicketIcon className="w-5 h-5 text-white" />
+                              <div className="w-8 h-8 rounded-lg bg-green-600 flex items-center justify-center mr-3">
+                                <TicketIcon className="w-4 h-4 text-white" />
                               </div>
                               <div>
-                                <div className="font-mono font-semibold text-gray-800">{coupon.code}</div>
-                                <div className="text-sm text-gray-500">Min: ₹{displayData.minOrder}</div>
+                                <div className="font-mono font-medium text-green-800 text-sm">{coupon.code}</div>
+                                <div className="text-xs text-green-600">Min: ₹{displayData.minOrder}</div>
                               </div>
                             </div>
                           </td>
-                          <td className="p-6">
+                          <td className="p-4">
                             <div className="flex items-center">
-                              {coupon.type === 'percent' ? (
+                              {(coupon.type === 'percent' || coupon.type === 'percentage') ? (
                                 <PercentIcon className="w-4 h-4 text-blue-500 mr-2" />
                               ) : (
                                 <MoneyIcon className="w-4 h-4 text-green-500 mr-2" />
                               )}
-                              <span className="capitalize text-gray-700">{coupon.type}</span>
+                              <span className="text-sm text-green-700">
+                                {(coupon.type === 'percent' || coupon.type === 'percentage') ? 'Percentage' : 'Fixed Amount'}
+                              </span>
                             </div>
                           </td>
-                          <td className="p-6">
-                            <div className="font-semibold text-green-600">
-                              {coupon.type === 'percent' ? `${coupon.amount}%` : `₹${coupon.amount}`}
+                          <td className="p-4">
+                            <div className="font-medium text-green-600 text-sm">
+                              {(coupon.type === 'percent' || coupon.type === 'percentage') ? `${coupon.amount}%` : `₹${coupon.amount}`}
                             </div>
                             {coupon.maxDiscount && (
-                              <div className="text-sm text-gray-500">Max: ₹{coupon.maxDiscount}</div>
+                              <div className="text-xs text-green-500">Max: ₹{coupon.maxDiscount}</div>
                             )}
                           </td>
-                          <td className="p-6">
-                            <div className="text-sm text-gray-700">
+                          <td className="p-4">
+                            <div className="text-sm text-green-700">
                               {displayData.usedCount} / {displayData.maxUses}
                             </div>
                           </td>
-                          <td className="p-6">
+                          <td className="p-4">
                             <div className="flex items-center">
-                              <CalendarIcon className="w-4 h-4 text-gray-400 mr-2" />
-                              <div className="text-sm text-gray-700">
+                              <CalendarIcon className="w-4 h-4 text-green-400 mr-2" />
+                              <div className="text-xs text-green-700">
                                 <div>Created: {formatDate(displayData.createdAt)}</div>
                                 <div>Expires: {formatDate(displayData.expiry)}</div>
                               </div>
                             </div>
                           </td>
-                          <td className="p-6">
+                          <td className="p-4">
                             <span className={classNames(
-                              'px-3 py-1 rounded-full text-xs font-medium',
+                              'px-2 py-1 rounded-full text-xs font-medium',
                               statusInfo.color
                             )}>
                               {statusInfo.status}
                             </span>
                           </td>
-                          <td className="p-6">
+                          <td className="p-4">
                             <PermissionButton
                               moduleName="coupons"
                               action="delete_coupon"
                               onClick={() => handleDelete(coupon._id)}
-                              className="neumorphic-button-small px-4 py-2 bg-red-500 text-white rounded-xl text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center"
+                              className="px-3 py-1 bg-red-500 text-white rounded-lg text-xs font-medium hover:bg-red-600 transition-colors duration-200 flex items-center"
                               disabledTooltip="You don't have permission to delete coupons"
                             >
-                              <DeleteIcon className="w-4 h-4 mr-1" />
+                              <DeleteIcon className="w-3 h-3 mr-1" />
                               Delete
                             </PermissionButton>
                           </td>
@@ -499,22 +502,22 @@ const AdminCoupons = () => {
               </div>
 
               {/* Mobile Card View */}
-              <div className="md:hidden space-y-4 p-4">
+              <div className="md:hidden space-y-3 p-3">
                 {coupons.map((coupon) => {
                   const displayData = getDisplayValues(coupon);
                   const statusInfo = getCouponStatus(coupon);
                   
                   return (
-                    <div key={coupon._id} className="bg-white/70 rounded-2xl p-4 border border-white/30 shadow-lg">
+                    <div key={coupon._id} className="bg-green-50 rounded-lg p-4 border border-green-200">
                       {/* Header */}
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center">
-                          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-purple-400 to-violet-500 shadow-soft flex items-center justify-center mr-2">
-                            <TicketIcon className="w-4 h-4 text-white" />
+                          <div className="w-6 h-6 rounded-md bg-green-600 flex items-center justify-center mr-2">
+                            <TicketIcon className="w-3 h-3 text-white" />
                           </div>
                           <div>
-                            <div className="font-mono font-semibold text-gray-800 text-sm">{coupon.code}</div>
-                            <div className="text-xs text-gray-500">Min: ₹{displayData.minOrder}</div>
+                            <div className="font-mono font-medium text-green-800 text-sm">{coupon.code}</div>
+                            <div className="text-xs text-green-600">Min: ₹{displayData.minOrder}</div>
                           </div>
                         </div>
                         <span className={classNames(
@@ -528,37 +531,39 @@ const AdminCoupons = () => {
                       {/* Content */}
                       <div className="grid grid-cols-2 gap-3 mb-3">
                         <div>
-                          <div className="text-xs text-gray-500 mb-1">Type</div>
+                          <div className="text-xs text-green-500 mb-1">Type</div>
                           <div className="flex items-center text-sm">
-                            {coupon.type === 'percent' ? (
+                            {(coupon.type === 'percent' || coupon.type === 'percentage') ? (
                               <PercentIcon className="w-3 h-3 text-blue-500 mr-1" />
                             ) : (
                               <MoneyIcon className="w-3 h-3 text-green-500 mr-1" />
                             )}
-                            <span className="capitalize text-gray-700">{coupon.type}</span>
+                            <span className="text-green-700 text-xs">
+                              {(coupon.type === 'percent' || coupon.type === 'percentage') ? 'Percentage' : 'Fixed Amount'}
+                            </span>
                           </div>
                         </div>
                         
                         <div>
-                          <div className="text-xs text-gray-500 mb-1">Discount</div>
-                          <div className="font-semibold text-green-600 text-sm">
-                            {coupon.type === 'percent' ? `${coupon.amount}%` : `₹${coupon.amount}`}
+                          <div className="text-xs text-green-500 mb-1">Discount</div>
+                          <div className="font-medium text-green-600 text-sm">
+                            {(coupon.type === 'percent' || coupon.type === 'percentage') ? `${coupon.amount}%` : `₹${coupon.amount}`}
                           </div>
                           {coupon.maxDiscount && (
-                            <div className="text-xs text-gray-500">Max: ₹{coupon.maxDiscount}</div>
+                            <div className="text-xs text-green-500">Max: ₹{coupon.maxDiscount}</div>
                           )}
                         </div>
 
                         <div>
-                          <div className="text-xs text-gray-500 mb-1">Usage</div>
-                          <div className="text-sm text-gray-700">
+                          <div className="text-xs text-green-500 mb-1">Usage</div>
+                          <div className="text-sm text-green-700">
                             {displayData.usedCount} / {displayData.maxUses}
                           </div>
                         </div>
 
                         <div>
-                          <div className="text-xs text-gray-500 mb-1">Expires</div>
-                          <div className="text-xs text-gray-700">
+                          <div className="text-xs text-green-500 mb-1">Expires</div>
+                          <div className="text-xs text-green-700">
                             {formatDate(displayData.expiry)}
                           </div>
                         </div>
@@ -569,7 +574,7 @@ const AdminCoupons = () => {
                         moduleName="coupons"
                         action="delete_coupon"
                         onClick={() => handleDelete(coupon._id)}
-                        className="w-full neumorphic-button-small px-3 py-2 bg-red-500 text-white rounded-lg text-sm font-medium hover:shadow-soft transition-all duration-300 flex items-center justify-center"
+                        className="w-full px-3 py-2 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-red-600 transition-colors duration-200 flex items-center justify-center"
                         disabledTooltip="You don't have permission to delete coupons"
                       >
                         <DeleteIcon className="w-4 h-4 mr-1" />
@@ -581,46 +586,15 @@ const AdminCoupons = () => {
               </div>
 
               {coupons.length === 0 && (
-                <div className="text-center py-16">
-                  <EmptyIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500 text-xl mb-4">No coupons found</p>
-                  <p className="text-gray-400">Create your first coupon to get started!</p>                </div>
+                <div className="text-center py-12">
+                  <EmptyIcon className="w-12 h-12 text-green-400 mx-auto mb-3" />
+                  <p className="text-green-500 text-lg mb-2">No coupons found</p>
+                  <p className="text-green-400 text-sm">Create your first coupon to get started!</p>
+                </div>
               )}
             </div>
           )}
         </div>
-
-      <style jsx>{`
-        .neumorphic-card {
-          box-shadow: 
-            20px 20px 60px rgba(0, 0, 0, 0.05),
-            -20px -20px 60px rgba(255, 255, 255, 0.8);
-        }
-        .neumorphic-button {
-          box-shadow: 
-            8px 8px 16px rgba(0, 0, 0, 0.2),
-            -8px -8px 16px rgba(255, 255, 255, 0.1);
-        }
-        .neumorphic-button-small {
-          box-shadow: 
-            4px 4px 8px rgba(0, 0, 0, 0.2),
-            -4px -4px 8px rgba(255, 255, 255, 0.1);
-        }
-        .neumorphic-input {
-          box-shadow: 
-            inset 4px 4px 8px rgba(0, 0, 0, 0.05),
-            inset -4px -4px 8px rgba(255, 255, 255, 0.8);
-        }
-        .shadow-soft {
-          box-shadow: 
-            8px 8px 16px rgba(0, 0, 0, 0.1),
-            -8px -8px 16px rgba(255, 255, 255, 0.8);
-        }
-        .shadow-soft-lg {
-          box-shadow: 
-            12px 12px 24px rgba(0, 0, 0, 0.1),
-            -12px -12px 24px rgba(255, 255, 255, 0.8);        }
-      `}</style>
     </>
   );
 };
