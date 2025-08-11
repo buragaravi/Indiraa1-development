@@ -342,181 +342,193 @@ const AdminBanners = () => {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto bg-[#f8faf8] min-h-screen">
-      {/* Error Display */}
-      {error && (
-        <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 shadow-sm">
-          <div className="flex">
-            <svg className="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <div className="ml-3">
-              <p className="text-sm text-red-700">{error}</p>
-            </div>
-            <button
-              onClick={() => setError('')}
-              className="ml-auto text-red-400 hover:text-red-600 transition-colors"
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-lg shadow-sm border">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Banner Management</h1>
-          <p className="text-gray-600 mt-1">Manage hero banners for your homepage</p>
-        </div>
-        <PermissionButton
-          module="banners"
-          action="create_banner"
-          onClick={() => {
-            setSelectedBanner(null);
-            setShowForm(true);
-          }}
-          className="bg-[#2ecc71] text-white px-6 py-3 rounded-lg hover:bg-[#27ae60] transition-colors font-medium flex items-center gap-2 shadow-md"
-          disabledTooltip="You don't have permission to create banners"
-        >
-          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-          Create Banner
-        </PermissionButton>
-      </div>
-
-      {/* Analytics Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-          <div className="flex items-center">
-            <div className="p-3 bg-[#2ecc71]/10 rounded-lg">
-              <svg className="h-6 w-6 text-[#2ecc71]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Banners</p>
-              <p className="text-2xl font-bold text-gray-900">{Array.isArray(banners) ? banners.length : 0}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-          <div className="flex items-center">
-            <div className="p-3 bg-green-100 rounded-lg">
-              <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Active Banners</p>
-              <p className="text-2xl font-bold text-[#2ecc71]">
-                {Array.isArray(banners) ? banners.filter(b => b.isActive).length : 0}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-          <div className="flex items-center">
-            <div className="p-3 bg-purple-100 rounded-lg">
-              <svg className="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Views</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {Array.isArray(banners) ? banners.reduce((sum, b) => sum + (b.viewCount || 0), 0).toLocaleString() : 0}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-          <div className="flex items-center">
-            <div className="p-3 bg-orange-100 rounded-lg">
-              <svg className="h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Clicks</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {Array.isArray(banners) ? banners.reduce((sum, b) => sum + (b.clickCount || 0), 0).toLocaleString() : 0}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Filters and Search */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border mb-6">
-        <div className="flex flex-wrap gap-4 items-center">
-          {/* Search */}
-          <div className="flex-1 min-w-64">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search banners..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2ecc71] focus:border-[#2ecc71] transition-colors"
-              />
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-          </div>
-
-          {/* Status Filter */}
-          <div className="flex gap-2">
-            {['all', 'active', 'inactive'].map(status => (
+    <div className="min-h-screen w-full p-4 sm:p-6 lg:p-8">
+      <div className=" mx-auto">
+        {/* Error Display */}
+        {error && (
+          <div className="mb-6 bg-red-50/80 backdrop-blur-sm border border-red-200/50 rounded-2xl p-4 shadow-lg shadow-red-100/50">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div className="ml-3 flex-1">
+                <p className="text-sm text-red-700 font-medium">{error}</p>
+              </div>
               <button
-                key={status}
-                onClick={() => setStatusFilter(status)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  statusFilter === status
-                    ? 'bg-[#2ecc71] text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
+                onClick={() => setError('')}
+                className="ml-auto flex-shrink-0 text-red-400 hover:text-red-600 transition-colors duration-200"
               >
-                {status.charAt(0).toUpperCase() + status.slice(1)}
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
-            ))}
+            </div>
+          </div>
+        )}
+
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6 bg-white p-5 lg:p-6 rounded-2xl shadow-lg border border-green-100">
+          <div className="mb-4 lg:mb-0">
+            <h1 className="text-xl lg:text-2xl font-bold text-green-800 mb-2">
+              Banner Management
+            </h1>
+            <p className="text-green-600 text-sm font-medium">Create stunning hero banners for your homepage</p>
+          </div>
+          <PermissionButton
+            module="banners"
+            action="create_banner"
+            onClick={() => {
+              setSelectedBanner(null);
+              setShowForm(true);
+            }}
+            className="group bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl transition-all duration-300 font-semibold flex items-center gap-3 shadow-md hover:shadow-lg transform hover:scale-105"
+            disabledTooltip="You don't have permission to create banners"
+          >
+            <svg className="h-5 w-5 group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Create Banner
+          </PermissionButton>
+        </div>
+
+        {/* Analytics Overview */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="group bg-white p-5 rounded-xl shadow-md border border-green-100 hover:shadow-lg hover:bg-green-50 transition-all duration-300 transform hover:scale-105">
+            <div className="flex items-center">
+              <div className="p-3 bg-green-500 rounded-xl shadow-md group-hover:shadow-lg transition-all duration-300">
+                <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-xs font-semibold text-green-600 mb-1">Total Banners</p>
+                <p className="text-lg font-bold text-green-800">
+                  {Array.isArray(banners) ? banners.length : 0}
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* Sort By */}
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2ecc71] focus:border-[#2ecc71] transition-colors"
-          >
-            <option value="priority">Sort by Priority</option>
-            <option value="title">Sort by Title</option>
-            <option value="views">Sort by Views</option>
-            <option value="created">Sort by Created Date</option>
-          </select>
-        </div>
-      </div>
+          <div className="group bg-white p-5 rounded-xl shadow-md border border-green-100 hover:shadow-lg hover:bg-green-50 transition-all duration-300 transform hover:scale-105">
+            <div className="flex items-center">
+              <div className="p-3 bg-green-600 rounded-xl shadow-md group-hover:shadow-lg transition-all duration-300">
+                <svg className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-xs font-semibold text-green-600 mb-1">Active Banners</p>
+                <p className="text-lg font-bold text-green-800">
+                  {Array.isArray(banners) ? banners.filter(b => b.isActive).length : 0}
+                </p>
+              </div>
+            </div>
+          </div>
 
-      {/* Banners List */}
-      <div className="bg-white rounded-lg shadow-sm border">
-        <div className="p-6">
-          <BannerList
-            banners={sortedBanners}
-            onEdit={handleEditBanner}
-            onDelete={handleDeleteBanner}
-            onToggleStatus={handleToggleStatus}
-            onReorder={handleReorder}
-            onBulkDelete={handleBulkDelete}
-            onBulkToggleStatus={handleBulkToggleStatus}
-            loading={loading}
-          />
+          <div className="group bg-white p-5 rounded-xl shadow-md border border-green-100 hover:shadow-lg hover:bg-green-50 transition-all duration-300 transform hover:scale-105">
+            <div className="flex items-center">
+              <div className="p-3 bg-green-700 rounded-xl shadow-md group-hover:shadow-lg transition-all duration-300">
+                <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-xs font-semibold text-green-600 mb-1">Total Views</p>
+                <p className="text-lg font-bold text-green-800">
+                  {Array.isArray(banners) ? banners.reduce((sum, b) => sum + (b.viewCount || 0), 0).toLocaleString() : 0}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="group bg-white p-5 rounded-xl shadow-md border border-green-100 hover:shadow-lg hover:bg-green-50 transition-all duration-300 transform hover:scale-105">
+            <div className="flex items-center">
+              <div className="p-3 bg-green-800 rounded-xl shadow-md group-hover:shadow-lg transition-all duration-300">
+                <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-xs font-semibold text-green-600 mb-1">Total Clicks</p>
+                <p className="text-lg font-bold text-green-800">
+                  {Array.isArray(banners) ? banners.reduce((sum, b) => sum + (b.clickCount || 0), 0).toLocaleString() : 0}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Filters and Search */}
+        <div className="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/20 mb-8">
+          <div className="flex flex-wrap gap-4 items-center">
+            {/* Search */}
+            <div className="flex-1 min-w-64">
+              <div className="relative group">
+                <input
+                  type="text"
+                  placeholder="Search banners..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 border border-gray-200/50 rounded-2xl focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all duration-300 bg-white/50 backdrop-blur-sm group-hover:bg-white/80"
+                />
+                <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 group-hover:text-emerald-500 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Status Filter */}
+            <div className="flex gap-2">
+              {['all', 'active', 'inactive'].map(status => (
+                <button
+                  key={status}
+                  onClick={() => setStatusFilter(status)}
+                  className={`px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 transform hover:scale-105 ${
+                    statusFilter === status
+                      ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg'
+                      : 'bg-white/50 text-gray-600 hover:bg-white/80 hover:shadow-md'
+                  }`}
+                >
+                  {status.charAt(0).toUpperCase() + status.slice(1)}
+                </button>
+              ))}
+            </div>
+
+            {/* Sort By */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="px-6 py-3 border border-gray-200/50 rounded-2xl focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all duration-300 bg-white/50 backdrop-blur-sm hover:bg-white/80"
+            >
+              <option value="priority">Sort by Priority</option>
+              <option value="title">Sort by Title</option>
+              <option value="views">Sort by Views</option>
+              <option value="created">Sort by Created Date</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Banners List */}
+        <div className="bg-white/60 backdrop-blur-md rounded-2xl shadow-lg border border-white/20 overflow-hidden">
+          <div className="p-6">
+            <BannerList
+              banners={sortedBanners}
+              onEdit={handleEditBanner}
+              onDelete={handleDeleteBanner}
+              onToggleStatus={handleToggleStatus}
+              onReorder={handleReorder}
+              onBulkDelete={handleBulkDelete}
+              onBulkToggleStatus={handleBulkToggleStatus}
+              loading={loading}
+            />
+          </div>
         </div>
       </div>
     </div>

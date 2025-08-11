@@ -194,328 +194,337 @@ const BannerForm = ({ banner = null, onSubmit, onCancel, isLoading = false }) =>
   };
 
   return (
-    <div className="banner-form-container bg-[#f8faf8] min-h-screen">
-      <div className="flex justify-between items-center mb-6 bg-white p-6 rounded-lg shadow-sm border">
-        <h2 className="text-2xl font-bold text-gray-800">
-          {banner ? 'Edit Banner' : 'Create New Banner'}
-        </h2>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => setShowPreview(!showPreview)}
-            className="px-4 py-2 bg-[#2ecc71] text-white rounded-lg hover:bg-[#27ae60] transition-colors"
-          >
-            {showPreview ? 'Hide Preview' : 'Show Preview'}
-          </button>
+    <div className="banner-form-container bg-green-50 min-h-screen p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 bg-white p-5 lg:p-6 rounded-2xl shadow-lg border border-green-100">
+          <h2 className="text-2xl lg:text-3xl font-bold text-green-800 mb-3 lg:mb-0">
+            {banner ? 'Edit Banner' : 'Create New Banner'}
+          </h2>
+          <div className="flex gap-3">
+            <button
+              type="button"
+              onClick={() => setShowPreview(!showPreview)}
+              className="px-5 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:scale-105"
+            >
+              {showPreview ? 'Hide Preview' : 'Show Preview'}
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div className={`grid ${showPreview ? 'grid-cols-2' : 'grid-cols-1'} gap-6`}>
-        {/* Form Section */}
-        <div className="space-y-6">
-          <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-sm border">
-            {/* Image Upload */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Banner Image *
-              </label>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 relative hover:border-[#2ecc71] transition-colors">
-                {imagePreview ? (
-                  <div className="relative">
-                    <img
-                      src={imagePreview}
-                      alt="Banner preview"
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setImageFile(null);
-                        setImagePreview('');
-                      }}
-                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600 transition-colors"
-                    >
-                      ×
-                    </button>
-                  </div>
-                ) : (
-                  <label htmlFor="image-upload" className="cursor-pointer block">
-                    <div className="text-center py-8">
-                      <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                      <p className="mt-2 text-sm text-gray-600">
-                        <span className="font-medium text-[#2ecc71] hover:text-[#27ae60]">
-                          Click to upload
-                        </span>
-                        {' '}or drag and drop
-                      </p>
-                      <p className="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
-                    </div>
-                  </label>
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                  id="image-upload"
-                />
-              </div>
-              {errors.image && (
-                <p className="mt-1 text-sm text-red-600">{errors.image}</p>
-              )}
-            </div>
-
-            {/* Title */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Title *
-              </label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleInputChange}
-                placeholder="Enter banner title"
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#2ecc71] focus:border-[#2ecc71] transition-colors ${
-                  errors.title ? 'border-red-500' : 'border-gray-300'
-                }`}
-                maxLength={100}
-              />
-              <div className="flex justify-between mt-1">
-                {errors.title && (
-                  <p className="text-sm text-red-600">{errors.title}</p>
-                )}
-                <p className="text-xs text-gray-500 ml-auto">
-                  {formData.title.length}/100
-                </p>
-              </div>
-            </div>
-
-            {/* Subtitle */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Subtitle
-              </label>
-              <textarea
-                name="subtitle"
-                value={formData.subtitle}
-                onChange={handleInputChange}
-                placeholder="Enter banner subtitle"
-                rows={3}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#2ecc71] focus:border-[#2ecc71] transition-colors ${
-                  errors.subtitle ? 'border-red-500' : 'border-gray-300'
-                }`}
-                maxLength={200}
-              />
-              <div className="flex justify-between mt-1">
-                {errors.subtitle && (
-                  <p className="text-sm text-red-600">{errors.subtitle}</p>
-                )}
-                <p className="text-xs text-gray-500 ml-auto">
-                  {formData.subtitle.length}/200
-                </p>
-              </div>
-            </div>
-
-            {/* CTA Section */}
-            <div className="grid grid-cols-2 gap-4">
+        <div className={`grid ${showPreview ? 'lg:grid-cols-2' : 'lg:grid-cols-1'} gap-6`}>
+          {/* Form Section */}
+          <div className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5 bg-white p-6 rounded-2xl shadow-lg border border-green-100">
+              {/* Image Upload */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  CTA Text
+                <label className="block text-sm font-semibold text-green-800 mb-3">
+                  Banner Image *
+                </label>
+                <div className="border-2 border-dashed border-green-200 rounded-xl p-6 relative hover:border-green-400 transition-all duration-300 bg-green-50">
+                  {imagePreview ? (
+                    <div className="relative">
+                      <img
+                        src={imagePreview}
+                        alt="Banner preview"
+                        className="w-full h-48 object-cover rounded-xl shadow-md"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setImageFile(null);
+                          setImagePreview('');
+                        }}
+                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm hover:bg-red-600 transition-colors shadow-md"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ) : (
+                    <label htmlFor="image-upload" className="cursor-pointer block">
+                      <div className="text-center py-8">
+                        <svg className="mx-auto h-12 w-12 text-green-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                          <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        <p className="mt-3 text-sm text-green-700">
+                          <span className="font-semibold text-green-600 hover:text-green-700">
+                            Click to upload
+                          </span>
+                          {' '}or drag and drop
+                        </p>
+                        <p className="text-xs text-green-600">PNG, JPG, GIF up to 5MB</p>
+                      </div>
+                    </label>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                    id="image-upload"
+                  />
+                </div>
+                {errors.image && (
+                  <p className="mt-2 text-sm text-red-600 font-medium">{errors.image}</p>
+                )}
+              </div>
+
+              {/* Title */}
+              <div>
+                <label className="block text-sm font-semibold text-green-800 mb-3">
+                  Title *
                 </label>
                 <input
                   type="text"
-                  name="ctaText"
-                  value={formData.ctaText}
+                  name="title"
+                  value={formData.title}
                   onChange={handleInputChange}
-                  placeholder="e.g., Shop Now"
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#2ecc71] focus:border-[#2ecc71] transition-colors ${
-                    errors.ctaText ? 'border-red-500' : 'border-gray-300'
+                  placeholder="Enter banner title"
+                  className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 bg-green-50 ${
+                    errors.title ? 'border-red-400' : 'border-green-200'
                   }`}
-                  maxLength={50}
+                  maxLength={100}
                 />
-                <div className="flex justify-between mt-1">
-                  {errors.ctaText && (
-                    <p className="text-sm text-red-600">{errors.ctaText}</p>
+                <div className="flex justify-between mt-2">
+                  {errors.title && (
+                    <p className="text-sm text-red-600 font-medium">{errors.title}</p>
                   )}
-                  <p className="text-xs text-gray-500 ml-auto">
-                    {formData.ctaText.length}/50
+                  <p className="text-xs text-green-600 ml-auto font-medium">
+                    {formData.title.length}/100
                   </p>
                 </div>
               </div>
 
+              {/* Subtitle */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  CTA Link
+                <label className="block text-sm font-semibold text-green-800 mb-3">
+                  Subtitle
                 </label>
-                <input
-                  type="url"
-                  name="ctaLink"
-                  value={formData.ctaLink}
+                <textarea
+                  name="subtitle"
+                  value={formData.subtitle}
                   onChange={handleInputChange}
-                  placeholder="https://example.com"
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#2ecc71] focus:border-[#2ecc71] transition-colors ${
-                    errors.ctaLink ? 'border-red-500' : 'border-gray-300'
+                  placeholder="Enter banner subtitle"
+                  rows={3}
+                  className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 bg-green-50 ${
+                    errors.subtitle ? 'border-red-400' : 'border-green-200'
                   }`}
+                  maxLength={200}
                 />
-                {errors.ctaLink && (
-                  <p className="mt-1 text-sm text-red-600">{errors.ctaLink}</p>
-                )}
+                <div className="flex justify-between mt-2">
+                  {errors.subtitle && (
+                    <p className="text-sm text-red-600 font-medium">{errors.subtitle}</p>
+                  )}
+                  <p className="text-xs text-green-600 ml-auto font-medium">
+                    {formData.subtitle.length}/200
+                  </p>
+                </div>
               </div>
-            </div>
 
-            {/* Text Position */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Text Position
-              </label>
-              <PositionSelector
-                selectedPosition={formData.textPosition}
-                onPositionChange={handlePositionChange}
-              />
-            </div>
-
-            {/* Color Settings */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Text Color
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="color"
-                    name="textColor"
-                    value={formData.textColor}
-                    onChange={handleInputChange}
-                    className="w-12 h-10 border border-gray-300 rounded cursor-pointer"
-                  />
+              {/* CTA Section */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-green-800 mb-3">
+                    CTA Text
+                  </label>
                   <input
                     type="text"
-                    value={formData.textColor}
-                    onChange={(e) => setFormData(prev => ({ ...prev, textColor: e.target.value }))}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="#ffffff"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Background Overlay
-                </label>
-                <input
-                  type="text"
-                  name="backgroundColor"
-                  value={formData.backgroundColor}
-                  onChange={handleInputChange}
-                  placeholder="rgba(0, 0, 0, 0.4)"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-            </div>
-
-            {/* Settings */}
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  name="isActive"
-                  checked={formData.isActive}
-                  onChange={handleInputChange}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                />
-                <label className="ml-2 text-sm text-gray-700">
-                  Active (visible on website)
-                </label>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Priority (0 = highest)
-                </label>
-                <input
-                  type="number"
-                  name="priority"
-                  value={formData.priority}
-                  onChange={handleInputChange}
-                  min="0"
-                  max="100"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-
-              {/* Scheduling */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Start Date (optional)
-                  </label>
-                  <input
-                    type="date"
-                    name="startDate"
-                    value={formData.startDate}
+                    name="ctaText"
+                    value={formData.ctaText}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="e.g., Shop Now"
+                    className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 bg-green-50 ${
+                      errors.ctaText ? 'border-red-400' : 'border-green-200'
+                    }`}
+                    maxLength={50}
                   />
+                  <div className="flex justify-between mt-2">
+                    {errors.ctaText && (
+                      <p className="text-sm text-red-600 font-medium">{errors.ctaText}</p>
+                    )}
+                    <p className="text-xs text-green-600 ml-auto font-medium">
+                      {formData.ctaText.length}/50
+                    </p>
+                  </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    End Date (optional)
+                  <label className="block text-sm font-semibold text-green-800 mb-3">
+                    CTA Link
                   </label>
                   <input
-                    type="date"
-                    name="endDate"
-                    value={formData.endDate}
+                    type="url"
+                    name="ctaLink"
+                    value={formData.ctaLink}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                      errors.endDate ? 'border-red-500' : 'border-gray-300'
+                    placeholder="https://example.com"
+                    className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 bg-green-50 ${
+                      errors.ctaLink ? 'border-red-400' : 'border-green-200'
                     }`}
                   />
-                  {errors.endDate && (
-                    <p className="mt-1 text-sm text-red-600">{errors.endDate}</p>
+                  {errors.ctaLink && (
+                    <p className="mt-2 text-sm text-red-600 font-medium">{errors.ctaLink}</p>
                   )}
                 </div>
               </div>
-            </div>
 
-            {/* Form Actions */}
-            <div className="flex justify-end gap-3 pt-6 border-t border-gray-200">
-              <button
-                type="button"
-                onClick={onCancel}
-                className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={isLoading || isSubmitting}
-                className="px-6 py-2 bg-[#2ecc71] text-white rounded-lg hover:bg-[#27ae60] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                {(isLoading || isSubmitting) ? 'Saving...' : (banner ? 'Update Banner' : 'Create Banner')}
-              </button>
-            </div>
-          </form>
-        </div>
+              {/* Text Position */}
+              <div>
+                <label className="block text-sm font-semibold text-green-800 mb-3">
+                  Text Position
+                </label>
+                <div className="bg-green-50 p-4 rounded-xl border border-green-200">
+                  <PositionSelector
+                    selectedPosition={formData.textPosition}
+                    onPositionChange={handlePositionChange}
+                  />
+                </div>
+              </div>
 
-        {/* Preview Section */}
-        {showPreview && (
-          <div className="sticky top-4">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Live Preview</h3>
-            <BannerPreview
-              imageUrl={imagePreview}
-              title={formData.title}
-              subtitle={formData.subtitle}
-              ctaText={formData.ctaText}
-              textPosition={formData.textPosition}
-              textColor={formData.textColor}
-              backgroundColor={formData.backgroundColor}
-            />
+              {/* Color Settings */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-green-800 mb-3">
+                    Text Color
+                  </label>
+                  <div className="flex gap-3">
+                    <input
+                      type="color"
+                      name="textColor"
+                      value={formData.textColor}
+                      onChange={handleInputChange}
+                      className="w-14 h-12 border-2 border-green-200 rounded-xl cursor-pointer bg-green-50"
+                    />
+                    <input
+                      type="text"
+                      value={formData.textColor}
+                      onChange={(e) => setFormData(prev => ({ ...prev, textColor: e.target.value }))}
+                      className="flex-1 px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-green-50 transition-all duration-300"
+                      placeholder="#ffffff"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-green-800 mb-3">
+                    Background Overlay
+                  </label>
+                  <input
+                    type="text"
+                    name="backgroundColor"
+                    value={formData.backgroundColor}
+                    onChange={handleInputChange}
+                    placeholder="rgba(0, 0, 0, 0.4)"
+                    className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-green-50 transition-all duration-300"
+                  />
+                </div>
+              </div>
+
+              {/* Settings */}
+              <div className="bg-green-50 p-5 rounded-xl border border-green-200 space-y-4">
+                <h4 className="text-lg font-semibold text-green-800 mb-3">Banner Settings</h4>
+                
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    name="isActive"
+                    checked={formData.isActive}
+                    onChange={handleInputChange}
+                    className="h-5 w-5 text-green-600 focus:ring-green-500 border-green-300 rounded"
+                  />
+                  <label className="ml-3 text-sm font-medium text-green-700">
+                    Active (visible on website)
+                  </label>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-green-800 mb-3">
+                    Priority (0 = highest)
+                  </label>
+                  <input
+                    type="number"
+                    name="priority"
+                    value={formData.priority}
+                    onChange={handleInputChange}
+                    min="0"
+                    max="100"
+                    className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white transition-all duration-300"
+                  />
+                </div>
+
+                {/* Scheduling */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-green-800 mb-3">
+                      Start Date (optional)
+                    </label>
+                    <input
+                      type="date"
+                      name="startDate"
+                      value={formData.startDate}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white transition-all duration-300"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-green-800 mb-3">
+                      End Date (optional)
+                    </label>
+                    <input
+                      type="date"
+                      name="endDate"
+                      value={formData.endDate}
+                      onChange={handleInputChange}
+                      className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white transition-all duration-300 ${
+                        errors.endDate ? 'border-red-400' : 'border-green-200'
+                      }`}
+                    />
+                    {errors.endDate && (
+                      <p className="mt-2 text-sm text-red-600 font-medium">{errors.endDate}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Form Actions */}
+              <div className="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t border-green-200">
+                <button
+                  type="button"
+                  onClick={onCancel}
+                  className="px-6 py-3 border-2 border-green-200 text-green-700 rounded-xl hover:bg-green-50 transition-all duration-300 font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isLoading || isSubmitting}
+                  className="px-8 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-semibold shadow-md hover:shadow-lg transform hover:scale-105"
+                >
+                  {(isLoading || isSubmitting) ? 'Saving...' : (banner ? 'Update Banner' : 'Create Banner')}
+                </button>
+              </div>
+            </form>
           </div>
-        )}
+
+          {/* Preview Section */}
+          {showPreview && (
+            <div className="sticky top-4">
+              <div className="bg-white p-6 rounded-2xl shadow-lg border border-green-100">
+                <h3 className="text-xl font-bold text-green-800 mb-4">Live Preview</h3>
+                <BannerPreview
+                  imageUrl={imagePreview}
+                  title={formData.title}
+                  subtitle={formData.subtitle}
+                  ctaText={formData.ctaText}
+                  textPosition={formData.textPosition}
+                  textColor={formData.textColor}
+                  backgroundColor={formData.backgroundColor}
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
