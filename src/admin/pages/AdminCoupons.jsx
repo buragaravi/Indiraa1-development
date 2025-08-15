@@ -14,7 +14,7 @@ import {
   TicketIcon,
   CalendarIcon,
   MoneyIcon,
-  PercentIcon
+  PercentageIcon
 } from '../components/AdminIcons';
 import toast from 'react-hot-toast';
 
@@ -28,7 +28,7 @@ const AdminCoupons = () => {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     code: '',
-    type: 'percentage',
+    type: 'percent',
     amount: '',
     maxDiscount: '',
     minAmount: '',
@@ -114,7 +114,7 @@ const AdminCoupons = () => {
         setShowForm(false);
         setFormData({
           code: '',
-          type: 'percentage',
+          type: 'percent',
           amount: '',
           maxDiscount: '',
           minAmount: '',
@@ -165,7 +165,7 @@ const AdminCoupons = () => {
     setShowForm(false);
     setFormData({
       code: '',
-      type: 'percentage',
+      type: 'percent',
       amount: '',
       maxDiscount: '',
       minAmount: '',
@@ -290,13 +290,13 @@ const AdminCoupons = () => {
                       onChange={handleInputChange}
                       className="w-full p-3 rounded-lg bg-green-50 border border-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     >
-                      <option value="percentage">Percentage</option>
+                      <option value="percent">Percentage</option>
                       <option value="flat">Fixed Amount</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2 text-green-700">
-                      {formData.type === 'percentage' ? 'Discount Percentage' : 'Discount Amount (₹)'}
+                      {formData.type === 'percent' ? 'Discount Percent' : 'Discount Amount (₹)'}
                     </label>
                     <input
                       type="number"
@@ -306,11 +306,11 @@ const AdminCoupons = () => {
                       className="w-full p-3 rounded-lg bg-green-50 border border-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       required
                       min="0"
-                      max={formData.type === 'percentage' ? "100" : undefined}
-                      step={formData.type === 'percentage' ? "1" : "0.01"}
+                      max={formData.type === 'percent' ? "100" : undefined}
+                      step={formData.type === 'percent' ? "1" : "0.01"}
                     />
                   </div>
-                  {formData.type === 'percentage' && (
+                  {formData.type === 'percent' && (
                     <div>
                       <label className="block text-sm font-medium mb-2 text-green-700">Maximum Discount (₹)</label>
                       <input
@@ -442,19 +442,19 @@ const AdminCoupons = () => {
                           </td>
                           <td className="p-4">
                             <div className="flex items-center">
-                              {(coupon.type === 'percent' || coupon.type === 'percentage') ? (
-                                <PercentIcon className="w-4 h-4 text-blue-500 mr-2" />
+                              {(coupon.type === 'percent' || coupon.type === 'percent') ? (
+                                <PercentageIcon className="w-4 h-4 text-blue-500 mr-2" />
                               ) : (
                                 <MoneyIcon className="w-4 h-4 text-green-500 mr-2" />
                               )}
                               <span className="text-sm text-green-700">
-                                {(coupon.type === 'percent' || coupon.type === 'percentage') ? 'Percentage' : 'Fixed Amount'}
+                                {(coupon.type === 'percent' || coupon.type === 'percent') ? 'Percent' : 'Fixed Amount'}
                               </span>
                             </div>
                           </td>
                           <td className="p-4">
                             <div className="font-medium text-green-600 text-sm">
-                              {(coupon.type === 'percent' || coupon.type === 'percentage') ? `${coupon.amount}%` : `₹${coupon.amount}`}
+                              {(coupon.type === 'percent' || coupon.type === 'percent') ? `${coupon.amount}%` : `₹${coupon.amount}`}
                             </div>
                             {coupon.maxDiscount && (
                               <div className="text-xs text-green-500">Max: ₹{coupon.maxDiscount}</div>
@@ -533,13 +533,13 @@ const AdminCoupons = () => {
                         <div>
                           <div className="text-xs text-green-500 mb-1">Type</div>
                           <div className="flex items-center text-sm">
-                            {(coupon.type === 'percent' || coupon.type === 'percentage') ? (
-                              <PercentIcon className="w-3 h-3 text-blue-500 mr-1" />
+                            {(coupon.type === 'percent' || coupon.type === 'percent') ? (
+                              <PercentageIcon className="w-3 h-3 text-blue-500 mr-1" />
                             ) : (
                               <MoneyIcon className="w-3 h-3 text-green-500 mr-1" />
                             )}
                             <span className="text-green-700 text-xs">
-                              {(coupon.type === 'percent' || coupon.type === 'percentage') ? 'Percentage' : 'Fixed Amount'}
+                              {(coupon.type === 'percent' || coupon.type === 'percent') ? 'Percent' : 'Fixed Amount'}
                             </span>
                           </div>
                         </div>
@@ -547,7 +547,7 @@ const AdminCoupons = () => {
                         <div>
                           <div className="text-xs text-green-500 mb-1">Discount</div>
                           <div className="font-medium text-green-600 text-sm">
-                            {(coupon.type === 'percent' || coupon.type === 'percentage') ? `${coupon.amount}%` : `₹${coupon.amount}`}
+                            {(coupon.type === 'percent' || coupon.type === 'percent') ? `${coupon.amount}%` : `₹${coupon.amount}`}
                           </div>
                           {coupon.maxDiscount && (
                             <div className="text-xs text-green-500">Max: ₹{coupon.maxDiscount}</div>
