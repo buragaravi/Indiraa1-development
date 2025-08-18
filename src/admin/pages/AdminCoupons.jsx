@@ -242,8 +242,8 @@ const AdminCoupons = () => {
             </p>
           </div>
           <PermissionButton
-            moduleName="coupons"
-            action="create_coupon"
+            module="coupons"
+            action="create"
             onClick={() => setShowForm(true)}
             className="w-full md:w-auto px-4 py-2 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-all duration-200 flex items-center justify-center shadow-md"
             disabledTooltip="You don't have permission to create coupons"
@@ -484,8 +484,8 @@ const AdminCoupons = () => {
                           </td>
                           <td className="p-4">
                             <PermissionButton
-                              moduleName="coupons"
-                              action="delete_coupon"
+                              module="coupons"
+                              action="delete"
                               onClick={() => handleDelete(coupon._id)}
                               className="px-3 py-1 bg-red-500 text-white rounded-lg text-xs font-medium hover:bg-red-600 transition-colors duration-200 flex items-center"
                               disabledTooltip="You don't have permission to delete coupons"
@@ -571,8 +571,8 @@ const AdminCoupons = () => {
 
                       {/* Actions */}
                       <PermissionButton
-                        moduleName="coupons"
-                        action="delete_coupon"
+                        module="coupons"
+                        action="delete"
                         onClick={() => handleDelete(coupon._id)}
                         className="w-full px-3 py-2 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-red-600 transition-colors duration-200 flex items-center justify-center"
                         disabledTooltip="You don't have permission to delete coupons"

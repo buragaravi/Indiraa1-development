@@ -133,8 +133,8 @@ const BannerList = ({
             </span>
             <div className="flex gap-2">
               <PermissionButton
-                moduleName="banners"
-                action="edit_banner"
+                module="banners"
+                action="activate"
                 onClick={() => handleBulkAction('activate')}
                 className="px-3 py-1 text-xs bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
                 disabledTooltip="You don't have permission to edit banners"
@@ -142,8 +142,8 @@ const BannerList = ({
                 Activate
               </PermissionButton>
               <PermissionButton
-                moduleName="banners"
-                action="edit_banner"
+                module="banners"
+                action="deactivate"
                 onClick={() => handleBulkAction('deactivate')}
                 className="px-3 py-1 text-xs bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 transition-colors"
                 disabledTooltip="You don't have permission to edit banners"
@@ -151,8 +151,8 @@ const BannerList = ({
                 Deactivate
               </PermissionButton>
               <PermissionButton
-                moduleName="banners"
-                action="delete_banner"
+                module="banners"
+                action="delete"
                 onClick={() => handleBulkAction('delete')}
                 className="px-3 py-1 text-xs bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors"
                 disabledTooltip="You don't have permission to delete banners"
@@ -295,8 +295,8 @@ const BannerList = ({
                 <div className="col-span-1">
                   <div className="flex items-center gap-1">
                     <PermissionButton
-                      moduleName="banners"
-                      action="edit_banner"
+                      module="banners"
+                      action={banner.isActive ? "deactivate" : "activate"}
                       onClick={() => onToggleStatus(banner._id, !banner.isActive)}
                       className={`p-1 rounded ${
                         banner.isActive 
@@ -313,8 +313,8 @@ const BannerList = ({
                     </PermissionButton>
 
                     <PermissionButton
-                      moduleName="banners"
-                      action="edit_banner"
+                      module="banners"
+                      action="edit"
                       onClick={() => onEdit(banner)}
                       className="p-1 text-blue-600 hover:bg-blue-100 rounded"
                       disabledTooltip="You don't have permission to edit banners"
@@ -326,8 +326,8 @@ const BannerList = ({
                     </PermissionButton>
 
                     <PermissionButton
-                      moduleName="banners"
-                      action="delete_banner"
+                      module="banners"
+                      action="delete"
                       onClick={() => {
                         if (window.confirm('Are you sure you want to delete this banner?')) {
                           onDelete(banner._id);

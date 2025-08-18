@@ -199,7 +199,7 @@ const AdminUsers = () => {
                         <td className="p-4">
                           <PermissionButton
                             module="users"
-                            action="edit_user"
+                            action="view"
                             onClick={() => handleViewOrders(user._id)}
                             className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-md hover:shadow-lg transition-all duration-300 flex items-center"
                             disabledTooltip="You don't have permission to view user details"
@@ -260,7 +260,7 @@ const AdminUsers = () => {
                         <td className="p-3">
                           <PermissionButton
                             module="users"
-                            action="edit_user"
+                            action="view"
                             onClick={() => handleViewOrders(user._id)}
                             className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-md hover:shadow-lg transition-all duration-300 flex items-center"
                             disabledTooltip="You don't have permission to view user details"
@@ -318,7 +318,7 @@ const AdminUsers = () => {
                       {/* Action Button */}
                       <PermissionButton
                         module="users"
-                        action="edit_user"
+                        action="view"
                         onClick={() => handleViewOrders(user._id)}
                         className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
                         disabledTooltip="You don't have permission to view user details"

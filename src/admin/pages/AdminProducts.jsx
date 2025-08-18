@@ -351,7 +351,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
             
             <PermissionButton
               module="products"
-              action="create_product"
+              action="create"
               onClick={() => setShowForm(true)}
               className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
             >
@@ -694,7 +694,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                             <div className="flex gap-1">
                               <PermissionButton
                                 module="products"
-                                action="edit_product"
+                                action="edit"
                                 onClick={() => handleEdit(product)}
                                 size="sm"
                                 className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
@@ -705,7 +705,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                               
                               <PermissionButton
                                 module="products"
-                                action="delete_product"
+                                action="delete"
                                 onClick={() => handleDelete(product._id)}
                                 size="sm"
                                 variant="danger"
@@ -863,7 +863,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                       <div className="flex gap-2">
                         <PermissionButton
                           module="products"
-                          action="edit_product"
+                          action="edit"
                           onClick={() => handleEdit(product)}
                           size="sm"
                           className="flex-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
@@ -874,7 +874,7 @@ const AdminProducts = ({ isReadOnly = false, onAccessDenied = () => {} }) => {
                         
                         <PermissionButton
                           module="products"
-                          action="delete_product"
+                          action="delete"
                           onClick={() => handleDelete(product._id)}
                           size="sm"
                           variant="danger"

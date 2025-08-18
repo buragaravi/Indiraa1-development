@@ -38,6 +38,7 @@ import AdminBanners from './admin/pages/AdminBanners';
 import AdminRevenueAnalytics from './admin/pages/AdminRevenueAnalytics';
 import AdminManagement from './admin/pages/AdminManagement';
 import AdminSidebar from './admin/components/AdminSidebar';
+import AdminProtectedRoute from './admin/components/AdminProtectedRoute';
 import { AdminPermissionProvider } from './admin/context/AdminPermissionContext';
 import AdminDashboard from './pages/AdminDashboard';
 import BulkUploadHome from './pages/BulkUploadHome';
@@ -73,33 +74,35 @@ import './App.css';
 // Admin Layout Component
 const AdminLayout = ({ children }) => {
   return (
-    <AdminPermissionProvider>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 admin-layout">
-        <AdminSidebar />
-        <div 
-          className="transition-all duration-300 ease-in-out"
-          style={{ 
-            marginLeft: 'var(--sidebar-width, 0px)',
-            width: 'calc(100% - var(--sidebar-width, 0px))'
-          }}
-        >
-          <main className="min-h-screen p-4 md:p-6 lg:p-8">
-            <div className="max-w-full mx-auto">
-              {children}
-            </div>
-          </main>
-        </div>
-        
-        <style>{`
-          @media (max-width: 768px) {
-            .admin-layout > div {
-              margin-left: 0 !important;
-              width: 100% !important;
+    <AdminProtectedRoute>
+      <AdminPermissionProvider>
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 admin-layout">
+          <AdminSidebar />
+          <div 
+            className="transition-all duration-300 ease-in-out"
+            style={{ 
+              marginLeft: 'var(--sidebar-width, 0px)',
+              width: 'calc(100% - var(--sidebar-width, 0px))'
+            }}
+          >
+            <main className="min-h-screen p-4 md:p-6 lg:p-8">
+              <div className="max-w-full mx-auto">
+                {children}
+              </div>
+            </main>
+          </div>
+          
+          <style>{`
+            @media (max-width: 768px) {
+              .admin-layout > div {
+                margin-left: 0 !important;
+                width: 100% !important;
+              }
             }
-          }
-        `}</style>
-      </div>
-    </AdminPermissionProvider>
+          `}</style>
+        </div>
+      </AdminPermissionProvider>
+    </AdminProtectedRoute>
   );
 };
 

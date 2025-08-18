@@ -3,7 +3,10 @@ import { useState, useEffect } from "react";
 export function useAuth() {
   const [user, setUser] = useState(null);
   const [admin, setAdmin] = useState(null);
-  const [token, setToken] = useState(() => localStorage.getItem("token") || "");
+  const [token, setToken] = useState(() => {
+    // Check both token and adminToken for backwards compatibility
+    return localStorage.getItem("token") || localStorage.getItem("adminToken") || "";
+  });
   const [isAdmin, setIsAdmin] = useState(false);
   
   // NEW: Multi-admin permission states
@@ -146,6 +149,7 @@ export function useAuth() {
   };
 
   const logout = () => {
+    // Clear all state variables
     setUser(null);
     setAdmin(null);
     setToken("");
@@ -154,9 +158,20 @@ export function useAuth() {
     setAdminPermissions(null);
     setIsSuperAdmin(false);
     setPermissionsLoading(false);
+    
+    // Clear all localStorage items
     localStorage.removeItem("token");
+    localStorage.removeItem("adminToken");
     localStorage.removeItem("user");
     localStorage.removeItem("admin");
+    localStorage.removeItem("userType");
+    localStorage.removeItem("subAdminToken");
+    localStorage.removeItem("subAdminData");
+    
+    // Clear any session storage as well
+    sessionStorage.clear();
+    
+    console.log("✅ Logout completed - all tokens and user data cleared");
   };
 
   const getCurrentUser = () => isAdmin ? admin : user;

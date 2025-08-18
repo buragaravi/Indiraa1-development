@@ -100,21 +100,16 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
         create_combo: 'Create New Combo Pack',
         edit_combo: 'Edit Combo Pack Details',
         delete_combo: 'Delete Combo Packs',
+        toggle_visibility: 'Toggle Combo Pack Visibility',
         manage_offers: 'Manage Special Offers'
       }
     },
     inventory: {
       name: 'Inventory Management',
       icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" /></svg>,
-      description: 'Stock management and batch tracking',
+      description: 'View stock levels and batch tracking',
       actions: {
-        view: 'View Stock Levels',
-        create: 'Create Inventory Records',
-        edit: 'Update Stock Quantity',
-        delete: 'Delete Inventory Records',
-        batch_create: 'Batch Create Inventory',
-        batch_edit: 'Batch Edit Inventory',
-        export: 'Export Inventory Data'
+        view: 'View Stock Levels and Batches'
       }
     },
     analytics: {
@@ -122,12 +117,7 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
       icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" /></svg>,
       description: 'Sales analytics and reporting',
       actions: {
-        view: 'View Analytics Dashboard',
-        export: 'Export Report Data',
-        revenue: 'Revenue Analysis',
-        sales: 'Sales Analytics',
-        users: 'User Analytics',
-        products: 'Product Analytics'
+        view: 'View Analytics Dashboard'
       }
     },
     returns: {
@@ -136,11 +126,13 @@ const ModulePermissionSelector = ({ permissions, onChange }) => {
       description: 'Handle returns and refund processing',
       actions: {
         view: 'View Returns List',
-        process: 'Process Return Requests',
-        approve: 'Approve Returns',
-        reject: 'Reject Returns', 
-        refund: 'Process Refunds',
-        export: 'Export Returns Data'
+        return_review: 'Return Review',
+        pickup_charges: 'Pickup Charges',
+        pickup_schedule: 'Pickup Schedule',
+        received_actions: 'Received Actions',
+        quality_check: 'Quality Check',
+        final_decision: 'Final Decision',
+        refund_approving: 'Refund Approving'
       }
     }
   };

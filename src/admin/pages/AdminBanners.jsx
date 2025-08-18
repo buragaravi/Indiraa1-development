@@ -378,7 +378,7 @@ const AdminBanners = () => {
           </div>
           <PermissionButton
             module="banners"
-            action="create_banner"
+            action="create"
             onClick={() => {
               setSelectedBanner(null);
               setShowForm(true);

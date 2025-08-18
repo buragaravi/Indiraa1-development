@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useAuth } from '../utils/useAuth';
 import { PermissionGate, SuperAdminOnly } from './PermissionGate';
 import { 
@@ -19,6 +20,7 @@ import {
 
 const AdminSidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { logout } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -90,12 +92,6 @@ const AdminSidebar = () => {
       path: '/admin/returns',
       name: 'Return Management',
       icon: ReturnIcon,
-      module: 'returns'
-    },
-    {
-      path: '/admin/return-analytics',
-      name: 'Return Analytics',
-      icon: AnalyticsIcon,
       module: 'returns'
     },
     {
@@ -256,11 +252,30 @@ const AdminSidebar = () => {
 
             {/* Logout Button */}
             <div className="absolute bottom-6 left-6 right-6">
-              <div className="border-t border-gray-200 pt-6">                <button                  onClick={() => {
-                    logout();
-                    // Close sidebar on mobile
-                    if (isMobile) {
-                      setIsCollapsed(true);
+              <div className="border-t border-gray-200 pt-6">
+                <button
+                  onClick={() => {
+                    try {
+                      // Show logout toast
+                      toast.success('Logging out...', { duration: 1000 });
+                      
+                      // Perform logout
+                      logout();
+                      
+                      // Small delay to ensure logout completes
+                      setTimeout(() => {
+                        // Navigate to login page
+                        navigate('/login', { replace: true });
+                        toast.success('Successfully logged out!');
+                      }, 100);
+                      
+                      // Close sidebar on mobile
+                      if (isMobile) {
+                        setIsCollapsed(true);
+                      }
+                    } catch (error) {
+                      console.error('Logout error:', error);
+                      toast.error('Error during logout. Please try again.');
                     }
                   }}
                   className="w-full flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-red-50 hover:text-red-600 transition-all duration-300 group hover:scale-102"
