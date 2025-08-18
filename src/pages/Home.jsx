@@ -538,7 +538,7 @@ const Home = () => {
         </div>
 
     {/* Dynamic Hero Banner with Perfect 18:9 Panoramic Aspect Ratio (fixed height on >=1024px) */}
-    <div className="relative z-[60] w-full">
+    <div className="relative z-[40] w-full">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
