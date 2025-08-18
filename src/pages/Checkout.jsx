@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
+import { toast } from 'react-hot-toast';
 import CoinRedemptionWidget from './CoinRedemptionWidget';
 import { 
   FiArrowLeft,
@@ -28,7 +29,10 @@ import {
   FiShoppingBag,
   FiMail,
   FiHome,
-  FiNavigation
+  FiNavigation,
+  FiPhone,
+  FiShield,
+  FiTruck
 } from 'react-icons/fi';
 
 const Checkout = () => {
@@ -47,7 +51,10 @@ const Checkout = () => {
   const [utrNumber, setUtrNumber] = useState('');
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [orderProcessing, setOrderProcessing] = useState(false);
-  const [orderResult, setOrderResult] = useState(null);  const [subtotal, setSubtotal] = useState(0);
+  const [orderResult, setOrderResult] = useState(null);
+  const [clickedAddress, setClickedAddress] = useState(null); // Track which address was just clicked
+  const [updatingItems, setUpdatingItems] = useState(new Set()); // Track items being updated
+  const [subtotal, setSubtotal] = useState(0);
   const [discount, setDiscount] = useState(0);
   const [coinDiscount, setCoinDiscount] = useState(null); // New state for coin discount
   const [userEmail, setUserEmail] = useState('');
@@ -83,6 +90,50 @@ const Checkout = () => {
   useEffect(() => {
     calculateTotals();
   }, [cart, appliedCoupon, coinDiscount]); // Add coinDiscount dependency
+
+  // Debug useEffect to monitor address selection
+  useEffect(() => {
+    console.log('[DEBUG] Selected address changed:', selectedAddress);
+    console.log('[DEBUG] Available addresses:', addresses);
+    
+    // Show a brief confirmation when address is selected
+    if (selectedAddress && addresses.length > 0) {
+      console.log(`[CONFIRMATION] Address selected: ${selectedAddress.name}`);
+    }
+  }, [selectedAddress, addresses]);
+
+  // Helper function to check if two addresses are the same
+  const isSameAddress = (addr1, addr2) => {
+    if (!addr1 || !addr2) return false;
+    
+    // Try _id comparison first (if available)
+    if (addr1._id && addr2._id) {
+      return addr1._id.toString() === addr2._id.toString();
+    }
+    
+    // Fallback to content-based comparison
+    return (
+      addr1.name === addr2.name && 
+      addr1.address === addr2.address && 
+      addr1.phone === addr2.phone &&
+      addr1.city === addr2.city &&
+      addr1.state === addr2.state &&
+      addr1.pincode === addr2.pincode
+    );
+  };
+
+  // Helper function to generate item key for cart operations
+  const getItemKey = (itemId, variantId = null) => {
+    return variantId ? `${itemId}-${variantId}` : itemId;
+  };
+
+  // Helper function to check if item matches for cart operations
+  const isMatchingItem = (item, itemId, variantId = null) => {
+    if (variantId) {
+      return item.selectedVariant?.id === variantId && item._id === itemId;
+    }
+    return item._id === itemId;
+  };
 
   const fetchCheckoutData = async () => {
     setLoading(true);
@@ -163,7 +214,7 @@ const Checkout = () => {
           setUserEmail(userData.user.email || ''); // Set user email
           // Auto-select first address if available and none is currently selected
           if (userData.user.addresses && userData.user.addresses.length > 0 && !selectedAddress) {
-            console.log('Auto-selecting first address:', userData.user.addresses[0]._id); // Debug log
+            console.log('Auto-selecting first address:', userData.user.addresses[0]); // Debug log
             setSelectedAddress(userData.user.addresses[0]);
           }
         }
@@ -252,55 +303,110 @@ const Checkout = () => {
     setCouponCode('');
   };
 
-  const updateCartQuantity = async (itemId, newQty) => {
+  const updateCartQuantity = async (itemId, newQty, variantId = null, itemType = 'product') => {
     if (newQty < 1) return;
     
+    const itemKey = getItemKey(itemId, variantId);
+    if (updatingItems.has(itemKey)) return; // Prevent multiple updates
+    
+    setUpdatingItems(prev => new Set(prev).add(itemKey));
+    
     try {
+      const requestBody = { qty: newQty, type: itemType };
+      
+      if (itemType === 'combo') {
+        requestBody.comboPackId = itemId;
+      } else {
+        requestBody.productId = itemId;
+        if (variantId) {
+          requestBody.variantId = variantId;
+        }
+      }
+
       const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/update', {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({
-          productId: itemId,
-          qty: newQty
-        })
+        body: JSON.stringify(requestBody)
+      });
+
+      if (response.ok) {
+        // Update local cart state for better UX
+        setCart(prevCart => prevCart.map(item => {
+          if (isMatchingItem(item, itemId, variantId)) {
+            return { ...item, qty: newQty };
+          }
+          return item;
+        }));
+        
+        console.log(`[CART] Updated quantity for ${itemType} ${itemId}${variantId ? ` (variant: ${variantId})` : ''} to ${newQty}`);
+        toast.success('Quantity updated');
+      } else {
+        const errorData = await response.json();
+        console.error('Error updating quantity:', errorData);
+        toast.error('Failed to update quantity');
+      }
+    } catch (error) {
+      console.error('Error updating quantity:', error);
+      toast.error('Error updating quantity');
+    } finally {
+      setUpdatingItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(itemKey);
+        return newSet;
+      });
+    }
+  };
+
+  const removeFromCart = async (itemId, variantId = null, itemType = 'product') => {
+    const itemKey = getItemKey(itemId, variantId);
+    if (updatingItems.has(itemKey)) return; // Prevent multiple updates
+    
+    setUpdatingItems(prev => new Set(prev).add(itemKey));
+    
+    try {
+      const requestBody = { type: itemType };
+      
+      if (itemType === 'combo') {
+        requestBody.comboPackId = itemId;
+      } else {
+        requestBody.productId = itemId;
+        if (variantId) {
+          requestBody.variantId = variantId;
+        }
+      }
+
+      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/remove', {
+        method: 'POST', // Changed from DELETE to POST to match Cart.jsx
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(requestBody)
       });
 
       if (response.ok) {
         // Update local cart state
-        setCart(cart.map(item => 
-          item._id === itemId ? { ...item, qty: newQty } : item
-        ));
+        setCart(prevCart => prevCart.filter(item => !isMatchingItem(item, itemId, variantId)));
+        
+        console.log(`[CART] Removed ${itemType} ${itemId}${variantId ? ` (variant: ${variantId})` : ''} from cart`);
+        toast.success('Item removed from cart');
       } else {
-        alert('Error updating quantity');
+        const errorData = await response.json();
+        console.error('Error removing item:', errorData);
+        toast.error('Failed to remove item');
       }
     } catch (error) {
-      alert('Error updating quantity');
-    }
-  };
-
-  const removeFromCart = async (itemId) => {
-    try {
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/products/cart/remove', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({
-          productId: itemId
-        })
+      console.error('Error removing item:', error);
+      toast.error('Error removing item');
+    } finally {
+      setUpdatingItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(itemKey);
+        return newSet;
       });
-
-      if (response.ok) {
-        setCart(cart.filter(item => item._id !== itemId));
-      } else {
-        alert('Error removing item');
-      }
-    } catch (error) {
-      alert('Error removing item');
     }
   };
   const addAddress = async (e) => {
@@ -627,51 +733,83 @@ const Checkout = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                    >                      <div className="checkout-product-image-placeholder">
+                    >                      <div className="relative w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center overflow-hidden shadow-inner">
                         {(item.type === 'combo' ? (item.mainImage || item.products?.[0]?.images?.[0]?.url) : (item.image || (item.images && item.images[0]))) ? (
-                          <img 
-                            src={item.type === 'combo' 
-                              ? (item.mainImage || item.products?.[0]?.images?.[0] || '/placeholder.png')
-                              : (item.image || item.images[0] || '/placeholder.png')
-                            } 
-                            alt={item.name || 'Product'}
-                            className="w-full h-full object-cover rounded-xl"
-                          />
+                          <>
+                            <img 
+                              src={item.type === 'combo' 
+                                ? (item.mainImage || item.products?.[0]?.images?.[0] || '/placeholder.png')
+                                : (item.image || item.images[0] || '/placeholder.png')
+                              } 
+                              alt={item.name || 'Product'}
+                              className="w-full h-full object-cover rounded-xl transition-transform duration-200 hover:scale-105"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'flex';
+                              }}
+                            />
+                            <div className="hidden w-full h-full absolute inset-0 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-xl flex items-center justify-center">
+                              <FiShoppingCart className="w-6 h-6 text-emerald-600" />
+                            </div>
+                          </>
                         ) : (
-                          <FiShoppingCart className="w-6 h-6 text-gray-600" />
+                          <div className="w-full h-full bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-xl flex items-center justify-center">
+                            <FiShoppingCart className="w-6 h-6 text-emerald-600" />
+                          </div>
+                        )}
+                        {item.type === 'combo' && (
+                          <div className="absolute -top-1 -right-1 bg-emerald-500 text-white text-xs px-1.5 py-0.5 rounded-full font-medium shadow-lg">
+                            COMBO
+                          </div>
                         )}
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-800">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-gray-800 truncate">
                           {item.name || 'Product'}
                         </h4>
                         {item.selectedVariant && (
-                          <p className="text-xs text-emerald-600 font-medium">
-                            Variant: {item.selectedVariant.label || item.selectedVariant.name}
-                          </p>
+                          <div className="flex items-center gap-1 mt-1">
+                            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                            <p className="text-xs text-emerald-600 font-medium">
+                              {item.selectedVariant.label || item.selectedVariant.name}
+                            </p>
+                          </div>
                         )}
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-600 mt-1">
                           ₹{item.price || 0} each
                         </p>
+                        {item.type === 'combo' && item.products?.length > 1 && (
+                          <p className="text-xs text-blue-600 font-medium mt-1">
+                            {item.products.length} items included
+                          </p>
+                        )}
                       </div>
                         {/* Quantity Controls */}
                       <div className="flex items-center gap-3">
                         {!item.isDirect && (
                           <div className="flex items-center gap-2 bg-white rounded-lg p-1">
                             <button
-                              onClick={() => updateCartQuantity(item._id, (item.qty || 1) - 1)}
-                              disabled={item.qty <= 1}
+                              onClick={() => updateCartQuantity(item._id, (item.qty || 1) - 1, item.selectedVariant?.id, item.type)}
+                              disabled={item.qty <= 1 || updatingItems.has(getItemKey(item._id, item.selectedVariant?.id))}
                               className="w-8 h-8 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                              <FiMinus className="w-4 h-4" />
+                              {updatingItems.has(getItemKey(item._id, item.selectedVariant?.id)) ? (
+                                <div className="w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                              ) : (
+                                <FiMinus className="w-4 h-4" />
+                              )}
                             </button>
                             <span className="w-8 text-center font-medium">{item.qty || 1}</span>
                             <button
-                              onClick={() => updateCartQuantity(item._id, (item.qty || 1) + 1)}
-                              disabled={item.qty >= (item.selectedVariant?.stock || item.stock)}
+                              onClick={() => updateCartQuantity(item._id, (item.qty || 1) + 1, item.selectedVariant?.id, item.type)}
+                              disabled={item.qty >= (item.selectedVariant?.stock || item.stock) || updatingItems.has(getItemKey(item._id, item.selectedVariant?.id))}
                               className="w-8 h-8 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                              <FiPlus className="w-4 h-4" />
+                              {updatingItems.has(getItemKey(item._id, item.selectedVariant?.id)) ? (
+                                <div className="w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                              ) : (
+                                <FiPlus className="w-4 h-4" />
+                              )}
                             </button>
                           </div>
                         )}
@@ -684,10 +822,15 @@ const Checkout = () => {
                         
                         {!item.isDirect && (
                           <button
-                            onClick={() => removeFromCart(item._id)}
-                            className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                            onClick={() => removeFromCart(item._id, item.selectedVariant?.id, item.type)}
+                            disabled={updatingItems.has(getItemKey(item._id, item.selectedVariant?.id))}
+                            className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            <FiTrash2 className="w-4 h-4" />
+                            {updatingItems.has(getItemKey(item._id, item.selectedVariant?.id)) ? (
+                              <div className="w-3 h-3 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
+                            ) : (
+                              <FiTrash2 className="w-4 h-4" />
+                            )}
                           </button>
                         )}
                       </div>
@@ -720,7 +863,7 @@ const Checkout = () => {
                       <button
                         onClick={applyCoupon}
                         disabled={couponLoading || !couponCode.trim()}
-                        className="checkout-primary-button"
+                        className="px-6 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200 flex items-center gap-2"
                       >
                         {couponLoading ? (
                           <FiLoader className="w-4 h-4 animate-spin" />
@@ -805,7 +948,7 @@ const Checkout = () => {
               <div className="flex justify-end">
                 <button
                   onClick={nextStep}
-                  className="checkout-primary-button"
+                  className="px-8 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors duration-200 shadow-lg"
                 >
                   Continue to Address
                 </button>
@@ -830,82 +973,152 @@ const Checkout = () => {
                   </h2>
                   <button
                     onClick={() => setShowAddressForm(true)}
-                    className="checkout-small-button"
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors duration-200 flex items-center gap-2 shadow-md"
                   >
                     <FiPlus className="w-4 h-4" />
                     Add New Address
                   </button>
                 </div>                {/* Address List */}
                 <div className="space-y-4 mb-6">
+                  {/* Selected Address Indicator */}
+                  {selectedAddress && (
+                    <motion.div 
+                      className="p-3 bg-green-100 border border-green-300 rounded-xl"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <FiCheckCircle className="w-4 h-4 text-green-600" />
+                        <span className="text-sm font-medium text-green-800">
+                          Selected: {selectedAddress.name}
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                  
                   {console.log('Current selectedAddress:', selectedAddress)} {/* Debug log */}
                   {addresses.length > 0 ? (
                     addresses.map((address, index) => {
-                      const isSelected = selectedAddress && selectedAddress._id && address._id && 
-                                        selectedAddress._id.toString() === address._id.toString();
+                      // Use the helper function for more robust comparison
+                      const isSelected = isSameAddress(selectedAddress, address);
+                      const isJustClicked = isSameAddress(clickedAddress, address);
                       
                       return (
                         <motion.div
-                          key={address._id || index}
-                          className={`p-4 border-2 rounded-2xl cursor-pointer transition-all duration-200 ${
+                          key={address._id || `${address.name}-${address.phone}-${index}`}
+                          className={`p-5 border-2 rounded-2xl cursor-pointer transition-all duration-300 relative overflow-hidden ${
                             isSelected 
-                              ? 'border-emerald-500 bg-emerald-50 shadow-lg ring-2 ring-emerald-200' 
-                              : 'border-gray-200 hover:border-emerald-300 hover:shadow-sm bg-white'
+                              ? 'border-green-500 bg-green-50 shadow-xl ring-4 ring-green-100 transform scale-[1.02]' 
+                              : isJustClicked
+                              ? 'border-blue-400 bg-blue-50 shadow-lg ring-2 ring-blue-200 transform scale-[1.01]'
+                              : 'border-gray-200 hover:border-green-300 hover:shadow-lg bg-white hover:bg-green-50/30'
                           }`}
                           onClick={() => {
-                            console.log('Selecting address:', address._id); // Debug log
+                            console.log('[CLICK] Selecting address:', address._id || 'no-id', address); // Debug log
+                            console.log('[CLICK] Current selectedAddress before:', selectedAddress); // Debug log
+                            
+                            // Immediate visual feedback
+                            setClickedAddress(address);
+                            setTimeout(() => setClickedAddress(null), 500);
+                            
                             setSelectedAddress(address);
+                            console.log('[CLICK] Address selection triggered for:', address.name); // Debug log
                           }}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.1 }}
+                          whileHover={{ scale: 1.01 }}
+                          whileTap={{ scale: 0.98 }}
                         >
-                          <div className="flex items-start gap-3">
-                            {/* Radio button style selector */}
-                            <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mt-0.5 flex-shrink-0 transition-all duration-200 ${
-                              isSelected 
-                                ? 'border-emerald-500 bg-emerald-500 shadow-sm' 
-                                : 'border-gray-300 bg-white hover:border-emerald-400'
-                            }`}>
+                          {/* Selection indicator overlay */}
+                          {isSelected && (
+                            <motion.div
+                              className="absolute inset-0 bg-gradient-to-r from-green-400/10 to-emerald-400/10 pointer-events-none"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ duration: 0.3 }}
+                            />
+                          )}
+                          <div className="flex items-start gap-4">
+                            {/* Enhanced Radio button style selector */}
+                            <motion.div 
+                              className={`relative w-8 h-8 rounded-full border-3 flex items-center justify-center mt-0.5 flex-shrink-0 transition-all duration-300 ${
+                                isSelected 
+                                  ? 'border-green-500 bg-green-500 shadow-lg ring-4 ring-green-200' 
+                                  : 'border-gray-300 bg-white hover:border-green-400 hover:bg-green-50'
+                              }`}
+                              animate={isSelected ? { 
+                                boxShadow: [
+                                  "0 0 0 0 rgba(34, 197, 94, 0.4)",
+                                  "0 0 0 8px rgba(34, 197, 94, 0)",
+                                  "0 0 0 0 rgba(34, 197, 94, 0)"
+                                ]
+                              } : {}}
+                              transition={{ 
+                                duration: 1.5,
+                                repeat: isSelected ? Infinity : 0,
+                                ease: "easeInOut"
+                              }}
+                            >
                               {isSelected && (
                                 <motion.div 
-                                  className="w-3 h-3 bg-white rounded-full"
+                                  className="w-4 h-4 bg-white rounded-full shadow-sm"
                                   initial={{ scale: 0 }}
                                   animate={{ scale: 1 }}
-                                  transition={{ duration: 0.2 }}
+                                  transition={{ duration: 0.3, type: "spring" }}
                                 />
                               )}
-                            </div>
+                              
+                              {/* Check mark overlay for extra confirmation */}
+                              {isSelected && (
+                                <motion.div
+                                  className="absolute inset-0 flex items-center justify-center"
+                                  initial={{ opacity: 0, scale: 0 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={{ delay: 0.2, duration: 0.3 }}
+                                >
+                                  <FiCheckCircle className="w-3 h-3 text-green-600" />
+                                </motion.div>
+                              )}
+                            </motion.div>
                             
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-2">
-                                <h4 className={`font-semibold ${isSelected ? 'text-emerald-800' : 'text-gray-800'}`}>
+                              <div className="flex items-center gap-3 mb-3">
+                                <h4 className={`font-bold text-lg ${isSelected ? 'text-green-800' : 'text-gray-800'}`}>
                                   {address.name}
                                 </h4>
                                 {address.isDefault && (
-                                  <span className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full">
+                                  <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full font-medium">
                                     Default
                                   </span>
                                 )}
                                 {isSelected && (
-                                  <span className="px-2 py-1 bg-emerald-500 text-white text-xs rounded-full">
-                                    Selected
-                                  </span>
+                                  <motion.span 
+                                    className="px-3 py-1 bg-green-500 text-white text-xs rounded-full font-bold shadow-md"
+                                    initial={{ scale: 0, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    transition={{ duration: 0.3, delay: 0.1 }}
+                                  >
+                                    ✓ SELECTED
+                                  </motion.span>
                                 )}
                               </div>
-                              <p className={`mb-1 ${isSelected ? 'text-gray-700' : 'text-gray-600'}`}>
+                              <p className={`mb-2 text-base ${isSelected ? 'text-gray-700 font-medium' : 'text-gray-600'}`}>
                                 {address.address}
                               </p>
-                              <p className={`mb-1 ${isSelected ? 'text-gray-700' : 'text-gray-600'}`}>
+                              <p className={`mb-2 text-base ${isSelected ? 'text-gray-700 font-medium' : 'text-gray-600'}`}>
                                 {address.city}, {address.state} - {address.pincode}
                               </p>
-                              <p className={`${isSelected ? 'text-gray-700' : 'text-gray-600'}`}>
+                              <p className={`text-sm ${isSelected ? 'text-green-700 font-medium' : 'text-gray-600'}`}>
+                                <FiPhoneCall className="w-3 h-3 inline mr-1" />
                                 Phone: {address.phone}
                               </p>
                             </div>
                             
                             {isSelected && (
-                              <div className="text-emerald-500 flex-shrink-0">
-                                <FiCheckCircle className="w-6 h-6" />
+                              <div className="text-green-500 flex-shrink-0">
+                                <FiCheckCircle className="w-7 h-7" />
                               </div>
                             )}
                           </div>
@@ -1045,7 +1258,7 @@ const Checkout = () => {
                           </button>
                           <button
                             type="submit"
-                            className="checkout-primary-button"
+                            className="px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors duration-200 shadow-lg"
                           >
                             Save Address
                           </button>
@@ -1067,7 +1280,11 @@ const Checkout = () => {
                 <button
                   onClick={nextStep}
                   disabled={!selectedAddress}
-                  className="checkout-primary-button-disabled"
+                  className={`px-8 py-3 rounded-xl font-semibold transition-colors duration-200 shadow-lg ${
+                    selectedAddress 
+                      ? 'bg-green-600 text-white hover:bg-green-700' 
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
                 >
                   Continue to Payment
                 </button>
@@ -1169,7 +1386,7 @@ const Checkout = () => {
                           <div className="space-y-3">
                             <button
                               onClick={() => window.open(generateUPIDeepLink(), '_blank')}
-                              className="checkout-upi-button"
+                              className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center gap-2 shadow-md"
                             >
                               <FiPhoneCall className="w-5 h-5" />
                               Open UPI App
@@ -1260,7 +1477,11 @@ const Checkout = () => {
                 <button
                   onClick={nextStep}
                   disabled={paymentMethod === 'upi' && !utrNumber.trim()}
-                  className="checkout-primary-button-disabled"
+                  className={`px-8 py-3 rounded-xl font-semibold transition-colors duration-200 shadow-lg ${
+                    (paymentMethod === 'upi' && !utrNumber.trim())
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-green-600 text-white hover:bg-green-700'
+                  }`}
                 >
                   Review Order
                 </button>
@@ -1286,147 +1507,358 @@ const Checkout = () => {
                 {/* Order Details */}
                 <div className="space-y-6">                  {/* Items */}
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-3">Items ({cart.length})</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                      <FiShoppingCart className="w-5 h-5 text-emerald-600" />
+                      Items ({cart.length})
+                    </h3>
                     <div className="space-y-3">                      {cart.map((item, index) => (
-                        <div key={item._id || index} className="flex items-center gap-4 p-3 bg-gray-50 rounded-xl">                          <div className="checkout-small-product-image-placeholder">
+                        <motion.div 
+                          key={item._id || index} 
+                          className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:shadow-md transition-all duration-200"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                        >
+                          <div className="relative w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center overflow-hidden shadow-inner">
                             {(item.type === 'combo' ? (item.mainImage || item.products?.[0]?.images?.[0]?.url) : (item.image || (item.images && item.images[0]))) ? (
-                              <img 
-                                src={item.type === 'combo' 
-                                  ? (item.mainImage || item.products?.[0]?.images?.[0] || '/placeholder.png')
-                                  : (item.image || item.images[0] || '/placeholder.png')
-                                } 
-                                alt={item.name || 'Product'}
-                                className="w-full h-full object-cover rounded-lg"
-                              />
+                              <>
+                                <img 
+                                  src={item.type === 'combo' 
+                                    ? (item.mainImage || item.products?.[0]?.images?.[0] || '/placeholder.png')
+                                    : (item.image || item.images[0] || '/placeholder.png')
+                                  } 
+                                  alt={item.name || 'Product'}
+                                  className="w-full h-full object-cover rounded-xl transition-transform duration-200 hover:scale-105"
+                                  onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    e.target.nextSibling.style.display = 'flex';
+                                  }}
+                                />
+                                <div className="hidden w-full h-full absolute inset-0 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-xl flex items-center justify-center">
+                                  <FiShoppingCart className="w-6 h-6 text-emerald-600" />
+                                </div>
+                              </>
                             ) : (
-                              <FiShoppingCart className="w-4 h-4 text-gray-600" />
+                              <div className="w-full h-full bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-xl flex items-center justify-center">
+                                <FiShoppingCart className="w-6 h-6 text-emerald-600" />
+                              </div>
+                            )}
+                            {item.type === 'combo' && (
+                              <div className="absolute -top-1 -right-1 bg-emerald-500 text-white text-xs px-1.5 py-0.5 rounded-full font-medium shadow-lg">
+                                COMBO
+                              </div>
                             )}
                           </div>
-                          <div className="flex-1">
-                            <h4 className="font-semibold text-gray-800">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-semibold text-gray-800 text-sm truncate">
                               {item.name || 'Product'}
                             </h4>
                             {item.selectedVariant && (
-                              <p className="text-xs text-emerald-600 font-medium">
-                                Variant: {item.selectedVariant.label || item.selectedVariant.name}
+                              <div className="flex items-center gap-1 mt-1">
+                                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                                <p className="text-xs text-emerald-600 font-medium">
+                                  {item.selectedVariant.label || item.selectedVariant.name}
+                                </p>
+                              </div>
+                            )}
+                            <p className="text-sm text-gray-600 mt-1">
+                              ₹{item.price || 0} × {item.qty || 1}
+                            </p>
+                            {item.type === 'combo' && item.products?.length > 1 && (
+                              <p className="text-xs text-blue-600 font-medium mt-1">
+                                {item.products.length} items included
                               </p>
                             )}
-                            <p className="text-sm text-gray-600">₹{item.price || 0} × {item.qty || 1}</p>
                           </div>
-                          <p className="font-semibold text-gray-800 text-sm">
-                            ₹{((item.qty || 1) * (item.price || 0)).toFixed(2)}
-                          </p>
-                        </div>
+                          <div className="text-right">
+                            <p className="font-bold text-gray-800 text-sm">
+                              ₹{((item.qty || 1) * (item.price || 0)).toFixed(2)}
+                            </p>
+                            <div className="flex items-center justify-end gap-1 mt-1">
+                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                              <span className="text-xs text-gray-500">Confirmed</span>
+                            </div>
+                          </div>
+                        </motion.div>
                       ))}
                     </div>
                   </div>
 
                   {/* Delivery Address */}
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-3">Delivery Address</h3>
-                    <div className="p-4 bg-gray-50 rounded-xl">
-                      <h4 className="font-medium text-gray-800">{selectedAddress?.name}</h4>
-                      <p className="text-gray-600 text-sm mt-1">{selectedAddress?.address}</p>
-                      <p className="text-gray-600 text-sm">{selectedAddress?.city}, {selectedAddress?.state} - {selectedAddress?.pincode}</p>
-                      <p className="text-gray-600 text-sm">Phone: {selectedAddress?.phone}</p>
-                    </div>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                      <FiMapPin className="w-5 h-5 text-emerald-600" />
+                      Delivery Address
+                    </h3>
+                    <motion.div 
+                      className="p-5 bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-xl"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center shadow-lg">
+                          <FiHome className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-gray-800 flex items-center gap-2">
+                            {selectedAddress?.name}
+                            {selectedAddress?.isDefault && (
+                              <span className="bg-emerald-100 text-emerald-700 text-xs px-2 py-1 rounded-full font-medium">
+                                Default
+                              </span>
+                            )}
+                          </h4>
+                          <p className="text-gray-700 text-sm mt-1 leading-relaxed">{selectedAddress?.address}</p>
+                          <p className="text-gray-600 text-sm mt-1">
+                            📍 {selectedAddress?.city}, {selectedAddress?.state} - {selectedAddress?.pincode}
+                          </p>
+                          <div className="flex items-center gap-4 mt-2">
+                            <div className="flex items-center gap-1">
+                              <FiPhone className="w-4 h-4 text-emerald-600" />
+                              <span className="text-sm text-gray-600">{selectedAddress?.phone}</span>
+                            </div>
+                            {selectedAddress?.email && (
+                              <div className="flex items-center gap-1">
+                                <FiMail className="w-4 h-4 text-emerald-600" />
+                                <span className="text-sm text-gray-600">{selectedAddress?.email}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="flex items-center gap-1">
+                            <FiCheckCircle className="w-4 h-4 text-emerald-500" />
+                            <span className="text-xs text-emerald-600 font-medium">Verified</span>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
 
                   {/* Payment Method */}
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-3">Payment Method</h3>
-                    <div className="p-4 bg-gray-50 rounded-xl">
-                      <div className="flex items-center gap-3">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                      <FiCreditCard className="w-5 h-5 text-emerald-600" />
+                      Payment Method
+                    </h3>
+                    <motion.div 
+                      className="p-5 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                    >
+                      <div className="flex items-center gap-4">
                         {paymentMethod === 'cod' ? (
                           <>
-                            <FiDollarSign className="w-5 h-5 text-emerald-600" />
-                            <div>
-                              <h4 className="font-medium text-gray-800">Cash on Delivery</h4>
-                              <p className="text-sm text-gray-600">Pay when your order arrives</p>
+                            <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+                              <FiDollarSign className="w-6 h-6 text-white" />
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-gray-800 flex items-center gap-2">
+                                Cash on Delivery
+                                <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-medium">
+                                  COD
+                                </span>
+                              </h4>
+                              <p className="text-sm text-gray-600 mt-1">Pay when your order arrives at your doorstep</p>
+                              <div className="flex items-center gap-2 mt-2">
+                                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                <span className="text-xs text-green-600 font-medium">No advance payment required</span>
+                              </div>
                             </div>
                           </>
                         ) : (
                           <>
-                            <FiPhoneCall className="w-5 h-5 text-emerald-600" />
-                            <div>
-                              <h4 className="font-medium text-gray-800">UPI Payment</h4>
-                              <p className="text-sm text-gray-600">UTR: {utrNumber}</p>
+                            <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center shadow-lg">
+                              <FiPhoneCall className="w-6 h-6 text-white" />
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-gray-800 flex items-center gap-2">
+                                UPI Payment
+                                <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full font-medium">
+                                  PAID
+                                </span>
+                              </h4>
+                              <p className="text-sm text-gray-600 mt-1">Payment completed via UPI</p>
+                              <div className="flex items-center gap-2 mt-2">
+                                <FiCheckCircle className="w-4 h-4 text-green-500" />
+                                <span className="text-xs text-green-600 font-medium">UTR: {utrNumber}</span>
+                              </div>
                             </div>
                           </>
                         )}
+                        <div className="text-right">
+                          <div className="flex items-center gap-1">
+                            <FiShield className="w-4 h-4 text-blue-500" />
+                            <span className="text-xs text-blue-600 font-medium">Secure</span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
 
                   {/* Applied Coupon */}
                   {appliedCoupon && (
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-3">Applied Coupon</h3>
-                      <div className="p-4 bg-green-50 border border-green-200 rounded-xl">
-                        <div className="flex items-center gap-3">
-                          <FiTag className="w-5 h-5 text-green-600" />
-                          <div>
-                            <h4 className="font-medium text-green-800">{appliedCoupon.code}</h4>                            <p className="text-sm text-green-600">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                        <FiTag className="w-5 h-5 text-emerald-600" />
+                        Applied Coupon
+                      </h3>
+                      <motion.div 
+                        className="p-5 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: 0.2 }}
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+                            <FiTag className="w-6 h-6 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-green-800 flex items-center gap-2">
+                              {appliedCoupon.code}
+                              <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-medium">
+                                ACTIVE
+                              </span>
+                            </h4>                            <p className="text-sm text-green-600 mt-1">
                               {appliedCoupon.description || 
                                 (appliedCoupon.type === 'percent' 
-                                  ? `${appliedCoupon.amount}% off` 
-                                  : `₹${appliedCoupon.amount} off`)}
+                                  ? `${appliedCoupon.amount}% discount applied` 
+                                  : `₹${appliedCoupon.amount} discount applied`)}
                             </p>
                           </div>
+                          <div className="text-right">
+                            <div className="flex items-center gap-1">
+                              <FiPercent className="w-4 h-4 text-green-500" />
+                              <span className="text-sm font-bold text-green-700">
+                                -₹{discount.toFixed(2)}
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      </motion.div>
                     </div>
                   )}
 
                   {/* Applied Coin Discount */}
                   {coinDiscount && (
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-3">Indira Coins Applied</h3>
-                      <div className="p-4 bg-green-50 border border-green-200 rounded-xl">
-                        <div className="flex items-center gap-3">
-                          <FiCheckCircle className="w-5 h-5 text-green-600" />
-                          <div>
-                            <h4 className="font-medium text-green-800">{coinDiscount.coinsUsed} coins used</h4>
-                            <p className="text-sm text-green-600">
-                              ₹{coinDiscount.discountAmount} discount applied
+                      <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                        <FiCheckCircle className="w-5 h-5 text-emerald-600" />
+                        Indira Coins Applied
+                      </h3>
+                      <motion.div 
+                        className="p-5 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: 0.3 }}
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center shadow-lg">
+                            <FiCheckCircle className="w-6 h-6 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-emerald-800 flex items-center gap-2">
+                              {coinDiscount.coinsUsed} Indira Coins Used
+                              <span className="bg-emerald-100 text-emerald-700 text-xs px-2 py-1 rounded-full font-medium">
+                                REDEEMED
+                              </span>
+                            </h4>
+                            <p className="text-sm text-emerald-600 mt-1">
+                              ₹{coinDiscount.discountAmount} discount from your coin balance
                             </p>
+                            <div className="flex items-center gap-2 mt-2">
+                              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                              <span className="text-xs text-emerald-600 font-medium">Coins deducted from wallet</span>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="flex items-center gap-1">
+                              <span className="text-lg font-bold text-emerald-700">
+                                -₹{coinDiscount.discountAmount.toFixed(2)}
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </motion.div>
                     </div>
                   )}                  {/* Final Total */}
                   <div className="border-t border-gray-200 pt-6">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-3">Payment Summary</h3>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Subtotal:</span>
-                        <span className="font-semibold">₹{subtotal.toFixed(2)}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Shipping:</span>
-                        <span className={`font-semibold ${subtotal >= 500 ? 'text-green-600' : 'text-gray-800'}`}>
-                          {subtotal >= 500 ? 'Free' : '₹100.00'}
-                        </span>
-                      </div>
-                      {discount > 0 && (
-                        <div className="flex justify-between text-green-600">
-                          <span>Discount:</span>
-                          <span className="font-semibold">-₹{discount.toFixed(2)}</span>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                      <FiDollarSign className="w-5 h-5 text-emerald-600" />
+                      Payment Summary
+                    </h3>
+                    <motion.div 
+                      className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-5 border border-gray-200"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: 0.4 }}
+                    >
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600 flex items-center gap-2">
+                            <FiShoppingCart className="w-4 h-4" />
+                            Subtotal:
+                          </span>
+                          <span className="font-semibold text-gray-800">₹{subtotal.toFixed(2)}</span>
                         </div>
-                      )}
-                      {coinDiscount && coinDiscount.discountAmount > 0 && (
-                        <div className="flex justify-between text-green-600">
-                          <span>Indira Coins ({coinDiscount.coinsUsed} coins):</span>
-                          <span className="font-semibold">-₹{coinDiscount.discountAmount.toFixed(2)}</span>
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600 flex items-center gap-2">
+                            <FiTruck className="w-4 h-4" />
+                            Shipping:
+                          </span>
+                          <span className={`font-semibold ${subtotal >= 500 ? 'text-green-600' : 'text-gray-800'} flex items-center gap-1`}>
+                            {subtotal >= 500 ? (
+                              <>
+                                <FiCheckCircle className="w-4 h-4 text-green-500" />
+                                Free
+                              </>
+                            ) : (
+                              '₹100.00'
+                            )}
+                          </span>
                         </div>
-                      )}
-                      <div className="border-t border-gray-200 pt-3">
-                        <div className="flex justify-between text-xl font-bold">
-                          <span>Total Amount:</span>
-                          <span>₹{total.toFixed(2)}</span>
+                        {discount > 0 && (
+                          <div className="flex justify-between items-center text-green-600">
+                            <span className="flex items-center gap-2">
+                              <FiTag className="w-4 h-4" />
+                              Coupon Discount:
+                            </span>
+                            <span className="font-semibold">-₹{discount.toFixed(2)}</span>
+                          </div>
+                        )}
+                        {coinDiscount && coinDiscount.discountAmount > 0 && (
+                          <div className="flex justify-between items-center text-emerald-600">
+                            <span className="flex items-center gap-2">
+                              <FiCheckCircle className="w-4 h-4" />
+                              Indira Coins ({coinDiscount.coinsUsed} coins):
+                            </span>
+                            <span className="font-semibold">-₹{coinDiscount.discountAmount.toFixed(2)}</span>
+                          </div>
+                        )}
+                        <div className="border-t border-gray-300 pt-3 mt-3">
+                          <div className="flex justify-between items-center">
+                            <span className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                              <FiCreditCard className="w-5 h-5 text-emerald-600" />
+                              Total Amount:
+                            </span>
+                            <motion.span 
+                              className="text-2xl font-bold text-emerald-600"
+                              initial={{ scale: 0.9 }}
+                              animate={{ scale: 1 }}
+                              transition={{ duration: 0.3, delay: 0.5 }}
+                            >
+                              ₹{total.toFixed(2)}
+                            </motion.span>
+                          </div>
+                          <div className="flex items-center justify-end gap-2 mt-2">
+                            <FiShield className="w-4 h-4 text-blue-500" />
+                            <span className="text-sm text-blue-600 font-medium">100% Secure Payment</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
               </div>
@@ -1441,7 +1873,7 @@ const Checkout = () => {
                 </button>
                 <button
                   onClick={placeOrder}
-                  className="checkout-primary-button"
+                  className="px-8 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors duration-200 shadow-lg flex items-center gap-2"
                 >
                   <FiCheck className="w-5 h-5" />
                   Place Order
@@ -1663,7 +2095,7 @@ const Checkout = () => {
                         <p className="text-gray-600 mb-6">{orderResult.message}</p>
                         <button
                           onClick={() => setShowPaymentModal(false)}
-                          className="checkout-primary-button"
+                          className="px-8 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors duration-200 shadow-lg"
                         >
                           Try Again
                         </button>

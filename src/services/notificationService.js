@@ -1,7 +1,7 @@
 // Push Notification Service for PWA Phase 3
 class NotificationService {
   constructor() {
-    this.vapidPublicKey = 'BG3Gx8HYNaOQfMnT...'; // Replace with your VAPID public key
+    this.vapidPublicKey = null; // will be fetched from backend
     this.subscription = null
     this.permission = 'default'
     this.notificationQueue = []
@@ -31,7 +31,10 @@ class NotificationService {
       this.permission = Notification.permission
       console.log(`📱 Notification permission: ${this.permission}`)
 
-      // If already granted, set up subscription
+  // Fetch VAPID public key from backend once
+  await this.ensureVapidKey()
+
+  // If already granted, set up subscription
       if (this.permission === 'granted') {
         await this.setupPushSubscription()
       }
@@ -40,6 +43,24 @@ class NotificationService {
     } catch (error) {
       console.error('❌ Failed to initialize notification service:', error)
       return false
+    }
+  }
+
+  // Ensure we have the VAPID public key from backend
+  async ensureVapidKey() {
+    if (this.vapidPublicKey) return this.vapidPublicKey
+    try {
+      const res = await fetch(`${this.apiBase()}/api/notifications/public-key`)
+      const json = await res.json()
+      if (json?.success && json.publicKey) {
+        this.vapidPublicKey = json.publicKey
+        return this.vapidPublicKey
+      }
+      console.warn('⚠️ Failed to fetch VAPID key, check backend configuration')
+      return null
+    } catch (e) {
+      console.warn('⚠️ Error fetching VAPID key:', e)
+      return null
     }
   }
 
@@ -54,6 +75,7 @@ class NotificationService {
       this.permission = permission
 
       if (permission === 'granted') {
+        await this.ensureVapidKey()
         console.log('✅ Notification permission granted')
         await this.setupPushSubscription()
         return true
@@ -70,7 +92,7 @@ class NotificationService {
   // Set up push subscription
   async setupPushSubscription() {
     try {
-      const registration = await navigator.serviceWorker.ready
+  const registration = await navigator.serviceWorker.ready
       
       // Check if already subscribed
       const existingSubscription = await registration.pushManager.getSubscription()
@@ -79,6 +101,11 @@ class NotificationService {
         this.subscription = existingSubscription
         console.log('✅ Using existing push subscription')
         return this.subscription
+      }
+
+      // Ensure we have a VAPID key
+      if (!this.vapidPublicKey) {
+        await this.ensureVapidKey()
       }
 
       // Create new subscription
@@ -103,7 +130,7 @@ class NotificationService {
   // Send subscription to server
   async sendSubscriptionToServer(subscription) {
     try {
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/notifications/subscribe', {
+  const response = await fetch(`${this.apiBase()}/api/notifications/subscribe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -344,7 +371,7 @@ class NotificationService {
   // Helper methods
   async getCartData() {
     try {
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/cart', {
+  const response = await fetch(`${this.apiBase()}/api/cart`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -357,7 +384,7 @@ class NotificationService {
 
   async checkForPromotions() {
     try {
-      const response = await fetch('https://indiraa1-backend.onrender.com/api/promotions/active', {
+  const response = await fetch(`${this.apiBase()}/api/promotions/active`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -407,8 +434,16 @@ class NotificationService {
     return {
       permission: this.permission,
       subscribed: !!this.subscription,
+      serviceWorkerReady: typeof navigator !== 'undefined' && 'serviceWorker' in navigator ? navigator.serviceWorker.ready.then(() => true).catch(() => false) : false,
       queuedNotifications: this.notificationQueue.length
     }
+  }
+
+  apiBase() {
+    // Prefer VITE_API_URL, fallback to current origin for same-host setups
+    return (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL)
+      ? import.meta.env.VITE_API_URL.replace(/\/$/, '')
+      : window.location.origin
   }
 }
 

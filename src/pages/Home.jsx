@@ -489,12 +489,17 @@ const Home = () => {
         ))}
       </div>
 
-      {/* Dynamic Hero Banner Section Container */}
+      {/* Unified Dynamic Hero Banner Section - Optimized 18:9 Panoramic Container */}
       <motion.section 
-        className="relative h-[60vh] flex items-center justify-center overflow-hidden"
+        className="relative py-6 px-2 sm:px-3 md:px-4 lg:px-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
+        style={{
+          y: heroY,
+          scale: heroScale,
+          rotate: heroRotate,
+        }}
       >
         {/* Hero Section Background Elements */}
         <div className="home-main-content-bg">
@@ -532,16 +537,13 @@ const Home = () => {
           <div className="home-grid-pattern"></div>
         </div>
 
-        {/* Clean Welcome Section Container - No special styling */}
-        <div className="relative z-10 w-full px-4">
-          
-          {/* Dynamic Hero Section with 18:9 Aspect Ratio */}
+    {/* Dynamic Hero Banner with Perfect 18:9 Panoramic Aspect Ratio (fixed height on >=1024px) */}
+    <div className="relative z-[60] w-full">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="relative overflow-hidden rounded-2xl w-full"
-            style={{ aspectRatio: '18/9' }}
+      className="relative overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl w-full shadow-lg hover:shadow-xl transition-shadow duration-300 hero-panorama"
           >
             <DynamicHeroSection />
           </motion.div>

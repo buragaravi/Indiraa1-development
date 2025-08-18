@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiUser, FiLock, FiEye, FiEyeOff, FiShield, FiUsers } from 'react-icons/fi';
 import toast from 'react-hot-toast';
+import { notificationService } from '../services/notificationService';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -47,12 +48,24 @@ const Login = () => {
           localStorage.setItem('adminToken', data.token); // Store as adminToken for admin
           localStorage.setItem('admin', JSON.stringify(data.admin || data.user));
           localStorage.setItem('userType', 'admin');
+          // After login, request notifications and register VAPID subscription
+          try {
+            await notificationService.requestPermission();
+          } catch (e) {
+            console.warn('[PWA Push] Admin login: notification permission/subscription failed:', e?.message || e);
+          }
           toast.success('Admin login successful!');
           navigate('/admin');
         } else {
           localStorage.setItem('token', data.token); // Store as token for regular users
           localStorage.setItem('user', JSON.stringify(data.user));
           localStorage.setItem('userType', 'user');
+          // After login, request notifications and register VAPID subscription
+          try {
+            await notificationService.requestPermission();
+          } catch (e) {
+            console.warn('[PWA Push] User login: notification permission/subscription failed:', e?.message || e);
+          }
           toast.success('Login successful!');
           navigate('/');
         }
