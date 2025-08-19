@@ -98,9 +98,28 @@ class NotificationService {
       const existingSubscription = await registration.pushManager.getSubscription()
       
       if (existingSubscription) {
-        this.subscription = existingSubscription
-        console.log('✅ Using existing push subscription')
-        return this.subscription
+        // Compare existing app server key with current VAPID
+        try {
+          await this.ensureVapidKey()
+          const subJson = existingSubscription.toJSON()
+          const currentKey = this.vapidPublicKey
+          const existingKey = subJson.applicationServerKey || subJson.keys?.p256dh || null
+          // Some browsers don't expose applicationServerKey; attempt to re-send to server anyway
+          this.subscription = existingSubscription
+          console.log('✅ Existing push subscription found')
+          // Always sync subscription to backend (may fix stale server records)
+          await this.sendSubscriptionToServer(existingSubscription)
+          // If keys clearly mismatch, re-subscribe
+          if (existingKey && currentKey && typeof existingKey === 'string' && existingKey !== currentKey) {
+            console.warn('🔁 Detected VAPID key change; re-subscribing')
+            await existingSubscription.unsubscribe()
+            this.subscription = null
+          } else {
+            return this.subscription
+          }
+        } catch (e) {
+          console.warn('⚠️ Could not verify existing subscription key, proceeding to subscribe anew')
+        }
       }
 
       // Ensure we have a VAPID key
@@ -109,7 +128,7 @@ class NotificationService {
       }
 
       // Create new subscription
-      const subscription = await registration.pushManager.subscribe({
+  const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: this.urlBase64ToUint8Array(this.vapidPublicKey)
       })
@@ -118,7 +137,7 @@ class NotificationService {
       console.log('✅ New push subscription created')
 
       // Send subscription to server
-      await this.sendSubscriptionToServer(subscription)
+  await this.sendSubscriptionToServer(subscription)
 
       return subscription
     } catch (error) {
@@ -137,7 +156,7 @@ class NotificationService {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-          subscription: subscription.toJSON(),
+          subscription: { ...subscription.toJSON(), vapidPublicKey: this.vapidPublicKey },
           userAgent: navigator.userAgent,
           timestamp: Date.now()
         })
